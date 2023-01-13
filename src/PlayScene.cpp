@@ -65,6 +65,15 @@ void PlayScene::HandleEvents()
 				m_pPlayer->SetAnimationState(PlayerAnimationState::PLAYER_IDLE_LEFT);
 			}
 		}
+		if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_W))
+		{
+			m_pPlayer->GetTransform()->position -= glm::vec2(0.0f, 5.0f);
+		}
+		else if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_S))
+		{
+			m_pPlayer->GetTransform()->position += glm::vec2(0.0f, 5.0f);
+		}
+
 	}
 	
 
