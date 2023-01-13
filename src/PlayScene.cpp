@@ -7,7 +7,8 @@
 #include "imgui_sdl.h"
 #include "Renderer.h"
 #include "Util.h"
-
+float decay = 0.5f;
+float speed = 1.0f;
 PlayScene::PlayScene()
 {
 	PlayScene::Start();
@@ -45,13 +46,15 @@ void PlayScene::HandleEvents()
 		if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_A))
 		{
 			m_pPlayer->SetAnimationState(PlayerAnimationState::PLAYER_RUN_LEFT);
-			m_pPlayer->GetTransform()->position -= glm::vec2(5.0f,0.0f);
+			//m_pPlayer->GetTransform()->position -= glm::vec2(5.0f,0.0f);
+			m_pPlayer->GetRigidBody()->velocity -= glm::vec2(speed, 0.0f);
 			m_playerFacingRight = false;
 		}
 		else if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_D))
 		{
 			m_pPlayer->SetAnimationState(PlayerAnimationState::PLAYER_RUN_RIGHT);
-			m_pPlayer->GetTransform()->position += glm::vec2(5.0f, 0.0f);
+			//m_pPlayer->GetTransform()->position += glm::vec2(5.0f, 0.0f);
+			m_pPlayer->GetRigidBody()->velocity += glm::vec2(speed, 0.0f);
 			m_playerFacingRight = true;
 		}
 		else
@@ -67,14 +70,41 @@ void PlayScene::HandleEvents()
 		}
 		if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_W))
 		{
-			m_pPlayer->GetTransform()->position -= glm::vec2(0.0f, 5.0f);
+			//m_pPlayer->GetTransform()->position -= glm::vec2(0.0f, 5.0f);
+			m_pPlayer->GetRigidBody()->velocity -= glm::vec2(0.0f, speed);
 		}
 		else if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_S))
 		{
-			m_pPlayer->GetTransform()->position += glm::vec2(0.0f, 5.0f);
+			//m_pPlayer->GetTransform()->position += glm::vec2(0.0f, 5.0f);
+			m_pPlayer->GetRigidBody()->velocity += glm::vec2(0.0f, speed);
 		}
-
 	}
+
+	m_pPlayer->GetTransform()->position += m_pPlayer->GetRigidBody()->velocity;
+	if (m_pPlayer->GetRigidBody()->velocity.x != 0.0f)
+	{
+		if (m_pPlayer->GetRigidBody()->velocity.x > 0.0f)
+		{
+			m_pPlayer->GetRigidBody()->velocity.x -= decay;
+		}
+		else
+		{
+			m_pPlayer->GetRigidBody()->velocity.x += decay;
+		}
+	}
+	if (m_pPlayer->GetRigidBody()->velocity.y != 0.0f)
+	{
+		if (m_pPlayer->GetRigidBody()->velocity.y > 0.0f)
+		{
+			m_pPlayer->GetRigidBody()->velocity.y -= decay;
+		}
+		else
+		{
+			m_pPlayer->GetRigidBody()->velocity.y += decay;
+		}
+	}
+
+
 	
 
 	if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_ESCAPE))
