@@ -1,22 +1,25 @@
 #include "Projectile.h"
 #include "TextureManager.h"
 
-Projectile::Projectile()
+Projectile::Projectile(Player* player,SDL_Point mousePosition)
 {
-	TextureManager::Instance().Load("../Assets/textures/Circle.png", "circle");
+	TextureManager::Instance().Load("../Assets/textures/Circle.png", "projectile");
 
-	const auto size = TextureManager::Instance().GetTextureSize("circle");
+	const auto size = TextureManager::Instance().GetTextureSize("projectile");
 	SetWidth(static_cast<int>(size.x));
 	SetHeight(static_cast<int>(size.y));
-	GetTransform()->position = glm::vec2(100.0f, 100.0f);
-	GetRigidBody()->velocity = glm::vec2(0, 0);
+	std::cout << mousePosition.x << std::endl;
+	std::cout << mousePosition.y << std::endl;
+	m_speed = 5.0f;
+	m_angle = (atan2((player->GetTransform()->position.y - mousePosition.y), (player->GetTransform()->position.x - mousePosition.x)));
+	GetTransform()->position = player->GetTransform()->position;
+	GetRigidBody()->velocity = glm::vec2(-cos(m_angle), -sin(m_angle));
 	GetRigidBody()->isColliding = false;
 
 	SetType(GameObjectType::PROJECTILE);
 	
 }
-Projectile::~Projectile()
-	= default;
+
 
 void Projectile::Draw()
 {
@@ -25,6 +28,7 @@ void Projectile::Draw()
 }
 void Projectile::Update()
 {
+	GetTransform()->position += GetRigidBody()->velocity * m_speed;
 	
 }
 void Projectile::Clean()

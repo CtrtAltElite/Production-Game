@@ -138,7 +138,7 @@
     <ClCompile Include="..\src\NavigationObject.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Projectile.cpp">
+    <ClCompile Include="..\src\Projectile.cpp">
       <Filter>Game Objects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -287,7 +287,7 @@
     <ClInclude Include="..\src\NavigationObject.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Projectile.h">
+    <ClInclude Include="..\src\Projectile.h">
       <Filter>Game Objects</Filter>
     </ClInclude>
   </ItemGroup>

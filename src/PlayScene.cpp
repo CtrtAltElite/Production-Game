@@ -105,7 +105,8 @@ void PlayScene::HandleEvents()
 	}
 	if(EventManager::Instance().MousePressed(1))
 	{
-		m_pProjectile = new Projectile(m_pPlayer);
+		SDL_GetMouseState(&m_mousePosition.x, &m_mousePosition.y);
+		m_pProjectile = new Projectile(m_pPlayer, m_mousePosition);
 		AddChild(m_pProjectile);
 		m_pProjVec.push_back(m_pProjectile);
 	}
@@ -135,7 +136,7 @@ void PlayScene::Start()
 	// Set GUI Title
 	m_guiTitle = "Play Scene";
 
-
+	SDL_GetMouseState(&m_mousePosition.x, &m_mousePosition.y);
 	// Player Sprite
 	m_pPlayer = new Player();
 	AddChild(m_pPlayer);

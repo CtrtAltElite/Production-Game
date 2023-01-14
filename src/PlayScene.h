@@ -24,7 +24,7 @@ private:
 	void GUI_Function() const;
 	std::string m_guiTitle;
 	
-	glm::vec2 m_mousePosition;
+	SDL_Point m_mousePosition;
 
 	Player* m_pPlayer;
 	Projectile* m_pProjectile;
