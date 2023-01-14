@@ -103,6 +103,7 @@ void PlayScene::HandleEvents()
 			m_pPlayer->GetRigidBody()->velocity.y += decay;
 		}
 	}
+	m_pProjectile->GetTransform()->position = EventManager::Instance().GetMousePosition();
 
 
 	
@@ -133,6 +134,9 @@ void PlayScene::Start()
 	m_pPlayer = new Player();
 	AddChild(m_pPlayer);
 	m_playerFacingRight = true;
+
+	m_pProjectile = new Projectile();
+	AddChild(m_pProjectile);
 
 
 	ImGuiWindowFrame::Instance().SetGuiFunction(std::bind(&PlayScene::GUI_Function, this));

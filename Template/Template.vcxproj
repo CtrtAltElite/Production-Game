@@ -74,6 +74,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)Intermediate\$(Configuration)\</IntDir>
+    <SourcePath>$(VC_SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -93,7 +94,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;FREEGLUT_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)include\SDL\include;$(SolutionDir)include\SDL_image\include;$(SolutionDir)include\SDL_mixer\include;$(SolutionDir)include\SDL2_ttf\include;%(AdditionalIncludeDirectories);$(SolutionDir)include\GL;$(SolutionDir)include\GLEW;$(SolutionDir)include\GLUT;$(SolutionDir)include\IL;$(SolutionDir)include\IMGUI;$(SolutionDir)include\IMGUI_SDL;$(SolutionDir)include\GLM</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)include\SDL\include;$(SolutionDir)include\SDL_image\include;$(SolutionDir)include\SDL_mixer\include;$(SolutionDir)include\SDL2_ttf\include;%(AdditionalIncludeDirectories);$(SolutionDir)include\GL;$(SolutionDir)include\GLEW;$(SolutionDir)include\GLUT;$(SolutionDir)include\IL;$(SolutionDir)include\IMGUI;$(SolutionDir)include\IMGUI_SDL;$(SolutionDir)include\GLM;$(SolutionDir)src</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -192,6 +193,7 @@
     <ClCompile Include="..\src\Target.cpp" />
     <ClCompile Include="..\src\TextureManager.cpp" />
     <ClCompile Include="..\src\Util.cpp" />
+    <ClCompile Include="Projectile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\IMGUI\imconfig.h" />
@@ -242,6 +244,7 @@
     <ClInclude Include="..\src\TextureManager.h" />
     <ClInclude Include="..\src\Transform.h" />
     <ClInclude Include="..\src\Util.h" />
+    <ClInclude Include="Projectile.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />

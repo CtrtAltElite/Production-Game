@@ -4,6 +4,8 @@
 
 #include "Scene.h"
 #include "Player.h"
+#include "Projectile.h"
+
 
 class PlayScene : public Scene
 {
@@ -25,6 +27,7 @@ private:
 	glm::vec2 m_mousePosition;
 
 	Player* m_pPlayer;
+	Projectile* m_pProjectile;
 	bool m_playerFacingRight;
 
 	// UI Items
