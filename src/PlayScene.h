@@ -28,6 +28,7 @@ private:
 
 	Player* m_pPlayer;
 	Projectile* m_pProjectile;
+	std::vector<Projectile*> m_pProjVec;
 	bool m_playerFacingRight;
 
 	// UI Items
