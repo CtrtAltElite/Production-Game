@@ -4,10 +4,11 @@
 #include "TextureManager.h"
 Background::Background()
 {
-	TextureManager::Instance().Load("../Assets/textures/nebula.png", "background");
+	TextureManager::Instance().Load("../Assets/textures/ocean.gif", "background");
 
-	SetWidth(1280);
-	SetHeight(720);
+	const auto size = TextureManager::Instance().GetTextureSize("background");
+	SetWidth(static_cast<int>(size.x));
+	SetHeight(static_cast<int>(size.y));
 	GetTransform()->position = glm::vec2(0.0f, 0.0f);
 	GetRigidBody()->velocity = glm::vec2(0, 0);
 	GetRigidBody()->isColliding = false;
@@ -22,7 +23,14 @@ void Background::Draw()
 	// alias for x and y
 	const auto x = static_cast<int>(GetTransform()->position.x - Game::Instance().camera.x);
 	const auto y = static_cast<int>(GetTransform()->position.y - Game::Instance().camera.y);
-	TextureManager::Instance().Draw("background",x,y);
+	for (int i =-10 ;i<10;i++)
+	{
+		for(int p = -10; p<10; p++)
+		{
+			TextureManager::Instance().Draw("background", x+GetHeight()*i, y+GetWidth()*p, 90);
+		}
+	}
+	
 }
 void Background::Update()
 {

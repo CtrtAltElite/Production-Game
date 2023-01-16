@@ -8,19 +8,18 @@ Player::Player(): m_currentAnimationState(PlayerAnimationState::PLAYER_IDLE_RIGH
 	TextureManager::Instance().LoadSpriteSheet(
 		"../Assets/sprites/atlas.txt",
 		"../Assets/sprites/atlas.png", 
-		"spritesheet");
+		"spritesheet"); 
 
 	SetSpriteSheet(TextureManager::Instance().GetSpriteSheet("spritesheet"));
-	
 	// set frame width
 	SetWidth(53);
 
 	// set frame height
 	SetHeight(58);
 
-	m_speed = 1.0f;
-	m_maxvelo = 10.0f;
-	m_velodecay = 0.8f;
+	m_speed = 0.4f;
+	m_maxvelo = 8.0f;
+	m_velodecay = 0.075f;
 	GetTransform()->position = glm::vec2(400.0f, 300.0f);
 	GetRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
 	GetRigidBody()->acceleration = glm::vec2(0.0f, 0.0f);
@@ -38,7 +37,6 @@ void Player::Draw()
 	// alias for x and y
 	const auto x = static_cast<int>(GetTransform()->position.x-Game::Instance().camera.x);
 	const auto y = static_cast<int>(GetTransform()->position.y-Game::Instance().camera.y);
-
 	// draw the player according to animation state
 	switch(m_currentAnimationState)
 	{
@@ -60,7 +58,8 @@ void Player::Draw()
 		break;
 	default:
 		break;
-	}
+		
+	} 
 	
 }
 
@@ -136,6 +135,7 @@ void Player::SetAnimationState(const PlayerAnimationState new_state)
 
 void Player::BuildAnimations()
 {
+	
 	auto idle_animation = Animation();
 
 	idle_animation.name = "idle";
@@ -155,4 +155,5 @@ void Player::BuildAnimations()
 	run_animation.frames.push_back(GetSpriteSheet()->GetFrame("megaman-run-3"));
 
 	SetAnimation(run_animation);
+	
 }

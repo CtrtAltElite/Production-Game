@@ -24,7 +24,7 @@ void PlayScene::Draw()
 void PlayScene::Update()
 {
 	UpdateDisplayList();
-	std::cout << m_pPlayer->GetRigidBody()->velocity.x << std::endl << m_pPlayer->GetRigidBody()->velocity.y << std::endl;
+	//std::cout << m_pPlayer->GetRigidBody()->velocity.x << std::endl << m_pPlayer->GetRigidBody()->velocity.y << std::endl;
 	Game::Instance().camera.x = (m_pPlayer->GetTransform()->position.x + m_pPlayer->GetWidth() / 2) - m_ScreenWidth / 2;
 	Game::Instance().camera.y = (m_pPlayer->GetTransform()->position.y + m_pPlayer->GetHeight() / 2) - m_ScreenHeight / 2;
 }
