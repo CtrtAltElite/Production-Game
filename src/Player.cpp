@@ -19,7 +19,7 @@ Player::Player(): m_currentAnimationState(PlayerAnimationState::PLAYER_IDLE_RIGH
 
 	m_speed = 0.4f;
 	m_maxvelo = 7.0f;
-	m_velodecay = 0.075f;
+	m_velodecay = 0.1f;
 	GetTransform()->position = glm::vec2(400.0f, 300.0f);
 	GetRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
 	GetRigidBody()->acceleration = glm::vec2(0.0f, 0.0f);
