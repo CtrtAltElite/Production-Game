@@ -16,7 +16,7 @@ int main(int argc, char* args[])
 	AllocConsole();
 	auto console = freopen("CON", "w", stdout);
 
-	Game::Instance().Init("SDL_Engine v0.28", 100, 100, 800, 600, false);
+	Game::Instance().Init("SDL_Engine v0.28", 100, 100, 1280, 720, false);
 
 	while (Game::Instance().IsRunning())
 	{

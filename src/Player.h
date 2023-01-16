@@ -18,11 +18,13 @@ public:
 
 	// setters
 	void SetAnimationState(PlayerAnimationState new_state);
-
+	float m_speed;
 private:
 	void BuildAnimations();
 
 	PlayerAnimationState m_currentAnimationState;
+	float m_maxvelo;
+	float m_velodecay;
 };
 
 #endif /* defined (__PLAYER__) */

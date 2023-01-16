@@ -4,6 +4,7 @@
 
 #include "Scene.h"
 #include "Player.h"
+#include "Background.h"
 #include "Projectile.h"
 
 
@@ -25,11 +26,13 @@ private:
 	std::string m_guiTitle;
 	
 	SDL_Point m_mousePosition;
-
+	int m_ScreenHeight;
+	int m_ScreenWidth;
 	Player* m_pPlayer;
 	Projectile* m_pProjectile;
 	std::vector<Projectile*> m_pProjVec;
 	bool m_playerFacingRight;
+	Background* m_pBackground;
 
 	// UI Items
 };

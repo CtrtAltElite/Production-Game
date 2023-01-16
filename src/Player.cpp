@@ -1,4 +1,6 @@
 #include "Player.h"
+
+#include "Game.h"
 #include "TextureManager.h"
 
 Player::Player(): m_currentAnimationState(PlayerAnimationState::PLAYER_IDLE_RIGHT)
@@ -16,6 +18,9 @@ Player::Player(): m_currentAnimationState(PlayerAnimationState::PLAYER_IDLE_RIGH
 	// set frame height
 	SetHeight(58);
 
+	m_speed = 1.0f;
+	m_maxvelo = 10.0f;
+	m_velodecay = 0.8f;
 	GetTransform()->position = glm::vec2(400.0f, 300.0f);
 	GetRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
 	GetRigidBody()->acceleration = glm::vec2(0.0f, 0.0f);
@@ -31,8 +36,8 @@ Player::~Player()
 void Player::Draw()
 {
 	// alias for x and y
-	const auto x = static_cast<int>(GetTransform()->position.x);
-	const auto y = static_cast<int>(GetTransform()->position.y);
+	const auto x = static_cast<int>(GetTransform()->position.x-Game::Instance().camera.x);
+	const auto y = static_cast<int>(GetTransform()->position.y-Game::Instance().camera.y);
 
 	// draw the player according to animation state
 	switch(m_currentAnimationState)
@@ -61,6 +66,63 @@ void Player::Draw()
 
 void Player::Update()
 {
+	
+	if (abs(GetRigidBody()->velocity.x) > 0)
+	{
+		if (abs(GetRigidBody()->velocity.x) - m_velodecay < 0)
+		{
+			GetRigidBody()->velocity.x = 0;
+		}
+		else
+		{
+			if (GetRigidBody()->velocity.x > 0)
+			{
+				GetRigidBody()->velocity.x -= m_velodecay;
+			}
+			else
+			{
+				GetRigidBody()->velocity.x += m_velodecay;
+			}
+		}
+			
+	}
+	if (abs(GetRigidBody()->velocity.y) > 0)
+	{
+		if (abs(GetRigidBody()->velocity.y) - m_velodecay < 0)
+		{
+			GetRigidBody()->velocity.y = 0;
+		}
+		else
+		{
+			if (GetRigidBody()->velocity.y > 0)
+			{
+				GetRigidBody()->velocity.y -= m_velodecay;
+			}
+			else
+			{
+				GetRigidBody()->velocity.y += m_velodecay;
+			}
+		}
+
+	}
+	if (GetRigidBody()->velocity.x > m_maxvelo)
+	{
+		GetRigidBody()->velocity.x = m_maxvelo;
+	}
+	if (GetRigidBody()->velocity.x < -m_maxvelo)
+	{
+		GetRigidBody()->velocity.x = -m_maxvelo;
+	}
+	if (GetRigidBody()->velocity.y > m_maxvelo)
+	{
+		GetRigidBody()->velocity.y = m_maxvelo;
+	}
+	if (GetRigidBody()->velocity.y < -m_maxvelo)
+	{
+		GetRigidBody()->velocity.y = -m_maxvelo;
+	}
+	
+	GetTransform()->position += GetRigidBody()->velocity * m_speed;
 }
 
 void Player::Clean()
