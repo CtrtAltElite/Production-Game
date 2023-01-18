@@ -24,6 +24,8 @@ void PlayScene::Draw()
 void PlayScene::Update()
 {
 	UpdateDisplayList();
+	SDL_GetMouseState(&m_mouseX, &m_mouseY);
+	m_angle = (atan2((m_pPlayer->GetTransform()->position.y - m_mouseY) - Game::Instance().camera.y, (m_pPlayer->GetTransform()->position.x - m_mouseX) - Game::Instance().camera.x));
 	Game::Instance().camera.x = (m_pPlayer->GetTransform()->position.x + m_pPlayer->GetWidth() / 2) - m_ScreenWidth / 2;
 	Game::Instance().camera.y = (m_pPlayer->GetTransform()->position.y + m_pPlayer->GetHeight() / 2) - m_ScreenHeight / 2;
 }
@@ -77,14 +79,17 @@ void PlayScene::HandleEvents()
 			//m_pPlayer->GetTransform()->position += glm::vec2(0.0f, 5.0f);
 			m_pPlayer->GetRigidBody()->velocity += glm::vec2(0.0f, m_pPlayer->m_speed);
 		}
+		if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_SPACE))
+		{
+			m_pPlayer->GetRigidBody()->velocity = glm::vec2(-cos(m_angle)*5.0f, -sin(m_angle)*5.0f);
+		}
 	}
 
 	
 	
 	if(EventManager::Instance().MousePressed(1))
 	{
-		SDL_GetMouseState(&m_mousePosition.x, &m_mousePosition.y);
-		m_pProjectile = new Projectile(m_pPlayer, m_mousePosition);
+		m_pProjectile = new Projectile(m_pPlayer);
 		AddChild(m_pProjectile);
 		m_pProjVec.push_back(m_pProjectile);
 	}
@@ -113,7 +118,6 @@ void PlayScene::Start()
 	m_guiTitle = "Play Scene";
 	m_ScreenHeight = 720;
 	m_ScreenWidth = 1280;
-	SDL_GetMouseState(&m_mousePosition.x, &m_mousePosition.y);
 	// Player Sprite
 	m_pBackground = new Background();
 	AddChild(m_pBackground);

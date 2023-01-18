@@ -120,7 +120,7 @@ void Player::Update()
 		GetRigidBody()->velocity.y = -m_maxvelo;
 	}
 	//std::cout << "X VELOCITY: " << GetRigidBody()->velocity.x << std::endl << " Y VELOCITY: " << GetRigidBody()->velocity.y << std::endl;
-	GetTransform()->position += GetRigidBody()->velocity * m_speed;
+	GetTransform()->position += GetRigidBody()->velocity;
 
 }
 

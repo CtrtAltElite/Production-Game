@@ -8,12 +8,14 @@
 class Projectile : public Sprite
 {
 public:
-	Projectile(Player* player, SDL_Point mousePosition);
+	Projectile(Player* player);
 	// Life Cycle Methods
 	virtual void Draw() override;
 	virtual void Update() override;
 	virtual void Clean() override;
 private:
+	int mouseX;
+	int mouseY;
 	float m_angle;
 	float m_speed;
 	float m_maxvelo;

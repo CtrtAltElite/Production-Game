@@ -24,10 +24,11 @@ private:
 	// IMGUI Function
 	void GUI_Function() const;
 	std::string m_guiTitle;
-	
-	SDL_Point m_mousePosition;
+	int m_mouseX;
+	int m_mouseY;
 	int m_ScreenHeight;
 	int m_ScreenWidth;
+	float m_angle;
 	Player* m_pPlayer;
 	Projectile* m_pProjectile;
 	std::vector<Projectile*> m_pProjVec;
