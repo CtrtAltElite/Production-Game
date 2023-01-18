@@ -10,12 +10,12 @@ Projectile::Projectile(Player* player)
 	const auto size = TextureManager::Instance().GetTextureSize("projectile");
 	SetWidth(static_cast<int>(size.x));
 	SetHeight(static_cast<int>(size.y));
-	m_speed = 10.0f;
 	m_maxvelo = 20.0f;
 	SDL_GetMouseState(&mouseX, &mouseY);
 	m_angle = (atan2((player->GetTransform()->position.y - mouseY)-Game::Instance().camera.y, (player->GetTransform()->position.x - mouseX) - Game::Instance().camera.x));
 	GetTransform()->position = player->GetTransform()->position;
-	GetRigidBody()->velocity = glm::vec2(-cos(m_angle), -sin(m_angle));
+	GetRigidBody()->velocity = glm::vec2(-cos(m_angle)*10.0f, -sin(m_angle)*10.0f);
+	player->GetRigidBody()->velocity += glm::vec2(cos(m_angle)*3.0f, sin(m_angle)*3.0f);
 	GetRigidBody()->isColliding = false;
 
 	SetType(GameObjectType::PROJECTILE);
@@ -49,7 +49,7 @@ void Projectile::Update()
 	{
 		GetRigidBody()->velocity.y = -m_maxvelo;
 	}
-	GetTransform()->position += GetRigidBody()->velocity * m_speed;
+	GetTransform()->position += GetRigidBody()->velocity;
 	
 }
 void Projectile::Clean()

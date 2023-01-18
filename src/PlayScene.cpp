@@ -81,12 +81,9 @@ void PlayScene::HandleEvents()
 		}
 		if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_SPACE))
 		{
-			m_pPlayer->GetRigidBody()->velocity = glm::vec2(-cos(m_angle)*5.0f, -sin(m_angle)*5.0f);
+			m_pPlayer->GetRigidBody()->velocity = glm::vec2(-cos(m_angle)*2.5f, -sin(m_angle)*2.5f);
 		}
 	}
-
-	
-	
 	if(EventManager::Instance().MousePressed(1))
 	{
 		m_pProjectile = new Projectile(m_pPlayer);

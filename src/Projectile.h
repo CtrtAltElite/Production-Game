@@ -17,7 +17,6 @@ private:
 	int mouseX;
 	int mouseY;
 	float m_angle;
-	float m_speed;
 	float m_maxvelo;
 };
 #endif /* defined (__PROJECTILE__)*/
