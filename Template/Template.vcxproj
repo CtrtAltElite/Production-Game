@@ -94,7 +94,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;FREEGLUT_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)include\SDL\include;$(SolutionDir)include\SDL_image\include;$(SolutionDir)include\SDL_mixer\include;$(SolutionDir)include\SDL2_ttf\include;%(AdditionalIncludeDirectories);$(SolutionDir)include\GL;$(SolutionDir)include\GLEW;$(SolutionDir)include\GLUT;$(SolutionDir)include\IL;$(SolutionDir)include\IMGUI;$(SolutionDir)include\IMGUI_SDL;$(SolutionDir)include\GLM;$(SolutionDir)src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)include\SDL\include;$(SolutionDir)include\SDL_image\include;$(SolutionDir)include\SDL_mixer\include;$(SolutionDir)include\SDL2_ttf\include;%(AdditionalIncludeDirectories);$(SolutionDir)include\GL;$(SolutionDir)include\GLEW;$(SolutionDir)include\GLUT;$(SolutionDir)include\IL;$(SolutionDir)include\IMGUI;$(SolutionDir)include\IMGUI_SDL;$(SolutionDir)include\GLM;$(SolutionDir)src;$(SolutionDir)include\box2d</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
