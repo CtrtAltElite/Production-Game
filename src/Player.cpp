@@ -11,19 +11,17 @@ Player::Player(): m_currentAnimationState(PlayerAnimationState::PLAYER_IDLE_RIGH
 		"spritesheet"); 
 
 	SetSpriteSheet(TextureManager::Instance().GetSpriteSheet("spritesheet"));
+	InitRigidBody();
 	// set frame width
 	SetWidth(53);
 
 	// set frame height
 	SetHeight(58);
-
+	
 	m_speed = 0.4f;
 	m_maxvelo = 7.0f;
 	m_velodecay = 0.1f;
-	GetTransform()->position = glm::vec2(400.0f, 300.0f);
-	GetRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
-	GetRigidBody()->acceleration = glm::vec2(0.0f, 0.0f);
-	GetRigidBody()->isColliding = false;
+	isColliding = true;
 	SetType(GameObjectType::PLAYER);
 
 	BuildAnimations();
@@ -31,12 +29,20 @@ Player::Player(): m_currentAnimationState(PlayerAnimationState::PLAYER_IDLE_RIGH
 
 Player::~Player()
 = default;
+void Player::InitRigidBody()
+{
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_dynamicBody;
+	bodyDef.position.Set(50.0f, 50.0f);
+	bodyDef.enabled = true;
+	m_rigidBody = Game::Instance().world.CreateBody(&bodyDef);
+}
 
 void Player::Draw()
 {
 	// alias for x and y
-	const auto x = static_cast<int>(GetTransform()->position.x-Game::Instance().camera.x);
-	const auto y = static_cast<int>(GetTransform()->position.y-Game::Instance().camera.y);
+	const auto x = static_cast<int>(m_rigidBody->GetPosition().x-Game::Instance().camera.x);
+	const auto y = static_cast<int>(m_rigidBody->GetPosition().y-Game::Instance().camera.y);
 	// draw the player according to animation state
 	switch(m_currentAnimationState)
 	{
@@ -60,68 +66,70 @@ void Player::Draw()
 		break;
 		
 	} 
-	
 }
 
 void Player::Update()
 {
-	if (abs(GetRigidBody()->velocity.x) > 0)
+	/*
+	b2Vec2 temp = m_rigidBody->GetLinearVelocity();
+	if (abs(temp.x > 0))
 	{
-		if (abs(GetRigidBody()->velocity.x) - m_velodecay < 0)
+		if (abs(temp.x) - m_velodecay < 0.0f)
 		{
-			GetRigidBody()->velocity.x = 0;
+			temp.x = 0;
 		}
 		else
 		{
-			if (GetRigidBody()->velocity.x > 0)
+			if (m_rigidBody->GetLinearVelocity().x > 0)
 			{
-				GetRigidBody()->velocity.x -= m_velodecay;
+				temp.x -= m_velodecay;
 			}
 			else
 			{
-				GetRigidBody()->velocity.x += m_velodecay;
+				temp.x += m_velodecay;
 			}
 		}
-			
 	}
-	if (abs(GetRigidBody()->velocity.y) > 0)
+	if (abs(temp.y) > 0)
 	{
-		if (abs(GetRigidBody()->velocity.y) - m_velodecay < 0)
+		if (abs(temp.y) - m_velodecay < 0)
 		{
-			GetRigidBody()->velocity.y = 0;
+			temp.y = 0;
 		}
 		else
 		{
-			if (GetRigidBody()->velocity.y > 0)
+			if (temp.y > 0)
 			{
-				GetRigidBody()->velocity.y -= m_velodecay;
+				temp.y -= m_velodecay;
 			}
 			else
 			{
-				GetRigidBody()->velocity.y += m_velodecay;
+				temp.y += m_velodecay;
 			}
 		}
-
 	}
-	if (GetRigidBody()->velocity.x > m_maxvelo)
+	m_rigidBody->SetLinearVelocity(temp);
+	if (temp.x > m_maxvelo)
 	{
-		GetRigidBody()->velocity.x = m_maxvelo;
+		temp.x = m_maxvelo;
 	}
-	if (GetRigidBody()->velocity.x < -m_maxvelo)
+	if (temp.x < -m_maxvelo)
 	{
-		GetRigidBody()->velocity.x = -m_maxvelo;
+		temp.x = -m_maxvelo;
 	}
-	if (GetRigidBody()->velocity.y > m_maxvelo)
+	if (temp.y > m_maxvelo)
 	{
-		GetRigidBody()->velocity.y = m_maxvelo;
+		temp.y = m_maxvelo;
 	}
-	if (GetRigidBody()->velocity.y < -m_maxvelo)
+	if (temp.y < -m_maxvelo)
 	{
-		GetRigidBody()->velocity.y = -m_maxvelo;
+		temp.y = -m_maxvelo;
 	}
 	//std::cout << "X VELOCITY: " << GetRigidBody()->velocity.x << std::endl << " Y VELOCITY: " << GetRigidBody()->velocity.y << std::endl;
-	GetTransform()->position += GetRigidBody()->velocity;
+	GetRigidBody()->SetTransform(GetRigidBody()->GetPosition()+temp, 0);
+	*/
 
+	//USE BOX 2D PHYSICS INSTEAD
 }
 
 void Player::Clean()

@@ -8,14 +8,14 @@ GameObject::GameObject() :
 GameObject::~GameObject()
 = default;
 
-Transform* GameObject::GetTransform()
+ const b2Transform* GameObject::GetTransform()
 {
-	return &m_transform;
+	return &m_rigidBody->GetTransform();
 }
 
-RigidBody* GameObject::GetRigidBody()
+b2Body* GameObject::GetRigidBody()
 {
-	return &m_rigidBody;
+	return m_rigidBody;
 }
 
 int GameObject::GetWidth() const

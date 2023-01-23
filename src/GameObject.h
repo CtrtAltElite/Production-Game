@@ -1,10 +1,8 @@
 #pragma once
 #ifndef __GAME_OBJECT__
 #define __GAME_OBJECT__
-
-#include "Transform.h"
-#include "RigidBody.h"
 #include <string>
+#include "box2d.h"
 
 // enums
 #include "GameObjectType.h"
@@ -25,10 +23,12 @@ public:
 	virtual void Clean() = 0;
 
 	// getters for common variables
-	Transform* GetTransform();
+	const b2Transform* GetTransform();
 
 	// getters and setters for physics properties
-	RigidBody* GetRigidBody();
+	b2Body* GetRigidBody();
+
+	virtual void InitRigidBody() = 0;
 
 	// getters and setters for game object properties
 	[[nodiscard]] int GetWidth() const;
@@ -44,12 +44,12 @@ public:
 	void SetVisible(bool state);
 	[[nodiscard]] bool IsVisible() const;
 
-private:
-	// transform component
-	Transform m_transform;
+	bool isColliding = false;
 
+private:
 	// rigid body component
-	RigidBody m_rigidBody;
+	b2Body* m_rigidBody;
+
 
 	// size variables
 	int m_width;

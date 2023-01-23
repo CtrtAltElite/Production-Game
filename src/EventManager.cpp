@@ -311,7 +311,7 @@ bool EventManager::GetMouseButton(const int button_number) const
     return m_mouseButtons[button_number];
 }
 
-glm::vec2 EventManager::GetMousePosition() const
+b2Vec2 EventManager::GetMousePosition() const
 {
     return m_mousePosition;
 }
@@ -345,7 +345,7 @@ EventManager::EventManager() :
     m_io(ImGui::GetIO()), m_isIMGUIActive(false), m_keyStates(nullptr), m_mouseWheel(0), m_isActive(true), m_mainWindowHasFocus(true)
 {
     // initialize mouse position
-    m_mousePosition = glm::vec2(0.0f, 0.0f);
+    m_mousePosition = b2Vec2(0.0f, 0.0f);
 
     // initialize button states for the mouse
     for (auto& mouse_button_state : m_mouseButtons)

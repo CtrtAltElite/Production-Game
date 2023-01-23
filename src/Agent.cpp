@@ -9,12 +9,12 @@ Agent::Agent()
 Agent::~Agent()
 = default;
 
-glm::vec2 Agent::GetTargetPosition() const
+b2Vec2 Agent::GetTargetPosition() const
 {
 	return m_targetPosition;
 }
 
-glm::vec2 Agent::GetCurrentDirection() const
+b2Vec2 Agent::GetCurrentDirection() const
 {
 	return m_currentDirection;
 }
@@ -39,12 +39,12 @@ glm::vec4 Agent::GetLOSColour() const
 	return m_LOSColour;
 }
 
-void Agent::SetTargetPosition(const glm::vec2 new_position)
+void Agent::SetTargetPosition(const b2Vec2 new_position)
 {
 	m_targetPosition = new_position;
 }
 
-void Agent::SetCurrentDirection(const glm::vec2 new_direction)
+void Agent::SetCurrentDirection(const b2Vec2 new_direction)
 {
 	m_currentDirection = new_direction;
 }
@@ -75,5 +75,5 @@ void Agent::ChangeDirection()
 {
 	const auto x = cos(m_currentHeading * Util::Deg2Rad);
 	const auto y = sin(m_currentHeading * Util::Deg2Rad);
-	m_currentDirection = glm::vec2(x, y);
+	m_currentDirection = b2Vec2(x, y);
 }

@@ -2,7 +2,7 @@
 #include "TextureManager.h"
 
 
-Label::Label(const std::string& text, const std::string& font_name, const int font_size, const SDL_Color colour, const glm::vec2 position, const int font_style, const bool is_centered):
+Label::Label(const std::string& text, const std::string& font_name, const int font_size, const SDL_Color colour, const b2Vec2 position, const int font_style, const bool is_centered):
 	m_fontColour(colour), m_fontName(font_name), m_text(text), m_isCentered(is_centered), m_fontSize(font_size), m_fontStyle(font_style)
 {
 	m_fontPath = "../Assets/fonts/" + font_name + ".ttf";
@@ -14,7 +14,7 @@ Label::Label(const std::string& text, const std::string& font_name, const int fo
 	const auto size = TextureManager::Instance().GetTextureSize(m_fontID);
 	SetWidth(static_cast<int>(size.x));
 	SetHeight(static_cast<int>(size.y));
-	GetTransform()->position = position;
+	GetRigidBody()->SetTransform(position, GetRigidBody()->GetAngle());
 }
 
 Label::~Label()
@@ -23,7 +23,7 @@ Label::~Label()
 void Label::Draw()
 {
 	// draw the label
-	TextureManager::Instance().DrawText(m_fontID, GetTransform()->position, 0, 255, m_isCentered);
+	TextureManager::Instance().DrawText(m_fontID, GetRigidBody()->GetPosition(), 0, 255, m_isCentered);
 }
 
 void Label::Update()

@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Background.h"
 #include "Projectile.h"
+#include "box2d.h"
 
 
 class PlayScene : public Scene
@@ -20,13 +21,12 @@ public:
 	virtual void Clean() override;
 	virtual void HandleEvents() override;
 	virtual void Start() override;
+	virtual void InitRigidBody() override;
 private:
 	// IMGUI Function
 	void GUI_Function() const;
 	std::string m_guiTitle;
-	int m_mouseX;
-	int m_mouseY;
-	int m_ScreenHeight;
+	int m_ScreenHeight; //probably already global constants
 	int m_ScreenWidth;
 	float m_angle;
 	Player* m_pPlayer;

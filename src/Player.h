@@ -2,6 +2,8 @@
 #ifndef __PLAYER__
 #define __PLAYER__
 
+#include <box2d.h>
+
 #include "PlayerAnimationState.h"
 #include "Sprite.h"
 
@@ -15,11 +17,14 @@ public:
 	virtual void Draw() override;
 	virtual void Update() override;
 	virtual void Clean() override;
+	void InitRigidBody() override;
 
 	// setters
 	void SetAnimationState(PlayerAnimationState new_state);
 	float m_speed;
 private:
+	bool isColliding;
+	b2Body* m_rigidBody;
 	void BuildAnimations();
 
 	PlayerAnimationState m_currentAnimationState;

@@ -18,6 +18,7 @@ public:
 	virtual void Clean() override;
 	virtual void HandleEvents() override;
 	virtual void Start() override;
+	void InitRigidBody() override;
 
 private:
 	Label* m_label{};

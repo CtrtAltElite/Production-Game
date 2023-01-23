@@ -12,10 +12,10 @@ Obstacle::Obstacle()
 	SetWidth(static_cast<int>(size.x));
 	SetHeight(static_cast<int>(size.y));
 
-	GetTransform()->position = glm::vec2(300.0f, 300.0f);
+	GetRigidBody()->SetTransform(b2Vec2(300.0f, 300.0f), GetRigidBody()->GetAngle());
 
 	SetType(GameObjectType::OBSTACLE);
-	GetRigidBody()->isColliding = false;
+	isColliding = false;
 
 	SoundManager::Instance().Load("../Assets/audio/yay.ogg", "yay", SoundType::SOUND_SFX);
 }
@@ -25,7 +25,7 @@ Obstacle::~Obstacle()
 
 void Obstacle::Draw()
 {
-	TextureManager::Instance().Draw("obstacle", GetTransform()->position, 0, 255, true);
+	TextureManager::Instance().Draw("obstacle", GetRigidBody()->GetPosition(), 0, 255, true);
 }
 
 void Obstacle::Update()

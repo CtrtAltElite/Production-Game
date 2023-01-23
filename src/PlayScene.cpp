@@ -24,10 +24,9 @@ void PlayScene::Draw()
 void PlayScene::Update()
 {
 	UpdateDisplayList();
-	SDL_GetMouseState(&m_mouseX, &m_mouseY);
-	m_angle = (atan2((m_pPlayer->GetTransform()->position.y - m_mouseY) - Game::Instance().camera.y, (m_pPlayer->GetTransform()->position.x - m_mouseX) - Game::Instance().camera.x));
-	Game::Instance().camera.x = (m_pPlayer->GetTransform()->position.x + m_pPlayer->GetWidth() / 2) - m_ScreenWidth / 2;
-	Game::Instance().camera.y = (m_pPlayer->GetTransform()->position.y + m_pPlayer->GetHeight() / 2) - m_ScreenHeight / 2;
+	m_angle = (atan2((m_pPlayer->GetRigidBody()->GetPosition().y - Game::Instance().GetMousePosition().y) - Game::Instance().camera.y, (m_pPlayer->GetRigidBody()->GetPosition().x - Game::Instance().GetMousePosition().x) - Game::Instance().camera.x));
+	Game::Instance().camera.x = (m_pPlayer->GetRigidBody()->GetPosition().x + m_pPlayer->GetWidth() / 2) - m_ScreenWidth / 2;
+	Game::Instance().camera.y = (m_pPlayer->GetRigidBody()->GetPosition().y + m_pPlayer->GetHeight() / 2) - m_ScreenHeight / 2;
 }
 
 void PlayScene::Clean()
@@ -43,19 +42,18 @@ void PlayScene::HandleEvents()
 
 	// handle player movement if no Game Controllers found
 	if (SDL_NumJoysticks() < 1)
+		//CHANGE TO BOX2D PHYSICS 
 	{
 		if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_A))
 		{
 			m_pPlayer->SetAnimationState(PlayerAnimationState::PLAYER_RUN_LEFT);
-			//m_pPlayer->GetTransform()->position -= glm::vec2(5.0f,0.0f);
-			m_pPlayer->GetRigidBody()->velocity -= glm::vec2(m_pPlayer->m_speed, 0.0f);
+			//m_pPlayer->GetRigidBody()->GetLinearVelocity() -= b2Vec2(m_pPlayer->m_speed, 0.0f);
 			m_playerFacingRight = false;
 		}
 		else if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_D))
 		{
 			m_pPlayer->SetAnimationState(PlayerAnimationState::PLAYER_RUN_RIGHT);
-			//m_pPlayer->GetTransform()->position += glm::vec2(5.0f, 0.0f);
-			m_pPlayer->GetRigidBody()->velocity += glm::vec2(m_pPlayer->m_speed, 0.0f);
+			//m_pPlayer->GetRigidBody()->GetLinearVelocity() += b2Vec2(m_pPlayer->m_speed, 0.0f);
 			m_playerFacingRight = true;
 		}
 		else
@@ -71,17 +69,15 @@ void PlayScene::HandleEvents()
 		}
 		if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_W))
 		{
-			//m_pPlayer->GetTransform()->position -= glm::vec2(0.0f, 5.0f);
-			m_pPlayer->GetRigidBody()->velocity -= glm::vec2(0.0f, m_pPlayer->m_speed);
+			//m_pPlayer->GetRigidBody()->GetLinearVelocity() -= b2Vec2(0.0f, m_pPlayer->m_speed);
 		}
 		else if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_S))
 		{
-			//m_pPlayer->GetTransform()->position += glm::vec2(0.0f, 5.0f);
-			m_pPlayer->GetRigidBody()->velocity += glm::vec2(0.0f, m_pPlayer->m_speed);
+			//m_pPlayer->GetRigidBody()->GetLinearVelocity() += b2Vec2(0.0f, m_pPlayer->m_speed);
 		}
 		if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_SPACE))
 		{
-			m_pPlayer->GetRigidBody()->velocity = glm::vec2(-cos(m_angle)*2.5f, -sin(m_angle)*2.5f);
+			//m_pPlayer->GetRigidBody()->GetLinearVelocity() = b2Vec2(-cos(m_angle)*2.5f, -sin(m_angle)*2.5f);
 		}
 	}
 	if(EventManager::Instance().MousePressed(1))
@@ -139,18 +135,18 @@ void PlayScene::GUI_Function() const
 	ImGui::Begin("Your Window Title Goes Here", NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoMove);
 
 
-	static float float2[3] = {m_pPlayer->GetTransform()->position.x,m_pPlayer->GetTransform()->position.y};
+	static float float2[3] = {m_pPlayer->GetRigidBody()->GetPosition().x,m_pPlayer->GetRigidBody()->GetPosition().y};
 	if(ImGui::SliderFloat2("Player position", float2, 0.0f, 800.0f))
 	{
-		if(m_pPlayer->GetTransform()->position.x<float2[0])
+		if(m_pPlayer->GetRigidBody()->GetPosition().x<float2[0])
 		{
 			m_pPlayer->SetAnimationState(PlayerAnimationState::PLAYER_RUN_LEFT);
 		}
-		if (m_pPlayer->GetTransform()->position.x > float2[0])
+		if (m_pPlayer->GetRigidBody()->GetPosition().x > float2[0])
 		{
 			m_pPlayer->SetAnimationState(PlayerAnimationState::PLAYER_RUN_RIGHT);
 		}
-		m_pPlayer->GetTransform()->position = glm::vec2(float2[0], float2[1]);
+		m_pPlayer->GetRigidBody()->SetTransform(b2Vec2(float2[0], float2[1]), m_pPlayer->GetRigidBody()->GetAngle());
 	}
 	
 	ImGui::End();

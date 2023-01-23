@@ -143,7 +143,7 @@ void TextureManager::Draw(const std::string & id, const int x, const int y, cons
 	SDL_RenderCopyEx(Renderer::Instance().GetRenderer(), m_textureMap[id].get(), &src_rect, &dest_rect, angle, nullptr, flip);
 }
 
-void TextureManager::Draw(const std::string& id, const glm::vec2 position, const double angle, const int alpha, const bool centered,
+void TextureManager::Draw(const std::string& id, const b2Vec2 position, const double angle, const int alpha, const bool centered,
                           const SDL_RendererFlip flip)
 {
 	Draw(id, static_cast<int>(position.x), static_cast<int>(position.y), angle, alpha, centered, flip);
@@ -297,7 +297,7 @@ void TextureManager::PlayAnimation(
 	SDL_RenderCopyEx(Renderer::Instance().GetRenderer(), m_textureMap[sprite_sheet_name].get(), &src_rect, &dest_rect, angle, nullptr, flip);
 }
 
-void TextureManager::PlayAnimation(const std::string& sprite_sheet_name, Animation& animation, const glm::vec2 position,
+void TextureManager::PlayAnimation(const std::string& sprite_sheet_name, Animation& animation, const b2Vec2 position,
 	const float speed_factor, const double angle, const int alpha, const bool centered, const SDL_RendererFlip flip)
 {
 	PlayAnimation(sprite_sheet_name, animation, static_cast<int>(position.x), static_cast<int>(position.y), speed_factor, angle, alpha, centered, flip);
@@ -334,13 +334,13 @@ void TextureManager::DrawText(const std::string & id, const int x, const int y, 
 	SDL_RenderCopyEx(Renderer::Instance().GetRenderer(), m_textureMap[id].get(), &src_rect, &dest_rect, angle, nullptr, flip);
 }
 
-void TextureManager::DrawText(const std::string& id, const glm::vec2 position, const double angle, const int alpha, const bool centered,
+void TextureManager::DrawText(const std::string& id, const b2Vec2 position, const double angle, const int alpha, const bool centered,
                               const SDL_RendererFlip flip)
 {
 	DrawText(id, static_cast<int>(position.x), static_cast<int>(position.y), angle, alpha, centered, flip);
 }
 
-glm::vec2 TextureManager::GetTextureSize(const std::string & id)
+b2Vec2 TextureManager::GetTextureSize(const std::string & id)
 {
 	int width;
 	int height;

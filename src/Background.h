@@ -14,10 +14,12 @@ public:
 	virtual void Draw() override;
 	virtual void Update() override;
 	virtual void Clean() override;
+	void InitRigidBody() override;
 
 	// setters
 	
 private:
+	b2Body* m_rigidBody;
 };
 
 #endif /* defined (__BACKGROUND__) */

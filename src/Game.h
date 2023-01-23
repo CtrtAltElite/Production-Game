@@ -44,7 +44,7 @@ public:
 	void Quit();
 
 	// getter and setter functions
-	[[nodiscard]] glm::vec2 GetMousePosition() const;
+	[[nodiscard]] b2Vec2 GetMousePosition() const;
 
 	void SetFrames(Uint32 frames);
 	[[nodiscard]] Uint32 GetFrames() const;
@@ -58,7 +58,7 @@ public:
 	[[nodiscard]] SDL_Window* GetWindow() const;
 
 	SDL_Rect camera = {0,0,1280,720};
-
+	b2World world;
 private:
 	Game();
 	~Game();
@@ -67,9 +67,8 @@ private:
 	bool m_bRunning;
 	Uint32 m_frames;
 	float m_deltaTime{};
-	glm::vec2 m_mousePosition;
-	
-
+	b2Vec2 m_mousePosition;
+	b2Vec2 m_gravity = {0.0f,-10.0f};
 	// scene variables
 	Scene* m_pCurrentScene;
 	SceneState m_currentSceneState;

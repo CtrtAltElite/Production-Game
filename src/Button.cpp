@@ -15,7 +15,7 @@
  * @param is_centered 
  */
 Button::Button(const std::string& image_path, std::string button_name, const GameObjectType type,
-               const glm::vec2 position, const bool is_centered):
+               const b2Vec2 position, const bool is_centered):
 m_alpha(255), m_name(std::move(button_name)), m_isCentered(is_centered), m_active(true)
 {
 	TextureManager::Instance().Load(image_path,m_name);
@@ -23,7 +23,7 @@ m_alpha(255), m_name(std::move(button_name)), m_isCentered(is_centered), m_activ
 	const auto size = TextureManager::Instance().GetTextureSize(m_name);
 	SetWidth(static_cast<int>(size.x));
 	SetHeight(static_cast<int>(size.y));
-	GetTransform()->position = position;
+	GetRigidBody()->SetTransform(position, GetRigidBody()->GetAngle());
 	SetType(type);
 }
 
@@ -33,7 +33,7 @@ Button::~Button()
 void Button::Draw()
 {
 	// draw the button
-	TextureManager::Instance().Draw(m_name, GetTransform()->position, 0, m_alpha, m_isCentered);
+	TextureManager::Instance().Draw(m_name, GetRigidBody()->GetPosition(), 0, m_alpha, m_isCentered);
 }
 
 void Button::Update()

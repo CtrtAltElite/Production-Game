@@ -8,6 +8,7 @@
 #include "MouseButtons.h"
 #include "GameController.h"
 #include "imgui.h"
+#include "box2d.h"
 
 /* singleton with magic static */
 class EventManager
@@ -35,7 +36,7 @@ public:
 
 	// mouse events
 	[[nodiscard]] bool GetMouseButton(int button_number) const;
-	[[nodiscard]] glm::vec2 GetMousePosition() const;
+	[[nodiscard]] b2Vec2 GetMousePosition() const;
 	[[nodiscard]] int GetMouseWheel() const;
 
 	[[nodiscard]] bool MousePressed(const int b) const;
@@ -91,7 +92,7 @@ private:
 
 	// mouse specific
 	bool m_mouseButtons[3]{};
-	glm::vec2 m_mousePosition;
+	b2Vec2 m_mousePosition;
 	int m_mouseWheel;
 
 	// mouse state containers

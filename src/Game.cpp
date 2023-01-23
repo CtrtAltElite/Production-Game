@@ -5,6 +5,7 @@
 #include "glm/gtx/string_cast.hpp"
 #include "Renderer.h"
 #include "EventManager.h"
+#include "TextureManager.h"
 
 
 // Game functions - DO NOT REMOVE ***********************************************
@@ -95,7 +96,8 @@ bool Game::Init(const char* title, const int x, const int y, const int width, co
 void Game::Start()
 {
 	m_currentSceneState = SceneState::NO_SCENE;
-
+	m_gravity = { 0.0f,-10.0f };
+	world = b2World(m_gravity);
 	ChangeSceneState(SceneState::PLAY);
 }
 
@@ -105,7 +107,7 @@ bool Game::IsRunning() const
 }
 
 
-glm::vec2 Game::GetMousePosition() const
+b2Vec2 Game::GetMousePosition() const
 {
 	return m_mousePosition;
 }

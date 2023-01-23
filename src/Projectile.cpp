@@ -12,11 +12,12 @@ Projectile::Projectile(Player* player)
 	SetHeight(static_cast<int>(size.y));
 	m_maxvelo = 20.0f;
 	SDL_GetMouseState(&mouseX, &mouseY);
-	m_angle = (atan2((player->GetTransform()->position.y - mouseY)-Game::Instance().camera.y, (player->GetTransform()->position.x - mouseX) - Game::Instance().camera.x));
-	GetTransform()->position = player->GetTransform()->position;
-	GetRigidBody()->velocity = glm::vec2(-cos(m_angle)*10.0f, -sin(m_angle)*10.0f);
-	player->GetRigidBody()->velocity += glm::vec2(cos(m_angle)*3.0f, sin(m_angle)*3.0f);
-	GetRigidBody()->isColliding = false;
+	m_angle = (atan2((player->GetRigidBody()->GetPosition().y - mouseY)-Game::Instance().camera.y, (player->GetRigidBody()->GetPosition().x - mouseX) - Game::Instance().camera.x));
+	GetRigidBody()->SetTransform(player->GetRigidBody()->GetPosition(), GetRigidBody()->GetAngle());
+	GetRigidBody()->GetLinearVelocity() = b2Vec2(-cos(m_angle)*10.0f, -sin(m_angle)*10.0f);
+	player->GetRigidBody()->GetLinearVelocity() += 
+		(cos(m_angle)*3.0f, sin(m_angle)*3.0f);
+	isColliding = false;
 
 	SetType(GameObjectType::PROJECTILE);
 	
@@ -26,30 +27,33 @@ Projectile::Projectile(Player* player)
 void Projectile::Draw()
 {
 	// draw the target
-	glm::vec2 position = GetTransform()->position;
+	b2Vec2 position = GetRigidBody()->GetPosition();
 	position.x -= Game::Instance().camera.x;
 	position.y -= Game::Instance().camera.y;
 	TextureManager::Instance().Draw("projectile", position, 0, 255, true);
 }
 void Projectile::Update()
 {
-	if (GetRigidBody()->velocity.x > m_maxvelo)
+	/*
+	if (GetRigidBody()->GetLinearVelocity().x > m_maxvelo)
 	{
-		GetRigidBody()->velocity.x = m_maxvelo;
+		GetRigidBody()->GetLinearVelocity().x = m_maxvelo;
 	}
-	if (GetRigidBody()->velocity.x < -m_maxvelo)
+	if (GetRigidBody()->GetLinearVelocity().x < -m_maxvelo)
 	{
-		GetRigidBody()->velocity.x = -m_maxvelo;
+		GetRigidBody()->GetLinearVelocity().x = -m_maxvelo;
 	}
-	if (GetRigidBody()->velocity.y > m_maxvelo)
+	if (GetRigidBody()->GetLinearVelocity().y > m_maxvelo)
 	{
-		GetRigidBody()->velocity.y = m_maxvelo;
+		GetRigidBody()->GetLinearVelocity().y = m_maxvelo;
 	}
-	if (GetRigidBody()->velocity.y < -m_maxvelo)
+	if (GetRigidBody()->GetLinearVelocity().y < -m_maxvelo)
 	{
-		GetRigidBody()->velocity.y = -m_maxvelo;
+		GetRigidBody()->GetLinearVelocity().y = -m_maxvelo;
 	}
-	GetTransform()->position += GetRigidBody()->velocity;
+	GetRigidBody()->GetPosition() += GetRigidBody()->GetLinearVelocity();
+	*/
+	//use box2d physics instead..!!!
 	
 }
 void Projectile::Clean()
