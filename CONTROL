@@ -3,6 +3,6 @@ Version: 2.4.1
 Port-Version: 2
 Architecture: x86-windows
 Multi-Arch: same
-Abi: e63a3f4eaa8a5d4d332499714aba82b186a35ac60326ba05b2666926f665329b
+Abi: 534b30321414f3e9bebb8f14d174a5040b617e7ff4910b7b306801a5e60074bf
 Description: An open source C++ engine for simulating rigid bodies in 2D
 Type: Port

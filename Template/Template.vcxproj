@@ -97,11 +97,12 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)include\SDL\include;$(SolutionDir)include\SDL_image\include;$(SolutionDir)include\SDL_mixer\include;$(SolutionDir)include\SDL2_ttf\include;%(AdditionalIncludeDirectories);$(SolutionDir)include\GL;$(SolutionDir)include\GLEW;$(SolutionDir)include\GLUT;$(SolutionDir)include\IL;$(SolutionDir)include\IMGUI;$(SolutionDir)include\IMGUI_SDL;$(SolutionDir)include\GLM;$(SolutionDir)src;$(SolutionDir)include\box2d</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(SolutionDir)lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;SDL2_net.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;SDL2_net.lib;box2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EntryPointSymbol>
