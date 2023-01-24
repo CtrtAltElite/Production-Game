@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "SoundManager.h"
 #include "TextureManager.h"
+#include "WorldManager.h"
 
 Obstacle::Obstacle()
 {
@@ -38,7 +39,7 @@ void Obstacle::Clean()
 }
 void Obstacle::InitRigidBody()
 {
-	m_rigidBody = Game::Instance().CreateRigidBody({ 400.0f,400.0f });
+	m_rigidBody = WorldManager::Instance().CreateRigidBody({ 400.0f,400.0f });
 }
 b2Body* Obstacle::GetRigidBody()
 {

@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "glm/gtx/string_cast.hpp"
 #include "EventManager.h"
+#include "WorldManager.h"
 
 StartScene::StartScene()
 {
@@ -83,7 +84,7 @@ void StartScene::Start()
 }
 void StartScene::InitRigidBody()
 {
-	m_rigidBody = Game::Instance().CreateRigidBody({ 0.0f,0.0f });
+	m_rigidBody = WorldManager::Instance().CreateRigidBody({ 0.0f,0.0f });
 }
 b2Body* StartScene::GetRigidBody()
 {

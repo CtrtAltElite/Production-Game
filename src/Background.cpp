@@ -2,6 +2,8 @@
 
 #include "Game.h"
 #include "TextureManager.h"
+#include "WorldManager.h"
+
 Background::Background()
 {
 	TextureManager::Instance().Load("../Assets/textures/ocean.gif", "background");
@@ -41,7 +43,7 @@ void Background::Clean()
 }
 void Background::InitRigidBody()
 {
-	m_rigidBody = Game::Instance().CreateRigidBody({ 0.0f,0.0f });
+	m_rigidBody = WorldManager::Instance().CreateRigidBody({ 0.0f,0.0f });
 }
 b2Body* Background::GetRigidBody()
 {

@@ -2,6 +2,7 @@
 
 #include "Game.h"
 #include "TextureManager.h"
+#include "WorldManager.h"
 
 Projectile::Projectile(Player* player)
 {
@@ -62,7 +63,7 @@ void Projectile::Clean()
 }
 void Projectile::InitRigidBody()
 {
-	m_rigidBody = Game::Instance().CreateDynamicRigidBody({ 0.0f,0.0f });
+	m_rigidBody = WorldManager::Instance().CreateDynamicRigidBody({ 0.0f,0.0f });
 }
 b2Body* Projectile::GetRigidBody()
 {

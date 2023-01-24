@@ -1,6 +1,7 @@
 #include "Label.h"
 #include "TextureManager.h"
 #include "Game.h"
+#include "WorldManager.h"
 
 Label::Label(const std::string& text, const std::string& font_name, const int font_size, const SDL_Color colour, const b2Vec2 position, const int font_style, const bool is_centered):
 	m_fontColour(colour), m_fontName(font_name), m_text(text), m_isCentered(is_centered), m_fontSize(font_size), m_fontStyle(font_style)
@@ -74,7 +75,7 @@ void Label::BuildFontID()
 }
 void Label::InitRigidBody()
 {
-	m_rigidBody = Game::Instance().CreateRigidBody({ 400.0,40.0f });
+	m_rigidBody = WorldManager::Instance().CreateRigidBody({ 400.0,40.0f });
 }
 b2Body* Label::GetRigidBody()
 {

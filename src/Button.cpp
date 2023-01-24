@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "EventManager.h"
 #include "TextureManager.h"
+#include "WorldManager.h"
 
 
 /**
@@ -75,7 +76,7 @@ void Button::SetActive(const bool value)
 }
 void Button::InitRigidBody()
 {
-	m_rigidBody = Game::Instance().CreateRigidBody({400.0f,400.0f});
+	m_rigidBody = WorldManager::Instance().CreateRigidBody({400.0f,400.0f});
 }
 b2Body* Button::GetRigidBody()
 {

@@ -2,6 +2,7 @@
 
 #include "Game.h"
 #include "TextureManager.h"
+#include "WorldManager.h"
 
 Player::Player(): m_currentAnimationState(PlayerAnimationState::PLAYER_IDLE_RIGHT)
 {
@@ -31,7 +32,7 @@ Player::~Player()
 = default;
 void Player::InitRigidBody()
 {
-	m_rigidBody = Game::Instance().CreateDynamicRigidBody({ 50.0f,50.0f });
+	m_rigidBody = WorldManager::Instance().CreateDynamicRigidBody({ 50.0f,50.0f });
 }
 
 void Player::Draw()

@@ -7,6 +7,8 @@
 #include "imgui_sdl.h"
 #include "Renderer.h"
 #include "Util.h"
+#include "WorldManager.h"
+
 PlayScene::PlayScene()
 {
 	PlayScene::Start();
@@ -122,7 +124,7 @@ void PlayScene::Start()
 }
 void PlayScene::InitRigidBody()
 {
-	m_rigidBody = Game::Instance().CreateRigidBody({ 0.0f,0.0f });
+	m_rigidBody = WorldManager::Instance().CreateRigidBody({ 0.0f,0.0f });
 }
 b2Body* PlayScene::GetRigidBody()
 {
