@@ -11,10 +11,10 @@
 // Game functions - DO NOT REMOVE ***********************************************
 
 Game::Game() :
-	m_bRunning(true), m_frames(0), m_pCurrentScene(nullptr), m_currentSceneState(SceneState::NO_SCENE), m_pWindow(nullptr)
+	m_bRunning(true), m_frames(0), m_pCurrentScene(nullptr), m_currentSceneState(SceneState::NO_SCENE), m_pWindow(nullptr),world(nullptr)
 {
-	gravity.Set(0.0f, -10.0f);
-	world = new b2World(gravity);
+	b2Vec2 gravity = b2Vec2(0.0f, 9.81f);
+	Game::world = new b2World(gravity);
 	srand(static_cast<unsigned>(time(nullptr)));  // random seed
 }
 
@@ -219,3 +219,23 @@ void Game::HandleEvents() const
 {
 	m_pCurrentScene->HandleEvents();
 }
+b2World* Game::GetWorld()
+{
+	return world;
+}
+b2Body* Game::CreateRigidBody(b2Vec2 position)
+{
+	b2BodyDef bodyDef;
+	bodyDef.position.Set(position.x, position.y);
+	b2Body* rigidBody = world->CreateBody(&bodyDef);
+	return rigidBody;
+}
+b2Body* Game::CreateDynamicRigidBody(b2Vec2 position)
+{
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_dynamicBody;
+	bodyDef.position.Set(position.x, position.y);
+	b2Body* rigidBody = world->CreateBody(&bodyDef);
+	return rigidBody;
+}
+//documentation says doesnt work during callbacks? probably has something to do with why it wont work

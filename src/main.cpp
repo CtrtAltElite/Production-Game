@@ -8,6 +8,8 @@
 constexpr float FPS = 60.0f;
 constexpr float DELAY_TIME = 1000.0f / FPS;
 
+
+
 int main(int argc, char* args[])
 {
 	Uint32 frames = 0;

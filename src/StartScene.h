@@ -18,12 +18,11 @@ public:
 	virtual void Clean() override;
 	virtual void HandleEvents() override;
 	virtual void Start() override;
-	virtual void InitRigidBody(b2Vec2 position) override;
+	virtual void InitRigidBody() override;
 	b2Body* GetRigidBody() override;
 	
 private:
 	b2Body* m_rigidBody;
-	b2BodyDef bodyDef;
 	Label* m_pStartLabel{};
 	Label* m_pInstructionsLabel{};
 	Button* m_pStartButton;

@@ -20,7 +20,7 @@ public:
 	virtual void Clean() override = 0;
 	virtual void HandleEvents() = 0;
 	virtual void Start() = 0;
-	virtual void InitRigidBody(b2Vec2 position) override=0;
+	virtual void InitRigidBody() override=0;
 	virtual b2Body* GetRigidBody() override=0;
 
 	void AddChild(DisplayObject* child, uint32_t layer_index = 0, std::optional<uint32_t> order_index = std::nullopt);

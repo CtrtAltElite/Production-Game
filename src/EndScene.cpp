@@ -55,7 +55,7 @@ void EndScene::Start()
 
 	// Restart Button
 	m_pRestartButton = new Button("../Assets/textures/restartButton.png", "restartButton", GameObjectType::RESTART_BUTTON);
-	m_pRestartButton->InitRigidBody(b2Vec2(400.0f, 400.0f));
+	m_pRestartButton->InitRigidBody();
 	m_pRestartButton->AddEventListener(Event::CLICK, [&]()-> void
 	{
 		m_pRestartButton->SetActive(false);
@@ -76,10 +76,9 @@ void EndScene::Start()
 
 	ImGuiWindowFrame::Instance().SetDefaultGuiFunction();
 }
-void EndScene::InitRigidBody(b2Vec2 position)
+void EndScene::InitRigidBody()
 {
-	bodyDef.position.Set(position.x, position.y);
-	m_rigidBody = Game::Instance().world->CreateBody(&bodyDef);
+	m_rigidBody = Game::Instance().CreateRigidBody({ 0.0f,0.0f });
 }
 b2Body* EndScene::GetRigidBody()
 {

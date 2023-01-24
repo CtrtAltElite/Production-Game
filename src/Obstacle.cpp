@@ -13,7 +13,7 @@ Obstacle::Obstacle()
 	SetWidth(static_cast<int>(size.x));
 	SetHeight(static_cast<int>(size.y));
 	b2Vec2 position = { 300.0f,300.0f };
-	InitRigidBody(position);
+	InitRigidBody();
 
 	SetType(GameObjectType::OBSTACLE);
 	isColliding = false;
@@ -36,12 +36,9 @@ void Obstacle::Update()
 void Obstacle::Clean()
 {
 }
-void Obstacle::InitRigidBody(b2Vec2 position)
+void Obstacle::InitRigidBody()
 {
-	b2BodyDef bodyDef;
-	bodyDef.type = b2_staticBody;
-	bodyDef.position.Set(position.x, position.y);
-	m_rigidBody = Game::Instance().world->CreateBody(&bodyDef);
+	m_rigidBody = Game::Instance().CreateRigidBody({ 400.0f,400.0f });
 }
 b2Body* Obstacle::GetRigidBody()
 {

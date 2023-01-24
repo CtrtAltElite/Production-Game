@@ -21,7 +21,7 @@ public:
 	virtual void Clean() override;
 	virtual void HandleEvents() override;
 	virtual void Start() override;
-	virtual void InitRigidBody(b2Vec2 position) override;
+	virtual void InitRigidBody() override;
 	b2Body* GetRigidBody() override;
 private:
 	// IMGUI Function
@@ -35,7 +35,6 @@ private:
 	std::vector<Projectile*> m_pProjVec;
 	bool m_playerFacingRight;
 	Background* m_pBackground;
-	b2BodyDef bodyDef;
 	b2Body* m_rigidBody;
 
 	// UI Items

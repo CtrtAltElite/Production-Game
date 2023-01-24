@@ -17,7 +17,7 @@ public:
 	virtual void Draw() override;
 	virtual void Update() override;
 	virtual void Clean() override;
-	void InitRigidBody(b2Vec2 position) override;
+	void InitRigidBody() override;
 	b2Body* GetRigidBody() override;
 
 	void SetText(const std::string& new_text);
@@ -25,7 +25,6 @@ public:
 	void SetSize(int new_size);
 
 private:
-	b2BodyDef bodyDef;
 	std::string m_fontPath;
 	std::string m_fontID;
 	SDL_Color m_fontColour;

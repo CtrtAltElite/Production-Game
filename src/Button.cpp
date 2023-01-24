@@ -19,7 +19,7 @@ Button::Button(const std::string& image_path, std::string button_name, const Gam
 m_alpha(255), m_name(std::move(button_name)), m_isCentered(is_centered), m_active(true)
 {
 	TextureManager::Instance().Load(image_path,m_name);
-	InitRigidBody(position);
+	InitRigidBody();
 	const auto size = TextureManager::Instance().GetTextureSize(m_name);
 	SetWidth(static_cast<int>(size.x));
 	SetHeight(static_cast<int>(size.y));
@@ -73,12 +73,9 @@ void Button::SetActive(const bool value)
 {
 	m_active = value;
 }
-void Button::InitRigidBody(b2Vec2 position)
+void Button::InitRigidBody()
 {
-	bodyDef.type = b2_staticBody;
-	bodyDef.position.Set(position.x,position.y);
-	bodyDef.enabled = true;
-	m_rigidBody = Game::Instance().world->CreateBody(&bodyDef);
+	m_rigidBody = Game::Instance().CreateRigidBody({400.0f,400.0f});
 }
 b2Body* Button::GetRigidBody()
 {

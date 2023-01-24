@@ -58,8 +58,10 @@ public:
 	[[nodiscard]] SDL_Window* GetWindow() const;
 
 	SDL_Rect camera = {0,0,1280,720};
-	b2Vec2 gravity;
-	b2World* world;
+	b2World* GetWorld();
+	b2Body* CreateRigidBody(b2Vec2 position);
+	b2Body* CreateDynamicRigidBody(b2Vec2 position);
+	
 private:
 	Game();
 
@@ -68,11 +70,11 @@ private:
 	Uint32 m_frames;
 	float m_deltaTime{};
 	b2Vec2 m_mousePosition;
-	const b2Vec2  m_gravity = {0.0f,-10.0f};
 	// scene variables
 	Scene* m_pCurrentScene;
 	SceneState m_currentSceneState;
-
+	b2World* world;
+	
 	// storage structures
 	std::shared_ptr<SDL_Window> m_pWindow;
 };

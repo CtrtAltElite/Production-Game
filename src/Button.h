@@ -22,7 +22,7 @@ public:
 	void Draw() override;
 	void Update() override;
 	void Clean() override;
-	void InitRigidBody(b2Vec2 position) override;
+	void InitRigidBody() override;
 	b2Body* GetRigidBody() override;
 
 	// button setters
@@ -30,7 +30,6 @@ public:
 	void SetActive(bool value);
 	
 private:
-	b2BodyDef bodyDef;
 	Uint8 m_alpha;
 	std::string m_name;
 	bool m_isCentered;

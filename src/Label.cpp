@@ -12,7 +12,7 @@ Label::Label(const std::string& text, const std::string& font_name, const int fo
 	const auto size = TextureManager::Instance().GetTextureSize(m_fontID);
 	SetWidth(static_cast<int>(size.x));
 	SetHeight(static_cast<int>(size.y));
-	InitRigidBody(position);
+	InitRigidBody();
 }
 
 Label::~Label()
@@ -72,10 +72,9 @@ void Label::BuildFontID()
 	m_fontID += "-";
 	m_fontID += m_text;
 }
-void Label::InitRigidBody(b2Vec2 position)
+void Label::InitRigidBody()
 {
-	bodyDef.position.Set(position.x, position.y);
-	m_rigidBody = Game::Instance().world->CreateBody(&bodyDef);
+	m_rigidBody = Game::Instance().CreateRigidBody({ 400.0,40.0f });
 }
 b2Body* Label::GetRigidBody()
 {

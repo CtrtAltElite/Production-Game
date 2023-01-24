@@ -18,10 +18,9 @@ public:
 	virtual void Clean() override;
 	virtual void HandleEvents() override;
 	virtual void Start() override;
-	void InitRigidBody(b2Vec2 position) override;
+	void InitRigidBody() override;
 	b2Body* GetRigidBody() override;
 private:
-	b2BodyDef bodyDef;
 	Label* m_label{};
 	b2Body* m_rigidBody;
 	Button* m_pRestartButton;
