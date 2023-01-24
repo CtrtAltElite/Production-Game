@@ -45,6 +45,6 @@ void Background::InitRigidBody()
 	bodyDef.type = b2_staticBody;
 	bodyDef.position.Set(0.0f, 0.0f);
 	bodyDef.enabled = true;
-	m_rigidBody = Game::Instance().world.CreateBody(&bodyDef);
+	m_rigidBody = Game::Instance().world->CreateBody(&bodyDef);
 }
 

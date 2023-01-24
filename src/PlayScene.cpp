@@ -111,6 +111,7 @@ void PlayScene::Start()
 	m_guiTitle = "Play Scene";
 	m_ScreenHeight = 720;
 	m_ScreenWidth = 1280;
+	InitRigidBody();
 	// Player Sprite
 	m_pBackground = new Background();
 	AddChild(m_pBackground);
@@ -123,7 +124,14 @@ void PlayScene::Start()
 
 	ImGuiWindowFrame::Instance().SetGuiFunction(std::bind(&PlayScene::GUI_Function, this));
 }
-
+void PlayScene::InitRigidBody()
+{
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_staticBody;
+	bodyDef.position.Set(0.0f, 0.0f);
+	bodyDef.enabled = true;
+	m_rigidBody = Game::Instance().world->CreateBody(&bodyDef);
+}
 void PlayScene::GUI_Function() const
 {
 	// Always open with a NewFrame

@@ -209,6 +209,7 @@
     <ClInclude Include="..\src\CollisionManager.h" />
     <ClInclude Include="..\src\CollisionShape.h" />
     <ClInclude Include="..\src\Config.h" />
+    <ClInclude Include="..\src\Enemy.h" />
     <ClInclude Include="..\src\ImGuiWindowFrame.h" />
     <ClInclude Include="..\src\NavigationObject.h" />
     <ClInclude Include="..\src\Obstacle.h" />
@@ -240,7 +241,6 @@
     <ClInclude Include="..\src\StartScene.h" />
     <ClInclude Include="..\src\TextureManager.h" />
     <ClInclude Include="..\src\Util.h" />
-    <ClInclude Include="Enemy.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />

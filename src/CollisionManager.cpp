@@ -277,9 +277,8 @@ bool CollisionManager::CircleAABBCheck(GameObject* object1, GameObject* object2)
 			object2->isColliding = true;
 
 			const auto attack_vector = object1->GetRigidBody()->GetPosition() - object2->GetRigidBody()->GetPosition();
-			constexpr auto normal = b2Vec2(0.0f, -1.0f);
-
-			const auto dot = Util::Dot(attack_vector, normal);
+			//constexpr auto normal = b2Vec2(0.0f, -1.0f);
+			const auto dot = Util::Dot(attack_vector, {0.0f,-1.0f});
 			const auto angle = acos(dot / Util::Magnitude(attack_vector)) * Util::Rad2Deg;
 
 			switch (object2->GetType())

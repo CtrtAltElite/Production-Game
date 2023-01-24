@@ -35,7 +35,7 @@ void Player::InitRigidBody()
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(50.0f, 50.0f);
 	bodyDef.enabled = true;
-	m_rigidBody = Game::Instance().world.CreateBody(&bodyDef);
+	m_rigidBody = Game::Instance().world->CreateBody(&bodyDef);
 }
 
 void Player::Draw()

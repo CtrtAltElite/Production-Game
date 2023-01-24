@@ -54,7 +54,7 @@ void StartScene::Start()
 	m_pInstructionsLabel->SetParent(this);
 	AddChild(m_pInstructionsLabel);
 
-
+	InitRigidBody();
 
 	// Start Button
 	m_pStartButton = new Button();
@@ -78,5 +78,13 @@ void StartScene::Start()
 	AddChild(m_pStartButton);
 
 	ImGuiWindowFrame::Instance().SetDefaultGuiFunction();
+}
+void StartScene::InitRigidBody()
+{
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_staticBody;
+	bodyDef.position.Set(0.0f, 0.0f);
+	bodyDef.enabled = true;
+	m_rigidBody = Game::Instance().world->CreateBody(&bodyDef);
 }
 

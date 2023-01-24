@@ -1,6 +1,6 @@
 #include "Button.h"
 #include <utility>
-
+#include "Game.h"
 #include "EventManager.h"
 #include "TextureManager.h"
 
@@ -19,7 +19,7 @@ Button::Button(const std::string& image_path, std::string button_name, const Gam
 m_alpha(255), m_name(std::move(button_name)), m_isCentered(is_centered), m_active(true)
 {
 	TextureManager::Instance().Load(image_path,m_name);
-
+	InitRigidBody();
 	const auto size = TextureManager::Instance().GetTextureSize(m_name);
 	SetWidth(static_cast<int>(size.x));
 	SetHeight(static_cast<int>(size.y));
@@ -73,4 +73,12 @@ void Button::SetAlpha(const Uint8 alpha)
 void Button::SetActive(const bool value)
 {
 	m_active = value;
+}
+void Button::InitRigidBody()
+{
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_staticBody;
+	bodyDef.position.Set(0.0f, 0.0f);
+	bodyDef.enabled = true;
+	m_rigidBody = Game::Instance().world->CreateBody(&bodyDef);
 }

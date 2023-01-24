@@ -1,12 +1,12 @@
 #include "Label.h"
 #include "TextureManager.h"
-
+#include "Game.h"
 
 Label::Label(const std::string& text, const std::string& font_name, const int font_size, const SDL_Color colour, const b2Vec2 position, const int font_style, const bool is_centered):
 	m_fontColour(colour), m_fontName(font_name), m_text(text), m_isCentered(is_centered), m_fontSize(font_size), m_fontStyle(font_style)
 {
 	m_fontPath = "../Assets/fonts/" + font_name + ".ttf";
-
+	InitRigidBody();
 	BuildFontID();
 
 	FontManager::Instance().Load(m_fontPath, m_fontID, font_size, font_style);
@@ -74,4 +74,11 @@ void Label::BuildFontID()
 	m_fontID += "-";
 	m_fontID += m_text;
 }
-
+void Label::InitRigidBody()
+{
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_staticBody;
+	bodyDef.position.Set(0.0f, 0.0f);
+	bodyDef.enabled = true;
+	m_rigidBody = Game::Instance().world->CreateBody(&bodyDef);
+}

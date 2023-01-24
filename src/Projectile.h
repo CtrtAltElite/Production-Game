@@ -19,5 +19,6 @@ private:
 	int mouseY;
 	float m_angle;
 	float m_maxvelo;
+	b2Body* m_rigidBody;
 };
 #endif /* defined (__PROJECTILE__)*/

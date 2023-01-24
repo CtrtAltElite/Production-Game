@@ -22,7 +22,7 @@ public:
 
 private:
 	Label* m_label{};
-
+	b2Body* m_rigidBody;
 	Button* m_pRestartButton;
 };
 

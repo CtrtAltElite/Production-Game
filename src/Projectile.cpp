@@ -14,9 +14,8 @@ Projectile::Projectile(Player* player)
 	SDL_GetMouseState(&mouseX, &mouseY);
 	m_angle = (atan2((player->GetRigidBody()->GetPosition().y - mouseY)-Game::Instance().camera.y, (player->GetRigidBody()->GetPosition().x - mouseX) - Game::Instance().camera.x));
 	GetRigidBody()->SetTransform(player->GetRigidBody()->GetPosition(), GetRigidBody()->GetAngle());
-	GetRigidBody()->GetLinearVelocity() = b2Vec2(-cos(m_angle)*10.0f, -sin(m_angle)*10.0f);
-	player->GetRigidBody()->GetLinearVelocity() += 
-		(cos(m_angle)*3.0f, sin(m_angle)*3.0f);
+	//GetRigidBody()->GetLinearVelocity() = b2Vec2(-cos(m_angle)*10.0f, -sin(m_angle)*10.0f);
+	//player->GetRigidBody()->GetLinearVelocity() += (cos(m_angle)*3.0f, sin(m_angle)*3.0f);
 	isColliding = false;
 
 	SetType(GameObjectType::PROJECTILE);
@@ -60,5 +59,12 @@ void Projectile::Clean()
 {
 	
 }
-
+void Projectile::InitRigidBody()
+{
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_staticBody;
+	bodyDef.position.Set(0.0f,0.0f);
+	bodyDef.enabled = true;
+	m_rigidBody = Game::Instance().world->CreateBody(&bodyDef);
+}
 

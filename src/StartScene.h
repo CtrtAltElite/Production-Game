@@ -21,6 +21,7 @@ public:
 	virtual void InitRigidBody() override;
 	
 private:
+	b2Body* m_rigidBody;
 	Label* m_pStartLabel{};
 	Label* m_pInstructionsLabel{};
 	Button* m_pStartButton;

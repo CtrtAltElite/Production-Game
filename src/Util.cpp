@@ -440,7 +440,7 @@ float Util::GetClosestEdge(const b2Vec2 vec_a, GameObject* object)
 
 	const auto target_offset = b2Vec2(width * 0.5f, height * 0.5f);
 	const auto target_top_left = object->GetRigidBody()->GetPosition() - target_offset;
-	SDL_Rect rect = { static_cast<int>(target_top_left.x), static_cast<int>(target_top_left.y), object->GetWidth(), object->GetHeight() };
+	SDL_FRect rect = { static_cast<float>(target_top_left.x), static_cast<float>(target_top_left.y), object->GetWidth(), object->GetHeight() };
 
 	const b2Vec2 sides[4] = { { rect.x + rect.w / 2, rect.y }, // top
 						   { rect.x + rect.w / 2, rect.y + rect.h }, // bottom

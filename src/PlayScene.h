@@ -34,6 +34,7 @@ private:
 	std::vector<Projectile*> m_pProjVec;
 	bool m_playerFacingRight;
 	Background* m_pBackground;
+	b2Body* m_rigidBody;
 
 	// UI Items
 };

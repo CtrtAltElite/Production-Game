@@ -76,3 +76,11 @@ void EndScene::Start()
 
 	ImGuiWindowFrame::Instance().SetDefaultGuiFunction();
 }
+void EndScene::InitRigidBody()
+{
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_staticBody;
+	bodyDef.position.Set(0.0f, 0.0f);
+	bodyDef.enabled = true;
+	m_rigidBody = Game::Instance().world->CreateBody(&bodyDef);
+}

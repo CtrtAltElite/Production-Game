@@ -32,6 +32,7 @@ private:
 	bool m_isCentered = true;
 	int m_fontSize;
 	int m_fontStyle;
+	b2Body* m_rigidBody;
 
 	void BuildFontID();
 };

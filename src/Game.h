@@ -58,7 +58,7 @@ public:
 	[[nodiscard]] SDL_Window* GetWindow() const;
 
 	SDL_Rect camera = {0,0,1280,720};
-	b2World world;
+	b2World* world;
 private:
 	Game();
 	~Game();
@@ -68,7 +68,8 @@ private:
 	Uint32 m_frames;
 	float m_deltaTime{};
 	b2Vec2 m_mousePosition;
-	b2Vec2 m_gravity = {0.0f,-10.0f};
+	b2Vec2 m_gravity;
+	b2World m_theworld;
 	// scene variables
 	Scene* m_pCurrentScene;
 	SceneState m_currentSceneState;
