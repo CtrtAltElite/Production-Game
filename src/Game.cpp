@@ -11,20 +11,17 @@
 // Game functions - DO NOT REMOVE ***********************************************
 
 Game::Game() :
-	m_bRunning(true), m_frames(0), m_pCurrentScene(nullptr), m_currentSceneState(SceneState::NO_SCENE), m_pWindow(nullptr), m_gravity(0.0f, -10.0f), m_theworld(m_gravity)
+	m_bRunning(true), m_frames(0), m_pCurrentScene(nullptr), m_currentSceneState(SceneState::NO_SCENE), m_pWindow(nullptr)
 {
-
+	gravity.Set(0.0f, -10.0f);
+	world = new b2World(gravity);
 	srand(static_cast<unsigned>(time(nullptr)));  // random seed
 }
-
-Game::~Game()
-= default;
 
 
 void Game::Init()
 {
 	m_bRunning = true;
-	world = &m_theworld;
 }
 
 bool Game::Init(const char* title, const int x, const int y, const int width, const int height, const bool fullscreen)

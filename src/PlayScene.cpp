@@ -107,10 +107,7 @@ void PlayScene::HandleEvents()
 
 void PlayScene::Start()
 {
-	// Set GUI Title
-	m_guiTitle = "Play Scene";
-	m_ScreenHeight = 720;
-	m_ScreenWidth = 1280;
+
 	InitRigidBody();
 	// Player Sprite
 	m_pBackground = new Background();
@@ -122,7 +119,6 @@ void PlayScene::Start()
 	
 
 
-	ImGuiWindowFrame::Instance().SetGuiFunction(std::bind(&PlayScene::GUI_Function, this));
 }
 void PlayScene::InitRigidBody()
 {
@@ -131,31 +127,4 @@ void PlayScene::InitRigidBody()
 	bodyDef.position.Set(0.0f, 0.0f);
 	bodyDef.enabled = true;
 	m_rigidBody = Game::Instance().world->CreateBody(&bodyDef);
-}
-void PlayScene::GUI_Function() const
-{
-	// Always open with a NewFrame
-	ImGui::NewFrame();
-
-	// See examples by uncommenting the following - also look at imgui_demo.cpp in the IMGUI filter
-	//ImGui::ShowDemoWindow();
-	
-	ImGui::Begin("Your Window Title Goes Here", NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoMove);
-
-
-	static float float2[3] = {m_pPlayer->GetRigidBody()->GetPosition().x,m_pPlayer->GetRigidBody()->GetPosition().y};
-	if(ImGui::SliderFloat2("Player position", float2, 0.0f, 800.0f))
-	{
-		if(m_pPlayer->GetRigidBody()->GetPosition().x<float2[0])
-		{
-			m_pPlayer->SetAnimationState(PlayerAnimationState::PLAYER_RUN_LEFT);
-		}
-		if (m_pPlayer->GetRigidBody()->GetPosition().x > float2[0])
-		{
-			m_pPlayer->SetAnimationState(PlayerAnimationState::PLAYER_RUN_RIGHT);
-		}
-		m_pPlayer->GetRigidBody()->SetTransform(b2Vec2(float2[0], float2[1]), m_pPlayer->GetRigidBody()->GetAngle());
-	}
-	
-	ImGui::End();
 }

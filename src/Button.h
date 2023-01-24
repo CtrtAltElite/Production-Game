@@ -22,7 +22,7 @@ public:
 	void Draw() override;
 	void Update() override;
 	void Clean() override;
-	void InitRigidBody() override;
+	void InitRigidBody(b2Vec2 position);
 
 	// button setters
 	void SetAlpha(Uint8 alpha);

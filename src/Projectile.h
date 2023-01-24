@@ -13,7 +13,7 @@ public:
 	virtual void Draw() override;
 	virtual void Update() override;
 	virtual void Clean() override;
-	void InitRigidBody() override;
+	void InitRigidBody(b2Vec2 position) override;
 private:
 	int mouseX;
 	int mouseY;

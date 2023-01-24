@@ -21,7 +21,7 @@ public:
 	virtual void Clean() override;
 	virtual void HandleEvents() override;
 	virtual void Start() override;
-	virtual void InitRigidBody() override;
+	virtual void InitRigidBody();
 private:
 	// IMGUI Function
 	void GUI_Function() const;

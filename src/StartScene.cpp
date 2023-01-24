@@ -47,10 +47,12 @@ void StartScene::Start()
 {
 	const SDL_Color blue = { 0, 0, 255, 255 };
 	m_pStartLabel = new Label("START SCENE", "Consolas", 80, blue, b2Vec2(400.0f, 40.0f));
+	m_pStartLabel->InitRigidBody(b2Vec2(400.0f,40.0f));
 	m_pStartLabel->SetParent(this);
 	AddChild(m_pStartLabel);
 
 	m_pInstructionsLabel = new Label("Press 1 to Play", "Consolas", 40, blue, b2Vec2(400.0f, 120.0f));
+	m_pInstructionsLabel->InitRigidBody(b2Vec2(400.0f,120.0f));
 	m_pInstructionsLabel->SetParent(this);
 	AddChild(m_pInstructionsLabel);
 
@@ -58,7 +60,8 @@ void StartScene::Start()
 
 	// Start Button
 	m_pStartButton = new Button();
-	m_pStartButton->GetRigidBody()->SetTransform(b2Vec2(400.0f, 400.0f), GetRigidBody()->GetAngle());
+	m_pStartButton->InitRigidBody(b2Vec2(400.0f,400.0f));
+	
 
 	m_pStartButton->AddEventListener(Event::CLICK, [&]()-> void
 	{
@@ -77,7 +80,6 @@ void StartScene::Start()
 	});
 	AddChild(m_pStartButton);
 
-	ImGuiWindowFrame::Instance().SetDefaultGuiFunction();
 }
 void StartScene::InitRigidBody()
 {

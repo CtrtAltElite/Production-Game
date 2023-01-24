@@ -17,7 +17,7 @@ public:
 	virtual void Draw() override;
 	virtual void Update() override;
 	virtual void Clean() override;
-	virtual void InitRigidBody() override;
+	void InitRigidBody(b2Vec2 position);
 
 	void SetText(const std::string& new_text);
 	void SetColour(SDL_Color new_colour) const;

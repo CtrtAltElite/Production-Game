@@ -23,12 +23,9 @@ public:
 	virtual void Clean() = 0;
 
 	// getters for common variables
-	const b2Transform* GetTransform();
 
 	// getters and setters for physics properties
-	b2Body* GetRigidBody();
-
-	virtual void InitRigidBody() = 0;
+	
 
 	// getters and setters for game object properties
 	[[nodiscard]] int GetWidth() const;
@@ -45,17 +42,18 @@ public:
 	[[nodiscard]] bool IsVisible() const;
 
 	bool isColliding = false;
+	b2Body* GetRigidBody();
 
 private:
 	// rigid body component
-	b2Body* m_rigidBody;
+	
 
 
 	// size variables
 	int m_width;
 	int m_height;
 	GameObjectType m_type;
-
+	b2Body* m_rigidBody;
 	bool m_enabled;
 	bool m_visible;
 };

@@ -55,7 +55,7 @@ void EndScene::Start()
 
 	// Restart Button
 	m_pRestartButton = new Button("../Assets/textures/restartButton.png", "restartButton", GameObjectType::RESTART_BUTTON);
-	m_pRestartButton->GetRigidBody()->SetTransform(b2Vec2(400.0f, 400.0f), GetRigidBody()->GetAngle());
+	m_pRestartButton->InitRigidBody(b2Vec2(400.0f, 400.0f));
 	m_pRestartButton->AddEventListener(Event::CLICK, [&]()-> void
 	{
 		m_pRestartButton->SetActive(false);

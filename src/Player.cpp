@@ -11,7 +11,7 @@ Player::Player(): m_currentAnimationState(PlayerAnimationState::PLAYER_IDLE_RIGH
 		"spritesheet"); 
 
 	SetSpriteSheet(TextureManager::Instance().GetSpriteSheet("spritesheet"));
-	InitRigidBody();
+	InitRigidBody(b2Vec2(50.0f,50.0f));
 	// set frame width
 	SetWidth(53);
 
@@ -29,11 +29,11 @@ Player::Player(): m_currentAnimationState(PlayerAnimationState::PLAYER_IDLE_RIGH
 
 Player::~Player()
 = default;
-void Player::InitRigidBody()
+void Player::InitRigidBody(b2Vec2 position)
 {
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
-	bodyDef.position.Set(50.0f, 50.0f);
+	bodyDef.position.Set(position.x,position.y);
 	bodyDef.enabled = true;
 	m_rigidBody = Game::Instance().world->CreateBody(&bodyDef);
 }

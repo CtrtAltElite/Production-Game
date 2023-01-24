@@ -6,15 +6,13 @@ Label::Label(const std::string& text, const std::string& font_name, const int fo
 	m_fontColour(colour), m_fontName(font_name), m_text(text), m_isCentered(is_centered), m_fontSize(font_size), m_fontStyle(font_style)
 {
 	m_fontPath = "../Assets/fonts/" + font_name + ".ttf";
-	InitRigidBody();
 	BuildFontID();
-
 	FontManager::Instance().Load(m_fontPath, m_fontID, font_size, font_style);
 	FontManager::Instance().TextToTexture(text, m_fontID, m_fontID, colour);
 	const auto size = TextureManager::Instance().GetTextureSize(m_fontID);
 	SetWidth(static_cast<int>(size.x));
 	SetHeight(static_cast<int>(size.y));
-	GetRigidBody()->SetTransform(position, GetRigidBody()->GetAngle());
+	InitRigidBody(position);
 }
 
 Label::~Label()
@@ -74,11 +72,12 @@ void Label::BuildFontID()
 	m_fontID += "-";
 	m_fontID += m_text;
 }
-void Label::InitRigidBody()
+void Label::InitRigidBody(b2Vec2 position)
 {
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_staticBody;
-	bodyDef.position.Set(0.0f, 0.0f);
+	bodyDef.position.Set(position.x, position.y);
 	bodyDef.enabled = true;
 	m_rigidBody = Game::Instance().world->CreateBody(&bodyDef);
 }
+

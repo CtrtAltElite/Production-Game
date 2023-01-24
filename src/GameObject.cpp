@@ -8,15 +8,6 @@ GameObject::GameObject() :
 GameObject::~GameObject()
 = default;
 
- const b2Transform* GameObject::GetTransform()
-{
-	return &m_rigidBody->GetTransform();
-}
-
-b2Body* GameObject::GetRigidBody()
-{
-	return m_rigidBody;
-}
 
 int GameObject::GetWidth() const
 {
@@ -31,6 +22,10 @@ int GameObject::GetHeight() const
 GameObjectType GameObject::GetType() const
 {
 	return m_type;
+}
+b2Body* GameObject::GetRigidBody()
+{
+	return m_rigidBody;
 }
 
 void GameObject::SetWidth(const int new_width)

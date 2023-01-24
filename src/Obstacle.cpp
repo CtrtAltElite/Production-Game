@@ -1,6 +1,7 @@
 #include "Obstacle.h"
 
 
+#include "Game.h"
 #include "SoundManager.h"
 #include "TextureManager.h"
 
@@ -11,8 +12,8 @@ Obstacle::Obstacle()
 	const auto size = TextureManager::Instance().GetTextureSize("obstacle");
 	SetWidth(static_cast<int>(size.x));
 	SetHeight(static_cast<int>(size.y));
-
-	GetRigidBody()->SetTransform(b2Vec2(300.0f, 300.0f), GetRigidBody()->GetAngle());
+	b2Vec2 position = { 300.0f,300.0f };
+	InitRigidBody(position);
 
 	SetType(GameObjectType::OBSTACLE);
 	isColliding = false;
@@ -34,4 +35,12 @@ void Obstacle::Update()
 
 void Obstacle::Clean()
 {
+}
+void Obstacle::InitRigidBody(b2Vec2 position)
+{
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_staticBody;
+	bodyDef.position.Set(position.x, position.y);
+	bodyDef.enabled = true;
+	m_rigidBody = Game::Instance().world->CreateBody(&bodyDef);
 }

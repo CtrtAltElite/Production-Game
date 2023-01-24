@@ -18,7 +18,7 @@ public:
 	virtual void Clean() override;
 	virtual void HandleEvents() override;
 	virtual void Start() override;
-	virtual void InitRigidBody() override;
+	virtual void InitRigidBody();
 	
 private:
 	b2Body* m_rigidBody;
