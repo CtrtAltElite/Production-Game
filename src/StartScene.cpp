@@ -56,7 +56,7 @@ void StartScene::Start()
 	m_pInstructionsLabel->SetParent(this);
 	AddChild(m_pInstructionsLabel);
 
-	InitRigidBody();
+	InitRigidBody(b2Vec2(0.0f,0.0f));
 
 	// Start Button
 	m_pStartButton = new Button();
@@ -81,12 +81,12 @@ void StartScene::Start()
 	AddChild(m_pStartButton);
 
 }
-void StartScene::InitRigidBody()
+void StartScene::InitRigidBody(b2Vec2 position)
 {
-	b2BodyDef bodyDef;
-	bodyDef.type = b2_staticBody;
-	bodyDef.position.Set(0.0f, 0.0f);
-	bodyDef.enabled = true;
+	bodyDef.position.Set(position.x, position.y);
 	m_rigidBody = Game::Instance().world->CreateBody(&bodyDef);
 }
-
+b2Body* StartScene::GetRigidBody()
+{
+	return m_rigidBody;
+}

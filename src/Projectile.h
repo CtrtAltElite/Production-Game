@@ -14,7 +14,9 @@ public:
 	virtual void Update() override;
 	virtual void Clean() override;
 	void InitRigidBody(b2Vec2 position) override;
+	b2Body* GetRigidBody() override;
 private:
+	b2BodyDef bodyDef;
 	int mouseX;
 	int mouseY;
 	float m_angle;

@@ -75,9 +75,12 @@ void Button::SetActive(const bool value)
 }
 void Button::InitRigidBody(b2Vec2 position)
 {
-	b2BodyDef bodyDef;
 	bodyDef.type = b2_staticBody;
 	bodyDef.position.Set(position.x,position.y);
 	bodyDef.enabled = true;
 	m_rigidBody = Game::Instance().world->CreateBody(&bodyDef);
+}
+b2Body* Button::GetRigidBody()
+{
+	return m_rigidBody;
 }

@@ -75,6 +75,7 @@
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)Intermediate\$(Configuration)\</IntDir>
     <SourcePath>$(VC_SourcePath)</SourcePath>
+    <LibraryPath>.\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -114,7 +115,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)include\SDL\include;$(SolutionDir)include\SDL_image\include;$(SolutionDir)include\SDL_mixer\include;$(SolutionDir)include\SDL2_ttf\include;%(AdditionalIncludeDirectories);$(SolutionDir)include\GL;$(SolutionDir)include\GLEW;$(SolutionDir)include\GLUT;$(SolutionDir)include\IL;$(SolutionDir)include\IMGUI;$(SolutionDir)include\IMGUI_SDL;$(SolutionDir)include\GLM</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)include\SDL\include;$(SolutionDir)include\SDL_image\include;$(SolutionDir)include\SDL_mixer\include;$(SolutionDir)include\SDL2_ttf\include;%(AdditionalIncludeDirectories);$(SolutionDir)include\GL;$(SolutionDir)include\GLEW;$(SolutionDir)include\GLUT;$(SolutionDir)include\IL;$(SolutionDir)include\IMGUI;$(SolutionDir)include\IMGUI_SDL;$(SolutionDir)include\GLM;$(SolutionDir)src;$(SolutionDir)include\box2d</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -177,7 +178,9 @@
     <ClCompile Include="..\src\DisplayObject.cpp" />
     <ClCompile Include="..\src\EndScene.cpp" />
     <ClCompile Include="..\src\FontManager.cpp" />
-    <ClCompile Include="..\src\Game.cpp" />
+    <ClCompile Include="..\src\Game.cpp">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)include\box2d;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="..\src\GameController.cpp" />
     <ClCompile Include="..\src\GameObject.cpp" />
     <ClCompile Include="..\src\Label.cpp" />

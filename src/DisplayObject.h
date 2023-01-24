@@ -17,6 +17,8 @@ public:
 	virtual void Clean() override = 0;
 	[[nodiscard]] Scene* GetParent() const;
 	void SetParent(Scene* parent);
+	virtual void InitRigidBody(b2Vec2 position) override=0;
+	virtual b2Body* GetRigidBody() override= 0;
 
 	/*
 	 * Gets the index of the layer, layers are groups of objects that share a layer order index.

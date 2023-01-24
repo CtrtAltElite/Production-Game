@@ -18,7 +18,7 @@ public:
 	virtual void Update() override;
 	virtual void Clean() override;
 	void InitRigidBody(b2Vec2 position) override;
-
+	b2Body*GetRigidBody() override;
 	// setters
 	void SetAnimationState(PlayerAnimationState new_state);
 	float m_speed;
@@ -26,7 +26,7 @@ private:
 	bool isColliding;
 	b2Body* m_rigidBody;
 	void BuildAnimations();
-
+	b2BodyDef bodyDef;
 	PlayerAnimationState m_currentAnimationState;
 	float m_maxvelo;
 	float m_velodecay;

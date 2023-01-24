@@ -31,7 +31,6 @@ Player::~Player()
 = default;
 void Player::InitRigidBody(b2Vec2 position)
 {
-	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(position.x,position.y);
 	bodyDef.enabled = true;
@@ -164,4 +163,8 @@ void Player::BuildAnimations()
 
 	SetAnimation(run_animation);
 	
+}
+b2Body* Player::GetRigidBody()
+{
+	return m_rigidBody;
 }

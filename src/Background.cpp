@@ -10,7 +10,7 @@ Background::Background()
 	SetWidth(static_cast<int>(size.x));
 	SetHeight(static_cast<int>(size.y));
 	SetType(GameObjectType::BACKGROUND);
-	InitRigidBody();
+	InitRigidBody(b2Vec2(0.0f,0.0f));
 }
 Background::~Background()
 = default;
@@ -39,12 +39,13 @@ void Background::Clean()
 {
 	
 }
-void Background::InitRigidBody()
+void Background::InitRigidBody(b2Vec2 position)
 {
-	b2BodyDef bodyDef;
-	bodyDef.type = b2_staticBody;
-	bodyDef.position.Set(0.0f, 0.0f);
-	bodyDef.enabled = true;
+	bodyDef.type = b2_kinematicBody;
+	bodyDef.position.Set(position.x, position.y);
 	m_rigidBody = Game::Instance().world->CreateBody(&bodyDef);
 }
-
+b2Body* Background::GetRigidBody()
+{
+	return m_rigidBody;
+}

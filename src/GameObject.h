@@ -21,7 +21,8 @@ public:
 
 	// remove anything that needs to be deleted
 	virtual void Clean() = 0;
-
+	virtual void InitRigidBody(b2Vec2 position)=0;
+	virtual b2Body* GetRigidBody() =0;
 	// getters for common variables
 
 	// getters and setters for physics properties
@@ -42,7 +43,7 @@ public:
 	[[nodiscard]] bool IsVisible() const;
 
 	bool isColliding = false;
-	b2Body* GetRigidBody();
+	
 
 private:
 	// rigid body component

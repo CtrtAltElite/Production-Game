@@ -108,7 +108,7 @@ void PlayScene::HandleEvents()
 void PlayScene::Start()
 {
 
-	InitRigidBody();
+	InitRigidBody(b2Vec2(0.0f,0.0f));
 	// Player Sprite
 	m_pBackground = new Background();
 	AddChild(m_pBackground);
@@ -120,11 +120,12 @@ void PlayScene::Start()
 
 
 }
-void PlayScene::InitRigidBody()
+void PlayScene::InitRigidBody(b2Vec2 position)
 {
-	b2BodyDef bodyDef;
-	bodyDef.type = b2_staticBody;
-	bodyDef.position.Set(0.0f, 0.0f);
-	bodyDef.enabled = true;
+	bodyDef.position.Set(position.x, position.y);
 	m_rigidBody = Game::Instance().world->CreateBody(&bodyDef);
+}
+b2Body* PlayScene::GetRigidBody()
+{
+	return m_rigidBody;
 }
