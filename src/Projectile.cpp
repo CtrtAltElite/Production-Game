@@ -38,16 +38,16 @@ void Projectile::Start()
 {
 	InitRigidBody();
 	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(GetWidth()/3, GetHeight()/3);
+	dynamicBox.SetAsBox(GetWidth()/2, GetHeight()/2);
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &dynamicBox;
-	fixtureDef.density = 0.5f;
-	fixtureDef.friction = 1.0f;
+	fixtureDef.density = 0.1f;
+	fixtureDef.friction = 0.1f;
 	GetRigidBody()->CreateFixture(&fixtureDef);
 	
 	std::cout << m_rigidBody->GetPosition().x << std::endl << m_rigidBody->GetPosition().y << std::endl;
-	GetRigidBody()->ApplyForceToCenter({ m_vector.x * 15000,m_vector.y * 15000 }, true);
-	m_player->GetRigidBody()->ApplyForceToCenter({ -m_vector.x * 10000.0f, -m_vector.y * 10000.0f }, true);
+	GetRigidBody()->ApplyForceToCenter({ m_vector.x * 100000,m_vector.y * 100000 }, true);
+	m_player->GetRigidBody()->ApplyForceToCenter({ -m_vector.x * 20000.0f, -m_vector.y * 20000.0f }, true);
 }
 
 void Projectile::Update()

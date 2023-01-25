@@ -10,19 +10,6 @@ Enemy::~Enemy()
 {
 	
 }
-void Enemy::Draw()
-{
-	
-}
-void Enemy::Update()
-{
-	
-}
-void Enemy::Clean()
-{
-	
-}
-void Enemy::BuildAnimations()
-{
-	
-}
+
+
+
