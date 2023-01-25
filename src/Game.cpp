@@ -6,6 +6,7 @@
 #include "Renderer.h"
 #include "EventManager.h"
 #include "TextureManager.h"
+#include "WorldManager.h"
 
 static void CreateBody()
 {
@@ -105,8 +106,9 @@ bool Game::IsRunning() const
 }
 
 
-b2Vec2 Game::GetMousePosition() const
+glm::ivec2 Game::GetMousePosition()
 {
+	SDL_GetMouseState(&m_mousePosition.x,&m_mousePosition.y);
 	return m_mousePosition;
 }
 
@@ -201,6 +203,7 @@ void Game::Render() const
 void Game::Update() const
 {
 	m_pCurrentScene->Update();
+	WorldManager::Instance().GetWorld()->Step(timeStep, velocityIterations, positionIterations);
 }
 
 void Game::Clean() const

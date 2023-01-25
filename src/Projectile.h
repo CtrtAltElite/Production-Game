@@ -2,6 +2,8 @@
 #ifndef __PROJECTILE__
 #define __PROJECTILE__
 
+#include <glm/vec2.hpp>
+
 #include "Player.h"
 #include "Sprite.h"
 
@@ -13,13 +15,14 @@ public:
 	virtual void Draw() override;
 	virtual void Update() override;
 	virtual void Clean() override;
-	void InitRigidBody() override;
+	void InitRigidBody()override;
 	b2Body* GetRigidBody() override;
+	void Start();
 private:
-	int mouseX;
-	int mouseY;
 	float m_angle;
-	float m_maxvelo;
+	b2Vec2 m_vector;
 	b2Body* m_rigidBody;
+	Player* m_player;
+	glm::ivec2 m_mousepos;
 };
 #endif /* defined (__PROJECTILE__)*/

@@ -29,10 +29,10 @@ public:
 	
 
 	// getters and setters for game object properties
-	[[nodiscard]] int GetWidth() const;
-	[[nodiscard]] int GetHeight() const;
-	void SetWidth(int new_width);
-	void SetHeight(int new_height);
+	[[nodiscard]] float GetWidth() const;
+	[[nodiscard]] float GetHeight() const;
+	void SetWidth(float new_width);
+	void SetHeight(float new_height);
 	[[nodiscard]] GameObjectType GetType() const;
 	void SetType(GameObjectType new_type);
 
@@ -51,8 +51,8 @@ private:
 
 
 	// size variables
-	int m_width;
-	int m_height;
+	float m_width;
+	float m_height;
 	GameObjectType m_type;
 	b2Body* m_rigidBody;
 	bool m_enabled;

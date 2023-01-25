@@ -4,7 +4,6 @@
 
 #include <box2d.h>
 
-#include "PlayerAnimationState.h"
 #include "Sprite.h"
 
 class Player final : public Sprite
@@ -19,16 +18,10 @@ public:
 	virtual void Clean() override;
 	void InitRigidBody() override;
 	b2Body*GetRigidBody() override;
-	// setters
-	void SetAnimationState(PlayerAnimationState new_state);
-	float m_speed;
+	void MoveAtMouse();
 private:
 	bool isColliding;
 	b2Body* m_rigidBody;
-	void BuildAnimations();
-	PlayerAnimationState m_currentAnimationState;
-	float m_maxvelo;
-	float m_velodecay;
 };
 
 #endif /* defined (__PLAYER__) */

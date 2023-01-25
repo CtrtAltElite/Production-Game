@@ -95,7 +95,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;FREEGLUT_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)include\SDL\include;$(SolutionDir)include\SDL_image\include;$(SolutionDir)include\SDL_mixer\include;$(SolutionDir)include\SDL2_ttf\include;%(AdditionalIncludeDirectories);$(SolutionDir)include\GL;$(SolutionDir)include\GLEW;$(SolutionDir)include\GLUT;$(SolutionDir)include\IL;$(SolutionDir)include\IMGUI;$(SolutionDir)include\IMGUI_SDL;$(SolutionDir)include\GLM;$(SolutionDir)src;$(SolutionDir)include\box2d</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)include\SDL\include;$(SolutionDir)include\SDL_image\include;$(SolutionDir)include\SDL_mixer\include;$(SolutionDir)include\SDL2_ttf\include;%(AdditionalIncludeDirectories);$(SolutionDir)include\GL;$(SolutionDir)include\GLEW;$(SolutionDir)include\GLUT;$(SolutionDir)include\IL;$(SolutionDir)include\IMGUI;$(SolutionDir)include\IMGUI_SDL;$(SolutionDir)include\GLM;$(SolutionDir)src;$(SolutionDir)include\box2d;$(SolutionDir)debug\lib;$(SolutionDir)debug</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
@@ -169,6 +169,7 @@
     <ClCompile Include="..\src\Agent.cpp" />
     <ClCompile Include="..\src\Background.cpp" />
     <ClCompile Include="..\src\Button.cpp" />
+    <ClCompile Include="..\src\Camera.cpp" />
     <ClCompile Include="..\src\CollisionManager.cpp" />
     <ClCompile Include="..\src\ImGuiWindowFrame.cpp" />
     <ClCompile Include="..\src\NavigationObject.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="..\src\Animation.h" />
     <ClInclude Include="..\src\Background.h" />
     <ClInclude Include="..\src\Button.h" />
+    <ClInclude Include="..\src\Camera.h" />
     <ClInclude Include="..\src\CollisionManager.h" />
     <ClInclude Include="..\src\CollisionShape.h" />
     <ClInclude Include="..\src\Config.h" />

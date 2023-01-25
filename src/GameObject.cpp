@@ -9,12 +9,12 @@ GameObject::~GameObject()
 = default;
 
 
-int GameObject::GetWidth() const
+float GameObject::GetWidth() const
 {
 	return m_width;
 }
 
-int GameObject::GetHeight() const
+float GameObject::GetHeight() const
 {
 	return m_height;
 }
@@ -28,12 +28,12 @@ b2Body* GameObject::GetRigidBody()
 	return m_rigidBody;
 }
 
-void GameObject::SetWidth(const int new_width)
+void GameObject::SetWidth(const float new_width)
 {
 	m_width = new_width;
 }
 
-void GameObject::SetHeight(const int new_height)
+void GameObject::SetHeight(const float new_height)
 {
 	m_height = new_height;
 }
