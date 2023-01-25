@@ -13,7 +13,6 @@ Obstacle::Obstacle()
 	const auto size = TextureManager::Instance().GetTextureSize("obstacle");
 	SetWidth(static_cast<int>(size.x));
 	SetHeight(static_cast<int>(size.y));
-	b2Vec2 position = { 300.0f,300.0f };
 	InitRigidBody();
 
 	SetType(GameObjectType::OBSTACLE);
@@ -39,7 +38,10 @@ void Obstacle::Clean()
 }
 void Obstacle::InitRigidBody()
 {
-	m_rigidBody = WorldManager::Instance().CreateRigidBody({ 400.0f,400.0f });
+	b2BodyDef bodyDef;
+	bodyDef.position.Set(400.0f, 400.0f);
+	bodyDef.enabled = true;
+	m_rigidBody = WorldManager::Instance().GetWorld()->CreateBody(&bodyDef);
 }
 b2Body* Obstacle::GetRigidBody()
 {

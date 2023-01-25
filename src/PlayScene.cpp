@@ -13,6 +13,8 @@
 PlayScene::PlayScene()
 {
 	PlayScene::Start();
+	m_ScreenWidth = 1280;
+	m_ScreenHeight = 720;
 }
 
 PlayScene::~PlayScene()
@@ -27,9 +29,8 @@ void PlayScene::Draw()
 void PlayScene::Update()
 {
 	UpdateDisplayList();
-	m_angle = (atan2((m_pPlayer->GetRigidBody()->GetPosition().y - Game::Instance().GetMousePosition().y) - Camera::Instance().GetPosition().y, (m_pPlayer->GetRigidBody()->GetPosition().x - Game::Instance().GetMousePosition().x) - Camera::Instance().GetPosition().x));
-	//b2Vec2 camPos = { (m_pPlayer->GetRigidBody()->GetPosition().x + m_pPlayer->GetWidth() / 2) - m_ScreenWidth / 2 ,(m_pPlayer->GetRigidBody()->GetPosition().y + m_pPlayer->GetHeight() / 2) - m_ScreenHeight / 2 };
-	b2Vec2 camPos = { 0.0,0.0 };
+	b2Vec2 camPos = { (m_pPlayer->GetRigidBody()->GetPosition().x + m_pPlayer->GetWidth() / 2) - m_ScreenWidth / 2 ,(m_pPlayer->GetRigidBody()->GetPosition().y + m_pPlayer->GetHeight() / 2) - m_ScreenHeight / 2 };
+	//b2Vec2 camPos = { 0.0,0.0 };
 	Camera::Instance().SetPosition(camPos);
 }
 
@@ -85,7 +86,6 @@ void PlayScene::Start()
 	AddChild(m_pBackground);
 	m_pPlayer = new Player();
 	AddChild(m_pPlayer);
-	m_playerFacingRight = true;
 
 	
 
@@ -93,7 +93,11 @@ void PlayScene::Start()
 }
 void PlayScene::InitRigidBody()
 {
-	m_rigidBody = WorldManager::Instance().CreateRigidBody({ 0.0f,0.0f });
+	b2BodyDef bodyDef;
+	bodyDef.position.Set(0.0f, 0.0f);
+	bodyDef.enabled = true;
+	bodyDef.type = b2_kinematicBody;
+	m_rigidBody = WorldManager::Instance().GetWorld()->CreateBody(&bodyDef);
 }
 b2Body* PlayScene::GetRigidBody()
 {

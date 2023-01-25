@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "Game.h"
 #include "TextureManager.h"
+#include "Util.h"
 #include "WorldManager.h"
 
 Player::Player()
@@ -29,21 +30,25 @@ Player::~Player()
 = default;
 void Player::InitRigidBody()
 {
-	m_rigidBody = WorldManager::Instance().CreateDynamicRigidBody({ 500.0f,500.0f });
+	b2BodyDef bodyDef;
+	bodyDef.position.Set(500.0f, 500.0f);
+	bodyDef.type = b2_dynamicBody;
+	bodyDef.enabled = true;
+	m_rigidBody = WorldManager::Instance().GetWorld()->CreateBody(&bodyDef);
 }
 
 void Player::Draw()
 {
 	// alias for x and y
-	const auto x = static_cast<int>(m_rigidBody->GetPosition().x- Camera::Instance().GetPosition().x);
-	const auto y = static_cast<int>(m_rigidBody->GetPosition().y-Camera::Instance().GetPosition().y);
+	float x = m_rigidBody->GetPosition().x - Camera::Instance().GetPosition().x;
+	float y = m_rigidBody->GetPosition().y - Camera::Instance().GetPosition().y;
 	// draw the player according to animation state
-	TextureManager::Instance().Draw("player", m_rigidBody->GetPosition(), 0, 255, true);
+	TextureManager::Instance().Draw("player", {x,y}, 0, 255, true);
 }
 
 void Player::Update()
 {
-	
+	Util::Clamp(GetRigidBody()->GetLinearVelocity(), m_maxLinearVelo); //doesnt work
 }
 
 void Player::Clean()

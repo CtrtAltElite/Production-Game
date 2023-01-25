@@ -47,6 +47,7 @@ void Projectile::Start()
 	
 	std::cout << m_rigidBody->GetPosition().x << std::endl << m_rigidBody->GetPosition().y << std::endl;
 	GetRigidBody()->ApplyForceToCenter({ m_vector.x * 15000,m_vector.y * 15000 }, true);
+	m_player->GetRigidBody()->ApplyForceToCenter({ -m_vector.x * 10000.0f, -m_vector.y * 10000.0f }, true);
 }
 
 void Projectile::Update()
@@ -61,7 +62,12 @@ void Projectile::Clean()
 
 void Projectile::InitRigidBody()
 {
-	m_rigidBody = WorldManager::Instance().CreateBulletRigidBody({ m_player->GetRigidBody()->GetPosition().x+m_vector.x,m_player->GetRigidBody()->GetPosition().y+m_vector.y});
+	b2BodyDef bodyDef;
+	bodyDef.position.Set(m_player->GetRigidBody()->GetPosition().x + m_vector.x, m_player->GetRigidBody()->GetPosition().y + m_vector.y);
+	bodyDef.enabled = true;
+	bodyDef.bullet = true;
+	bodyDef.type = b2_dynamicBody;
+	m_rigidBody = WorldManager::Instance().GetWorld()->CreateBody(&bodyDef);
 }
 b2Body* Projectile::GetRigidBody()
 {

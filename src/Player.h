@@ -22,6 +22,7 @@ public:
 private:
 	bool isColliding;
 	b2Body* m_rigidBody;
+	float m_maxLinearVelo=0.0f; //doesnt work
 };
 
 #endif /* defined (__PLAYER__) */

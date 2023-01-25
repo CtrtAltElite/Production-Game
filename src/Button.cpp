@@ -76,7 +76,11 @@ void Button::SetActive(const bool value)
 }
 void Button::InitRigidBody()
 {
-	m_rigidBody = WorldManager::Instance().CreateRigidBody({400.0f,400.0f});
+	b2BodyDef bodyDef;
+	bodyDef.position.Set(400.0f, 400.0f);
+	bodyDef.enabled = true;
+	bodyDef.type = b2_kinematicBody;
+	m_rigidBody = WorldManager::Instance().GetWorld()->CreateBody(&bodyDef);
 }
 b2Body* Button::GetRigidBody()
 {

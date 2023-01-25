@@ -29,11 +29,9 @@ private:
 	std::string m_guiTitle;
 	int m_ScreenHeight; //probably already global constants
 	int m_ScreenWidth;
-	float m_angle;
 	Player* m_pPlayer;
 	Projectile* m_pProjectile;
 	std::vector<Projectile*> m_pProjVec;
-	bool m_playerFacingRight;
 	Background* m_pBackground;
 	b2Body* m_rigidBody;
 

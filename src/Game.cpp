@@ -204,6 +204,7 @@ void Game::Update() const
 {
 	m_pCurrentScene->Update();
 	WorldManager::Instance().GetWorld()->Step(timeStep, velocityIterations, positionIterations);
+	WorldManager::Instance().GetWorld()->ClearForces();
 }
 
 void Game::Clean() const

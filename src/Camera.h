@@ -13,6 +13,6 @@ public:
 	void SetPosition(b2Vec2 pos) { m_position = pos; }
 	void SetSize(b2Vec2 size) { m_size = size; }
 private:
-	b2Vec2 m_position;
-	b2Vec2 m_size;
+	b2Vec2 m_position={1280/2,720/2};
+	b2Vec2 m_size{1280,720};
 };

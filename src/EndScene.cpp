@@ -79,7 +79,11 @@ void EndScene::Start()
 }
 void EndScene::InitRigidBody()
 {
-	m_rigidBody = WorldManager::Instance().CreateRigidBody({ 0.0f,0.0f });
+	b2BodyDef bodyDef;
+	bodyDef.position.Set(0.0f, 0.0f);
+	bodyDef.enabled = true;
+	bodyDef.type = b2_kinematicBody;
+	m_rigidBody = WorldManager::Instance().GetWorld()->CreateBody(&bodyDef);
 }
 b2Body* EndScene::GetRigidBody()
 {
