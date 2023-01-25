@@ -22,8 +22,8 @@ Background::~Background()
 void Background::Draw()
 {
 	// alias for x and y
-	const auto x = static_cast<int>(m_rigidBody->GetPosition().x - Camera::Instance().GetPosition().x);
-	const auto y = static_cast<int>(m_rigidBody->GetPosition().y - Camera::Instance().GetPosition().y);
+	const auto x = static_cast<int>(m_rigidBody->GetPosition().x);
+	const auto y = static_cast<int>(m_rigidBody->GetPosition().y);
 	for (int i =-10 ;i<10;i++)
 	{
 		for(int p = -10; p<10; p++)

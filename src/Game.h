@@ -56,6 +56,8 @@ public:
 	void ChangeSceneState(SceneState new_state);
 
 	[[nodiscard]] SDL_Window* GetWindow() const;
+	int GetWindowWidth() const { return m_ScreenWidth; }
+	int GetWindowHeight() const { return m_ScreenHeight; }
 
 	
 private:
@@ -72,6 +74,8 @@ private:
 	float timeStep = 1.0f / 60.f;
 	int32 velocityIterations = 10;
 	int32 positionIterations = 8;
+	int m_ScreenWidth;
+	int m_ScreenHeight;
 	
 	
 	// storage structures

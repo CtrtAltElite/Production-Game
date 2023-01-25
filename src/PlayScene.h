@@ -15,7 +15,6 @@ public:
 	PlayScene();
 	~PlayScene() override;
 
-	// Scene LifeCycle Functions
 	virtual void Draw() override;
 	virtual void Update() override;
 	virtual void Clean() override;
@@ -24,7 +23,6 @@ public:
 	virtual void InitRigidBody() override;
 	b2Body* GetRigidBody() override;
 private:
-	// IMGUI Function
 	void GUI_Function() const;
 	std::string m_guiTitle;
 	int m_ScreenHeight; //probably already global constants
@@ -35,7 +33,6 @@ private:
 	Background* m_pBackground;
 	b2Body* m_rigidBody;
 
-	// UI Items
 };
 
 #endif /* defined (__PLAY_SCENE__) */

@@ -3,6 +3,7 @@
 #define __PLAYER__
 
 #include <box2d.h>
+#include <glm/vec2.hpp>
 
 #include "Sprite.h"
 
@@ -19,8 +20,12 @@ public:
 	void InitRigidBody() override;
 	b2Body*GetRigidBody() override;
 	void MoveAtMouse();
+	void RotateToMouse();
 private:
-	bool isColliding;
+	glm::ivec2 m_mousePos;
+	float m_angleToMouse;
+	b2Vec2 m_lookTarget;
+	bool m_isColliding=false;
 	b2Body* m_rigidBody;
 	float m_maxLinearVelo=0.0f; //doesnt work
 };

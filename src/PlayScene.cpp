@@ -30,7 +30,6 @@ void PlayScene::Update()
 {
 	UpdateDisplayList();
 	b2Vec2 camPos = { (m_pPlayer->GetRigidBody()->GetPosition().x + m_pPlayer->GetWidth() / 2) - m_ScreenWidth / 2 ,(m_pPlayer->GetRigidBody()->GetPosition().y + m_pPlayer->GetHeight() / 2) - m_ScreenHeight / 2 };
-	//b2Vec2 camPos = { 0.0,0.0 };
 	Camera::Instance().SetPosition(camPos);
 }
 

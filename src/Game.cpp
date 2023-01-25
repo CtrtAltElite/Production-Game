@@ -29,7 +29,8 @@ void Game::Init()
 bool Game::Init(const char* title, const int x, const int y, const int width, const int height, const bool fullscreen)
 {
 	auto flags = 0;
-
+	m_ScreenHeight = height;
+	m_ScreenWidth = width;
 	if (fullscreen)
 	{
 		flags = SDL_WINDOW_FULLSCREEN;
@@ -87,7 +88,6 @@ bool Game::Init(const char* title, const int x, const int y, const int width, co
 		std::cout << "SDL init failure" << std::endl;
 		return false; //SDL could not initialize
 	}
-
 	std::cout << "init success" << std::endl;
 	m_bRunning = true; // everything initialized successfully - start the main loop
 

@@ -15,8 +15,8 @@ Projectile::Projectile(Player* player)
 	m_mousepos = Game::Instance().GetMousePosition();
 	isColliding = false;
 	m_player = player;
-	m_angle = (atan2((m_player->GetRigidBody()->GetPosition().y - m_mousepos.y) - Camera::Instance().GetPosition().y, (m_player->GetRigidBody()->GetPosition().x - m_mousepos.x) - Camera::Instance().GetPosition().x));
-	m_vector = { -cos(m_angle) * 50,-sin(m_angle) * 50 };
+	m_angle = player->GetRigidBody()->GetAngle();
+	m_vector = { cos(m_angle) * 50,sin(m_angle) * 50 };
 	Start();
 	
 	
@@ -30,8 +30,6 @@ void Projectile::Draw()
 {
 	// draw the target
 	b2Vec2 position = GetRigidBody()->GetPosition();
-	position.x -= Camera::Instance().GetPosition().x;
-	position.y -= Camera::Instance().GetPosition().y;
 	TextureManager::Instance().Draw("projectile", position, 0, 180, true);
 }
 void Projectile::Start()
@@ -52,12 +50,16 @@ void Projectile::Start()
 
 void Projectile::Update()
 {
-	
+	b2Vec2 pos = GetRigidBody()->GetPosition();
+	if (pos.x<-deleteBuffer || pos.x>Game::Instance().GetWindowWidth() + deleteBuffer || pos.y<-deleteBuffer || pos.y>Game::Instance().GetWindowHeight() + deleteBuffer)
+	{
+		m_deleteMe = true;
+		//std::cout << "Projectile set to delete" << std::endl;
+	}
 	
 }
 void Projectile::Clean()
 {
-	
 }
 
 void Projectile::InitRigidBody()
