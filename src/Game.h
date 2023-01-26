@@ -19,6 +19,7 @@
 #include "EndScene.h"
 
 #include "Config.h"
+#include "b2_draw.h"
 
 #include "ImGuiWindowFrame.h"
 
@@ -58,7 +59,6 @@ public:
 	[[nodiscard]] SDL_Window* GetWindow() const;
 	int GetWindowWidth() const { return m_ScreenWidth; }
 	int GetWindowHeight() const { return m_ScreenHeight; }
-
 	
 private:
 	Game();
@@ -76,6 +76,7 @@ private:
 	int32 positionIterations = 8;
 	int m_ScreenWidth;
 	int m_ScreenHeight;
+	
 	
 	
 	// storage structures

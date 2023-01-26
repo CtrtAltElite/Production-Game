@@ -12,11 +12,10 @@ Projectile::Projectile(Player* player)
 	const auto size = TextureManager::Instance().GetTextureSize("projectile");
 	SetWidth(static_cast<int>(size.x));
 	SetHeight(static_cast<int>(size.y));
-	m_mousepos = Game::Instance().GetMousePosition();
 	isColliding = false;
 	m_player = player;
 	m_angle = player->GetRigidBody()->GetAngle();
-	m_vector = { cos(m_angle) * 50,sin(m_angle) * 50 };
+	m_vector = { cos(m_angle) * 65,sin(m_angle) * 65 };
 	Start();
 	
 	
@@ -29,8 +28,7 @@ Projectile::Projectile(Player* player)
 void Projectile::Draw()
 {
 	// draw the target
-	b2Vec2 position = GetRigidBody()->GetPosition();
-	TextureManager::Instance().Draw("projectile", position, 0, 180, true);
+	TextureManager::Instance().Draw("projectile", Camera::Instance().CameraDisplace(m_rigidBody->GetPosition()), 0, 180, true);
 }
 void Projectile::Start()
 {

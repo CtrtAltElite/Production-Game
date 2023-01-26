@@ -20,11 +20,11 @@ public:
 	void Start();
 private:
 	int deleteBuffer = 200.0f;
+	float m_damage;
 	float m_angle;
 	b2Vec2 m_vector;
 	b2Body* m_rigidBody;
 	Player* m_player;
-	glm::ivec2 m_mousepos;
 	bool m_deleteMe = false;
 };
 #endif /* defined (__PROJECTILE__)*/

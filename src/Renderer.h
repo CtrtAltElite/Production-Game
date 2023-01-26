@@ -3,6 +3,7 @@
 #define __RENDERER__
 #include <SDL.h>
 #include "Config.h"
+#include "box2d.h"
 
 /* Singleton */
 class Renderer

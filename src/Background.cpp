@@ -22,13 +22,12 @@ Background::~Background()
 void Background::Draw()
 {
 	// alias for x and y
-	const auto x = static_cast<int>(m_rigidBody->GetPosition().x);
-	const auto y = static_cast<int>(m_rigidBody->GetPosition().y);
+	b2Vec2 position = Camera::Instance().CameraDisplace(m_rigidBody->GetPosition());
 	for (int i =-10 ;i<10;i++)
 	{
 		for(int p = -10; p<10; p++)
 		{
-			TextureManager::Instance().Draw("background", x+GetHeight()*i, y+GetWidth()*p, 90);
+			TextureManager::Instance().Draw("background", position.x+GetHeight()*i, position.y+GetWidth()*p, 90);
 		}
 	}
 	

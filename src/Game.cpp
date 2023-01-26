@@ -7,7 +7,6 @@
 #include "EventManager.h"
 #include "TextureManager.h"
 #include "WorldManager.h"
-
 static void CreateBody()
 {
 }
@@ -224,5 +223,4 @@ void Game::HandleEvents() const
 {
 	m_pCurrentScene->HandleEvents();
 }
-
 //documentation says doesnt work during callbacks? probably has something to do with why it wont work

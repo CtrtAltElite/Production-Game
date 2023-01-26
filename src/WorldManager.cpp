@@ -1,6 +1,7 @@
 ﻿#include "WorldManager.h"
 
 #include "Game.h"
+#include "Renderer.h"
 
 WorldManager::WorldManager()
 {

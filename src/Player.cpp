@@ -36,25 +36,34 @@ void Player::InitRigidBody()
 	bodyDef.position.Set(500.0f, 500.0f);
 	bodyDef.angle = 0;
 	bodyDef.type = b2_dynamicBody;
-	bodyDef.linearDamping = 0.6f;
-	bodyDef.angularDamping = 0.8f;
+	bodyDef.linearDamping = 0.8f;
+	bodyDef.angularDamping = 1.0f;
 	bodyDef.enabled = true;
 	m_rigidBody = WorldManager::Instance().GetWorld()->CreateBody(&bodyDef);
 }
 
 void Player::Draw()
 {
-	// alias for x and y
-	float x = m_rigidBody->GetPosition().x;
-	float y = m_rigidBody->GetPosition().y;
-	// draw the player according to animation state
-	TextureManager::Instance().Draw("player", {x,y}, GetRigidBody()->GetAngle()*Util::Rad2Deg, 255, true);
+	//add fixture and rigid body render
+	TextureManager::Instance().Draw("player", Camera::Instance().CameraDisplace(m_rigidBody->GetPosition()), GetRigidBody()->GetAngle() * Util::Rad2Deg, 255, true);
+	/*for (b2Fixture* f = GetRigidBody()->GetFixtureList(); f; f = f->GetNext())
+	{
+		b2Shape::Type shapeType = f->GetType();
+		if (shapeType == b2Shape::e_polygon)
+		{
+			b2PolygonShape* polygon = (b2PolygonShape*)f->GetShape();
+			SDL_RenderDrawLinesF(Renderer::Instance().GetRenderer(), polygon->m_vertices, 4);
+		}
+	}*/
+	
 }
 
 void Player::Update()
 {
-	m_mousePos = Game::Instance().GetMousePosition();
-	b2Vec2 toTarget = { m_mousePos.x - GetRigidBody()->GetPosition().x, m_mousePos.y - GetRigidBody()->GetPosition().y };
+	//Camera displace and mouse position cause a ton of problems. remove comment in Camera.cpp to disable camera
+	m_mousePos = Camera::Instance().CameraDisplace(Game::Instance().GetMousePosition());
+	b2Vec2 displacedPos = Camera::Instance().CameraDisplace(GetRigidBody()->GetPosition());
+	b2Vec2 toTarget = { m_mousePos.x - displacedPos.x, m_mousePos.y - displacedPos.y };
 	m_angleToMouse = b2Atan2(toTarget.y, toTarget.x);
 	RotateToMouse();
 }
@@ -81,11 +90,11 @@ void Player::MoveAtMouse()
 }
 void Player::RotateToMouse()
 {
-	float nextAngle = GetRigidBody()->GetAngle() + GetRigidBody()->GetAngularVelocity() / 60.0;
+	float nextAngle = GetRigidBody()->GetAngle() + GetRigidBody()->GetAngularVelocity() / 10.0;
 	float totalRotation = m_angleToMouse - nextAngle;
 	while (totalRotation < -180 * Util::Deg2Rad) totalRotation += 360 * Util::Deg2Rad;
 	while (totalRotation > 180 * Util::Deg2Rad) totalRotation -= 360 * Util::Deg2Rad;
-	float desiredAngularVelocity = totalRotation * 60;
+	float desiredAngularVelocity = totalRotation * 10;
 	float change = 1 * Util::Deg2Rad; //allow 1 degree rotation per time step
 	desiredAngularVelocity = std::min(change, std::max(-change, desiredAngularVelocity));
 	float impulse = GetRigidBody()->GetInertia() * desiredAngularVelocity;
