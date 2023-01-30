@@ -78,10 +78,11 @@ void Player::MoveAtMouse()
 {
 	
 	b2Vec2 vector = { cos(GetRigidBody()->GetAngle()),sin(GetRigidBody()->GetAngle()) };
-
-
-	GetRigidBody()->ApplyForceToCenter({ vector.x * m_speed,vector.y * m_speed }, true);
-
+	
+	if (GetRigidBody()->GetTransform().p != vector)
+	{
+		GetRigidBody()->ApplyForceToCenter({ vector.x * m_speed,vector.y * m_speed }, true);
+	}
 
 
 	//std::cout << "Body Angle: " << GetRigidBody()->GetAngle() * Util::Rad2Deg << std::endl;
@@ -97,14 +98,14 @@ void Player::RotateToMouse()
 {
 	float nextAngle = GetRigidBody()->GetAngle() + GetRigidBody()->GetAngularVelocity() / 10.0;
 	float totalRotation = m_angleToMouse - nextAngle;
-	Util::Clamp(totalRotation, 0.0f, 360.0f);
-	//while (totalRotation < -180 * Util::Deg2Rad) totalRotation += 360 * Util::Deg2Rad;
-	//while (totalRotation > 180 * Util::Deg2Rad) totalRotation -= 360 * Util::Deg2Rad;
+
+	while (totalRotation < -180 * Util::Deg2Rad) totalRotation += 360 * Util::Deg2Rad;
+	while (totalRotation > 180 * Util::Deg2Rad) totalRotation -= 360 * Util::Deg2Rad;
 	float desiredAngularVelocity = totalRotation * 10;
 	float change = 1 * Util::Deg2Rad; //allow 1 degree rotation per time step
 	desiredAngularVelocity = std::min(change, std::max(-change, desiredAngularVelocity));
 	float impulse = GetRigidBody()->GetInertia() * desiredAngularVelocity;
-	GetRigidBody()->ApplyAngularImpulse(impulse*10.0f,true);
+	GetRigidBody()->ApplyAngularImpulse(impulse*100.0f,true);
 
 }
 

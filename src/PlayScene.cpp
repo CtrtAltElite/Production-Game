@@ -43,7 +43,7 @@ void PlayScene::InitRigidBody()
 	b2BodyDef bodyDef;
 	bodyDef.position.Set(0.0f, 0.0f);
 	bodyDef.enabled = true;
-	bodyDef.type = b2_kinematicBody;
+	bodyDef.type = b2_dynamicBody;
 	m_rigidBody = WorldManager::Instance().GetWorld()->CreateBody(&bodyDef);
 }
 
@@ -58,8 +58,8 @@ void PlayScene::Draw()
 void PlayScene::Update()
 {
 	UpdateDisplayList();
-	//b2Vec2 camPos = m_pPlayer->GetRigidBody()->GetPosition();
-	//Camera::Instance().SetPosition(camPos);
+	b2Vec2 camPos = m_pPlayer->GetRigidBody()->GetPosition();
+	Camera::Instance().SetPosition(camPos);
 }
 
 // When we are cleaning up the scene, preparing to leave
