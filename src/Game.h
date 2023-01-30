@@ -45,7 +45,7 @@ public:
 	void Quit();
 
 	// getter and setter functions
-	[[nodiscard]] glm::ivec2 GetMousePosition(); //probably should move to Util
+	[[nodiscard]] b2Vec2 GetMousePosition(); //probably should move to Util
 
 	void SetFrames(Uint32 frames);
 	[[nodiscard]] Uint32 GetFrames() const;

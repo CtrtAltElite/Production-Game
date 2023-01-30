@@ -22,12 +22,12 @@ public:
 	void MoveAtMouse();
 	void RotateToMouse();
 private:
-	glm::ivec2 m_mousePos;
+	b2Vec2 m_mousePos;
 	float m_angleToMouse;
 	b2Vec2 m_lookTarget;
 	bool m_isColliding=false;
 	b2Body* m_rigidBody;
-	float m_maxLinearVelo=0.0f; //doesnt work
+	float m_speed = 5000000.0f;
 };
 
 #endif /* defined (__PLAYER__) */

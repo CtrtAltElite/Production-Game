@@ -105,10 +105,12 @@ bool Game::IsRunning() const
 }
 
 
-glm::ivec2 Game::GetMousePosition()
+b2Vec2 Game::GetMousePosition()
 {
 	SDL_GetMouseState(&m_mousePosition.x,&m_mousePosition.y);
-	return m_mousePosition;
+
+	b2Vec2 m_tempMousePosition = b2Vec2((float)m_mousePosition.x, (float)m_mousePosition.y);
+	return m_tempMousePosition;
 }
 
 void Game::SetFrames(const Uint32 frames)

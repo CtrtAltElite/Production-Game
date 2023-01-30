@@ -8,14 +8,13 @@
 #include "Util.h"
 #include "WorldManager.h"
 
+// Constructor, initializes a lot of stuff like RigidBody and any physics or texture variables.
 Player::Player()
 {
 	TextureManager::Instance().Load("../Assets/textures/ncl.png", "player");
 	InitRigidBody();
-	// set frame width
-	SetWidth(53);
-	// set frame height
-	SetHeight(58);
+	SetWidth(53); // Setting width of frame
+	SetHeight(58); // Setting height of frame
 	b2PolygonShape dynamicBox;
 	dynamicBox.SetAsBox(GetWidth()/3, GetHeight()/3);
 	b2FixtureDef fixtureDef;
@@ -28,8 +27,11 @@ Player::Player()
 
 }
 
+// Just a default destructor
 Player::~Player()
 = default;
+
+
 void Player::InitRigidBody()
 {
 	b2BodyDef bodyDef;
@@ -71,11 +73,14 @@ void Player::Update()
 void Player::Clean()
 {
 }
+
 void Player::MoveAtMouse()
 {
 	
 	b2Vec2 vector = { cos(GetRigidBody()->GetAngle()),sin(GetRigidBody()->GetAngle()) };
-	GetRigidBody()->ApplyForceToCenter({ vector.x * 1000000.0f,vector.y * 1000000.0f }, true);
+
+
+	GetRigidBody()->ApplyForceToCenter({ vector.x * m_speed,vector.y * m_speed }, true);
 
 
 
@@ -92,15 +97,15 @@ void Player::RotateToMouse()
 {
 	float nextAngle = GetRigidBody()->GetAngle() + GetRigidBody()->GetAngularVelocity() / 10.0;
 	float totalRotation = m_angleToMouse - nextAngle;
-	while (totalRotation < -180 * Util::Deg2Rad) totalRotation += 360 * Util::Deg2Rad;
-	while (totalRotation > 180 * Util::Deg2Rad) totalRotation -= 360 * Util::Deg2Rad;
+	Util::Clamp(totalRotation, 0.0f, 360.0f);
+	//while (totalRotation < -180 * Util::Deg2Rad) totalRotation += 360 * Util::Deg2Rad;
+	//while (totalRotation > 180 * Util::Deg2Rad) totalRotation -= 360 * Util::Deg2Rad;
 	float desiredAngularVelocity = totalRotation * 10;
 	float change = 1 * Util::Deg2Rad; //allow 1 degree rotation per time step
 	desiredAngularVelocity = std::min(change, std::max(-change, desiredAngularVelocity));
 	float impulse = GetRigidBody()->GetInertia() * desiredAngularVelocity;
 	GetRigidBody()->ApplyAngularImpulse(impulse*10.0f,true);
-	
-	
+
 }
 
 b2Body* Player::GetRigidBody()
