@@ -42,30 +42,30 @@ public:
 	virtual void Exit();
 
 private:
-
-	class PauseState : public State
-	{
-	public:
-		PauseState();
-		virtual void Enter();
-		virtual void Update();
-		virtual void Render();
-		virtual void Exit();
-
-	};
-	class EndState : public State
-	{
-	public:
-		EndState();
-		virtual void Enter();
-		virtual void Update();
-		virtual void Render();
-		virtual void Exit();
-
-	private:
-
-	};
 };
+class PauseState : public State
+{
+public:
+	PauseState();
+	virtual void Enter();
+	virtual void Update();
+	virtual void Render();
+	virtual void Exit();
+
+};
+class EndState : public State
+{
+public:
+	EndState();
+	virtual void Enter();
+	virtual void Update();
+	virtual void Render();
+	virtual void Exit();
+
+private:
+};
+
+
 
 
 
