@@ -96,6 +96,7 @@ bool Game::Init(const char* title, const int x, const int y, const int width, co
 void Game::Start()
 {
 	m_currentSceneState = SceneState::NO_SCENE;
+	//set start state here too
 	ChangeSceneState(SceneState::PLAY);
 }
 
@@ -195,7 +196,6 @@ void Game::Render() const
 	SDL_RenderClear(Renderer::Instance().GetRenderer()); // clear the renderer to the draw colour
 
 	m_pCurrentScene->Draw();
-
 	SDL_RenderPresent(Renderer::Instance().GetRenderer()); // draw to the screen
 
 	ImGuiWindowFrame::Instance().Render();
@@ -217,7 +217,6 @@ void Game::Clean() const
 	ImGuiWindowFrame::Instance().Clean();
 
 	//TTF_Quit();
-
 	SDL_Quit();
 }
 
