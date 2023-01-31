@@ -147,6 +147,12 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\StateManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\States.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\StartScene.h">
@@ -294,6 +300,12 @@
       <Filter>Game Objects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Enemy.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\StateManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\States.h">
       <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
