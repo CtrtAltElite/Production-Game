@@ -1,9 +1,10 @@
 ﻿#pragma once
 #include "Enemy.h"
 
-class Shark : Enemy 
+class Shark : public Enemy 
 {
 public:
+	Shark();
 	virtual void Draw() override;
 	virtual void Update() override;
 	virtual void Clean() override;

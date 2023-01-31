@@ -34,6 +34,8 @@ void PlayScene::Start()
 	AddChild(m_pBackground);
 	m_pPlayer = new Player();
 	AddChild(m_pPlayer);
+	m_pShark = new Shark();
+	AddChild(m_pShark);
 
 }
 

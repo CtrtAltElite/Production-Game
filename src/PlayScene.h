@@ -7,6 +7,7 @@
 #include "Background.h"
 #include "Projectile.h"
 #include "box2d.h"
+#include "Shark.h"
 
 
 class PlayScene : public Scene
@@ -28,6 +29,7 @@ private:
 	int m_ScreenHeight; //probably already global constants
 	int m_ScreenWidth;
 	Player* m_pPlayer;
+	Shark* m_pShark;
 	Projectile* m_pProjectile;
 	std::vector<Projectile*> m_pProjVec;
 	Background* m_pBackground;
