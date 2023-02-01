@@ -14,13 +14,10 @@ public:
 	virtual void Draw() override;
 	virtual void Update() override;
 	virtual void Clean() override;
-	void InitRigidBody() override;
-	b2Body* GetRigidBody() override;
-
 	// setters
 	
 private:
-	b2Body* m_rigidBody;
+	
 	
 };
 

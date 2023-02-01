@@ -42,14 +42,4 @@ void Background::Clean()
 {
 	
 }
-void Background::InitRigidBody()
-{
-	b2BodyDef bodyDef;
-	bodyDef.position.Set(0.0f, 0.0f);
-	bodyDef.enabled = true;
-	m_rigidBody = WorldManager::Instance().GetWorld()->CreateBody(&bodyDef);
-}
-b2Body* Background::GetRigidBody()
-{
-	return m_rigidBody;
-}
+

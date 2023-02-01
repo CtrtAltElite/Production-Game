@@ -48,31 +48,31 @@ void EndScene::HandleEvents()
 
 void EndScene::Start()
 {
-	const SDL_Color blue = { 0, 0, 255, 255 };
-	m_label = new Label("END SCENE", "Dock51", 80, blue, glm::vec2(400.0f, 40.0f));
+	const SDL_Color red = { 255, 0, 0, 255 };
+	m_label = new Label("YOU DIED", "Dock51", 100, red, glm::vec2(1280 / 2, 720 / 2 - 200));
 	m_label->SetParent(this);
 	AddChild(m_label);
 
 	// Restart Button
-	m_pRestartButton = new Button("../Assets/textures/restartButton.png", "restartButton", GameObjectType::RESTART_BUTTON);
-	m_pRestartButton->GetTransform()->position = glm::vec2(400.0f, 400.0f);
+	m_pRestartButton = new Button("../Assets/textures/restart-button.png", "restartButton", GameObjectType::RESTART_BUTTON);
 	m_pRestartButton->AddEventListener(Event::CLICK, [&]()-> void
-	{
-		m_pRestartButton->SetActive(false);
-		Game::Instance().ChangeSceneState(SceneState::PLAY);
-	});
+		{
+			m_pRestartButton->SetActive(false);
+	Game::Instance().ChangeSceneState(SceneState::PLAY);
+		});
 
 	m_pRestartButton->AddEventListener(Event::MOUSE_OVER, [&]()->void
-	{
-		m_pRestartButton->SetAlpha(128);
-	});
+		{
+			m_pRestartButton->SetAlpha(128);
+		});
 
 	m_pRestartButton->AddEventListener(Event::MOUSE_OUT, [&]()->void
-	{
-		m_pRestartButton->SetAlpha(255);
-	});
+		{
+			m_pRestartButton->SetAlpha(255);
+		});
 
 	AddChild(m_pRestartButton);
 
 	ImGuiWindowFrame::Instance().SetDefaultGuiFunction();
 }
+
