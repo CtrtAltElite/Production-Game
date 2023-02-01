@@ -28,8 +28,19 @@ void Shark::Draw()
 
 void Shark::Update()
 {
-
+	Move();
 }
+
+void Shark::Move()
+{
+	
+}
+
+void Shark::LookTowardsPlayer(b2Vec2 player_position)
+{
+	
+}
+
 
 void Shark::Clean()
 {
@@ -64,4 +75,21 @@ void Shark::InitRigidBody()
 b2Body* Shark::GetRigidBody()
 {
 	return m_rigidBody;
+}
+
+void Shark::ChangeDirection(float heading)
+{
+	const float x = (heading);
+	const float y = (heading);
+	m_currentDirection = b2Vec2(x, y);
+}
+
+void Shark::ChangeDirection(b2Vec2 direction)
+{
+	m_currentDirection = direction;
+}
+
+b2Vec2 Shark::GetDirection()
+{
+	return m_currentDirection;
 }

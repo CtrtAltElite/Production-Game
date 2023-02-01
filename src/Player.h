@@ -32,8 +32,6 @@ private:
 	b2Body* m_rigidBody;
 	b2Vec2 m_currentDirection;
 	float m_speed = 5000000.0f;
-	float m_turnForce = 500000.0f;
-	float m_turnSensitivity = 5000.0f;
 };
 
 #endif /* defined (__PLAYER__) */

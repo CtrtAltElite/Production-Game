@@ -62,6 +62,7 @@ void PlayScene::Update()
 	UpdateDisplayList();
 	b2Vec2 camPos = m_pPlayer->GetRigidBody()->GetPosition();
 	Camera::Instance().SetPosition(camPos);
+	m_pShark->LookTowardsPlayer(m_pPlayer->GetRigidBody()->GetTransform().p);
 }
 
 // When we are cleaning up the scene, preparing to leave
