@@ -3,7 +3,6 @@
 #include "Game.h"
 #include "glm/gtx/string_cast.hpp"
 #include "EventManager.h"
-#include "WorldManager.h"
 
 EndScene::EndScene()
 {
@@ -50,13 +49,13 @@ void EndScene::HandleEvents()
 void EndScene::Start()
 {
 	const SDL_Color blue = { 0, 0, 255, 255 };
-	m_label = new Label("END SCENE", "Dock51", 80, blue, b2Vec2(400.0f, 40.0f));
+	m_label = new Label("END SCENE", "Dock51", 80, blue, glm::vec2(400.0f, 40.0f));
 	m_label->SetParent(this);
 	AddChild(m_label);
 
 	// Restart Button
 	m_pRestartButton = new Button("../Assets/textures/restartButton.png", "restartButton", GameObjectType::RESTART_BUTTON);
-	m_pRestartButton->InitRigidBody();
+	m_pRestartButton->GetTransform()->position = glm::vec2(400.0f, 400.0f);
 	m_pRestartButton->AddEventListener(Event::CLICK, [&]()-> void
 	{
 		m_pRestartButton->SetActive(false);
@@ -76,16 +75,4 @@ void EndScene::Start()
 	AddChild(m_pRestartButton);
 
 	ImGuiWindowFrame::Instance().SetDefaultGuiFunction();
-}
-void EndScene::InitRigidBody()
-{
-	b2BodyDef bodyDef;
-	bodyDef.position.Set(0.0f, 0.0f);
-	bodyDef.enabled = true;
-	bodyDef.type = b2_kinematicBody;
-	m_rigidBody = WorldManager::Instance().GetWorld()->CreateBody(&bodyDef);
-}
-b2Body* EndScene::GetRigidBody()
-{
-	return m_rigidBody;
 }

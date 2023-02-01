@@ -18,12 +18,11 @@ public:
 	virtual void Clean() override;
 	virtual void HandleEvents() override;
 	virtual void Start() override;
-	void InitRigidBody() override;
-	b2Body* GetRigidBody() override;
+
 private:
 	Label* m_label{};
-	b2Body* m_rigidBody;
-	Button* m_pRestartButton;
+
+	Button* m_pRestartButton{};
 };
 
 #endif /* defined (__END_SCENE__) */

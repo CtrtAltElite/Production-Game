@@ -8,13 +8,22 @@ GameObject::GameObject() :
 GameObject::~GameObject()
 = default;
 
+Transform* GameObject::GetTransform()
+{
+	return &m_transform;
+}
 
-float GameObject::GetWidth() const
+RigidBody* GameObject::GetRigidBody()
+{
+	return &m_rigidBody;
+}
+
+int GameObject::GetWidth() const
 {
 	return m_width;
 }
 
-float GameObject::GetHeight() const
+int GameObject::GetHeight() const
 {
 	return m_height;
 }
@@ -23,17 +32,13 @@ GameObjectType GameObject::GetType() const
 {
 	return m_type;
 }
-b2Body* GameObject::GetRigidBody()
-{
-	return m_rigidBody;
-}
 
-void GameObject::SetWidth(const float new_width)
+void GameObject::SetWidth(const int new_width)
 {
 	m_width = new_width;
 }
 
-void GameObject::SetHeight(const float new_height)
+void GameObject::SetHeight(const int new_height)
 {
 	m_height = new_height;
 }
@@ -61,4 +66,14 @@ void GameObject::SetVisible(const bool state)
 bool GameObject::IsVisible() const
 {
 	return m_visible;
+}
+
+void GameObject::setIsCentered(const bool state)
+{
+	m_isCentered = state;
+}
+
+bool GameObject::isCentered() const
+{
+	return m_isCentered;
 }

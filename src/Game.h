@@ -44,7 +44,7 @@ public:
 	void Quit();
 
 	// getter and setter functions
-	[[nodiscard]] glm::ivec2 GetMousePosition(); //probably should move to Util
+	[[nodiscard]] glm::vec2 GetMousePosition() const;
 
 	void SetFrames(Uint32 frames);
 	[[nodiscard]] Uint32 GetFrames() const;
@@ -57,23 +57,20 @@ public:
 
 	[[nodiscard]] SDL_Window* GetWindow() const;
 
-	
 private:
 	Game();
+	~Game();
 
 	// game properties
 	bool m_bRunning;
 	Uint32 m_frames;
 	float m_deltaTime{};
-	glm::ivec2 m_mousePosition;
+	glm::vec2 m_mousePosition;
+
 	// scene variables
 	Scene* m_pCurrentScene;
 	SceneState m_currentSceneState;
-	float timeStep = 1.0f / 60.f;
-	int32 velocityIterations = 10;
-	int32 positionIterations = 8;
-	
-	
+
 	// storage structures
 	std::shared_ptr<SDL_Window> m_pWindow;
 };

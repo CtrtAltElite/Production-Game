@@ -1,72 +1,91 @@
 #include "Player.h"
-
-#include "Camera.h"
-#include "Game.h"
 #include "TextureManager.h"
-#include "Util.h"
-#include "WorldManager.h"
 
-Player::Player()
+Player::Player(): m_currentAnimationState(PlayerAnimationState::PLAYER_IDLE_RIGHT)
 {
-	TextureManager::Instance().Load("../Assets/textures/Circle.png", "player");
-	InitRigidBody();
+	TextureManager::Instance().LoadSpriteSheet(
+		"../Assets/sprites/atlas.txt",
+		"../Assets/sprites/atlas.png", 
+		"spritesheet");
+
+	SetSpriteSheet(TextureManager::Instance().GetSpriteSheet("spritesheet"));
+	
 	// set frame width
 	SetWidth(53);
+
 	// set frame height
 	SetHeight(58);
-	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(GetWidth()/3, GetHeight()/3);
-	b2FixtureDef fixtureDef;
-	fixtureDef.shape = &dynamicBox;
-	fixtureDef.density = 0.5f;
-	fixtureDef.friction = 0.5f;
-	GetRigidBody()->CreateFixture(&fixtureDef);
-	isColliding = false;
+
+	GetTransform()->position = glm::vec2(400.0f, 300.0f);
+	GetRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
+	GetRigidBody()->acceleration = glm::vec2(0.0f, 0.0f);
+	GetRigidBody()->isColliding = false;
 	SetType(GameObjectType::PLAYER);
 
+	BuildAnimations();
 }
 
 Player::~Player()
 = default;
-void Player::InitRigidBody()
-{
-	b2BodyDef bodyDef;
-	bodyDef.position.Set(500.0f, 500.0f);
-	bodyDef.type = b2_dynamicBody;
-	bodyDef.enabled = true;
-	m_rigidBody = WorldManager::Instance().GetWorld()->CreateBody(&bodyDef);
-}
 
 void Player::Draw()
 {
-	// alias for x and y
-	float x = m_rigidBody->GetPosition().x - Camera::Instance().GetPosition().x;
-	float y = m_rigidBody->GetPosition().y - Camera::Instance().GetPosition().y;
 	// draw the player according to animation state
-	TextureManager::Instance().Draw("player", {x,y}, 0, 255, true);
+	switch(m_currentAnimationState)
+	{
+	case PlayerAnimationState::PLAYER_IDLE_RIGHT:
+		TextureManager::Instance().PlayAnimation("spritesheet", GetAnimation("idle"),
+			GetTransform()->position, 0.12f, 0, 255, true);
+		break;
+	case PlayerAnimationState::PLAYER_IDLE_LEFT:
+		TextureManager::Instance().PlayAnimation("spritesheet", GetAnimation("idle"),
+			GetTransform()->position, 0.12f, 0, 255, true, SDL_FLIP_HORIZONTAL);
+		break;
+	case PlayerAnimationState::PLAYER_RUN_RIGHT:
+		TextureManager::Instance().PlayAnimation("spritesheet", GetAnimation("run"),
+			GetTransform()->position, 0.25f, 0, 255, true);
+		break;
+	case PlayerAnimationState::PLAYER_RUN_LEFT:
+		TextureManager::Instance().PlayAnimation("spritesheet", GetAnimation("run"),
+			GetTransform()->position, 0.25f, 0, 255, true, SDL_FLIP_HORIZONTAL);
+		break;
+	default:
+		break;
+	}
 }
 
 void Player::Update()
 {
-	Util::Clamp(GetRigidBody()->GetLinearVelocity(), m_maxLinearVelo); //doesnt work
 }
 
 void Player::Clean()
 {
 }
-void Player::MoveAtMouse()
+
+void Player::SetAnimationState(const PlayerAnimationState new_state)
 {
-	glm::ivec2 mousepos = Game::Instance().GetMousePosition();
-	float angle = atan2((GetRigidBody()->GetPosition().y - mousepos.y) - Camera::Instance().GetPosition().y, (GetRigidBody()->GetPosition().x - mousepos.x) - Camera::Instance().GetPosition().x);
-	b2Vec2 vector = { -cos(angle)*100000.0f,-sin(angle)*100000.0f };
-	GetRigidBody()->ApplyForceToCenter(vector, true);
-	std::cout << "X: "<<GetRigidBody()->GetPosition().x << " Y: " << GetRigidBody()->GetPosition().y << std::endl;
-	std::cout << "MOUSE POS X:" << mousepos.x << ", Y: " << mousepos.y << std::endl;
-	std::cout << "Linear Velocity X: " << GetRigidBody()->GetLinearVelocity().x <<", Y: "<< GetRigidBody()->GetLinearVelocity().y<< std::endl;
+	m_currentAnimationState = new_state;
 }
 
-
-b2Body* Player::GetRigidBody()
+void Player::BuildAnimations()
 {
-	return m_rigidBody;
+	auto idle_animation = Animation();
+
+	idle_animation.name = "idle";
+	idle_animation.frames.push_back(GetSpriteSheet()->GetFrame("megaman-idle-0"));
+	idle_animation.frames.push_back(GetSpriteSheet()->GetFrame("megaman-idle-1"));
+	idle_animation.frames.push_back(GetSpriteSheet()->GetFrame("megaman-idle-2"));
+	idle_animation.frames.push_back(GetSpriteSheet()->GetFrame("megaman-idle-3"));
+
+	SetAnimation(idle_animation);
+
+	auto run_animation = Animation();
+
+	run_animation.name = "run";
+	run_animation.frames.push_back(GetSpriteSheet()->GetFrame("megaman-run-0"));
+	run_animation.frames.push_back(GetSpriteSheet()->GetFrame("megaman-run-1"));
+	run_animation.frames.push_back(GetSpriteSheet()->GetFrame("megaman-run-2"));
+	run_animation.frames.push_back(GetSpriteSheet()->GetFrame("megaman-run-3"));
+
+	SetAnimation(run_animation);
 }

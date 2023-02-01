@@ -39,7 +39,7 @@ float Util::Clamp(float value, const float min, const float max)
 }
 
 /** This method confines a vector magnitude to the max_length parameter */
-b2Vec2 Util::Clamp(const b2Vec2 vec, const float max_length)
+glm::vec2 Util::Clamp(const glm::vec2 vec, const float max_length)
 {
 	if (const auto sqr_magnitude = Util::SquaredMagnitude(vec); sqr_magnitude > max_length * max_length)
 	{
@@ -73,7 +73,7 @@ float Util::Clamp01(const float value)
 /**
 * Returns the Euclidean distance of vecA and vecB
 */
-float Util::Distance(const b2Vec2 vec_a, const b2Vec2 vec_b)
+float Util::Distance(const glm::vec2 vec_a, const glm::vec2 vec_b)
 {
 	const auto x = vec_b.x - vec_a.x;
 	const auto y = vec_b.y - vec_a.y;
@@ -84,7 +84,7 @@ float Util::Distance(const b2Vec2 vec_a, const b2Vec2 vec_b)
 * Returns the Squared Euclidean distance of vecA and vecB
 * No Square Root
 */
-float Util::SquaredDistance(const b2Vec2 vec_a, const b2Vec2 vec_b)
+float Util::SquaredDistance(const glm::vec2 vec_a, const glm::vec2 vec_b)
 {
 	const auto x = vec_b.x - vec_a.x;
 	const auto y = vec_b.y - vec_a.y;
@@ -95,7 +95,7 @@ float Util::SquaredDistance(const b2Vec2 vec_a, const b2Vec2 vec_b)
 * Returns the magnitude of a vec2
 *
 */
-float Util::Magnitude(const b2Vec2 vec)
+float Util::Magnitude(const glm::vec2 vec)
 {
 	const auto x = vec.x;
 	const auto y = vec.y;
@@ -106,7 +106,7 @@ float Util::Magnitude(const b2Vec2 vec)
 * Returns the squared Magnitude of a vec2
 * No Square Root
 */
-float Util::SquaredMagnitude(const b2Vec2 vec)
+float Util::SquaredMagnitude(const glm::vec2 vec)
 {
 	const auto x = vec.x;
 	const auto y = vec.y;
@@ -114,7 +114,7 @@ float Util::SquaredMagnitude(const b2Vec2 vec)
 }
 
 
-b2Vec2 Util::LimitMagnitude(b2Vec2 vector, const float magnitude)
+glm::vec2 Util::LimitMagnitude(glm::vec2 vector, const float magnitude)
 {
 	if (const auto length = Magnitude(vector); length > magnitude) {
 		const auto limiter = magnitude / length;
@@ -135,7 +135,7 @@ float Util::Lerp(const float a, const float b, const float t)
 	return a + (b - a) * Util::Clamp01(t);
 }
 
-b2Vec2 Util::Lerp(const b2Vec2 p0, const b2Vec2 p1, const float t)
+glm::vec2 Util::Lerp(const glm::vec2 p0, const glm::vec2 p1, const float t)
 {
 	const auto lerp_xs = Lerp(p0.x, p1.x, t);
 	const auto lerp_ys = Lerp(p0.y, p1.y, t);
@@ -179,7 +179,7 @@ float Util::RandomRange(const float min, const float max)
 	return min + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (max - min)));
 }
 
-b2Vec2 Util::RandomRange(const b2Vec2 p0, const b2Vec2 p1)
+glm::vec2 Util::RandomRange(const glm::vec2 p0, const glm::vec2 p1)
 {
 	const auto random_x = RandomRange(p0.x, p1.x);
 	const auto random_y = RandomRange(p0.y, p1.y);
@@ -203,7 +203,7 @@ float Util::Sanitize(float value)
 * and returns them in dest or returns the result in a new vec2
 *
 */
-b2Vec2 Util::Min(const b2Vec2 vec_a, const b2Vec2 vec_b)
+glm::vec2 Util::Min(const glm::vec2 vec_a, const glm::vec2 vec_b)
 {
 	return { glm::min(vec_a.x, vec_b.x) , glm::min(vec_a.y, vec_b.y) };
 }
@@ -218,7 +218,7 @@ float Util::Min(const float a, const float b)
 * and returns the result in dest or returns the result as a new vec2
 *
 */
-b2Vec2 Util::Max(const b2Vec2 vec_a, const b2Vec2 vec_b)
+glm::vec2 Util::Max(const glm::vec2 vec_a, const glm::vec2 vec_b)
 {
 	return { glm::max(vec_a.x, vec_b.x), glm::max(vec_a.y, vec_b.y)};
 }
@@ -232,7 +232,7 @@ float Util::Max(const float a, const float b)
 * Negates the x and y components of a vec2 and returns them in a new vec2 object
 *
 */
-b2Vec2 Util::Negate(const b2Vec2 vec)
+glm::vec2 Util::Negate(const glm::vec2 vec)
 {
 	return { -vec.x, -vec.y };
 }
@@ -241,7 +241,7 @@ b2Vec2 Util::Negate(const b2Vec2 vec)
 * Returns the inverse x and y components of src vec2 and returns them in a new vec2 object
 *
 */
-b2Vec2 Util::Inverse(const b2Vec2 vec)
+glm::vec2 Util::Inverse(const glm::vec2 vec)
 {
 	return {1.0f / vec.x, 1.0f / vec.y};
 }
@@ -251,9 +251,9 @@ b2Vec2 Util::Inverse(const b2Vec2 vec)
 * Normalizes vec2 and stores the result in a new vec2 object
 *
 */
-b2Vec2 Util::Normalize(const b2Vec2 vec)
+glm::vec2 Util::Normalize(const glm::vec2 vec)
 {
-	b2Vec2 dest;
+	glm::vec2 dest;
 	const auto x = vec.x;
 	const auto y = vec.y;
 	if (auto length = (x * x) + (y * y); length > 0) 
@@ -268,7 +268,7 @@ b2Vec2 Util::Normalize(const b2Vec2 vec)
 /**
 * Returns the angle in degrees between from and to.
 */
-float Util::Angle(const b2Vec2 from, const b2Vec2 to)
+float Util::Angle(const glm::vec2 from, const glm::vec2 to)
 {
 	return acos(Clamp(Dot(Normalize(from), Normalize(to)), -1.0f, 1.0f)) * 57.29578f;
 }
@@ -276,19 +276,19 @@ float Util::Angle(const b2Vec2 from, const b2Vec2 to)
 /**
 * Dot Product of two vectors.
 */
-float Util::Dot(const b2Vec2 lhs, const b2Vec2 rhs)
+float Util::Dot(const glm::vec2 lhs, const glm::vec2 rhs)
 {
 	return lhs.x * rhs.x + lhs.y * rhs.y;
 }
 
-float Util::SignedAngle(const b2Vec2 from, const b2Vec2 to)
+float Util::SignedAngle(const glm::vec2 from, const glm::vec2 to)
 {
 	const auto unsigned_angle = Util::Angle(from, to);
 	const auto sign = Util::Sign(from.x * to.y - from.y * to.x);
 	return unsigned_angle * sign;
 }
 
-void Util::DrawLine(const b2Vec2 start, const b2Vec2 end, const glm::vec4 colour, SDL_Renderer* renderer)
+void Util::DrawLine(const glm::vec2 start, const glm::vec2 end, const glm::vec4 colour, SDL_Renderer* renderer)
 {
 	const auto [r, g, b, a] = ToSDLColour(colour);
 
@@ -297,7 +297,7 @@ void Util::DrawLine(const b2Vec2 start, const b2Vec2 end, const glm::vec4 colour
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 }
 
-void Util::DrawRect(const b2Vec2 position, const int width, const int height, const glm::vec4 colour, SDL_Renderer* renderer)
+void Util::DrawRect(const glm::vec2 position, const int width, const int height, const glm::vec4 colour, SDL_Renderer* renderer)
 {
 	const auto [r, g, b, a] = ToSDLColour(colour);
 
@@ -312,7 +312,7 @@ void Util::DrawRect(const b2Vec2 position, const int width, const int height, co
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 }
 
-void Util::DrawFilledRect(const b2Vec2 position, const int width, const int height, const glm::vec4 fill_colour, SDL_Renderer* renderer)
+void Util::DrawFilledRect(const glm::vec2 position, const int width, const int height, const glm::vec4 fill_colour, SDL_Renderer* renderer)
 {
 	const auto [r, g, b, a] = ToSDLColour(fill_colour);
 
@@ -327,7 +327,7 @@ void Util::DrawFilledRect(const b2Vec2 position, const int width, const int heig
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 }
 
-void Util::DrawCircle(const b2Vec2 centre, const float radius, const glm::vec4 colour, const ShapeType type, SDL_Renderer* renderer)
+void Util::DrawCircle(const glm::vec2 centre, const float radius, const glm::vec4 colour, const ShapeType type, SDL_Renderer* renderer)
 {
 	const auto [r, g, b, a] = ToSDLColour(colour);
 
@@ -404,7 +404,7 @@ void Util::DrawCircle(const b2Vec2 centre, const float radius, const glm::vec4 c
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 }
 
-void Util::DrawCapsule(const b2Vec2 position, const int width, const int height, const glm::vec4 colour, SDL_Renderer* renderer)
+void Util::DrawCapsule(const glm::vec2 position, const int width, const int height, const glm::vec4 colour, SDL_Renderer* renderer)
 {
 	float radius;
 	const float half_width = floor(static_cast<float>(width) * 0.5f);
@@ -412,19 +412,19 @@ void Util::DrawCapsule(const b2Vec2 position, const int width, const int height,
 	if (width > height)
 	{
 		// Horizontal Capsule
-		DrawCircle(b2Vec2(position.x - half_width + half_height, position.y), half_height, colour, ShapeType::SEMI_CIRCLE_LEFT, renderer);
-		DrawCircle(b2Vec2(position.x + half_width - half_height, position.y), half_height, colour, ShapeType::SEMI_CIRCLE_RIGHT, renderer);
-		DrawLine(b2Vec2(position.x - half_width + half_height, position.y - half_height), b2Vec2(position.x + half_width - half_height, position.y - half_height), colour, renderer);
-		DrawLine(b2Vec2(position.x - half_width + half_height, position.y + half_height), b2Vec2(position.x + half_width - half_height, position.y + half_height), colour, renderer);
+		DrawCircle(glm::vec2(position.x - half_width + half_height, position.y), half_height, colour, ShapeType::SEMI_CIRCLE_LEFT, renderer);
+		DrawCircle(glm::vec2(position.x + half_width - half_height, position.y), half_height, colour, ShapeType::SEMI_CIRCLE_RIGHT, renderer);
+		DrawLine(glm::vec2(position.x - half_width + half_height, position.y - half_height), glm::vec2(position.x + half_width - half_height, position.y - half_height), colour, renderer);
+		DrawLine(glm::vec2(position.x - half_width + half_height, position.y + half_height), glm::vec2(position.x + half_width - half_height, position.y + half_height), colour, renderer);
 	}
 	else if (width < height)
 	{
 		// Vertical Capsule
 		radius = half_width * 0.5f;
-		DrawCircle(b2Vec2(position.x, position.y - half_height + radius), radius, colour, ShapeType::SEMI_CIRCLE_TOP, renderer);
-		DrawCircle(b2Vec2(position.x, position.y + half_height - radius), radius, colour, ShapeType::SEMI_CIRCLE_BOTTOM, renderer);
-		DrawLine(b2Vec2(position.x - radius, position.y - half_height + radius), b2Vec2(position.x - half_width * 0.5f, position.y + half_height * 0.5f), colour, renderer);
-		DrawLine(b2Vec2(position.x + radius, position.y - half_height + radius), b2Vec2(position.x + half_width * 0.5f, position.y + half_height * 0.5f), colour, renderer);
+		DrawCircle(glm::vec2(position.x, position.y - half_height + radius), radius, colour, ShapeType::SEMI_CIRCLE_TOP, renderer);
+		DrawCircle(glm::vec2(position.x, position.y + half_height - radius), radius, colour, ShapeType::SEMI_CIRCLE_BOTTOM, renderer);
+		DrawLine(glm::vec2(position.x - radius, position.y - half_height + radius), glm::vec2(position.x - half_width * 0.5f, position.y + half_height * 0.5f), colour, renderer);
+		DrawLine(glm::vec2(position.x + radius, position.y - half_height + radius), glm::vec2(position.x + half_width * 0.5f, position.y + half_height * 0.5f), colour, renderer);
 	}
 	else
 	{
@@ -433,16 +433,16 @@ void Util::DrawCapsule(const b2Vec2 position, const int width, const int height,
 	}
 }
 
-float Util::GetClosestEdge(const b2Vec2 vec_a, GameObject* object)
+float Util::GetClosestEdge(const glm::vec2 vec_a, GameObject* object)
 {
 	const auto width = static_cast<float>(object->GetWidth());
 	const auto height = static_cast<float>(object->GetHeight());
 
-	const auto target_offset = b2Vec2(width * 0.5f, height * 0.5f);
-	const auto target_top_left = object->GetRigidBody()->GetPosition() - target_offset;
-	SDL_FRect rect = { static_cast<float>(target_top_left.x), static_cast<float>(target_top_left.y), object->GetWidth(), object->GetHeight() };
+	const auto target_offset = glm::vec2(width * 0.5f, height * 0.5f);
+	const auto target_top_left = object->GetTransform()->position - target_offset;
+	SDL_Rect rect = { static_cast<int>(target_top_left.x), static_cast<int>(target_top_left.y), object->GetWidth(), object->GetHeight() };
 
-	const b2Vec2 sides[4] = { { rect.x + rect.w / 2, rect.y }, // top
+	const glm::vec2 sides[4] = { { rect.x + rect.w / 2, rect.y }, // top
 						   { rect.x + rect.w / 2, rect.y + rect.h }, // bottom
 						   { rect.x, rect.y + rect.h / 2 }, // left
 						   { rect.x + rect.w, rect.y + rect.h / 2 } }; // right
@@ -462,4 +462,23 @@ SDL_Color Util::ToSDLColour(const glm::vec4 colour)
 	color.b = static_cast<Uint8>(floor(colour.b * 255.0f));
 	color.a = static_cast<Uint8>(floor(colour.a * 255.0f));
 	return color;
+}
+
+glm::vec2 Util::RotatePoint(glm::vec2 point, const float angle, const glm::vec2 pivot)
+{
+	const float s = sin(angle * Deg2Rad);
+	const float c = cos(angle * Deg2Rad);
+
+	// translate point back to origin:
+	point.x -= pivot.x;
+	point.y -= pivot.y;
+
+	// rotate point
+	const float new_x = point.x * c - point.y * s;
+	const float new_y = point.x * s + point.y * c;
+
+	// translate point back:
+	point.x = new_x + pivot.x;
+	point.y = new_y + pivot.y;
+	return point;
 }

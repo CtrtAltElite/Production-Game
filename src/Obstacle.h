@@ -16,10 +16,7 @@ public:
 	void Draw() override;
 	void Update() override;
 	void Clean() override;
-	void InitRigidBody() override;
-	b2Body* GetRigidBody() override;
 private:
-	b2Body* m_rigidBody;
 	
 };
 

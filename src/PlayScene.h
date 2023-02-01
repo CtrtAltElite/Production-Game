@@ -3,11 +3,10 @@
 #define __PLAY_SCENE__
 
 #include "Scene.h"
+#include "Plane.h"
 #include "Player.h"
-#include "Background.h"
-#include "Projectile.h"
-#include "box2d.h"
-
+#include "Button.h"
+#include "Label.h"
 
 class PlayScene : public Scene
 {
@@ -21,21 +20,26 @@ public:
 	virtual void Clean() override;
 	virtual void HandleEvents() override;
 	virtual void Start() override;
-	virtual void InitRigidBody() override;
-	b2Body* GetRigidBody() override;
 private:
 	// IMGUI Function
-	void GUI_Function() const;
+	void GUI_Function();
 	std::string m_guiTitle;
-	int m_ScreenHeight; //probably already global constants
-	int m_ScreenWidth;
-	Player* m_pPlayer;
-	Projectile* m_pProjectile;
-	std::vector<Projectile*> m_pProjVec;
-	Background* m_pBackground;
-	b2Body* m_rigidBody;
+	
+	glm::vec2 m_mousePosition;
+
+	Plane* m_pPlaneSprite{};
+	Player* m_pPlayer{};
+	bool m_playerFacingRight{};
 
 	// UI Items
+	Button* m_pBackButton{};
+	Button* m_pNextButton{};
+	Label* m_pInstructionsLabel{};
+
+	// Input Control
+	int m_pCurrentInputType{};
+	void GetPlayerInput();
+	void GetKeyboardInput();
 };
 
 #endif /* defined (__PLAY_SCENE__) */

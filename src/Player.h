@@ -2,8 +2,7 @@
 #ifndef __PLAYER__
 #define __PLAYER__
 
-#include <box2d.h>
-
+#include "PlayerAnimationState.h"
 #include "Sprite.h"
 
 class Player final : public Sprite
@@ -16,13 +15,14 @@ public:
 	virtual void Draw() override;
 	virtual void Update() override;
 	virtual void Clean() override;
-	void InitRigidBody() override;
-	b2Body*GetRigidBody() override;
-	void MoveAtMouse();
+
+	// setters
+	void SetAnimationState(PlayerAnimationState new_state);
+
 private:
-	bool isColliding;
-	b2Body* m_rigidBody;
-	float m_maxLinearVelo=0.0f; //doesnt work
+	void BuildAnimations();
+
+	PlayerAnimationState m_currentAnimationState;
 };
 
 #endif /* defined (__PLAYER__) */

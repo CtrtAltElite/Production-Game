@@ -15,10 +15,9 @@ public:
 	virtual void Draw() override = 0;
 	virtual void Update() override = 0;
 	virtual void Clean() override = 0;
+
 	[[nodiscard]] Scene* GetParent() const;
 	void SetParent(Scene* parent);
-	virtual void InitRigidBody() override=0;
-	virtual b2Body* GetRigidBody() override= 0;
 
 	/*
 	 * Gets the index of the layer, layers are groups of objects that share a layer order index.
@@ -36,12 +35,9 @@ public:
 	 */
 	void SetLayerIndex(uint32_t new_index, const uint32_t new_order = 0);
 	
-	
 
 private:
-	
 	friend class Scene;
-	
 	uint32_t m_layerIndex = 0;
 	uint32_t m_layerOrderIndex;
 	Scene* m_pParentScene{};

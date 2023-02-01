@@ -5,20 +5,18 @@
 #include "glm/gtx/string_cast.hpp"
 #include "Renderer.h"
 #include "EventManager.h"
-#include "TextureManager.h"
-#include "WorldManager.h"
 
-static void CreateBody()
-{
-}
+
 // Game functions - DO NOT REMOVE ***********************************************
 
 Game::Game() :
 	m_bRunning(true), m_frames(0), m_pCurrentScene(nullptr), m_currentSceneState(SceneState::NO_SCENE), m_pWindow(nullptr)
 {
-	
 	srand(static_cast<unsigned>(time(nullptr)));  // random seed
 }
+
+Game::~Game()
+= default;
 
 
 void Game::Init()
@@ -97,7 +95,8 @@ bool Game::Init(const char* title, const int x, const int y, const int width, co
 void Game::Start()
 {
 	m_currentSceneState = SceneState::NO_SCENE;
-	ChangeSceneState(SceneState::PLAY);
+
+	ChangeSceneState(SceneState::START);
 }
 
 bool Game::IsRunning() const
@@ -106,9 +105,8 @@ bool Game::IsRunning() const
 }
 
 
-glm::ivec2 Game::GetMousePosition()
+glm::vec2 Game::GetMousePosition() const
 {
-	SDL_GetMouseState(&m_mousePosition.x,&m_mousePosition.y);
 	return m_mousePosition;
 }
 
@@ -203,8 +201,6 @@ void Game::Render() const
 void Game::Update() const
 {
 	m_pCurrentScene->Update();
-	WorldManager::Instance().GetWorld()->Step(timeStep, velocityIterations, positionIterations);
-	WorldManager::Instance().GetWorld()->ClearForces();
 }
 
 void Game::Clean() const
@@ -224,5 +220,3 @@ void Game::HandleEvents() const
 {
 	m_pCurrentScene->HandleEvents();
 }
-
-//documentation says doesnt work during callbacks? probably has something to do with why it wont work

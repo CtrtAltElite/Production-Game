@@ -107,7 +107,7 @@ void ImGuiWindowFrame::Start()
 	ImGui::StyleColorsDark();
 
 	// Hack to remove ghost window error - do not remove
-	Util::DrawRect(b2Vec2(0, 0), 1, 1, glm::vec4(1, 1, 1, 1), GetRenderer());
+	Util::DrawRect(glm::vec2(0, 0), 1, 1, glm::vec4(1, 1, 1, 1), GetRenderer());
 }
 
 void ImGuiWindowFrame::Clean()
