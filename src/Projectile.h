@@ -26,5 +26,6 @@ private:
 	b2Body* m_rigidBody;
 	Player* m_player;
 	bool m_deleteMe = false;
+	float m_speed;
 };
 #endif /* defined (__PROJECTILE__)*/

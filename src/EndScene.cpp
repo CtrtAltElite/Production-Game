@@ -56,7 +56,7 @@ void EndScene::Start()
 	AddChild(m_label);
 
 	// Restart Button
-	m_pRestartButton = new Button("../Assets/textures/restartButton.png", "restartButton", GameObjectType::RESTART_BUTTON);
+	m_pRestartButton = new Button("../Assets/textures/restart-button.png", "restartButton", GameObjectType::RESTART_BUTTON);
 	m_pRestartButton->InitRigidBody();
 	m_pRestartButton->AddEventListener(Event::CLICK, [&]()-> void
 	{

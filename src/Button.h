@@ -11,7 +11,7 @@
 class Button : public UIControl
 {
 public:
-	explicit Button(const std::string& image_path = "../Assets/textures/StartButton.png", 
+	explicit Button(const std::string& image_path = "../Assets/textures/Start-Button.png", 
 	                std::string button_name = "startButton", 
 	                GameObjectType type = GameObjectType::START_BUTTON, 
 					b2Vec2 position = b2Vec2{ 0.0f, 0.0f }, bool is_centered = true);

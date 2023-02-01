@@ -76,16 +76,13 @@ void Player::Clean()
 
 void Player::MoveAtMouse()
 {
+
 	
-	//b2Vec2 vector = { cos(GetRigidBody()->GetAngle()),sin(GetRigidBody()->GetAngle()) };
-	
-	if (GetRigidBody()->GetTransform().p != GetDirection())
-	{
-		GetRigidBody()->ApplyForceToCenter({ GetDirection().x * m_speed,GetDirection().y * m_speed }, true);
-	}
+	b2Vec2 vector = { cos(GetRigidBody()->GetAngle()),sin(GetRigidBody()->GetAngle()) };
+	GetRigidBody()->ApplyForceToCenter({ vector.x * m_speed,vector.y * m_speed }, true);
 
 
-	std::cout << "Body Angle: " << GetRigidBody()->GetAngle() * Util::Deg2Rad << std::endl;
+	//std::cout << "Body Angle: " << GetRigidBody()->GetAngle() * Util::Deg2Rad << std::endl;
 	//std::cout << "Angle to mouse: " << m_angleToMouse * Util::Rad2Deg << std::endl;
 	//std::cout << "Angular Velo: " << GetRigidBody()->GetAngularVelocity() << std::endl;
 	//std::cout << "Inertia: " << GetRigidBody()->GetInertia() << std::endl;

@@ -3,11 +3,12 @@
 #include "Camera.h"
 #include "Game.h"
 #include "TextureManager.h"
+#include "Util.h"
 #include "WorldManager.h"
 
 Projectile::Projectile(Player* player)
 {
-	TextureManager::Instance().Load("../Assets/textures/Circle.png", "projectile");
+	TextureManager::Instance().Load("../Assets/textures/Small_Torpedo.png", "projectile");
 
 	const auto size = TextureManager::Instance().GetTextureSize("projectile");
 	SetWidth(static_cast<int>(size.x));
@@ -15,7 +16,8 @@ Projectile::Projectile(Player* player)
 	isColliding = false;
 	m_player = player;
 	m_angle = player->GetRigidBody()->GetAngle();
-	m_vector = { cos(m_angle) * 65,sin(m_angle) * 65 };
+	m_speed = 150;
+	m_vector = { cos(m_angle) * m_speed,sin(m_angle) * m_speed };
 	Start();
 	
 	
@@ -28,7 +30,7 @@ Projectile::Projectile(Player* player)
 void Projectile::Draw()
 {
 	// draw the target
-	TextureManager::Instance().Draw("projectile", Camera::Instance().CameraDisplace(m_rigidBody->GetPosition()), 0, 180, true);
+	TextureManager::Instance().Draw("projectile", Camera::Instance().CameraDisplace(m_rigidBody->GetPosition()),m_angle*Util::Rad2Deg, 255, true);
 }
 void Projectile::Start()
 {
@@ -63,7 +65,7 @@ void Projectile::Clean()
 void Projectile::InitRigidBody()
 {
 	b2BodyDef bodyDef;
-	bodyDef.position.Set(m_player->GetRigidBody()->GetPosition().x + m_vector.x, m_player->GetRigidBody()->GetPosition().y + m_vector.y);
+	bodyDef.position.Set(m_player->GetRigidBody()->GetPosition().x + m_vector.x*0.5, m_player->GetRigidBody()->GetPosition().y + m_vector.y*0.5);
 	bodyDef.enabled = true;
 	bodyDef.bullet = true;
 	bodyDef.type = b2_dynamicBody;

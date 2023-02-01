@@ -69,7 +69,7 @@ void StartScene::Start()
 	
 	m_pStartButton->AddEventListener(Event::MOUSE_OVER, [&]()->void
 	{
-		m_pStartButton->SetAlpha(128);
+		m_pStartButton->SetAlpha(200);
 	});
 
 	m_pStartButton->AddEventListener(Event::MOUSE_OUT, [&]()->void
