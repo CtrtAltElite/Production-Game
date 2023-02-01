@@ -64,9 +64,9 @@ void Player::Update()
 {
 	//Camera displace and mouse position cause a ton of problems. remove comment in Camera.cpp to disable camera
 	m_mousePos = Camera::Instance().CameraDisplace(Game::Instance().GetMousePosition());
-	//b2Vec2 displacedPos = Camera::Instance().CameraDisplace(GetRigidBody()->GetPosition());
-	//b2Vec2 toTarget = { m_mousePos.x - displacedPos.x, m_mousePos.y - displacedPos.y };
-	//m_angleToMouse = b2Atan2(toTarget.y, toTarget.x);
+	b2Vec2 displacedPos = Camera::Instance().CameraDisplace(GetRigidBody()->GetPosition());
+	b2Vec2 toTarget = { m_mousePos.x - displacedPos.x, m_mousePos.y - displacedPos.y };
+	m_angleToMouse = b2Atan2(toTarget.y, toTarget.x);
 	RotateToMouse();
 }
 
@@ -114,32 +114,33 @@ b2Vec2 Player::GetDirection()
 
 void Player::RotateToMouse()
 {
-	b2Vec2 movement_arm = Util::Normalize(b2Vec2((m_mousePos.x - GetRigidBody()->GetTransform().p.x),
-		(m_mousePos.y - GetRigidBody()->GetTransform().p.y))); // Slope (Direction Vector) Formula
+	b2Vec2 movement_arm = m_mousePos - GetRigidBody()->GetTransform().p;
 	ChangeDirection(movement_arm); // Sets the direction to the current mousePos
 
-	// Finding the angle using: cos0 = dot product of a and b / magnitude of a and b
-	float angle = acos(Util::Dot(GetRigidBody()->GetTransform().p, m_mousePos) / Util::Magnitude(GetRigidBody()->GetTransform().p) * Util::Magnitude(m_mousePos));
-	std::cout << GetRigidBody()->GetAngle() << std::endl;
-	while (GetRigidBody()->GetAngle() != angle)
-	{
-		if (GetRigidBody()->GetAngularVelocity() > m_turnSensitivity)
-		{
-			GetRigidBody()->SetAngularVelocity(m_turnForce);
-		}
-
-		GetRigidBody()->ApplyTorque(m_turnForce * 1, true);
-
-	}
-	//float angle = (Util::Angle(m_currentDirection, m_mousePos) * Util::Deg2Rad);
-	//std::cout << "angle: " << angle << std::endl;
-	//ChangeDirection(angle);
-	//if (GetRigidBody()->GetAngle() != angle)
+	//// Finding the angle using: cos0 = dot product of a and b / magnitude of a and b
+	//std::cout << GetRigidBody()->GetAngle() << std::endl;
+	//for(float i = GetRigidBody()->GetAngle(); i != angle)
 	//{
-	//	GetRigidBody()->ApplyTorque(m_turnForce * angle, true);
+	//	if ()
+	//	{
+	//		GetRigidBody()->ApplyTorque(m_turnForce * (1 * Util::Deg2Rad), true);
+	//	}
 	//}
+	//{
+	//	if (GetRigidBody()->GetAngularVelocity() > m_turnSensitivity)
+	//	{
+	//		GetRigidBody()->SetAngularVelocity(m_turnForce);
+	//	}
 
-
+	float nextAngle = GetRigidBody()->GetAngle() + GetRigidBody()->GetAngularVelocity() / 10.0;
+	float totalRotation = m_angleToMouse - nextAngle;
+	while (totalRotation < -180 * Util::Deg2Rad) totalRotation += 360 * Util::Deg2Rad;
+	while (totalRotation > 180 * Util::Deg2Rad) totalRotation -= 360 * Util::Deg2Rad;
+	float desiredAngularVelocity = totalRotation * 10;
+	float change = 1 * Util::Deg2Rad; //allow 1 degree rotation per time step
+	desiredAngularVelocity = std::min(change, std::max(-change, desiredAngularVelocity));
+	float impulse = GetRigidBody()->GetInertia() * desiredAngularVelocity;
+	GetRigidBody()->ApplyAngularImpulse(impulse * 10.0f, true);
 }
 
 b2Body* Player::GetRigidBody()
