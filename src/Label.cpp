@@ -13,7 +13,8 @@ Label::Label(const std::string& text, const std::string& font_name, const int fo
 	const auto size = TextureManager::Instance().GetTextureSize(m_fontID);
 	SetWidth(static_cast<int>(size.x));
 	SetHeight(static_cast<int>(size.y));
-	InitRigidBody();
+	m_Position = position;
+	InitRigidBody(position);
 }
 
 Label::~Label()
@@ -22,7 +23,7 @@ Label::~Label()
 void Label::Draw()
 {
 	// draw the label
-	TextureManager::Instance().DrawText(m_fontID, GetRigidBody()->GetPosition(), 0, 255, m_isCentered);
+	TextureManager::Instance().DrawText(m_fontID, m_Position, 0, 255, m_isCentered);
 }
 
 void Label::Update()
@@ -77,6 +78,14 @@ void Label::InitRigidBody()
 {
 	b2BodyDef bodyDef;
 	bodyDef.position.Set(400.0f, 100.0f);
+	bodyDef.enabled = true;
+	bodyDef.type = b2_kinematicBody;
+	m_rigidBody = WorldManager::Instance().GetWorld()->CreateBody(&bodyDef);
+}
+void Label::InitRigidBody(b2Vec2 position)
+{
+	b2BodyDef bodyDef;
+	bodyDef.position.Set(position.x,position.y);
 	bodyDef.enabled = true;
 	bodyDef.type = b2_kinematicBody;
 	m_rigidBody = WorldManager::Instance().GetWorld()->CreateBody(&bodyDef);

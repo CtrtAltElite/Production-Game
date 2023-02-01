@@ -47,13 +47,11 @@ void StartScene::HandleEvents()
 void StartScene::Start()
 {
 	const SDL_Color blue = { 0, 0, 255, 255 };
-	m_pStartLabel = new Label("START SCENE", "Consolas", 80, blue, b2Vec2(400.0f, 40.0f));
-	m_pStartLabel->InitRigidBody();
+	m_pStartLabel = new Label("Project CARL", "Dock51", 80, blue, b2Vec2(1280/2,100));
 	m_pStartLabel->SetParent(this);
 	AddChild(m_pStartLabel);
 
-	m_pInstructionsLabel = new Label("Press 1 to Play", "Consolas", 40, blue, b2Vec2(400.0f, 120.0f));
-	m_pInstructionsLabel->InitRigidBody();
+	m_pInstructionsLabel = new Label("Click to Shoot. Press SPACE to move.", "Consolas", 40, blue, b2Vec2(1280/2, 720/2-150));
 	m_pInstructionsLabel->SetParent(this);
 	AddChild(m_pInstructionsLabel);
 
@@ -61,7 +59,6 @@ void StartScene::Start()
 
 	// Start Button
 	m_pStartButton = new Button();
-	m_pStartButton->InitRigidBody();
 	
 
 	m_pStartButton->AddEventListener(Event::CLICK, [&]()-> void
@@ -85,7 +82,7 @@ void StartScene::Start()
 void StartScene::InitRigidBody()
 {
 	b2BodyDef bodyDef;
-	bodyDef.position.Set(0.0f, 0.0f);
+	bodyDef.position.Set(1280, 700);
 	bodyDef.enabled = true;
 	bodyDef.type = b2_kinematicBody;
 	m_rigidBody = WorldManager::Instance().GetWorld()->CreateBody(&bodyDef);

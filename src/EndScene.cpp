@@ -50,7 +50,8 @@ void EndScene::HandleEvents()
 void EndScene::Start()
 {
 	const SDL_Color blue = { 0, 0, 255, 255 };
-	m_label = new Label("END SCENE", "Dock51", 80, blue, b2Vec2(400.0f, 40.0f));
+	const SDL_Color red = { 255, 0, 0, 255 };
+	m_label = new Label("YOU DIED", "Dock51", 100, red, b2Vec2(1280/2, 720/2-200));
 	m_label->SetParent(this);
 	AddChild(m_label);
 
