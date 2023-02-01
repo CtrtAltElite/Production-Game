@@ -25,4 +25,5 @@ private:
 	float m_speed = 6000000.0f;
 	bool isDead = false;
 	b2Vec2 m_currentDirection;
+	float m_angleToPlayer;
 };

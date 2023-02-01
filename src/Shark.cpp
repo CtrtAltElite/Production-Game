@@ -7,6 +7,7 @@
 
 Shark::Shark()
 {
+	TextureManager::Instance().Load("../Assets/textures/Brute_Shark.png", "shark");
 	InitRigidBody();
 	SetWidth(53); // Setting width of frame
 	SetHeight(58); // Setting height of frame
@@ -23,7 +24,7 @@ Shark::Shark()
 
 void Shark::Draw()
 {
-	TextureManager::Instance().Draw("player", Camera::Instance().CameraDisplace(m_rigidBody->GetPosition()), GetRigidBody()->GetAngle() * Util::Rad2Deg, 255, true);
+	TextureManager::Instance().Draw("shark", Camera::Instance().CameraDisplace(m_rigidBody->GetPosition()), m_angleToPlayer*Util::Rad2Deg, 255, true);
 }
 
 void Shark::Update()
@@ -45,7 +46,7 @@ void Shark::LookTowardsPlayer(b2Vec2 player_position)
 	ChangeDirection(movement_arm); // Sets the direction to the current mousePos
 
 	b2Vec2 toTarget = { player_position.x - player_position.x, player_position.y - player_position.y };
-	float m_angleToPlayer = b2Atan2(toTarget.y, toTarget.x);
+	m_angleToPlayer = b2Atan2(toTarget.y, toTarget.x);
 
 	float nextAngle = GetRigidBody()->GetAngle() + GetRigidBody()->GetAngularVelocity() / 10.0;
 	float totalRotation = m_angleToPlayer - nextAngle;
