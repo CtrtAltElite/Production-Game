@@ -77,15 +77,15 @@ void Player::Clean()
 void Player::MoveAtMouse()
 {
 	
-	b2Vec2 vector = { cos(GetRigidBody()->GetAngle()),sin(GetRigidBody()->GetAngle()) };
+	//b2Vec2 vector = { cos(GetRigidBody()->GetAngle()),sin(GetRigidBody()->GetAngle()) };
 	
-	if (GetRigidBody()->GetTransform().p != vector)
+	if (GetRigidBody()->GetTransform().p != GetDirection())
 	{
-		GetRigidBody()->ApplyForceToCenter({ vector.x * m_speed,vector.y * m_speed }, true);
+		GetRigidBody()->ApplyForceToCenter({ GetDirection().x * m_speed,GetDirection().y * m_speed }, true);
 	}
 
 
-	//std::cout << "Body Angle: " << GetRigidBody()->GetAngle() * Util::Rad2Deg << std::endl;
+	std::cout << "Body Angle: " << GetRigidBody()->GetAngle() * Util::Deg2Rad << std::endl;
 	//std::cout << "Angle to mouse: " << m_angleToMouse * Util::Rad2Deg << std::endl;
 	//std::cout << "Angular Velo: " << GetRigidBody()->GetAngularVelocity() << std::endl;
 	//std::cout << "Inertia: " << GetRigidBody()->GetInertia() << std::endl;
@@ -94,19 +94,53 @@ void Player::MoveAtMouse()
 	//std::cout << "Linear Velocity X: " << GetRigidBody()->GetLinearVelocity().x <<", Y: "<< GetRigidBody()->GetLinearVelocity().y<< std::endl;
 	
 }
+
+void Player::ChangeDirection(float heading)
+{
+	const float x = (heading);
+	const float y = (heading);
+	m_currentDirection = b2Vec2(x, y);
+}
+
+void Player::ChangeDirection(b2Vec2 direction)
+{
+	m_currentDirection = direction;
+}
+
+b2Vec2 Player::GetDirection()
+{
+	return m_currentDirection;
+}
+
 void Player::RotateToMouse()
 {
+	b2Vec2 movement_arm = m_mousePos - GetRigidBody()->GetTransform().p;
+	ChangeDirection(movement_arm); // Sets the direction to the current mousePos
+
+	//// Finding the angle using: cos0 = dot product of a and b / magnitude of a and b
+	//std::cout << GetRigidBody()->GetAngle() << std::endl;
+	//for(float i = GetRigidBody()->GetAngle(); i != angle)
+	//{
+	//	if ()
+	//	{
+	//		GetRigidBody()->ApplyTorque(m_turnForce * (1 * Util::Deg2Rad), true);
+	//	}
+	//}
+	//{
+	//	if (GetRigidBody()->GetAngularVelocity() > m_turnSensitivity)
+	//	{
+	//		GetRigidBody()->SetAngularVelocity(m_turnForce);
+	//	}
+
 	float nextAngle = GetRigidBody()->GetAngle() + GetRigidBody()->GetAngularVelocity() / 10.0;
 	float totalRotation = m_angleToMouse - nextAngle;
-
 	while (totalRotation < -180 * Util::Deg2Rad) totalRotation += 360 * Util::Deg2Rad;
 	while (totalRotation > 180 * Util::Deg2Rad) totalRotation -= 360 * Util::Deg2Rad;
 	float desiredAngularVelocity = totalRotation * 10;
 	float change = 1 * Util::Deg2Rad; //allow 1 degree rotation per time step
 	desiredAngularVelocity = std::min(change, std::max(-change, desiredAngularVelocity));
 	float impulse = GetRigidBody()->GetInertia() * desiredAngularVelocity;
-	GetRigidBody()->ApplyAngularImpulse(impulse*100.0f,true);
-
+	GetRigidBody()->ApplyAngularImpulse(impulse * 10.0f, true);
 }
 
 b2Body* Player::GetRigidBody()
