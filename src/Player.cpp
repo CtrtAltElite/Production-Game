@@ -64,9 +64,9 @@ void Player::Update()
 {
 	//Camera displace and mouse position cause a ton of problems. remove comment in Camera.cpp to disable camera
 	m_mousePos = Camera::Instance().CameraDisplace(Game::Instance().GetMousePosition());
-	b2Vec2 displacedPos = Camera::Instance().CameraDisplace(GetRigidBody()->GetPosition());
-	b2Vec2 toTarget = { m_mousePos.x - displacedPos.x, m_mousePos.y - displacedPos.y };
-	m_angleToMouse = b2Atan2(toTarget.y, toTarget.x);
+	//b2Vec2 displacedPos = Camera::Instance().CameraDisplace(GetRigidBody()->GetPosition());
+	//b2Vec2 toTarget = { m_mousePos.x - displacedPos.x, m_mousePos.y - displacedPos.y };
+	//m_angleToMouse = b2Atan2(toTarget.y, toTarget.x);
 	RotateToMouse();
 }
 
@@ -77,15 +77,15 @@ void Player::Clean()
 void Player::MoveAtMouse()
 {
 	
-	b2Vec2 vector = { cos(GetRigidBody()->GetAngle()),sin(GetRigidBody()->GetAngle()) };
+	//b2Vec2 vector = { cos(GetRigidBody()->GetAngle()),sin(GetRigidBody()->GetAngle()) };
 	
-	if (GetRigidBody()->GetTransform().p != vector)
+	if (GetRigidBody()->GetTransform().p != GetDirection())
 	{
-		GetRigidBody()->ApplyForceToCenter({ vector.x * m_speed,vector.y * m_speed }, true);
+		GetRigidBody()->ApplyForceToCenter({ GetDirection().x * m_speed,GetDirection().y * m_speed }, true);
 	}
 
 
-	//std::cout << "Body Angle: " << GetRigidBody()->GetAngle() * Util::Rad2Deg << std::endl;
+	std::cout << "Body Angle: " << GetRigidBody()->GetAngle() * Util::Deg2Rad << std::endl;
 	//std::cout << "Angle to mouse: " << m_angleToMouse * Util::Rad2Deg << std::endl;
 	//std::cout << "Angular Velo: " << GetRigidBody()->GetAngularVelocity() << std::endl;
 	//std::cout << "Inertia: " << GetRigidBody()->GetInertia() << std::endl;
@@ -94,18 +94,51 @@ void Player::MoveAtMouse()
 	//std::cout << "Linear Velocity X: " << GetRigidBody()->GetLinearVelocity().x <<", Y: "<< GetRigidBody()->GetLinearVelocity().y<< std::endl;
 	
 }
+
+void Player::ChangeDirection(float heading)
+{
+	const float x = (heading);
+	const float y = (heading);
+	m_currentDirection = b2Vec2(x, y);
+}
+
+void Player::ChangeDirection(b2Vec2 direction)
+{
+	m_currentDirection = direction;
+}
+
+b2Vec2 Player::GetDirection()
+{
+	return m_currentDirection;
+}
+
 void Player::RotateToMouse()
 {
-	float nextAngle = GetRigidBody()->GetAngle() + GetRigidBody()->GetAngularVelocity() / 10.0;
-	float totalRotation = m_angleToMouse - nextAngle;
+	b2Vec2 movement_arm = Util::Normalize(b2Vec2((m_mousePos.x - GetRigidBody()->GetTransform().p.x),
+		(m_mousePos.y - GetRigidBody()->GetTransform().p.y))); // Slope (Direction Vector) Formula
+	ChangeDirection(movement_arm); // Sets the direction to the current mousePos
 
-	while (totalRotation < -180 * Util::Deg2Rad) totalRotation += 360 * Util::Deg2Rad;
-	while (totalRotation > 180 * Util::Deg2Rad) totalRotation -= 360 * Util::Deg2Rad;
-	float desiredAngularVelocity = totalRotation * 10;
-	float change = 1 * Util::Deg2Rad; //allow 1 degree rotation per time step
-	desiredAngularVelocity = std::min(change, std::max(-change, desiredAngularVelocity));
-	float impulse = GetRigidBody()->GetInertia() * desiredAngularVelocity;
-	GetRigidBody()->ApplyAngularImpulse(impulse*100.0f,true);
+	// Finding the angle using: cos0 = dot product of a and b / magnitude of a and b
+	float angle = acos(Util::Dot(GetRigidBody()->GetTransform().p, m_mousePos) / Util::Magnitude(GetRigidBody()->GetTransform().p) * Util::Magnitude(m_mousePos));
+	std::cout << GetRigidBody()->GetAngle() << std::endl;
+	while (GetRigidBody()->GetAngle() != angle)
+	{
+		if (GetRigidBody()->GetAngularVelocity() > m_turnSensitivity)
+		{
+			GetRigidBody()->SetAngularVelocity(m_turnForce);
+		}
+
+		GetRigidBody()->ApplyTorque(m_turnForce * 1, true);
+
+	}
+	//float angle = (Util::Angle(m_currentDirection, m_mousePos) * Util::Deg2Rad);
+	//std::cout << "angle: " << angle << std::endl;
+	//ChangeDirection(angle);
+	//if (GetRigidBody()->GetAngle() != angle)
+	//{
+	//	GetRigidBody()->ApplyTorque(m_turnForce * angle, true);
+	//}
+
 
 }
 

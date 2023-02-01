@@ -21,13 +21,19 @@ public:
 	b2Body*GetRigidBody() override;
 	void MoveAtMouse();
 	void RotateToMouse();
+	virtual void ChangeDirection(float heading);
+	virtual void ChangeDirection(b2Vec2 direction);
+	b2Vec2 GetDirection();
 private:
 	b2Vec2 m_mousePos;
 	float m_angleToMouse;
 	b2Vec2 m_lookTarget;
 	bool m_isColliding=false;
 	b2Body* m_rigidBody;
+	b2Vec2 m_currentDirection;
 	float m_speed = 5000000.0f;
+	float m_turnForce = 500000.0f;
+	float m_turnSensitivity = 5000.0f;
 };
 
 #endif /* defined (__PLAYER__) */
