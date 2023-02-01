@@ -57,8 +57,8 @@ public:
 	void ChangeSceneState(SceneState new_state);
 
 	[[nodiscard]] SDL_Window* GetWindow() const;
-	int GetWindowWidth() const { return m_ScreenWidth; }
-	int GetWindowHeight() const { return m_ScreenHeight; }
+	int GetWindowWidth() { return m_ScreenWidth; }
+	int GetWindowHeight() { return m_ScreenHeight; }
 	
 private:
 	Game();

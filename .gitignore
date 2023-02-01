@@ -396,3 +396,5 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+Template/Intermediate/Debug/vc143.idb
+bin/Debug/Template.exe
