@@ -11,10 +11,10 @@
 // Constructor, initializes a lot of stuff like RigidBody and any physics or texture variables.
 Player::Player()
 {
-	TextureManager::Instance().Load("../Assets/textures/ncl.png", "player");
+	TextureManager::Instance().Load("../Assets/sprites/test_ship.png", "player");
 	InitRigidBody();
-	SetWidth(53); // Setting width of frame
-	SetHeight(58); // Setting height of frame
+	SetWidth(64); // Setting width of frame
+	SetHeight(64); // Setting height of frame
 	b2PolygonShape dynamicBox;
 	dynamicBox.SetAsBox(GetWidth()/3, GetHeight()/3);
 	b2FixtureDef fixtureDef;
@@ -57,7 +57,6 @@ void Player::Draw()
 			SDL_RenderDrawLinesF(Renderer::Instance().GetRenderer(), polygon->m_vertices, 4);
 		}
 	}*/
-	
 }
 
 void Player::Update()
