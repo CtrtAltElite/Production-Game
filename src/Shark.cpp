@@ -33,12 +33,29 @@ void Shark::Update()
 
 void Shark::Move()
 {
-	
+	if (GetRigidBody()->GetTransform().p != GetDirection())
+	{
+		GetRigidBody()->ApplyForceToCenter({ GetDirection().x * m_speed,GetDirection().y * m_speed }, true);
+	}
 }
 
 void Shark::LookTowardsPlayer(b2Vec2 player_position)
 {
-	
+	b2Vec2 movement_arm = player_position - GetRigidBody()->GetTransform().p;
+	ChangeDirection(movement_arm); // Sets the direction to the current mousePos
+
+	b2Vec2 toTarget = { player_position.x - player_position.x, player_position.y - player_position.y };
+	float m_angleToPlayer = b2Atan2(toTarget.y, toTarget.x);
+
+	float nextAngle = GetRigidBody()->GetAngle() + GetRigidBody()->GetAngularVelocity() / 10.0;
+	float totalRotation = m_angleToPlayer - nextAngle;
+	while (totalRotation < -180 * Util::Deg2Rad) totalRotation += 360 * Util::Deg2Rad;
+	while (totalRotation > 180 * Util::Deg2Rad) totalRotation -= 360 * Util::Deg2Rad;
+	float desiredAngularVelocity = totalRotation * 10;
+	float change = 1 * Util::Deg2Rad; //allow 1 degree rotation per time step
+	desiredAngularVelocity = std::min(change, std::max(-change, desiredAngularVelocity));
+	float impulse = GetRigidBody()->GetInertia() * desiredAngularVelocity;
+	GetRigidBody()->ApplyAngularImpulse(impulse * 10.0f, true);
 }
 
 
