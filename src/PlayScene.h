@@ -32,6 +32,7 @@ private:
 	Shark* m_pShark;
 	Projectile* m_pProjectile;
 	std::vector<Projectile*> m_pProjVec;
+	std::vector<Shark*> m_pSharkVec;
 	Background* m_pBackground;
 	b2Body* m_rigidBody;
 

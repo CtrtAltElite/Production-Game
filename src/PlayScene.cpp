@@ -37,6 +37,9 @@ void PlayScene::Start()
 	m_pShark = new Shark();
 	AddChild(m_pShark);
 
+	SoundManager::Instance().Load("/Assets/audio/levelOneMusic.mp3", "levelOneMusic", SoundType::SOUND_MUSIC);
+	//SoundManager::Instance().Load("/Assets/audio/player_shoot.wav", "playerShoot", SoundType::SOUND_SFX);
+	
 }
 
 // Initializing the Rigidbody, setting some base values and then adding it to the World
@@ -64,6 +67,26 @@ void PlayScene::Update()
 	Camera::Instance().SetPosition(camPos);
 	m_pShark->LookTowardsPlayer(m_pPlayer->GetRigidBody()->GetTransform().p);
 
+	if (CollisionManager::AABBCheck(m_pPlayer, m_pShark))
+	{
+
+		Game::Instance().ChangeSceneState(SceneState::END);
+		std::cout << "you lose!\n";
+
+	}
+	for (Projectile* playerBullet : m_pProjVec)
+	{
+		for (Shark* shark : m_pSharkVec)
+		{
+			if (CollisionManager::AABBCheck(m_pShark, playerBullet))
+			{
+				Game::Instance().ChangeSceneState(SceneState::END);
+				std::cout << "you win!\n";
+			}
+		}
+		
+	}
+	
 }
 
 // When we are cleaning up the scene, preparing to leave
@@ -92,6 +115,7 @@ void PlayScene::HandleEvents()
 		m_pProjectile = new Projectile(m_pPlayer);
 		AddChild(m_pProjectile);
 		m_pProjVec.push_back(m_pProjectile);
+		SoundManager::Instance().PlaySound("playerShoot");
 	}
 
 	if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_ESCAPE))
