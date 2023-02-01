@@ -22,6 +22,7 @@ private:
 	b2Body* m_rigidBody;
 	float m_health = 100.0f;
 	float m_maxHealth = 100.0f;
+	float m_speed = 6000000.0f;
 	bool isDead = false;
 	b2Vec2 m_currentDirection;
 };
