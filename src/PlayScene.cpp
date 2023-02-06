@@ -53,7 +53,7 @@ void PlayScene::GetPlayerInput()
 		m_pProjectile = new Projectile(m_pPlayer);
 		AddChild(m_pProjectile);
 		m_ProjVec.push_back(m_pProjectile);
-		SoundManager::Instance().PlaySound("playerShoot");
+		//SoundManager::Instance().PlaySound("playerShoot");
 		}
 }
 

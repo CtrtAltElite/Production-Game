@@ -21,12 +21,14 @@ void Projectile::Start()
 	const auto size = TextureManager::Instance().GetTextureSize("projectile");
 	SetWidth(static_cast<int>(size.x));
 	SetHeight(static_cast<int>(size.y));
-	veloDamp = {0.999,0.999};
+	veloDamp = {0.9975,0.9975};
+	m_speed = 150.0f;
+	m_maxSpeed = 300.0f;
 	SDL_GetMouseState(&m_mousepos.x,&m_mousepos.y);
 	isColliding = false;
 	m_angle = m_pPlayer->GetTransform()->rotation.r;
 	GetTransform()->position = m_pPlayer->GetTransform()->position;
-	GetRigidBody()->velocity+= glm::vec2{cos(m_pPlayer->GetTransform()->rotation.r)*100.0f,sin(m_pPlayer->GetTransform()->rotation.r)*100.0f};
+	GetRigidBody()->velocity+= glm::vec2{cos(m_pPlayer->GetTransform()->rotation.r)*m_speed,sin(m_pPlayer->GetTransform()->rotation.r)*m_speed};
 	SetType(GameObjectType::PROJECTILE);
 
 	//debug

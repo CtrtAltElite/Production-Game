@@ -25,7 +25,8 @@ private:
 	float m_angle;
 	Player* m_pPlayer;
 	bool isColliding;
-	float m_maxSpeed = 200.0f;
+	float m_speed;
+	float m_maxSpeed;
 	glm::ivec2 m_mousepos;
 	
 };

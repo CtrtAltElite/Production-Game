@@ -27,7 +27,8 @@ public:
 
 private:
 	void BuildAnimations();
-	float m_maxSpeed = 100.0f;
+	float m_speed;
+	float m_maxSpeed;
 	glm::vec2 veloDamp;
 	glm::ivec2 m_mousePos;
 

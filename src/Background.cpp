@@ -20,8 +20,8 @@ Background::~Background()
 void Background::Draw()
 {
 	// alias for x and y
-	const auto x = static_cast<int>(GetTransform()->position.x - Camera::Instance().GetPosition().x);
-	const auto y = static_cast<int>(GetTransform()->position.y - Camera::Instance().GetPosition().y);
+	const auto x = static_cast<int>(GetTransform()->position.x);
+	const auto y = static_cast<int>(GetTransform()->position.y);
 	for (int i =-10 ;i<10;i++)
 	{
 		for(int p = -10; p<10; p++)

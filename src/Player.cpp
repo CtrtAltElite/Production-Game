@@ -18,6 +18,8 @@ Player::Player(): m_currentAnimationState(PlayerAnimationState::PLAYER_IDLE_RIGH
 	// set frame height
 	SetHeight(58);
 
+	m_speed = 5.0f;
+	m_maxSpeed = 200.0f;
 	GetTransform()->position = glm::vec2(400.0f, 300.0f);
 	GetRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
 	GetRigidBody()->acceleration = glm::vec2(0.0f, 0.0f);
@@ -85,7 +87,7 @@ void Player::SetAnimationState(const PlayerAnimationState new_state)
 
 void Player::MoveAtMouse()
 {
-	GetRigidBody()->velocity-=Util::Normalize(glm::vec2{GetTransform()->position.x-m_mousePos.x,GetTransform()->position.y-m_mousePos.y});
+	GetRigidBody()->velocity-=Util::Normalize(glm::vec2{GetTransform()->position.x-m_mousePos.x,GetTransform()->position.y-m_mousePos.y})*m_speed;
 }
 void Player::LookAtMouse()
 {

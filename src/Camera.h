@@ -1,4 +1,8 @@
 ﻿#pragma once
+#include <glm/detail/type_vec.hpp>
+
+#include "Transform.h"
+
 class Camera
 {
 public:
@@ -7,11 +11,8 @@ public:
 		static Camera instance;
 		return instance;
 	}
-	glm::vec2 GetPosition() { return m_position; }
-	glm::vec2 GetSize() { return m_size; }
-	void SetPosition(glm::vec2 pos) { m_position = pos; }
-	void SetSize(glm::vec2 size) { m_size = size; }
+	void Update();
+	glm::vec2 CameraDisplace(glm::vec2 position);
 private:
-	glm::vec2 m_position={1280/2,720/2};
-	glm::vec2 m_size{1280,720};
+	Transform m_transform;
 };
