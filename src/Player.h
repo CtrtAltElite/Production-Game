@@ -18,9 +18,9 @@ public:
 	void Move();
 
 	// setters
-	void GetPlayerInput();
 	void SetAnimationState(PlayerAnimationState new_state);
 	void MoveAtMouse();
+	void LookAtMouse();
 	void SetMaxSpeed (float maxSpeed) {m_maxSpeed = maxSpeed;}
 
 	float GetMaxSpeed(){return m_maxSpeed;}
@@ -28,6 +28,7 @@ public:
 private:
 	void BuildAnimations();
 	float m_maxSpeed = 100.0f;
+	glm::ivec2 m_mousePos;
 
 	PlayerAnimationState m_currentAnimationState;
 };

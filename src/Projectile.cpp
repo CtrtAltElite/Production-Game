@@ -13,21 +13,24 @@ Projectile::Projectile(Player* player)
 void Projectile::Draw()
 {
 	// draw the target
-	TextureManager::Instance().Draw("projectile", GetTransform()->position, 0, 255, true);
+	TextureManager::Instance().Draw("projectile", GetTransform()->position, m_angle*Util::Rad2Deg, 255, true);
 }
 void Projectile::Start()
 {
-	TextureManager::Instance().Load("../Assets/textures/Circle.png", "projectile");
+	TextureManager::Instance().Load("../Assets/textures/Small_Torpedo.png", "projectile");
 	const auto size = TextureManager::Instance().GetTextureSize("projectile");
 	SetWidth(static_cast<int>(size.x));
 	SetHeight(static_cast<int>(size.y));
 	SDL_GetMouseState(&m_mousepos.x,&m_mousepos.y);
 	isColliding = false;
+	m_angle = m_pPlayer->GetTransform()->rotation.r;
 	GetTransform()->position = m_pPlayer->GetTransform()->position;
-	std::cout << "Spawned projectile at:" << GetTransform()->position.x << " , " << GetTransform()->position.y<<std::endl;
-	GetRigidBody()->velocity-=Util::Normalize(glm::vec2{GetTransform()->position.x-m_mousepos.x,GetTransform()->position.y-m_mousepos.y});
-	std::cout << GetRigidBody()->velocity.x << " , " << GetRigidBody()->velocity.y<<std::endl;
+	GetRigidBody()->velocity-= glm::vec2{cos(m_pPlayer->GetTransform()->rotation.r),sin(m_pPlayer->GetTransform()->rotation.r)};
 	SetType(GameObjectType::PROJECTILE);
+
+	//debug
+	std::cout << "Spawned projectile at:" << GetTransform()->position.x << " , " << GetTransform()->position.y<<std::endl;
+	std::cout << GetRigidBody()->velocity.x << " , " << GetRigidBody()->velocity.y<<std::endl;
 }
 void Projectile::Move()
 {

@@ -37,19 +37,19 @@ void Player::Draw()
 	{
 	case PlayerAnimationState::PLAYER_IDLE_RIGHT:
 		TextureManager::Instance().PlayAnimation("spritesheet", GetAnimation("idle"),
-			GetTransform()->position, 0.12f, 0, 255, true);
+			GetTransform()->position, 0.12f, GetTransform()->rotation.r*Util::Rad2Deg, 255, true);
 		break;
 	case PlayerAnimationState::PLAYER_IDLE_LEFT:
 		TextureManager::Instance().PlayAnimation("spritesheet", GetAnimation("idle"),
-			GetTransform()->position, 0.12f, 0, 255, true, SDL_FLIP_HORIZONTAL);
+			GetTransform()->position, 0.12f, GetTransform()->rotation.r*Util::Rad2Deg, 255, true, SDL_FLIP_HORIZONTAL);
 		break;
 	case PlayerAnimationState::PLAYER_RUN_RIGHT:
 		TextureManager::Instance().PlayAnimation("spritesheet", GetAnimation("run"),
-			GetTransform()->position, 0.25f, 0, 255, true);
+			GetTransform()->position, 0.25f, GetTransform()->rotation.r*Util::Rad2Deg, 255, true);
 		break;
 	case PlayerAnimationState::PLAYER_RUN_LEFT:
 		TextureManager::Instance().PlayAnimation("spritesheet", GetAnimation("run"),
-			GetTransform()->position, 0.25f, 0, 255, true, SDL_FLIP_HORIZONTAL);
+			GetTransform()->position, 0.25f, GetTransform()->rotation.r*Util::Rad2Deg, 255, true, SDL_FLIP_HORIZONTAL);
 		break;
 	default:
 		break;
@@ -58,6 +58,8 @@ void Player::Draw()
 
 void Player::Update()
 {
+	SDL_GetMouseState(&m_mousePos.x,&m_mousePos.y);
+	LookAtMouse();
 	Move();
 }
 void Player::Move()
@@ -83,9 +85,13 @@ void Player::SetAnimationState(const PlayerAnimationState new_state)
 
 void Player::MoveAtMouse()
 {
-	glm::ivec2 mousePos;
-	SDL_GetMouseState(&mousePos.x,&mousePos.y);
-	GetRigidBody()->velocity-=Util::Normalize(glm::vec2{GetTransform()->position.x-mousePos.x,GetTransform()->position.y-mousePos.y});
+	GetRigidBody()->velocity-=Util::Normalize(glm::vec2{GetTransform()->position.x-m_mousePos.x,GetTransform()->position.y-m_mousePos.y});
+}
+void Player::LookAtMouse()
+{
+	float angleToMouse = atan2(m_mousePos.y-GetTransform()->position.y,m_mousePos.x-GetTransform()->position.x);
+	GetTransform()->rotation.r = angleToMouse;
+	std::cout << angleToMouse <<std::endl;
 }
 
 void Player::BuildAnimations()
