@@ -1,75 +1,51 @@
 #include "Projectile.h"
-
 #include "Camera.h"
 #include "Game.h"
 #include "TextureManager.h"
-#include "WorldManager.h"
+#include "Util.h"
 
 Projectile::Projectile(Player* player)
 {
-	TextureManager::Instance().Load("../Assets/textures/Circle.png", "projectile");
-
-	const auto size = TextureManager::Instance().GetTextureSize("projectile");
-	SetWidth(static_cast<int>(size.x));
-	SetHeight(static_cast<int>(size.y));
-	m_mousepos = Game::Instance().GetMousePosition();
-	isColliding = false;
-	m_player = player;
-	m_angle = (atan2((m_player->GetRigidBody()->GetPosition().y - m_mousepos.y) - Camera::Instance().GetPosition().y, (m_player->GetRigidBody()->GetPosition().x - m_mousepos.x) - Camera::Instance().GetPosition().x));
-	m_vector = { -cos(m_angle) * 50,-sin(m_angle) * 50 };
+	
+	m_pPlayer = player;
 	Start();
-	
-	
-
-	SetType(GameObjectType::PROJECTILE);
-	
 }
-
-
 void Projectile::Draw()
 {
 	// draw the target
-	b2Vec2 position = GetRigidBody()->GetPosition();
-	position.x -= Camera::Instance().GetPosition().x;
-	position.y -= Camera::Instance().GetPosition().y;
-	TextureManager::Instance().Draw("projectile", position, 0, 180, true);
+	TextureManager::Instance().Draw("projectile", GetTransform()->position, 0, 255, true);
 }
 void Projectile::Start()
 {
-	InitRigidBody();
-	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(GetWidth()/3, GetHeight()/3);
-	b2FixtureDef fixtureDef;
-	fixtureDef.shape = &dynamicBox;
-	fixtureDef.density = 0.5f;
-	fixtureDef.friction = 1.0f;
-	GetRigidBody()->CreateFixture(&fixtureDef);
-	
-	std::cout << m_rigidBody->GetPosition().x << std::endl << m_rigidBody->GetPosition().y << std::endl;
-	GetRigidBody()->ApplyForceToCenter({ m_vector.x * 15000,m_vector.y * 15000 }, true);
-	m_player->GetRigidBody()->ApplyForceToCenter({ -m_vector.x * 10000.0f, -m_vector.y * 10000.0f }, true);
+	TextureManager::Instance().Load("../Assets/textures/Circle.png", "projectile");
+	const auto size = TextureManager::Instance().GetTextureSize("projectile");
+	SetWidth(static_cast<int>(size.x));
+	SetHeight(static_cast<int>(size.y));
+	SDL_GetMouseState(&m_mousepos.x,&m_mousepos.y);
+	isColliding = false;
+	GetTransform()->position = m_pPlayer->GetTransform()->position;
+	std::cout << "Spawned projectile at:" << GetTransform()->position.x << " , " << GetTransform()->position.y<<std::endl;
+	GetRigidBody()->velocity-=Util::Normalize(glm::vec2{GetTransform()->position.x-m_mousepos.x,GetTransform()->position.y-m_mousepos.y});
+	std::cout << GetRigidBody()->velocity.x << " , " << GetRigidBody()->velocity.y<<std::endl;
+	SetType(GameObjectType::PROJECTILE);
 }
-
+void Projectile::Move()
+{
+	const float dt =Game::Instance().GetDeltaTime();
+	const glm::vec2 initial_position = GetTransform()->position;
+	const glm::vec2 velocity_term = GetRigidBody()->velocity * dt;
+	const glm::vec2 acceleration_term = GetRigidBody()->acceleration * 0.5f *dt;
+	const glm::vec2 final_position = initial_position + velocity_term + acceleration_term;
+	GetTransform()->position = final_position;
+	GetRigidBody()->velocity += GetRigidBody()->acceleration;
+	GetRigidBody()->velocity = Util::Clamp(GetRigidBody()->velocity,GetMaxSpeed());
+}
 void Projectile::Update()
 {
-	
-	
+	Move();
 }
 void Projectile::Clean()
 {
 	
 }
 
-void Projectile::InitRigidBody()
-{
-	b2BodyDef bodyDef;
-	bodyDef.position.Set(m_player->GetRigidBody()->GetPosition().x + m_vector.x, m_player->GetRigidBody()->GetPosition().y + m_vector.y);
-	bodyDef.enabled = true;
-	bodyDef.bullet = true;
-	bodyDef.type = b2_dynamicBody;
-	m_rigidBody = WorldManager::Instance().GetWorld()->CreateBody(&bodyDef);
-}
-b2Body* Projectile::GetRigidBody()
-{
-	return m_rigidBody;
-}

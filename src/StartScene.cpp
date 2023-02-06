@@ -46,22 +46,19 @@ void StartScene::HandleEvents()
 void StartScene::Start()
 {
 	const SDL_Color blue = { 0, 0, 255, 255 };
-	m_pStartLabel = new Label("START SCENE", "Consolas", 80, blue, glm::vec2(400.0f, 40.0f));
+	m_pStartLabel = new Label("Project CARL", "Dock51", 80, blue, glm::vec2(1280/2,100));
 	m_pStartLabel->SetParent(this);
 	AddChild(m_pStartLabel);
 
-	m_pInstructionsLabel = new Label("Press 1 to Play", "Consolas", 40, blue, glm::vec2(400.0f, 120.0f));
+	m_pInstructionsLabel = new Label("Click to Shoot. Press SPACE to move.", "Consolas", 40, blue, glm::vec2(1280/2, 720/2-150));
 	m_pInstructionsLabel->SetParent(this);
 	AddChild(m_pInstructionsLabel);
 
 
-	m_pShip = new Ship();
-	m_pShip->GetTransform()->position = glm::vec2(400.0f, 300.0f); 
-	AddChild(m_pShip); 
-
+	
 	// Start Button
 	m_pStartButton = new Button();
-	m_pStartButton->GetTransform()->position = glm::vec2(400.0f, 400.0f); 
+	m_pStartButton->GetTransform()->position = glm::vec2(1280.0f/2.0f, 400.0f); 
 
 	m_pStartButton->AddEventListener(Event::CLICK, [&]()-> void
 	{

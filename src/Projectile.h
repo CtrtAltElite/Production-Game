@@ -3,6 +3,7 @@
 #define __PROJECTILE__
 
 #include <glm/vec2.hpp>
+#include <glm/detail/func_common.hpp>
 
 #include "Player.h"
 #include "Sprite.h"
@@ -15,14 +16,16 @@ public:
 	virtual void Draw() override;
 	virtual void Update() override;
 	virtual void Clean() override;
-	void InitRigidBody()override;
-	b2Body* GetRigidBody() override;
+	void SetMaxSpeed(float maxSpeed) {m_maxSpeed = maxSpeed;}
+	float GetMaxSpeed(){return m_maxSpeed;}
 	void Start();
+	void Move();
 private:
 	float m_angle;
-	b2Vec2 m_vector;
-	b2Body* m_rigidBody;
-	Player* m_player;
+	Player* m_pPlayer;
+	bool isColliding;
+	float m_maxSpeed = 200.0f;
 	glm::ivec2 m_mousepos;
+	
 };
 #endif /* defined (__PROJECTILE__)*/

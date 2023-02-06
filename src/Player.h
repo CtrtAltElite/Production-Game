@@ -15,12 +15,19 @@ public:
 	virtual void Draw() override;
 	virtual void Update() override;
 	virtual void Clean() override;
+	void Move();
 
 	// setters
+	void GetPlayerInput();
 	void SetAnimationState(PlayerAnimationState new_state);
+	void MoveAtMouse();
+	void SetMaxSpeed (float maxSpeed) {m_maxSpeed = maxSpeed;}
+
+	float GetMaxSpeed(){return m_maxSpeed;}
 
 private:
 	void BuildAnimations();
+	float m_maxSpeed = 100.0f;
 
 	PlayerAnimationState m_currentAnimationState;
 };

@@ -1,5 +1,7 @@
 #include "Player.h"
 #include "TextureManager.h"
+#include "Util.h"
+#include "Game.h"
 
 Player::Player(): m_currentAnimationState(PlayerAnimationState::PLAYER_IDLE_RIGHT)
 {
@@ -56,15 +58,34 @@ void Player::Draw()
 
 void Player::Update()
 {
+	Move();
 }
-
+void Player::Move()
+{
+	const float dt =Game::Instance().GetDeltaTime();
+	const glm::vec2 initial_position = GetTransform()->position;
+	const glm::vec2 velocity_term = GetRigidBody()->velocity * dt;
+	const glm::vec2 acceleration_term = GetRigidBody()->acceleration * 0.5f *dt;
+	const glm::vec2 final_position = initial_position + velocity_term + acceleration_term;
+	GetTransform()->position = final_position;
+	GetRigidBody()->velocity += GetRigidBody()->acceleration;
+	GetRigidBody()->velocity = Util::Clamp(GetRigidBody()->velocity,GetMaxSpeed());
+}
 void Player::Clean()
 {
 }
 
+
 void Player::SetAnimationState(const PlayerAnimationState new_state)
 {
 	m_currentAnimationState = new_state;
+}
+
+void Player::MoveAtMouse()
+{
+	glm::ivec2 mousePos;
+	SDL_GetMouseState(&mousePos.x,&mousePos.y);
+	GetRigidBody()->velocity-=Util::Normalize(glm::vec2{GetTransform()->position.x-mousePos.x,GetTransform()->position.y-mousePos.y});
 }
 
 void Player::BuildAnimations()
