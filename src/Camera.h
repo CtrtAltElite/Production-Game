@@ -11,7 +11,7 @@ public:
 		static Camera instance;
 		return instance;
 	}
-	void Update();
+	Transform* GetTransform(){return &m_transform;}
 	glm::vec2 CameraDisplace(glm::vec2 position);
 private:
 	Transform m_transform;

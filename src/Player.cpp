@@ -1,4 +1,6 @@
 #include "Player.h"
+
+#include "Camera.h"
 #include "TextureManager.h"
 #include "Util.h"
 #include "Game.h"
@@ -40,19 +42,19 @@ void Player::Draw()
 	{
 	case PlayerAnimationState::PLAYER_IDLE_RIGHT:
 		TextureManager::Instance().PlayAnimation("spritesheet", GetAnimation("idle"),
-			GetTransform()->position, 0.12f, GetTransform()->rotation.r*Util::Rad2Deg, 255, true);
+			Camera::Instance().CameraDisplace(GetTransform()->position), 0.12f, GetTransform()->rotation.r*Util::Rad2Deg, 255, true);
 		break;
 	case PlayerAnimationState::PLAYER_IDLE_LEFT:
 		TextureManager::Instance().PlayAnimation("spritesheet", GetAnimation("idle"),
-			GetTransform()->position, 0.12f, GetTransform()->rotation.r*Util::Rad2Deg, 255, true, SDL_FLIP_HORIZONTAL);
+			Camera::Instance().CameraDisplace(GetTransform()->position), 0.12f, GetTransform()->rotation.r*Util::Rad2Deg, 255, true, SDL_FLIP_HORIZONTAL);
 		break;
 	case PlayerAnimationState::PLAYER_RUN_RIGHT:
 		TextureManager::Instance().PlayAnimation("spritesheet", GetAnimation("run"),
-			GetTransform()->position, 0.25f, GetTransform()->rotation.r*Util::Rad2Deg, 255, true);
+			Camera::Instance().CameraDisplace(GetTransform()->position), 0.25f, GetTransform()->rotation.r*Util::Rad2Deg, 255, true);
 		break;
 	case PlayerAnimationState::PLAYER_RUN_LEFT:
 		TextureManager::Instance().PlayAnimation("spritesheet", GetAnimation("run"),
-			GetTransform()->position, 0.25f, GetTransform()->rotation.r*Util::Rad2Deg, 255, true, SDL_FLIP_HORIZONTAL);
+			Camera::Instance().CameraDisplace(GetTransform()->position), 0.25f, GetTransform()->rotation.r*Util::Rad2Deg, 255, true, SDL_FLIP_HORIZONTAL);
 		break;
 	default:
 		break;
@@ -65,6 +67,7 @@ void Player::Update()
 	LookAtMouse();
 	Move();
 	GetRigidBody()->velocity*=veloDamp;
+	Camera::Instance().GetTransform()->position=GetTransform()->position-glm::vec2{1280/2,720/2};
 }
 void Player::Move()
 {

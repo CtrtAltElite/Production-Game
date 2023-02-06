@@ -1,10 +1,8 @@
 ﻿#include "Camera.h"
-void Camera::Update()
-{
-}
 
-glm::vec2 Camera::CameraDisplace(glm::vec2)
+
+glm::vec2 Camera::CameraDisplace(glm::vec2 position)
 {
-    return glm::vec2{0,0};
+    return glm::vec2{position.x-m_transform.position.x,position.y-m_transform.position.y};
 }
 

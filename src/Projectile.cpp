@@ -13,7 +13,7 @@ Projectile::Projectile(Player* player)
 void Projectile::Draw()
 {
 	// draw the target
-	TextureManager::Instance().Draw("projectile", GetTransform()->position, m_angle*Util::Rad2Deg, 255, true);
+	TextureManager::Instance().Draw("projectile", Camera::Instance().CameraDisplace(GetTransform()->position), m_angle*Util::Rad2Deg, 255, true);
 }
 void Projectile::Start()
 {
