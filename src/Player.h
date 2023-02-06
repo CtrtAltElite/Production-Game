@@ -12,9 +12,9 @@ public:
 	~Player() override;
 
 	// Life Cycle Methods
-	virtual void Draw() override;
-	virtual void Update() override;
-	virtual void Clean() override;
+	void Draw() override;
+	void Update() override;
+	void Clean() override;
 	void Move();
 
 	// setters
@@ -28,6 +28,7 @@ public:
 private:
 	void BuildAnimations();
 	float m_maxSpeed = 100.0f;
+	glm::vec2 veloDamp;
 	glm::ivec2 m_mousePos;
 
 	PlayerAnimationState m_currentAnimationState;

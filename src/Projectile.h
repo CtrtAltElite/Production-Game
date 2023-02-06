@@ -13,14 +13,15 @@ class Projectile : public Sprite
 public:
 	Projectile(Player* player);
 	// Life Cycle Methods
-	virtual void Draw() override;
-	virtual void Update() override;
-	virtual void Clean() override;
+	void Draw() override;
+	void Update() override;
+	void Clean() override;
 	void SetMaxSpeed(float maxSpeed) {m_maxSpeed = maxSpeed;}
 	float GetMaxSpeed(){return m_maxSpeed;}
 	void Start();
 	void Move();
 private:
+	glm::vec2 veloDamp;
 	float m_angle;
 	Player* m_pPlayer;
 	bool isColliding;

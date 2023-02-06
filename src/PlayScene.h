@@ -16,11 +16,11 @@ public:
 	~PlayScene() override;
 
 	// Scene LifeCycle Functions
-	virtual void Draw() override;
-	virtual void Update() override;
-	virtual void Clean() override;
-	virtual void HandleEvents() override;
-	virtual void Start() override;
+	void Draw() override;
+	void Update() override;
+	void Clean() override;
+	void HandleEvents() override;
+	void Start() override;
 private:
 	// IMGUI Function
 	void GUI_Function();

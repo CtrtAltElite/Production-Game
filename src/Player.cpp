@@ -22,6 +22,7 @@ Player::Player(): m_currentAnimationState(PlayerAnimationState::PLAYER_IDLE_RIGH
 	GetRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
 	GetRigidBody()->acceleration = glm::vec2(0.0f, 0.0f);
 	GetRigidBody()->isColliding = false;
+	veloDamp = {0.985, 0.985};
 	SetType(GameObjectType::PLAYER);
 
 	BuildAnimations();
@@ -61,13 +62,14 @@ void Player::Update()
 	SDL_GetMouseState(&m_mousePos.x,&m_mousePos.y);
 	LookAtMouse();
 	Move();
+	GetRigidBody()->velocity*=veloDamp;
 }
 void Player::Move()
 {
 	const float dt =Game::Instance().GetDeltaTime();
 	const glm::vec2 initial_position = GetTransform()->position;
 	const glm::vec2 velocity_term = GetRigidBody()->velocity * dt;
-	const glm::vec2 acceleration_term = GetRigidBody()->acceleration * 0.5f *dt;
+	const glm::vec2 acceleration_term = GetRigidBody()->acceleration * 0.5f;
 	const glm::vec2 final_position = initial_position + velocity_term + acceleration_term;
 	GetTransform()->position = final_position;
 	GetRigidBody()->velocity += GetRigidBody()->acceleration;
@@ -76,8 +78,6 @@ void Player::Move()
 void Player::Clean()
 {
 }
-
-
 void Player::SetAnimationState(const PlayerAnimationState new_state)
 {
 	m_currentAnimationState = new_state;
@@ -91,7 +91,6 @@ void Player::LookAtMouse()
 {
 	float angleToMouse = atan2(m_mousePos.y-GetTransform()->position.y,m_mousePos.x-GetTransform()->position.x);
 	GetTransform()->rotation.r = angleToMouse;
-	std::cout << angleToMouse <<std::endl;
 }
 
 void Player::BuildAnimations()

@@ -21,11 +21,12 @@ void Projectile::Start()
 	const auto size = TextureManager::Instance().GetTextureSize("projectile");
 	SetWidth(static_cast<int>(size.x));
 	SetHeight(static_cast<int>(size.y));
+	veloDamp = {0.999,0.999};
 	SDL_GetMouseState(&m_mousepos.x,&m_mousepos.y);
 	isColliding = false;
 	m_angle = m_pPlayer->GetTransform()->rotation.r;
 	GetTransform()->position = m_pPlayer->GetTransform()->position;
-	GetRigidBody()->velocity-= glm::vec2{cos(m_pPlayer->GetTransform()->rotation.r),sin(m_pPlayer->GetTransform()->rotation.r)};
+	GetRigidBody()->velocity+= glm::vec2{cos(m_pPlayer->GetTransform()->rotation.r)*100.0f,sin(m_pPlayer->GetTransform()->rotation.r)*100.0f};
 	SetType(GameObjectType::PROJECTILE);
 
 	//debug
@@ -37,7 +38,7 @@ void Projectile::Move()
 	const float dt =Game::Instance().GetDeltaTime();
 	const glm::vec2 initial_position = GetTransform()->position;
 	const glm::vec2 velocity_term = GetRigidBody()->velocity * dt;
-	const glm::vec2 acceleration_term = GetRigidBody()->acceleration * 0.5f *dt;
+	const glm::vec2 acceleration_term = GetRigidBody()->acceleration * 0.5f;
 	const glm::vec2 final_position = initial_position + velocity_term + acceleration_term;
 	GetTransform()->position = final_position;
 	GetRigidBody()->velocity += GetRigidBody()->acceleration;
@@ -46,6 +47,7 @@ void Projectile::Move()
 void Projectile::Update()
 {
 	Move();
+	GetRigidBody()->velocity*=veloDamp;
 }
 void Projectile::Clean()
 {
