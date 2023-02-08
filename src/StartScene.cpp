@@ -45,7 +45,7 @@ void StartScene::HandleEvents()
 
 void StartScene::Start()
 {
-	const SDL_Color blue = { 0, 0, 255, 255 };
+	constexpr SDL_Color blue = { 0, 0, 255, 255 };
 	m_pStartLabel = new Label("Project CARL", "Dock51", 80, blue, glm::vec2(1280/2,100));
 	m_pStartLabel->SetParent(this);
 	AddChild(m_pStartLabel);

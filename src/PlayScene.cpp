@@ -4,9 +4,11 @@
 #include "InputType.h"
 
 // required for IMGUI
+#include "Camera.h"
 #include "imgui.h"
 #include "imgui_sdl.h"
 #include "Renderer.h"
+#include "Torpedo.h"
 #include "Util.h"
 
 PlayScene::PlayScene()
@@ -50,7 +52,7 @@ void PlayScene::GetPlayerInput()
 	}
 	if(EventManager::Instance().MousePressed(1)) //left mouse button
 		{
-		m_pProjectile = new Projectile(m_pPlayer);
+		m_pProjectile = new Torpedo(m_pPlayer);
 		AddChild(m_pProjectile);
 		m_ProjVec.push_back(m_pProjectile);
 		//SoundManager::Instance().PlaySound("playerShoot");
@@ -61,6 +63,7 @@ void PlayScene::GetPlayerInput()
 
 void PlayScene::Start()
 {
+	Camera::Instance().SetEnabled(false);
 	// Set GUI Title
 	m_guiTitle = "Play Scene";
 

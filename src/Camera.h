@@ -13,6 +13,10 @@ public:
 	}
 	Transform* GetTransform(){return &m_transform;}
 	glm::vec2 CameraDisplace(glm::vec2 position);
+
+	void SetEnabled(bool enabled);
+	bool GetEnabled();
 private:
+	bool m_isEnabled = true;
 	Transform m_transform;
 };
