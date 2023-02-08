@@ -44,27 +44,27 @@ glm::vec2 Projectile::GetVeloDamp()
     return m_veloDamp;
 }
 
-float Projectile::GetAngle()
+float Projectile::GetAngle() const
 {
     return m_angle;
 }
 
-Player* Projectile::GetPlayer()
+Player* Projectile::GetPlayer() const
 {
     return m_pPlayer;
 }
 
-bool Projectile::GetIsColliding()
+bool Projectile::GetIsColliding() const
 {
     return m_isColliding;
 }
 
-float Projectile::GetSpeed()
+float Projectile::GetSpeed() const
 {
     return m_speed;
 }
 
-float Projectile::GetMaxSpeed()
+float Projectile::GetMaxSpeed() const
 {
     return m_maxSpeed;
 }

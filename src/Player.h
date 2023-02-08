@@ -23,14 +23,14 @@ public:
 	void LookAtMouse();
 	void SetMaxSpeed (float maxSpeed) {m_maxSpeed = maxSpeed;}
 
-	float GetMaxSpeed(){return m_maxSpeed;}
+	float GetMaxSpeed() const {return m_maxSpeed;}
 
 private:
 	void BuildAnimations();
 	float m_speed;
 	float m_maxSpeed;
 	glm::vec2 veloDamp;
-	glm::ivec2 m_mousePos;
+	glm::vec2 m_mousePos;
 
 	PlayerAnimationState m_currentAnimationState;
 };

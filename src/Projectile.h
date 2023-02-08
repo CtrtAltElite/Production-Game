@@ -14,9 +14,9 @@ public:
 	Projectile();
 	virtual ~Projectile();
 	// Life Cycle Methods
-	virtual void Draw()=0;
-	virtual void Update()=0;
-	virtual void Clean() = 0; 
+	void Draw() override =0;
+	void Update() override =0;
+	void Clean() override = 0; 
 	virtual void Start() =0;
 	virtual void Move() =0 ;
 
@@ -29,11 +29,11 @@ public:
 	void SetMaxSpeed(float maxSpeed);
 
 	glm::vec2 GetVeloDamp();
-	float GetAngle();
-	Player* GetPlayer();
-	bool GetIsColliding();
-	float GetSpeed();
-	float GetMaxSpeed();
+	[[nodiscard]] float GetAngle() const;
+	[[nodiscard]] Player* GetPlayer() const;
+	[[nodiscard]] bool GetIsColliding() const;
+	[[nodiscard]] float GetSpeed() const;
+	[[nodiscard]] float GetMaxSpeed() const;
 
 private:
 	glm::vec2 m_veloDamp;

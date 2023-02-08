@@ -11,5 +11,5 @@ public:
     void Start() override;
     void Move() override;
 private:
-    glm::ivec2 m_mousePos;
+    glm::vec2 m_mousePos;
 };

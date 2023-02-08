@@ -26,7 +26,6 @@ private:
 	void GUI_Function();
 	std::string m_guiTitle;
 	
-	glm::vec2 m_mousePosition;
 	
 	Player* m_pPlayer{};
 	Background* m_pBackground{};

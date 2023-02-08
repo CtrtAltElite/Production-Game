@@ -63,7 +63,7 @@ void Player::Draw()
 
 void Player::Update()
 {
-	SDL_GetMouseState(&m_mousePos.x,&m_mousePos.y);
+	m_mousePos = Util::GetMousePos();
 	LookAtMouse();
 	Move();
 	GetRigidBody()->velocity*=veloDamp;

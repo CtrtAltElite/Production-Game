@@ -9,8 +9,8 @@ Background::Background()
 	TextureManager::Instance().Load("../Assets/textures/ocean.gif", "background");
 
 	const auto size = TextureManager::Instance().GetTextureSize("background");
-	SetWidth(size.x);
-	SetHeight(size.y);
+	SetWidth(static_cast<int>(size.x));
+	SetHeight(static_cast<int>(size.y));
 	SetType(GameObjectType::BACKGROUND);
 }
 Background::~Background()

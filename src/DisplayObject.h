@@ -12,9 +12,9 @@ public:
 	virtual ~DisplayObject();
 
 	// Inherited via GameObject
-	virtual void Draw() override = 0;
-	virtual void Update() override = 0;
-	virtual void Clean() override = 0;
+	void Draw() override = 0;
+	void Update() override = 0;
+	void Clean() override = 0;
 
 	[[nodiscard]] Scene* GetParent() const;
 	void SetParent(Scene* parent);

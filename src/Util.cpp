@@ -483,9 +483,12 @@ glm::vec2 Util::RotatePoint(glm::vec2 point, const float angle, const glm::vec2 
 	return point;
 }
 
-glm::ivec2 Util::GetMousePos()
+glm::vec2 Util::GetMousePos()
 {
-	glm::ivec2 pos;
-	SDL_GetMouseState(&pos.x,&pos.y);
-	return pos;
+	int posx;
+	int posy;
+	SDL_GetMouseState(&posx,&posy);
+	static_cast<float>(posx);
+	static_cast<float>(posy);
+	return glm::vec2({posx,posy});
 }
