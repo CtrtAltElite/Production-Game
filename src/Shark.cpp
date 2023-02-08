@@ -14,7 +14,6 @@ Shark::Shark()
 }
 void Shark::Move()
 {
-    
 }
 void Shark::Draw()
 {

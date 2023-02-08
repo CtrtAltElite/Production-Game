@@ -2,7 +2,7 @@
 #ifndef __ENEMY__
 #define __ENEMY
 #include "Sprite.h"
-class Enemy : public DisplayObject
+class Enemy : public Sprite
 {
 public:
 	Enemy();
@@ -14,7 +14,7 @@ public:
 	void Clean() override = 0;
 	
 	virtual void Move() = 0;
-
+	
 	void SetIsColliding(bool collide);
 	void SetIsDead (bool dead);
 	void SetHealth (float health);
@@ -38,6 +38,5 @@ private:
 	bool m_isColliding;
 	bool m_isDead;
 	glm::vec2 m_veloDamp;
-	void BuildAnimations();
 };
 #endif /* defined (__ENEMY__) */

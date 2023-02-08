@@ -7,7 +7,7 @@
 #include <unordered_map>
 #include "SpriteSheet.h"
 
-class Sprite : public DisplayObject
+class Sprite : virtual public DisplayObject
 {
 public:
 	Sprite();

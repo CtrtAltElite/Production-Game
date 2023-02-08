@@ -3,7 +3,7 @@
 #define __NAVIGATION_OBJECT__
 #include "DisplayObject.h"
 
-class NavigationObject : public DisplayObject
+class NavigationObject : virtual public DisplayObject
 {
 public:
 	// Constructor
