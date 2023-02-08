@@ -8,11 +8,11 @@
 Player::Player(): m_currentAnimationState(PlayerAnimationState::PLAYER_IDLE_RIGHT)
 {
 	TextureManager::Instance().LoadSpriteSheet(
-		"../Assets/sprites/atlas.txt",
-		"../Assets/sprites/atlas.png", 
-		"spritesheet");
+		"../Assets/sprites/sub_sprite.txt",
+		"../Assets/sprites/sub_sprite.png", 
+		"sub_spritesheet");
 
-	SetSpriteSheet(TextureManager::Instance().GetSpriteSheet("spritesheet"));
+	SetSpriteSheet(TextureManager::Instance().GetSpriteSheet("sub_spritesheet"));
 	
 	// set frame width
 	SetWidth(53);
@@ -41,20 +41,20 @@ void Player::Draw()
 	switch(m_currentAnimationState)
 	{
 	case PlayerAnimationState::PLAYER_IDLE_RIGHT:
-		TextureManager::Instance().PlayAnimation("spritesheet", GetAnimation("idle"),
-			Camera::Instance().CameraDisplace(GetTransform()->position), 0.12f, GetTransform()->rotation.r*Util::Rad2Deg, 255, true);
-		break;
-	case PlayerAnimationState::PLAYER_IDLE_LEFT:
-		TextureManager::Instance().PlayAnimation("spritesheet", GetAnimation("idle"),
-			Camera::Instance().CameraDisplace(GetTransform()->position), 0.12f, GetTransform()->rotation.r*Util::Rad2Deg, 255, true, SDL_FLIP_HORIZONTAL);
-		break;
-	case PlayerAnimationState::PLAYER_RUN_RIGHT:
-		TextureManager::Instance().PlayAnimation("spritesheet", GetAnimation("run"),
+		TextureManager::Instance().PlayAnimation("sub_spritesheet", GetAnimation("idle"),
 			Camera::Instance().CameraDisplace(GetTransform()->position), 0.25f, GetTransform()->rotation.r*Util::Rad2Deg, 255, true);
 		break;
-	case PlayerAnimationState::PLAYER_RUN_LEFT:
-		TextureManager::Instance().PlayAnimation("spritesheet", GetAnimation("run"),
+	case PlayerAnimationState::PLAYER_IDLE_LEFT:
+		TextureManager::Instance().PlayAnimation("sub_spritesheet", GetAnimation("idle"),
 			Camera::Instance().CameraDisplace(GetTransform()->position), 0.25f, GetTransform()->rotation.r*Util::Rad2Deg, 255, true, SDL_FLIP_HORIZONTAL);
+		break;
+	case PlayerAnimationState::PLAYER_RUN_RIGHT:
+		TextureManager::Instance().PlayAnimation("sub_spritesheet", GetAnimation("run"),
+			Camera::Instance().CameraDisplace(GetTransform()->position), 0.75f, GetTransform()->rotation.r*Util::Rad2Deg, 255, true);
+		break;
+	case PlayerAnimationState::PLAYER_RUN_LEFT:
+		TextureManager::Instance().PlayAnimation("sub_spritesheet", GetAnimation("run"),
+			Camera::Instance().CameraDisplace(GetTransform()->position), 0.75f, GetTransform()->rotation.r*Util::Rad2Deg, 255, true, SDL_FLIP_HORIZONTAL);
 		break;
 	default:
 		break;
@@ -103,20 +103,28 @@ void Player::BuildAnimations()
 	auto idle_animation = Animation();
 
 	idle_animation.name = "idle";
-	idle_animation.frames.push_back(GetSpriteSheet()->GetFrame("megaman-idle-0"));
-	idle_animation.frames.push_back(GetSpriteSheet()->GetFrame("megaman-idle-1"));
-	idle_animation.frames.push_back(GetSpriteSheet()->GetFrame("megaman-idle-2"));
-	idle_animation.frames.push_back(GetSpriteSheet()->GetFrame("megaman-idle-3"));
+	idle_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub1"));
+	idle_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub2"));
+	idle_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub3"));
+	idle_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub4"));
+	idle_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub5"));
+	idle_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub6"));
+	idle_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub7"));
+	idle_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub8"));
 
 	SetAnimation(idle_animation);
 
 	auto run_animation = Animation();
 
 	run_animation.name = "run";
-	run_animation.frames.push_back(GetSpriteSheet()->GetFrame("megaman-run-0"));
-	run_animation.frames.push_back(GetSpriteSheet()->GetFrame("megaman-run-1"));
-	run_animation.frames.push_back(GetSpriteSheet()->GetFrame("megaman-run-2"));
-	run_animation.frames.push_back(GetSpriteSheet()->GetFrame("megaman-run-3"));
+	run_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub1"));
+	run_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub2"));
+	run_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub3"));
+	run_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub4"));
+	run_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub5"));
+	run_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub6"));
+	run_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub7"));
+	run_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub8"));
 
 	SetAnimation(run_animation);
 }

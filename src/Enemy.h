@@ -12,9 +12,8 @@ public:
 	void Draw() override = 0;
 	void Update() override = 0;
 	void Clean() override = 0;
-	
-	virtual void Move() = 0;
-	
+
+	virtual void Move();
 	void SetIsColliding(bool collide);
 	void SetIsDead (bool dead);
 	void SetHealth (float health);

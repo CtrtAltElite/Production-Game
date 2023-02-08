@@ -36,17 +36,6 @@ void Torpedo::Start()
     std::cout << "Spawned projectile at:" << GetTransform()->position.x << " , " << GetTransform()->position.y<<std::endl;
     std::cout << GetRigidBody()->velocity.x << " , " << GetRigidBody()->velocity.y<<std::endl;
 }
-void Torpedo::Move()
-{
-    const float dt =Game::Instance().GetDeltaTime();
-    const glm::vec2 initial_position = GetTransform()->position;
-    const glm::vec2 velocity_term = GetRigidBody()->velocity * dt;
-    const glm::vec2 acceleration_term = GetRigidBody()->acceleration * 0.5f;
-    const glm::vec2 final_position = initial_position + velocity_term + acceleration_term;
-    GetTransform()->position = final_position;
-    GetRigidBody()->velocity += GetRigidBody()->acceleration;
-    GetRigidBody()->velocity = Util::Clamp(GetRigidBody()->velocity,GetMaxSpeed());
-}
 void Torpedo::Update()
 {
     Move();

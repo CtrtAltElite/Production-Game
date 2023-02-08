@@ -11,8 +11,8 @@ public:
     void Draw() override;
     void Update() override;
     void Clean() override;
-    void Move() override;
 
+    void LookForPlayer();
     void LookTowardsPlayer();
     
 private:

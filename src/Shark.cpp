@@ -12,9 +12,7 @@ Shark::Shark()
     GetRigidBody()->isColliding = false;
     SetType(GameObjectType::SHARK);
 }
-void Shark::Move()
-{
-}
+
 void Shark::Draw()
 {
     TextureManager::Instance().Draw("shark", GetTransform()->position,0, 255, true);

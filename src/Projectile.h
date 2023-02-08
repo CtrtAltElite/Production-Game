@@ -18,8 +18,8 @@ public:
 	void Update() override =0;
 	void Clean() override = 0; 
 	virtual void Start() =0;
-	virtual void Move() =0 ;
 
+	virtual void Move();
 	
 	void SetVeloDamp(glm::vec2 veloDamp);
 	void SetAngle(float angle);

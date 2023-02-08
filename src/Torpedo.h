@@ -9,7 +9,6 @@ public:
     void Update() override;
     void Clean() override;
     void Start() override;
-    void Move() override;
 private:
     glm::vec2 m_mousePos;
 };
