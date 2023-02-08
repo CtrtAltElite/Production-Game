@@ -10,6 +10,7 @@
 #include "Renderer.h"
 #include "Torpedo.h"
 #include "Util.h"
+#include "Layers.h"
 
 PlayScene::PlayScene()
 {
@@ -74,6 +75,8 @@ void PlayScene::Start()
 	AddChild(m_pPlayer);
 	m_playerFacingRight = true;
 
+	m_pShark = new Shark();
+	AddChild(m_pShark);
 	
 
 	/* DO NOT REMOVE */

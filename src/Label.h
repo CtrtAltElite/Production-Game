@@ -17,9 +17,9 @@ public:
 	~Label() override;
 
 	// Inherited via GameObject
-	virtual void Draw() override;
-	virtual void Update() override;
-	virtual void Clean() override;
+	void Draw() override;
+	void Update() override;
+	void Clean() override;
 
 	// Mutator Functions 
 	void SetText(const std::string& new_text);

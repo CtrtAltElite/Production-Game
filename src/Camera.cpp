@@ -14,7 +14,7 @@ void Camera::SetEnabled(bool enabled)
     m_isEnabled = enabled;
 }
 
-bool Camera::GetEnabled()
+bool Camera::GetEnabled() const
 {
     return m_isEnabled;
 }

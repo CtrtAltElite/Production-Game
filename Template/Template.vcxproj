@@ -172,6 +172,7 @@
     <ClCompile Include="..\src\NavigationObject.cpp" />
     <ClCompile Include="..\src\Obstacle.cpp" />
     <ClCompile Include="..\src\Projectile.cpp" />
+    <ClCompile Include="..\src\Shark.cpp" />
     <ClCompile Include="..\src\Sprite.cpp" />
     <ClCompile Include="..\src\Torpedo.cpp" />
     <ClCompile Include="..\src\UIControl.cpp" />
@@ -217,9 +218,11 @@
     <ClInclude Include="..\src\Heuristic.h" />
     <ClInclude Include="..\src\ImGuiWindowFrame.h" />
     <ClInclude Include="..\src\InputType.h" />
+    <ClInclude Include="..\src\Layers.h" />
     <ClInclude Include="..\src\NavigationObject.h" />
     <ClInclude Include="..\src\Obstacle.h" />
     <ClInclude Include="..\src\Projectile.h" />
+    <ClInclude Include="..\src\Shark.h" />
     <ClInclude Include="..\src\SoundType.h" />
     <ClInclude Include="..\src\Sprite.h" />
     <ClInclude Include="..\src\Torpedo.h" />

@@ -8,6 +8,7 @@
 #include "Button.h"
 #include "Label.h"
 #include "Projectile.h"
+#include "Shark.h"
 
 class PlayScene : public Scene
 {
@@ -30,6 +31,7 @@ private:
 	Player* m_pPlayer{};
 	Background* m_pBackground{};
 	Projectile* m_pProjectile{};
+	Shark* m_pShark{};
 	std::vector<Projectile*>m_ProjVec;
 	bool m_playerFacingRight{};
 

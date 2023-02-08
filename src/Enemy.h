@@ -12,6 +12,8 @@ public:
 	void Draw() override = 0;
 	void Update() override = 0;
 	void Clean() override = 0;
+	
+	virtual void Move() = 0;
 
 	void SetIsColliding(bool collide);
 	void SetIsDead (bool dead);
@@ -19,13 +21,13 @@ public:
 	void SetSpeed (float speed);
 	void SetMaxSpeed (float maxSpeed);
 	void SetVeloDamp (glm::vec2 veloDamp);
-	
-	float GetSpeed() const;
-	float GetMaxSpeed() const;
+
+	[[nodiscard]] float GetSpeed() const;
+	[[nodiscard]] float GetMaxSpeed() const;
 	glm::vec2 GetVeloDamp();
-	bool GetIsColliding() const;
-	bool GetIsDead() const;
-	float GetHealth() const;
+	[[nodiscard]] bool GetIsColliding() const;
+	[[nodiscard]] bool GetIsDead() const;
+	[[nodiscard]] float GetHealth() const;
 
 	
 	//void SetAnimationState()

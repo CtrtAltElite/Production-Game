@@ -26,6 +26,7 @@ void Background::Draw()
 		for(int p = -10; p<10; p++)
 		{
 			TextureManager::Instance().Draw("background", temp.x+GetHeight()*i, temp.y+GetWidth()*p, 90);
+			//better way to do this
 		}
 	}
 	

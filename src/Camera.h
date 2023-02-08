@@ -15,7 +15,7 @@ public:
 	glm::vec2 CameraDisplace(glm::vec2 position);
 
 	void SetEnabled(bool enabled);
-	bool GetEnabled();
+	bool GetEnabled() const;
 private:
 	bool m_isEnabled = true;
 	Transform m_transform;

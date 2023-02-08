@@ -1,5 +1,12 @@
 #include "Enemy.h"
 
+Enemy::Enemy()
+{
+}
+
+Enemy::~Enemy()
+=default;
+
 void Enemy::SetIsColliding(bool collide)
 {
     m_isColliding = collide;

@@ -10,9 +10,9 @@ public:
 	~Target() override;
 
 	// Inherited via GameObject
-	virtual void Draw() override;
-	virtual void Update() override;
-	virtual void Clean() override;
+	void Draw() override;
+	void Update() override;
+	void Clean() override;
 
 private:
 	void Move();
