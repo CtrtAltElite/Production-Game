@@ -91,11 +91,11 @@ void Player::SetAnimationState(const PlayerAnimationState new_state)
 
 void Player::MoveAtMouse()
 {
-	GetRigidBody()->velocity-=Util::Normalize(glm::vec2{GetTransform()->position.x-m_mousePos.x,GetTransform()->position.y-m_mousePos.y})*m_speed;
+	GetRigidBody()->velocity-=Util::Normalize(glm::vec2{Camera::Instance().CameraDisplace(GetTransform()->position).x-m_mousePos.x,Camera::Instance().CameraDisplace(GetTransform()->position).y-m_mousePos.y})*m_speed;
 }
 void Player::LookAtMouse()
 {
-	float angleToMouse = atan2(m_mousePos.y-GetTransform()->position.y,m_mousePos.x-GetTransform()->position.x);
+	float angleToMouse = atan2(m_mousePos.y-Camera::Instance().CameraDisplace(GetTransform()->position).y,m_mousePos.x-Camera::Instance().CameraDisplace(GetTransform()->position).x);
 	GetTransform()->rotation.r = angleToMouse;
 }
 

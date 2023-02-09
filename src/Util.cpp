@@ -494,7 +494,6 @@ glm::vec2 Util::GetMousePos()
 	SDL_GetMouseState(&posx,&posy);
 	static_cast<float>(posx);
 	static_cast<float>(posy);
-	//Camera::Instance().CameraDisplace({posx,posy});
-	//std::cout << "Mouse Pos X: " << posx << " Mouse Pos Y: " << posy<< " .\n";
+	//std::cout << "Mouse Pos X: " << posx << " Mouse Pos Y: " << posy << " .\n";
 	return glm::vec2({posx,posy});
 }

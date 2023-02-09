@@ -64,7 +64,7 @@ void PlayScene::GetPlayerInput()
 
 void PlayScene::Start()
 {
-	
+	Camera::Instance().SetEnabled(true);
 	// Set GUI Title
 	m_guiTitle = "Play Scene";
 
