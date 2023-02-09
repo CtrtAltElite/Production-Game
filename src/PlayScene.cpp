@@ -54,7 +54,7 @@ void PlayScene::GetPlayerInput()
 	if(EventManager::Instance().MousePressed(1)) //left mouse button
 		{
 		m_pProjectile = new Torpedo(m_pPlayer);
-		AddChild(m_pProjectile);
+		AddChild(m_pProjectile,PROJECTILES);
 		m_ProjVec.push_back(m_pProjectile);
 		//SoundManager::Instance().PlaySound("playerShoot");
 		}
@@ -64,21 +64,20 @@ void PlayScene::GetPlayerInput()
 
 void PlayScene::Start()
 {
-	Camera::Instance().SetEnabled(false);
+	
 	// Set GUI Title
 	m_guiTitle = "Play Scene";
 
-	m_pBackground = new Background();
-	AddChild(m_pBackground);
+	m_pBackground = new Background;
+	AddChild(m_pBackground,BACKGROUND);
 	// Player Sprite
-	m_pPlayer = new Player();
-	AddChild(m_pPlayer);
+	m_pPlayer = new Player;
+	AddChild(m_pPlayer,PLAYERS);
 	m_playerFacingRight = true;
 
-	m_pShark = new Shark();
-	AddChild(m_pShark);
+	m_pShark = new Shark;
+	AddChild(m_pShark,ENEMIES);
 	
-
 	/* DO NOT REMOVE */
 	ImGuiWindowFrame::Instance().SetGuiFunction([this] { GUI_Function(); });
 }

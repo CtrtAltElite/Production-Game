@@ -1,9 +1,9 @@
 ﻿#pragma once
 #include <glm/detail/type_vec.hpp>
 
-#include "Transform.h"
+#include "Player.h"
 
-class Camera
+class Camera : public GameObject
 {
 public:
 	static Camera& Instance()
@@ -11,12 +11,13 @@ public:
 		static Camera instance;
 		return instance;
 	}
-	Transform* GetTransform(){return &m_transform;}
+	
+	virtual ~Camera();
+	
+	void Draw() override{}
+	void Clean() override{}
+	void Update() override{};
 	glm::vec2 CameraDisplace(glm::vec2 position);
-
-	void SetEnabled(bool enabled);
-	bool GetEnabled() const;
 private:
-	bool m_isEnabled = true;
-	Transform m_transform;
+	Camera();
 };

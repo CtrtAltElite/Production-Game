@@ -1,21 +1,23 @@
 ﻿#include "Camera.h"
 
+#include "Config.h"
+
+Camera::Camera()
+{
+    SetWidth(Config::SCREEN_WIDTH);
+    SetHeight(Config::SCREEN_HEIGHT);
+}
+
+Camera::~Camera()
+=default;
+
 
 glm::vec2 Camera::CameraDisplace(glm::vec2 position)
 {
-    if (m_isEnabled)
-        return glm::vec2{position.x-m_transform.position.x,position.y-m_transform.position.y};
+    if (IsEnabled())
+        return glm::vec2{position.x-GetTransform()->position.x,position.y-GetTransform()->position.y};
     return position;
     
 }
 
-void Camera::SetEnabled(bool enabled)
-{
-    m_isEnabled = enabled;
-}
-
-bool Camera::GetEnabled() const
-{
-    return m_isEnabled;
-}
 

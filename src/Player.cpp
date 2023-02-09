@@ -67,7 +67,6 @@ void Player::Update()
 	LookAtMouse();
 	Move();
 	GetRigidBody()->velocity*=veloDamp;
-	Camera::Instance().GetTransform()->position=GetTransform()->position-glm::vec2{1280/2,720/2};
 }
 void Player::Move()
 {
@@ -79,6 +78,8 @@ void Player::Move()
 	GetTransform()->position = final_position;
 	GetRigidBody()->velocity += GetRigidBody()->acceleration;
 	GetRigidBody()->velocity = Util::Clamp(GetRigidBody()->velocity,GetMaxSpeed());
+	Camera::Instance().GetTransform()->position.x = GetTransform()->position.x - static_cast<float>(Config::SCREEN_WIDTH)/2;
+	Camera::Instance().GetTransform()->position.y = GetTransform()->position.y - static_cast<float>(Config::SCREEN_HEIGHT)/2;
 }
 void Player::Clean()
 {

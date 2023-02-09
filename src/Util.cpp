@@ -1,7 +1,11 @@
 #include "Util.h"
+
+#include <iostream>
 #include <glm/gtc/constants.hpp>
 #include <glm/gtx/norm.hpp>
 #include <SDL.h>
+
+#include "Camera.h"
 #include "Renderer.h"
 
 constexpr float Util::EPSILON = glm::epsilon<float>();
@@ -490,5 +494,7 @@ glm::vec2 Util::GetMousePos()
 	SDL_GetMouseState(&posx,&posy);
 	static_cast<float>(posx);
 	static_cast<float>(posy);
+	//Camera::Instance().CameraDisplace({posx,posy});
+	//std::cout << "Mouse Pos X: " << posx << " Mouse Pos Y: " << posy<< " .\n";
 	return glm::vec2({posx,posy});
 }

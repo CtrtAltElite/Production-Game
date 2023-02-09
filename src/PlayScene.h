@@ -6,6 +6,7 @@
 #include "Scene.h"
 #include "Player.h"
 #include "Button.h"
+#include "Camera.h"
 #include "Label.h"
 #include "Projectile.h"
 #include "Shark.h"
@@ -26,7 +27,6 @@ private:
 	// IMGUI Function
 	void GUI_Function();
 	std::string m_guiTitle;
-	
 	
 	Player* m_pPlayer{};
 	Background* m_pBackground{};

@@ -1,4 +1,6 @@
 ﻿#include "Shark.h"
+
+#include "Camera.h"
 #include "TextureManager.h"
 
 Shark::Shark()
@@ -15,7 +17,7 @@ Shark::Shark()
 
 void Shark::Draw()
 {
-    TextureManager::Instance().Draw("shark", GetTransform()->position,0, 255, true);
+    TextureManager::Instance().Draw("shark", Camera::Instance().CameraDisplace(GetTransform()->position),0, 255, true);
 }
 
 void Shark::Update()
