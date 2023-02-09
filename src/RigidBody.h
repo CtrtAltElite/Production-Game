@@ -10,6 +10,10 @@ struct RigidBody
 
 	glm::vec2 velocity;
 	glm::vec2 acceleration;
+	glm::vec2 velocityDampening;
+	float angularVelocity;
+	float angularVelocityDampening;
+	float angularAcceleration;
 	bool isColliding = false;
 };
 #endif /* defined (__RIGID_BODY__) */

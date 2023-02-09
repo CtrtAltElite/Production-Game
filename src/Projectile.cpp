@@ -14,7 +14,7 @@ Projectile::~Projectile()
 
 void Projectile::SetVeloDamp(glm::vec2 veloDamp)
 {
-    m_veloDamp = veloDamp;
+    GetRigidBody()->velocityDampening = veloDamp;
 }
 
 void Projectile::SetAngle(float angle)
@@ -44,7 +44,7 @@ void Projectile::SetMaxSpeed(float maxSpeed)
 
 glm::vec2 Projectile::GetVeloDamp()
 {
-    return m_veloDamp;
+   return GetRigidBody()->velocityDampening;
 }
 
 float Projectile::GetAngle() const

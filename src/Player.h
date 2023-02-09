@@ -29,7 +29,6 @@ private:
 	void BuildAnimations();
 	float m_speed;
 	float m_maxSpeed;
-	glm::vec2 veloDamp;
 	glm::vec2 m_mousePos;
 
 	PlayerAnimationState m_currentAnimationState;

@@ -26,7 +26,8 @@ Player::Player(): m_currentAnimationState(PlayerAnimationState::PLAYER_IDLE_RIGH
 	GetRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
 	GetRigidBody()->acceleration = glm::vec2(0.0f, 0.0f);
 	GetRigidBody()->isColliding = false;
-	veloDamp = {0.985, 0.985};
+	GetRigidBody()->velocityDampening = {0.985, 0.985};
+	GetRigidBody()->angularVelocityDampening = 0.95f;
 	SetType(GameObjectType::PLAYER);
 
 	BuildAnimations();
@@ -37,6 +38,7 @@ Player::~Player()
 
 void Player::Draw()
 {
+	
 	// draw the player according to animation state
 	switch(m_currentAnimationState)
 	{
@@ -46,7 +48,7 @@ void Player::Draw()
 		break;
 	case PlayerAnimationState::PLAYER_IDLE_LEFT:
 		TextureManager::Instance().PlayAnimation("sub_spritesheet", GetAnimation("idle"),
-			Camera::Instance().CameraDisplace(GetTransform()->position), 0.25f, GetTransform()->rotation.r*Util::Rad2Deg, 255, true, SDL_FLIP_HORIZONTAL);
+			Camera::Instance().CameraDisplace(GetTransform()->position), 0.25f, GetTransform()->rotation.r*Util::Rad2Deg, 255, true, SDL_FLIP_VERTICAL);
 		break;
 	case PlayerAnimationState::PLAYER_RUN_RIGHT:
 		TextureManager::Instance().PlayAnimation("sub_spritesheet", GetAnimation("run"),
@@ -63,10 +65,20 @@ void Player::Draw()
 
 void Player::Update()
 {
+	while (GetTransform()->rotation.r < 0 * Util::Deg2Rad) GetTransform()->rotation.r += 360 * Util::Deg2Rad;
+	while (GetTransform()->rotation.r > 360 * Util::Deg2Rad) GetTransform()->rotation.r -= 360 * Util::Deg2Rad;
+	if (GetTransform()->rotation.r*Util::Rad2Deg > 90 && GetTransform()->rotation.r*Util::Rad2Deg < 270)
+	{
+		SetAnimationState(PlayerAnimationState::PLAYER_IDLE_LEFT);
+	}
+	else
+	{
+		SetAnimationState(PlayerAnimationState::PLAYER_IDLE_RIGHT);
+	}
 	m_mousePos = Util::GetMousePos();
 	LookAtMouse();
 	Move();
-	GetRigidBody()->velocity*=veloDamp;
+	//std::cout << GetTransform()->rotation.r*Util::Rad2Deg << std::endl;
 }
 void Player::Move()
 {
@@ -78,6 +90,14 @@ void Player::Move()
 	GetTransform()->position = final_position;
 	GetRigidBody()->velocity += GetRigidBody()->acceleration;
 	GetRigidBody()->velocity = Util::Clamp(GetRigidBody()->velocity,GetMaxSpeed());
+	const float initial_rotation = GetTransform()->rotation.r;
+	const float angularVelocity_term = GetRigidBody()->angularVelocity * dt;
+	const float angularAcceleration_term = GetRigidBody()->angularAcceleration * 0.5f;
+	const float final_rotation = initial_rotation + angularVelocity_term + angularAcceleration_term;
+	GetTransform()->rotation.r = final_rotation;
+	GetRigidBody()->angularVelocity += GetRigidBody()->angularAcceleration;
+	GetRigidBody()->velocity*=GetRigidBody()->velocityDampening;
+	GetRigidBody()->angularVelocity*=GetRigidBody()->angularVelocityDampening;
 	Camera::Instance().GetTransform()->position.x = GetTransform()->position.x - static_cast<float>(Config::SCREEN_WIDTH)/2;
 	Camera::Instance().GetTransform()->position.y = GetTransform()->position.y - static_cast<float>(Config::SCREEN_HEIGHT)/2;
 }
@@ -91,12 +111,20 @@ void Player::SetAnimationState(const PlayerAnimationState new_state)
 
 void Player::MoveAtMouse()
 {
-	GetRigidBody()->velocity-=Util::Normalize(glm::vec2{Camera::Instance().CameraDisplace(GetTransform()->position).x-m_mousePos.x,Camera::Instance().CameraDisplace(GetTransform()->position).y-m_mousePos.y})*m_speed;
+	GetRigidBody()->velocity+=glm::vec2{cos(GetTransform()->rotation.r),sin(GetTransform()->rotation.r)}*m_speed;
 }
 void Player::LookAtMouse()
 {
 	float angleToMouse = atan2(m_mousePos.y-Camera::Instance().CameraDisplace(GetTransform()->position).y,m_mousePos.x-Camera::Instance().CameraDisplace(GetTransform()->position).x);
-	GetTransform()->rotation.r = angleToMouse;
+	float nextAngle = GetTransform()->rotation.r + GetRigidBody()->angularVelocity / 10.0f;
+	float totalRotation = angleToMouse - nextAngle;
+	while (totalRotation < -180 * Util::Deg2Rad) totalRotation += 360 * Util::Deg2Rad;
+	while (totalRotation > 180 * Util::Deg2Rad) totalRotation -= 360 * Util::Deg2Rad;
+	float desiredAngularVelocity = totalRotation * 10.0f;
+	float change = 1000 * Util::Deg2Rad; //allow 10 degree rotation per time step
+	desiredAngularVelocity = std::min(change, std::max(-change, desiredAngularVelocity));
+	GetRigidBody()->angularVelocity+=desiredAngularVelocity/10;
+	
 }
 
 void Player::BuildAnimations()

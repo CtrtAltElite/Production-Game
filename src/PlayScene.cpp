@@ -29,6 +29,7 @@ void PlayScene::Draw()
 void PlayScene::Update()
 {
 	UpdateDisplayList();
+	Collision();
 }
 
 void PlayScene::Clean()
@@ -80,6 +81,15 @@ void PlayScene::Start()
 	
 	/* DO NOT REMOVE */
 	ImGuiWindowFrame::Instance().SetGuiFunction([this] { GUI_Function(); });
+}
+
+void PlayScene::Collision()
+{
+	//only needed in play state, not start or end or pause.
+	//list of game objects stored in scene children
+	//each game object type will probably want to use a different type of collision
+	//dont want to do object->checkcollision with all objects because then each collision will be checked twice
+	//want to use distance checker to be within a certain range before checking collision.
 }
 
 void PlayScene::GUI_Function() 

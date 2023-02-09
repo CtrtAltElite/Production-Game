@@ -16,7 +16,7 @@ public:
 	
 	void Draw() override{}
 	void Clean() override{}
-	void Update() override{};
+	void Update() override{}
 	glm::vec2 CameraDisplace(glm::vec2 position);
 private:
 	Camera();

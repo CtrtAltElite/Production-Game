@@ -23,6 +23,7 @@ public:
 	void Clean() override;
 	void HandleEvents() override;
 	void Start() override;
+	void Collision();
 private:
 	// IMGUI Function
 	void GUI_Function();
