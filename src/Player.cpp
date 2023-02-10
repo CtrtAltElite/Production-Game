@@ -29,6 +29,8 @@ Player::Player(): m_currentAnimationState(PlayerAnimationState::PLAYER_IDLE_RIGH
 	GetRigidBody()->velocityDampening = {0.985, 0.985};
 	GetRigidBody()->angularVelocityDampening = 0.95f;
 	SetType(GameObjectType::PLAYER);
+	animVelo = 0.33f;
+	animVeloDamp = 0.99f;
 
 	BuildAnimations();
 }
@@ -44,19 +46,11 @@ void Player::Draw()
 	{
 	case PlayerAnimationState::PLAYER_IDLE_RIGHT:
 		TextureManager::Instance().PlayAnimation("sub_spritesheet", GetAnimation("idle"),
-			Camera::Instance().CameraDisplace(GetTransform()->position), 0.25f, GetTransform()->rotation.r*Util::Rad2Deg, 255, true);
+			Camera::Instance().CameraDisplace(GetTransform()->position), animVelo, GetTransform()->rotation.r*Util::Rad2Deg, 255, true);
 		break;
 	case PlayerAnimationState::PLAYER_IDLE_LEFT:
 		TextureManager::Instance().PlayAnimation("sub_spritesheet", GetAnimation("idle"),
-			Camera::Instance().CameraDisplace(GetTransform()->position), 0.25f, GetTransform()->rotation.r*Util::Rad2Deg, 255, true, SDL_FLIP_VERTICAL);
-		break;
-	case PlayerAnimationState::PLAYER_RUN_RIGHT:
-		TextureManager::Instance().PlayAnimation("sub_spritesheet", GetAnimation("run"),
-			Camera::Instance().CameraDisplace(GetTransform()->position), 0.75f, GetTransform()->rotation.r*Util::Rad2Deg, 255, true);
-		break;
-	case PlayerAnimationState::PLAYER_RUN_LEFT:
-		TextureManager::Instance().PlayAnimation("sub_spritesheet", GetAnimation("run"),
-			Camera::Instance().CameraDisplace(GetTransform()->position), 0.75f, GetTransform()->rotation.r*Util::Rad2Deg, 255, true, SDL_FLIP_HORIZONTAL);
+			Camera::Instance().CameraDisplace(GetTransform()->position), animVelo, GetTransform()->rotation.r*Util::Rad2Deg, 255, true, SDL_FLIP_VERTICAL);
 		break;
 	default:
 		break;
@@ -70,15 +64,20 @@ void Player::Update()
 	if (GetTransform()->rotation.r*Util::Rad2Deg > 90 && GetTransform()->rotation.r*Util::Rad2Deg < 270)
 	{
 		SetAnimationState(PlayerAnimationState::PLAYER_IDLE_LEFT);
+		SetFlipped(true);
 	}
 	else
 	{
 		SetAnimationState(PlayerAnimationState::PLAYER_IDLE_RIGHT);
+		SetFlipped(false);
 	}
+	animVelo*=animVeloDamp;
+	animVelo = Util::Clamp(animVelo,0.33f,1.5f);
 	m_mousePos = Util::GetMousePos();
 	LookAtMouse();
 	Move();
 	//std::cout << GetTransform()->rotation.r*Util::Rad2Deg << std::endl;
+	//std::cout << animVelo << std::endl;
 }
 void Player::Move()
 {
@@ -112,6 +111,7 @@ void Player::SetAnimationState(const PlayerAnimationState new_state)
 void Player::MoveAtMouse()
 {
 	GetRigidBody()->velocity+=glm::vec2{cos(GetTransform()->rotation.r),sin(GetTransform()->rotation.r)}*m_speed;
+	animVelo+=0.1f;
 }
 void Player::LookAtMouse()
 {

@@ -28,8 +28,8 @@ void Torpedo::Start()
     m_mousePos = Util::GetMousePos();
     SetIsColliding(false);
     SetAngle(GetPlayer()->GetTransform()->rotation.r);
-    GetTransform()->position = GetPlayer()->GetTransform()->position;
     GetRigidBody()->velocity+= glm::vec2{cos(GetPlayer()->GetTransform()->rotation.r)*GetSpeed(),sin(GetPlayer()->GetTransform()->rotation.r)*GetSpeed()};
+    GetTransform()->position = GetPlayer()->GetTransform()->position;
     SetType(GameObjectType::PROJECTILE);
 
     //debug

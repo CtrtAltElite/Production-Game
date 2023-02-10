@@ -35,6 +35,9 @@ private:
 	Shark* m_pShark{};
 	std::vector<Projectile*>m_ProjVec;
 	bool m_playerFacingRight{};
+	Label* m_pFpsCounter{};
+
+	
 
 	
 	// Input Control

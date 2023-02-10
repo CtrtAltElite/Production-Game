@@ -25,11 +25,17 @@ public:
 
 	float GetMaxSpeed() const {return m_maxSpeed;}
 
+	void SetFlipped(bool flipped){m_flipped = flipped;}
+	bool GetFlipped() const {return m_flipped;}
+
 private:
 	void BuildAnimations();
 	float m_speed;
 	float m_maxSpeed;
 	glm::vec2 m_mousePos;
+	float animVelo;
+	float animVeloDamp;
+	bool m_flipped;
 
 	PlayerAnimationState m_currentAnimationState;
 };

@@ -79,6 +79,17 @@ void PlayScene::Start()
 	m_pShark = new Shark;
 	AddChild(m_pShark,ENEMIES);
 	
+	m_pFpsCounter = new Label;
+	m_pFpsCounter->SetEnabled(true);
+	m_pFpsCounter->SetHeight(50);
+	m_pFpsCounter->SetWidth(50);
+	m_pFpsCounter->SetText("Test");
+	m_pFpsCounter->GetTransform()->position = {50.0f,50.0f};
+	m_pFpsCounter->SetSize(40);
+	m_pFpsCounter->SetColour({255,255,0,255});
+	AddChild(m_pFpsCounter,UI);
+
+	
 	/* DO NOT REMOVE */
 	ImGuiWindowFrame::Instance().SetGuiFunction([this] { GUI_Function(); });
 }
