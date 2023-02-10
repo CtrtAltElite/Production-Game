@@ -101,10 +101,13 @@ void PlayScene::Collision()
 	{
 		if(Util::Distance(enemy->GetTransform()->position,m_pPlayer->GetTransform()->position)<50.0f)
 		{
-			std::cout << "Distance less than 50" <<std::endl;
+			//std::cout << "Distance less than 50" <<std::endl;
 			if (CollisionManager::AABBCheck(enemy,m_pPlayer)) //doeosnt work
 			{
 				std::cout <<  "Enemy player collision" <<::std::endl;
+			} else
+			{
+				m_pPlayer->GetRigidBody()->isColliding = false;
 			}
 		}
 	}
