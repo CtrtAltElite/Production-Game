@@ -13,8 +13,11 @@ Torpedo::Torpedo(Player* player)
 }
 void Torpedo::Draw()
 {
+    Util::DrawRect(Camera::Instance().CameraDisplace(this) -
+            glm::vec2(this->GetWidth() * 0.5f, this->GetHeight() * 0.5f),
+            this->GetWidth(), this->GetHeight());
     // draw the target
-    TextureManager::Instance().Draw("torpedo", Camera::Instance().CameraDisplace(GetTransform()->position), GetAngle()*Util::Rad2Deg, 255, true);
+    TextureManager::Instance().Draw("torpedo", Camera::Instance().CameraDisplace(this), GetAngle()*Util::Rad2Deg, 255, true);
 }
 void Torpedo::Start()
 {
