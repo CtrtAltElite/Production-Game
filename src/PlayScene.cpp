@@ -28,8 +28,8 @@ void PlayScene::Draw()
 
 void PlayScene::Update()
 {
-	UpdateDisplayList();
 	Collision();
+	UpdateDisplayList();
 }
 
 void PlayScene::Clean()
@@ -77,6 +77,7 @@ void PlayScene::Start()
 	m_playerFacingRight = true;
 
 	m_pShark = new Shark;
+	m_pEnemies.push_back(m_pShark);
 	AddChild(m_pShark,ENEMIES);
 	
 	m_pFpsCounter = new Label;
@@ -96,8 +97,18 @@ void PlayScene::Start()
 
 void PlayScene::Collision()
 {
+	for (auto enemy : m_pEnemies)
+	{
+		if(Util::Distance(enemy->GetTransform()->position,m_pPlayer->GetTransform()->position)<50.0f)
+		{
+			std::cout << "Distance less than 50" <<std::endl;
+			if (CollisionManager::AABBCheck(enemy,m_pPlayer)) //doeosnt work
+			{
+				std::cout <<  "Enemy player collision" <<::std::endl;
+			}
+		}
+	}
 	//only needed in play state, not start or end or pause.
-	//list of game objects stored in scene children
 	//each game object type will probably want to use a different type of collision
 	//dont want to do object->checkcollision with all objects because then each collision will be checked twice
 	//want to use distance checker to be within a certain range before checking collision.

@@ -39,7 +39,7 @@ void Torpedo::Start()
 void Torpedo::Update()
 {
     Move();
-    GetRigidBody()->velocity*=GetVeloDamp();
+    //GetRigidBody()->velocity*=GetVeloDamp();
 }
 void Torpedo::Clean()
 {

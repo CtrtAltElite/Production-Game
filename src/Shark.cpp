@@ -1,6 +1,7 @@
 ﻿#include "Shark.h"
 
 #include "Camera.h"
+#include "Renderer.h"
 #include "TextureManager.h"
 
 Shark::Shark()
@@ -17,6 +18,7 @@ Shark::Shark()
 
 void Shark::Draw()
 {
+    SDL_RenderDrawRectF(Renderer::Instance().GetRenderer(),new SDL_FRect{Camera::Instance().CameraDisplace(GetTransform()->position).x,Camera::Instance().CameraDisplace(GetTransform()->position).y,static_cast<float>(GetWidth()),static_cast<float>(GetHeight())});
     TextureManager::Instance().Draw("shark", Camera::Instance().CameraDisplace(GetTransform()->position),0, 255, true);
 }
 

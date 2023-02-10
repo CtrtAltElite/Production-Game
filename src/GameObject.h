@@ -44,7 +44,7 @@ public:
 	void SetVisible(bool state);
 	[[nodiscard]] bool IsVisible() const;
 
-	void setIsCentered(bool state);
+	void SetIsCentered(bool state);
 	[[nodiscard]] bool isCentered() const;
 
 private:

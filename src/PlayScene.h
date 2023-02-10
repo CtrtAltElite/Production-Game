@@ -33,6 +33,7 @@ private:
 	Background* m_pBackground{};
 	Projectile* m_pProjectile{};
 	Shark* m_pShark{};
+	std::vector<Enemy*>m_pEnemies{};
 	std::vector<Projectile*>m_ProjVec;
 	bool m_playerFacingRight{};
 	Label* m_pFpsCounter{};

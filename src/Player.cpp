@@ -42,6 +42,7 @@ void Player::Draw()
 {
 	
 	// draw the player according to animation state
+	SDL_RenderDrawRectF(Renderer::Instance().GetRenderer(),new SDL_FRect{Camera::Instance().CameraDisplace(GetTransform()->position).x,Camera::Instance().CameraDisplace(GetTransform()->position).y,static_cast<float>(GetWidth()),static_cast<float>(GetHeight())});
 	switch(m_currentAnimationState)
 	{
 	case PlayerAnimationState::PLAYER_IDLE_RIGHT:
