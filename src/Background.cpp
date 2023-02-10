@@ -20,7 +20,7 @@ Background::~Background()
 void Background::Draw()
 {
 	// alias for x and y
-	glm::vec2 temp = Camera::Instance().CameraDisplace(GetTransform()->position);
+	glm::vec2 temp = Camera::Instance().CameraDisplace(this);
 	for (int i =-10 ;i<10;i++)
 	{
 		for(int p = -10; p<10; p++)

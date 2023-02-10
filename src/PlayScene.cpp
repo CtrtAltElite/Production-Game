@@ -79,6 +79,7 @@ void PlayScene::Start()
 	AddChild(m_pBackground,BACKGROUND);
 	// Player Sprite
 	m_pPlayer = new Player;
+	m_pPlayer->SetIsCentered(true);
 	AddChild(m_pPlayer,PLAYERS);
 	m_playerFacingRight = true;
 

@@ -12,12 +12,15 @@ Camera::~Camera()
 =default;
 
 
-glm::vec2 Camera::CameraDisplace(glm::vec2 position)
+glm::vec2 Camera::CameraDisplace(DisplayObject* object)
 {
     if (IsEnabled())
-        return glm::vec2{position.x-GetTransform()->position.x,position.y-GetTransform()->position.y};
-    return position;
-    
+    {
+        glm::vec2 displace = {object->GetTransform()->position.x-GetTransform()->position.x,object->GetTransform()->position.y-GetTransform()->position.y};
+        return displace;
+    }
+    return object->GetTransform()->position;
 }
+
 
 

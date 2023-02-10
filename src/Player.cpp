@@ -24,6 +24,7 @@ Player::Player(): m_currentAnimationState(PlayerAnimationState::PLAYER_IDLE_RIGH
 	m_maxSpeed = 200.0f;
 	GetTransform()->position = glm::vec2(400.0f, 300.0f);
 	GetRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
+	GetRigidBody()->bounds=glm::vec2(GetWidth(), GetHeight());
 	GetRigidBody()->acceleration = glm::vec2(0.0f, 0.0f);
 	GetRigidBody()->isColliding = false;
 	GetRigidBody()->velocityDampening = {0.985, 0.985};
@@ -42,16 +43,19 @@ void Player::Draw()
 {
 	
 	// draw the player according to animation state
-	SDL_RenderDrawRectF(Renderer::Instance().GetRenderer(),new SDL_FRect{Camera::Instance().CameraDisplace(GetTransform()->position).x,Camera::Instance().CameraDisplace(GetTransform()->position).y,static_cast<float>(GetWidth()),static_cast<float>(GetHeight())});
+	Util::DrawRect(Camera::Instance().CameraDisplace(this) -
+			glm::vec2(this->GetWidth() * 0.5f, this->GetHeight() * 0.5f),
+			this->GetWidth(), this->GetHeight());
+	//SDL_RenderDrawRectF(Renderer::Instance().GetRenderer(),new SDL_FRect{Camera::Instance().CameraDisplace(this).x,Camera::Instance().CameraDisplace(this).y,static_cast<float>(GetWidth()),static_cast<float>(GetHeight())});
 	switch(m_currentAnimationState)
 	{
 	case PlayerAnimationState::PLAYER_IDLE_RIGHT:
 		TextureManager::Instance().PlayAnimation("sub_spritesheet", GetAnimation("idle"),
-			Camera::Instance().CameraDisplace(GetTransform()->position), animVelo, GetTransform()->rotation.r*Util::Rad2Deg, 255, true);
+			Camera::Instance().CameraDisplace(this), animVelo, GetTransform()->rotation.r*Util::Rad2Deg, 255, true);
 		break;
 	case PlayerAnimationState::PLAYER_IDLE_LEFT:
 		TextureManager::Instance().PlayAnimation("sub_spritesheet", GetAnimation("idle"),
-			Camera::Instance().CameraDisplace(GetTransform()->position), animVelo, GetTransform()->rotation.r*Util::Rad2Deg, 255, true, SDL_FLIP_VERTICAL);
+			Camera::Instance().CameraDisplace(this), animVelo, GetTransform()->rotation.r*Util::Rad2Deg, 255, true, SDL_FLIP_VERTICAL);
 		break;
 	default:
 		break;
@@ -116,7 +120,7 @@ void Player::MoveAtMouse()
 }
 void Player::LookAtMouse()
 {
-	float angleToMouse = atan2(m_mousePos.y-Camera::Instance().CameraDisplace(GetTransform()->position).y,m_mousePos.x-Camera::Instance().CameraDisplace(GetTransform()->position).x);
+	float angleToMouse = atan2(m_mousePos.y-Camera::Instance().CameraDisplace(this).y,m_mousePos.x-Camera::Instance().CameraDisplace(this).x);
 	float nextAngle = GetTransform()->rotation.r + GetRigidBody()->angularVelocity / 10.0f;
 	float totalRotation = angleToMouse - nextAngle;
 	while (totalRotation < -180 * Util::Deg2Rad) totalRotation += 360 * Util::Deg2Rad;
