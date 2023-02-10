@@ -71,7 +71,7 @@ float Enemy::GetHealth() const
 }
 void Enemy::Move()
 {
-    const float dt =Game::Instance().GetDeltaTime();
+    const float dt = Game::Instance().GetDeltaTime();
     const glm::vec2 initial_position = GetTransform()->position;
     const glm::vec2 velocity_term = GetRigidBody()->velocity * dt;
     const glm::vec2 acceleration_term = GetRigidBody()->acceleration * 0.5f;

@@ -30,6 +30,8 @@ void PlayScene::Update()
 {
 	Collision();
 	UpdateDisplayList();
+
+	// Set FPS display on screen.
 	if ((SDL_GetTicks64() / 1000) > 0)
 	{
 		int fps = Game::Instance().GetFrames() / (SDL_GetTicks64() / 1000);
@@ -83,10 +85,12 @@ void PlayScene::Start()
 	AddChild(m_pPlayer,PLAYERS);
 	m_playerFacingRight = true;
 
-	m_pShark = new Shark;
+	// Spawning a test shark for now
+	m_pShark = new Shark; 
 	m_pEnemies.push_back(m_pShark);
 	AddChild(m_pShark,ENEMIES);
-	
+
+	// FPS Counter Set-Up
 	m_pFpsCounter = new Label;
 	m_pFpsCounter->SetEnabled(true);
 	m_pFpsCounter->SetHeight(50);
@@ -108,7 +112,7 @@ void PlayScene::Collision()
 	{
 		if(Util::Distance(enemy->GetTransform()->position,m_pPlayer->GetTransform()->position)<50.0f)
 		{
-			if (CollisionManager::AABBCheck(enemy,m_pPlayer)) //doeosnt work
+			if (CollisionManager::AABBCheck(enemy,m_pPlayer)) 
 			{
 				std::cout <<  "Enemy player collision" <<::std::endl;
 			} else

@@ -14,6 +14,8 @@ public:
 	void Clean() override = 0;
 
 	virtual void Move();
+
+
 	void SetIsColliding(bool collide);
 	void SetIsDead (bool dead);
 	void SetHealth (float health);
