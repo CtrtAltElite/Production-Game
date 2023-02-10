@@ -5,7 +5,7 @@
 
 #include "Game.h"
 
-constexpr float FPS = 60.0f;
+constexpr float FPS = 300.0f;
 constexpr float DELAY_TIME = 1000.0f / FPS;
 
 /**

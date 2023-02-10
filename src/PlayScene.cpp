@@ -30,6 +30,12 @@ void PlayScene::Update()
 {
 	Collision();
 	UpdateDisplayList();
+	if ((SDL_GetTicks64() / 1000) > 0)
+	{
+		int fps = Game::Instance().GetFrames() / (SDL_GetTicks64() / 1000);
+		const std::string fpsText = "FPS: " + std::to_string(fps);
+		m_pFpsCounter->SetText(fpsText);
+	}
 }
 
 void PlayScene::Clean()
@@ -84,8 +90,8 @@ void PlayScene::Start()
 	m_pFpsCounter->SetEnabled(true);
 	m_pFpsCounter->SetHeight(50);
 	m_pFpsCounter->SetWidth(50);
-	m_pFpsCounter->SetText("Test");
-	m_pFpsCounter->GetTransform()->position = {50.0f,50.0f};
+	m_pFpsCounter->SetText("0 fps");
+	m_pFpsCounter->GetTransform()->position = {90.0f,30.0f};
 	m_pFpsCounter->SetSize(40);
 	m_pFpsCounter->SetColour({255,255,0,255});
 	AddChild(m_pFpsCounter,UI);
@@ -101,7 +107,6 @@ void PlayScene::Collision()
 	{
 		if(Util::Distance(enemy->GetTransform()->position,m_pPlayer->GetTransform()->position)<50.0f)
 		{
-			//std::cout << "Distance less than 50" <<std::endl;
 			if (CollisionManager::AABBCheck(enemy,m_pPlayer)) //doeosnt work
 			{
 				std::cout <<  "Enemy player collision" <<::std::endl;
