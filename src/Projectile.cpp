@@ -42,6 +42,26 @@ void Projectile::SetMaxSpeed(float maxSpeed)
     m_maxSpeed = maxSpeed;
 }
 
+void Projectile::SetDeleteMe(bool deleteMe)
+{
+    m_deleteMe = deleteMe;
+}
+
+void Projectile::SetProjectileSource(GameObject* source)
+{
+    m_pProjectileSource = source;
+}
+
+void Projectile::SetDeleteBuffer(float buffer)
+{
+    m_OffScreenDeleteBuffer = buffer;
+}
+
+void Projectile::SetDamage(float damage)
+{
+    m_damage = damage;
+}
+
 glm::vec2 Projectile::GetVeloDamp()
 {
    return GetRigidBody()->velocityDampening;
@@ -71,6 +91,27 @@ float Projectile::GetMaxSpeed() const
 {
     return m_maxSpeed;
 }
+
+bool Projectile::GetDeleteMe() const
+{
+    return m_deleteMe;
+}
+
+GameObject* Projectile::GetProjectileSource() const
+{
+    return m_pProjectileSource;
+}
+
+float Projectile::GetDeleteBuffer() const
+{
+    return m_OffScreenDeleteBuffer;
+}
+
+float Projectile::GetDamage() const
+{
+    return m_damage;
+}
+
 void Projectile::Move()
 {
     const float dt =Game::Instance().GetDeltaTime();
@@ -81,5 +122,17 @@ void Projectile::Move()
     GetTransform()->position = final_position;
     GetRigidBody()->velocity += GetRigidBody()->acceleration;
     GetRigidBody()->velocity = Util::Clamp(GetRigidBody()->velocity,GetMaxSpeed());
+}
+
+void Projectile::CheckBounds()
+{
+    if (GetTransform()->position.x<0-GetDeleteBuffer()||
+        GetTransform()->position.y<0-GetDeleteBuffer()||
+        GetTransform()->position.x>Config::SCREEN_WIDTH+GetDeleteBuffer()||
+        GetTransform()->position.y>Config::SCREEN_HEIGHT+GetDeleteBuffer())
+    {
+        std::cout << "Projectile set to delete\n"; 
+        SetDeleteMe(true);
+    }
 }
 

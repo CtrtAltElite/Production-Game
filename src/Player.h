@@ -17,16 +17,20 @@ public:
 	void Clean() override;
 	void Move();
 
-	// setters
-	void SetAnimationState(PlayerAnimationState new_state);
 	void MoveAtMouse();
 	void LookAtMouse();
-	void SetMaxSpeed (float maxSpeed) {m_maxSpeed = maxSpeed;}
 
-	float GetMaxSpeed() const {return m_maxSpeed;}
-
-	void SetFlipped(bool flipped){m_flipped = flipped;}
-	bool GetFlipped() const {return m_flipped;}
+	// setters
+	void SetAnimationState(PlayerAnimationState new_state);
+	void SetMaxSpeed (float maxSpeed);
+	void SetFlipped(bool flipped);
+	void SetScore(float score);
+	void SetKillcount(int killcount);
+	
+	float GetMaxSpeed() const;
+	bool GetFlipped() const;
+	float GetScore();
+	int GetKillcount();
 
 private:
 	void BuildAnimations();
@@ -36,6 +40,8 @@ private:
 	float animVelo;
 	float animVeloDamp;
 	bool m_flipped;
+	float m_score;
+	int m_killCount;
 
 	PlayerAnimationState m_currentAnimationState;
 };

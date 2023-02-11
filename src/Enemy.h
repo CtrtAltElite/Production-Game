@@ -22,13 +22,16 @@ public:
 	void SetSpeed (float speed);
 	void SetMaxSpeed (float maxSpeed);
 	void SetVeloDamp (glm::vec2 veloDamp);
+	void SetScoreValue (float scoreValue);
 
 	[[nodiscard]] float GetSpeed() const;
 	[[nodiscard]] float GetMaxSpeed() const;
-	glm::vec2 GetVeloDamp();
+	[[nodiscard]] glm::vec2 GetVeloDamp();
 	[[nodiscard]] bool GetIsColliding() const;
 	[[nodiscard]] bool GetIsDead() const;
 	[[nodiscard]] float GetHealth() const;
+	[[nodiscard]] float GetScoreValue() const;
+	
 
 	
 	//void SetAnimationState()
@@ -38,6 +41,7 @@ private:
 	float m_maxSpeed;
 	bool m_isColliding;
 	bool m_isDead;
+	float m_scorevalue;
 	glm::vec2 m_veloDamp;
 };
 #endif /* defined (__ENEMY__) */

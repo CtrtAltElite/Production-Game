@@ -40,6 +40,11 @@ void Enemy::SetVeloDamp(glm::vec2 veloDamp)
     m_veloDamp = veloDamp;
 }
 
+void Enemy::SetScoreValue(float scoreValue)
+{
+    m_scorevalue = scoreValue;
+}
+
 float Enemy::GetSpeed() const
 {
     return m_Speed;
@@ -69,6 +74,12 @@ float Enemy::GetHealth() const
 {
     return m_Health;
 }
+
+float Enemy::GetScoreValue() const
+{
+    return m_scorevalue;
+}
+
 void Enemy::Move()
 {
     const float dt = Game::Instance().GetDeltaTime();

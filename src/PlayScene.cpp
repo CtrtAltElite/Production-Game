@@ -30,6 +30,7 @@ void PlayScene::Update()
 {
 	Collision();
 	UpdateDisplayList();
+	
 
 	// Set FPS display on screen.
 	if ((SDL_GetTicks64() / 1000) > 0)
@@ -120,11 +121,36 @@ void PlayScene::Collision()
 				m_pPlayer->GetRigidBody()->isColliding = false;
 			}
 		}
+		for (auto projectile : m_ProjVec)
+		{
+			if(projectile->GetProjectileSource()->GetType()== GameObjectType::PLAYER)
+			{
+				if(Util::Distance(enemy->GetTransform()->position,projectile->GetTransform()->position)<30.0f)
+				{
+					if (CollisionManager::AABBCheck(enemy,projectile)) 
+					{
+						std::cout <<  "Bullet enemy collision" <<::std::endl;
+						enemy->SetHealth(enemy->GetHealth()-projectile->GetDamage());
+					} else
+					{
+						projectile->GetRigidBody()->isColliding = false;
+					}
+				}
+				
+			}
+		}
 	}
+	DeleteFlagged();
 	//only needed in play state, not start or end or pause.
 	//each game object type will probably want to use a different type of collision
 	//dont want to do object->checkcollision with all objects because then each collision will be checked twice
 	//want to use distance checker to be within a certain range before checking collision.
+}
+
+void PlayScene::DeleteFlagged()
+{
+	//delete code here
+	
 }
 
 void PlayScene::GUI_Function() 

@@ -24,6 +24,7 @@ public:
 	void HandleEvents() override;
 	void Start() override;
 	void Collision();
+	void DeleteFlagged();
 private:
 	// IMGUI Function
 	void GUI_Function();

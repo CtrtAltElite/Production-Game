@@ -30,6 +30,9 @@ void Torpedo::Start()
     SetMaxSpeed(300.0f);
     m_mousePos = Util::GetMousePos();
     SetIsColliding(false);
+    SetDeleteBuffer(100.0f);
+    SetDamage(50.0f);
+    SetProjectileSource(GetPlayer());
     SetAngle(GetPlayer()->GetTransform()->rotation.r);
     GetRigidBody()->velocity+= glm::vec2{cos(GetPlayer()->GetTransform()->rotation.r)*GetSpeed(),sin(GetPlayer()->GetTransform()->rotation.r)*GetSpeed()};
     GetTransform()->position = GetPlayer()->GetTransform()->position;
@@ -42,7 +45,12 @@ void Torpedo::Start()
 void Torpedo::Update()
 {
     Move();
-    GetRigidBody()->velocity*=GetVeloDamp();
+    //GetRigidBody()->velocity*=GetVeloDamp();
+    CheckBounds();
+    if(GetIsColliding())
+    {
+        SetDeleteMe(true);
+    }
 }
 void Torpedo::Clean()
 {

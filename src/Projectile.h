@@ -18,8 +18,9 @@ public:
 	void Update() override =0;
 	void Clean() override = 0; 
 	virtual void Start() =0;
-
 	virtual void Move();
+
+	void CheckBounds();
 	
 	void SetVeloDamp(glm::vec2 veloDamp);
 	void SetAngle(float angle);
@@ -27,6 +28,10 @@ public:
 	void SetIsColliding(bool colliding);
 	void SetSpeed(float speed);
 	void SetMaxSpeed(float maxSpeed);
+	void SetDeleteMe(bool deleteMe);
+	void SetProjectileSource(GameObject* source);
+	void SetDeleteBuffer(float buffer);
+	void SetDamage(float damage);
 
 	glm::vec2 GetVeloDamp();
 	[[nodiscard]] float GetAngle() const;
@@ -34,14 +39,21 @@ public:
 	[[nodiscard]] bool GetIsColliding() const;
 	[[nodiscard]] float GetSpeed() const;
 	[[nodiscard]] float GetMaxSpeed() const;
+	[[nodiscard]] bool GetDeleteMe() const;
+	[[nodiscard]] GameObject* GetProjectileSource() const;
+	[[nodiscard]] float GetDeleteBuffer() const;
+	[[nodiscard]] float GetDamage() const;
 
 private:
+	GameObject* m_pProjectileSource;
 	glm::vec2 m_veloDamp;
 	float m_angle;
 	Player* m_pPlayer;
 	bool m_isColliding;
+	float m_damage;
 	float m_speed;
 	float m_maxSpeed;
-	
+	bool m_deleteMe;
+	float m_OffScreenDeleteBuffer;
 };
 #endif /* defined (__PROJECTILE__)*/

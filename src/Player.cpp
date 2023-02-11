@@ -113,6 +113,26 @@ void Player::SetAnimationState(const PlayerAnimationState new_state)
 	m_currentAnimationState = new_state;
 }
 
+void Player::SetMaxSpeed(float maxSpeed)
+{
+	m_maxSpeed = maxSpeed;
+}
+
+void Player::SetFlipped(bool flipped)
+{
+	m_flipped = flipped;
+}
+
+void Player::SetScore(float score)
+{
+	m_score = score;
+}
+
+void Player::SetKillcount(int killcount)
+{
+	m_killCount = killcount;
+}
+
 void Player::MoveAtMouse()
 {
 	GetRigidBody()->velocity+=glm::vec2{cos(GetTransform()->rotation.r),sin(GetTransform()->rotation.r)}*m_speed;
@@ -130,6 +150,26 @@ void Player::LookAtMouse()
 	desiredAngularVelocity = std::min(change, std::max(-change, desiredAngularVelocity));
 	GetRigidBody()->angularVelocity+=desiredAngularVelocity/10;
 	
+}
+
+float Player::GetMaxSpeed() const
+{
+	return m_maxSpeed;
+}
+
+bool Player::GetFlipped() const
+{
+	return m_flipped;
+}
+
+float Player::GetScore()
+{
+	return m_score;
+}
+
+int Player::GetKillcount()
+{
+	return m_killCount;
 }
 
 void Player::BuildAnimations()
