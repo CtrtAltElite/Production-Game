@@ -76,6 +76,7 @@ void PlayScene::GetPlayerInput()
 void PlayScene::Start()
 {
 	Camera::Instance().SetEnabled(true);
+	Game::Instance().SetDebugMode(true);
 	// Set GUI Title
 	m_guiTitle = "Play Scene";
 
@@ -101,6 +102,10 @@ void PlayScene::Start()
 	m_pFpsCounter->GetTransform()->position = {90.0f,30.0f};
 	m_pFpsCounter->SetSize(40);
 	m_pFpsCounter->SetColour({255,255,0,255});
+	if(!Game::Instance().GetDebugMode())
+	{
+		m_pFpsCounter->SetVisible(false);
+	}
 	AddChild(m_pFpsCounter,UI);
 
 	

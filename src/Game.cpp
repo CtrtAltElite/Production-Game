@@ -182,6 +182,16 @@ SDL_Window* Game::GetWindow() const
 	return m_pWindow.get();
 }
 
+bool Game::GetDebugMode() const
+{
+	return m_DebugMode;
+}
+
+void Game::SetDebugMode(bool mode)
+{
+	m_DebugMode = mode;
+}
+
 void Game::Quit()
 {
 	m_bRunning = false;

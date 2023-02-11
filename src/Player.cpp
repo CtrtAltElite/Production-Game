@@ -38,9 +38,13 @@ void Player::Draw()
 {
 	
 	// draw the player according to animation state
-	Util::DrawRect(Camera::Instance().CameraDisplace(this) -
+	if(Game::Instance().GetDebugMode())
+	{
+		Util::DrawRect(Camera::Instance().CameraDisplace(this) -
 			glm::vec2(this->GetWidth() * 0.5f, this->GetHeight() * 0.5f),
 			this->GetWidth(), this->GetHeight());
+		
+	}
 	//SDL_RenderDrawRectF(Renderer::Instance().GetRenderer(),new SDL_FRect{Camera::Instance().CameraDisplace(this).x,Camera::Instance().CameraDisplace(this).y,static_cast<float>(GetWidth()),static_cast<float>(GetHeight())});
 	switch(m_currentAnimationState)
 	{

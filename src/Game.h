@@ -57,12 +57,16 @@ public:
 
 	[[nodiscard]] SDL_Window* GetWindow() const;
 
+	bool GetDebugMode() const;
+	void SetDebugMode(bool mode);
+
 private:
 	Game();
 	~Game();
 
 	// game properties
 	bool m_bRunning;
+	bool m_DebugMode;
 	Uint32 m_frames;
 	float m_deltaTime{};
 	glm::vec2 m_mousePosition;
