@@ -90,5 +90,14 @@ void Enemy::Move()
     GetTransform()->position = final_position;
     GetRigidBody()->velocity += GetRigidBody()->acceleration;
     GetRigidBody()->velocity = Util::Clamp(GetRigidBody()->velocity,GetMaxSpeed());
+    const float initial_rotation = GetTransform()->rotation.r;
+    const float angularVelocity_term = GetRigidBody()->angularVelocity * dt;
+    const float angularAcceleration_term = GetRigidBody()->angularAcceleration * 0.5f;
+    const float final_rotation = initial_rotation + angularVelocity_term + angularAcceleration_term;
+    GetTransform()->rotation.r = final_rotation;
+    GetRigidBody()->angularVelocity += GetRigidBody()->angularAcceleration;
+    GetRigidBody()->velocity*=GetRigidBody()->velocityDampening;
+    GetRigidBody()->angularVelocity*=GetRigidBody()->angularVelocityDampening;
+    CollisionManager::RotateAABB(this, this->GetTransform()->rotation.r*Util::Rad2Deg);
 }
 

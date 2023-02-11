@@ -26,11 +26,16 @@ public:
 	void SetFlipped(bool flipped);
 	void SetScore(float score);
 	void SetKillcount(int killcount);
-	
-	float GetMaxSpeed() const;
-	bool GetFlipped() const;
+	void SetHealth(float health);
+	void SetIsDead (bool isDead);
+
+
+	[[nodiscard]] float GetMaxSpeed() const;
+	[[nodiscard]] bool GetFlipped() const;
 	float GetScore();
 	int GetKillcount();
+	float GetHealth();
+	bool GetIsDead();
 
 private:
 	void BuildAnimations();
@@ -42,6 +47,8 @@ private:
 	bool m_flipped;
 	float m_score;
 	int m_killCount;
+	float m_Health;
+	bool m_isDead;
 
 	PlayerAnimationState m_currentAnimationState;
 };

@@ -30,7 +30,8 @@ void PlayScene::Update()
 {
 	Collision();
 	UpdateDisplayList();
-	
+	DeleteFlagged();
+	std::cout << Camera::Instance().GetTransform()->position.x << " , " << Camera::Instance().GetTransform()->position.y << std::endl;
 
 	// Set FPS display on screen.
 	if ((SDL_GetTicks64() / 1000) > 0)
@@ -136,11 +137,10 @@ void PlayScene::Collision()
 						projectile->GetRigidBody()->isColliding = false;
 					}
 				}
-				
 			}
 		}
 	}
-	DeleteFlagged();
+	
 	//only needed in play state, not start or end or pause.
 	//each game object type will probably want to use a different type of collision
 	//dont want to do object->checkcollision with all objects because then each collision will be checked twice

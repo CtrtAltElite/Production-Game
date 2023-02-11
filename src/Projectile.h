@@ -23,7 +23,6 @@ public:
 	void CheckBounds();
 	
 	void SetVeloDamp(glm::vec2 veloDamp);
-	void SetAngle(float angle);
 	void SetPlayer(Player* player);
 	void SetIsColliding(bool colliding);
 	void SetSpeed(float speed);
@@ -34,7 +33,6 @@ public:
 	void SetDamage(float damage);
 
 	glm::vec2 GetVeloDamp();
-	[[nodiscard]] float GetAngle() const;
 	[[nodiscard]] Player* GetPlayer() const;
 	[[nodiscard]] bool GetIsColliding() const;
 	[[nodiscard]] float GetSpeed() const;
@@ -47,7 +45,6 @@ public:
 private:
 	GameObject* m_pProjectileSource;
 	glm::vec2 m_veloDamp;
-	float m_angle;
 	Player* m_pPlayer;
 	bool m_isColliding;
 	float m_damage;

@@ -10,6 +10,8 @@ class Config {
 public:
 	static constexpr int SCREEN_WIDTH = 1280;
 	static constexpr int SCREEN_HEIGHT = 720;
+	static constexpr int LEVEL_BOUNDARIES_X = 800;
+	static constexpr int LEVEL_BOUNDARIES_Y = 800;
 	static constexpr int ROW_NUM = 15;
 	static constexpr int COL_NUM = 20;
 	static constexpr int TILE_SIZE = 40;

@@ -13,13 +13,8 @@ Player::Player(): m_currentAnimationState(PlayerAnimationState::PLAYER_IDLE_RIGH
 		"sub_spritesheet");
 
 	SetSpriteSheet(TextureManager::Instance().GetSpriteSheet("sub_spritesheet"));
-	
-	// set frame width
-	SetWidth(53);
-
-	// set frame height
-	SetHeight(58);
-
+	SetWidth(58);
+	SetHeight(30);
 	m_speed = 5.0f;
 	m_maxSpeed = 200.0f;
 	GetTransform()->position = glm::vec2(400.0f, 300.0f);
@@ -28,7 +23,7 @@ Player::Player(): m_currentAnimationState(PlayerAnimationState::PLAYER_IDLE_RIGH
 	GetRigidBody()->acceleration = glm::vec2(0.0f, 0.0f);
 	GetRigidBody()->isColliding = false;
 	GetRigidBody()->velocityDampening = {0.985, 0.985};
-	GetRigidBody()->angularVelocityDampening = 0.95f;
+	GetRigidBody()->angularVelocityDampening = 0.96f;
 	SetType(GameObjectType::PLAYER);
 	animVelo = 0.33f;
 	animVeloDamp = 0.99f;
@@ -104,6 +99,9 @@ void Player::Move()
 	GetRigidBody()->angularVelocity*=GetRigidBody()->angularVelocityDampening;
 	Camera::Instance().GetTransform()->position.x = GetTransform()->position.x - static_cast<float>(Config::SCREEN_WIDTH)/2;
 	Camera::Instance().GetTransform()->position.y = GetTransform()->position.y - static_cast<float>(Config::SCREEN_HEIGHT)/2;
+	Camera::Instance().GetTransform()->position.x = Util::Clamp(Camera::Instance().GetTransform()->position.x,-Config::LEVEL_BOUNDARIES_X,Config::LEVEL_BOUNDARIES_X);
+	Camera::Instance().GetTransform()->position.y = Util::Clamp(Camera::Instance().GetTransform()->position.y,-Config::LEVEL_BOUNDARIES_Y,Config::LEVEL_BOUNDARIES_Y);
+	CollisionManager::RotateAABB(this, this->GetTransform()->rotation.r*Util::Rad2Deg);
 }
 void Player::Clean()
 {
@@ -133,20 +131,30 @@ void Player::SetKillcount(int killcount)
 	m_killCount = killcount;
 }
 
+void Player::SetHealth(float health)
+{
+	m_Health = health;
+}
+
+void Player::SetIsDead(bool isDead)
+{
+	isDead = m_isDead;
+}
+
 void Player::MoveAtMouse()
 {
 	GetRigidBody()->velocity+=glm::vec2{cos(GetTransform()->rotation.r),sin(GetTransform()->rotation.r)}*m_speed;
-	animVelo+=0.1f;
+	animVelo+=0.12f;
 }
 void Player::LookAtMouse()
 {
 	float angleToMouse = atan2(m_mousePos.y-Camera::Instance().CameraDisplace(this).y,m_mousePos.x-Camera::Instance().CameraDisplace(this).x);
-	float nextAngle = GetTransform()->rotation.r + GetRigidBody()->angularVelocity / 10.0f;
+	float nextAngle = GetTransform()->rotation.r + GetRigidBody()->angularVelocity/10;
 	float totalRotation = angleToMouse - nextAngle;
 	while (totalRotation < -180 * Util::Deg2Rad) totalRotation += 360 * Util::Deg2Rad;
 	while (totalRotation > 180 * Util::Deg2Rad) totalRotation -= 360 * Util::Deg2Rad;
-	float desiredAngularVelocity = totalRotation * 10.0f;
-	float change = 1000 * Util::Deg2Rad; //allow 10 degree rotation per time step
+	float desiredAngularVelocity = totalRotation*10;
+	float change = 1000 * Util::Deg2Rad;
 	desiredAngularVelocity = std::min(change, std::max(-change, desiredAngularVelocity));
 	GetRigidBody()->angularVelocity+=desiredAngularVelocity/10;
 	
@@ -170,6 +178,16 @@ float Player::GetScore()
 int Player::GetKillcount()
 {
 	return m_killCount;
+}
+
+float Player::GetHealth()
+{
+	return m_Health;
+}
+
+bool Player::GetIsDead()
+{
+	return m_isDead;
 }
 
 void Player::BuildAnimations()

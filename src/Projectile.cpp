@@ -17,10 +17,6 @@ void Projectile::SetVeloDamp(glm::vec2 veloDamp)
     GetRigidBody()->velocityDampening = veloDamp;
 }
 
-void Projectile::SetAngle(float angle)
-{
-    m_angle = angle;
-}
 
 void Projectile::SetPlayer(Player* player)
 {
@@ -67,10 +63,6 @@ glm::vec2 Projectile::GetVeloDamp()
    return GetRigidBody()->velocityDampening;
 }
 
-float Projectile::GetAngle() const
-{
-    return m_angle;
-}
 
 Player* Projectile::GetPlayer() const
 {
@@ -114,7 +106,7 @@ float Projectile::GetDamage() const
 
 void Projectile::Move()
 {
-    const float dt =Game::Instance().GetDeltaTime();
+    const float dt = Game::Instance().GetDeltaTime();
     const glm::vec2 initial_position = GetTransform()->position;
     const glm::vec2 velocity_term = GetRigidBody()->velocity * dt;
     const glm::vec2 acceleration_term = GetRigidBody()->acceleration * 0.5f;
@@ -122,6 +114,15 @@ void Projectile::Move()
     GetTransform()->position = final_position;
     GetRigidBody()->velocity += GetRigidBody()->acceleration;
     GetRigidBody()->velocity = Util::Clamp(GetRigidBody()->velocity,GetMaxSpeed());
+    const float initial_rotation = GetTransform()->rotation.r;
+    const float angularVelocity_term = GetRigidBody()->angularVelocity * dt;
+    const float angularAcceleration_term = GetRigidBody()->angularAcceleration * 0.5f;
+    const float final_rotation = initial_rotation + angularVelocity_term + angularAcceleration_term;
+    GetTransform()->rotation.r = final_rotation;
+    GetRigidBody()->angularVelocity += GetRigidBody()->angularAcceleration;
+    //GetRigidBody()->velocity*=GetRigidBody()->velocityDampening;
+    //GetRigidBody()->angularVelocity*=GetRigidBody()->angularVelocityDampening;
+   //CollisionManager::RotateAABB(this, this->GetTransform()->rotation.r*Util::Rad2Deg); DOESNT LIKE THIS FOR SOME REASON
 }
 
 void Projectile::CheckBounds()

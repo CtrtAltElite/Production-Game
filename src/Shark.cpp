@@ -8,8 +8,8 @@
 Shark::Shark()
 {
     TextureManager::Instance().Load("../Assets/textures/Brute_Shark.png", "shark");
-    SetWidth(50.0f);
-    SetHeight(50.0f);
+    SetWidth(45.0f);
+    SetHeight(45.0f);
     SetHealth(100.0f);
     GetTransform()->position = glm::vec2(200.0f, 200.0f);
     GetRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
