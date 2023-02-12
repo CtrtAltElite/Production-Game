@@ -60,6 +60,9 @@ public:
 	bool GetDebugMode() const;
 	void SetDebugMode(bool mode);
 
+	Player* GetPlayer() const;
+	void SetPlayer(Player* player);
+
 private:
 	Game();
 	~Game();
@@ -70,6 +73,7 @@ private:
 	Uint32 m_frames;
 	float m_deltaTime{};
 	glm::vec2 m_mousePosition;
+	Player* m_pPlayer;
 
 	// scene variables
 	Scene* m_pCurrentScene;

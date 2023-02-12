@@ -5,9 +5,8 @@
 
 Projectile::Projectile()
 {
-    
+    SetStartTime(SDL_GetTicks());
 }
-
 Projectile::~Projectile()
     =default;
 
@@ -58,6 +57,16 @@ void Projectile::SetDamage(float damage)
     m_damage = damage;
 }
 
+void Projectile::SetStartTime(Uint32 startTime)
+{
+    m_startTime = startTime;
+}
+
+Uint32 Projectile::GetStartTime() const
+{
+    return m_startTime;
+}
+
 glm::vec2 Projectile::GetVeloDamp()
 {
    return GetRigidBody()->velocityDampening;
@@ -103,6 +112,7 @@ float Projectile::GetDamage() const
 {
     return m_damage;
 }
+
 
 void Projectile::Move()
 {

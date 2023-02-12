@@ -192,6 +192,16 @@ void Game::SetDebugMode(bool mode)
 	m_DebugMode = mode;
 }
 
+Player* Game::GetPlayer() const
+{
+	return m_pPlayer;
+}
+
+void Game::SetPlayer(Player* player)
+{
+	m_pPlayer = player;
+}
+
 void Game::Quit()
 {
 	m_bRunning = false;

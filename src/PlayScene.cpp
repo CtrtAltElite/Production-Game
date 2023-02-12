@@ -11,7 +11,6 @@
 #include "Torpedo.h"
 #include "Util.h"
 #include "Layers.h"
-
 PlayScene::PlayScene()
 {
 	PlayScene::Start();
@@ -31,7 +30,7 @@ void PlayScene::Update()
 	Collision();
 	UpdateDisplayList();
 	DeleteFlagged();
-	std::cout << Camera::Instance().GetTransform()->position.x << " , " << Camera::Instance().GetTransform()->position.y << std::endl;
+	//std::cout << Camera::Instance().GetTransform()->position.x << " , " << Camera::Instance().GetTransform()->position.y << std::endl;
 
 	// Set FPS display on screen.
 	if ((SDL_GetTicks64() / 1000) > 0)
@@ -64,15 +63,12 @@ void PlayScene::GetPlayerInput()
 	}
 	if(EventManager::Instance().MousePressed(1)) //left mouse button
 		{
-		m_pProjectile = new Torpedo(m_pPlayer);
+		m_pProjectile = new Torpedo();
 		AddChild(m_pProjectile,PROJECTILES);
 		m_ProjVec.push_back(m_pProjectile);
 		//SoundManager::Instance().PlaySound("playerShoot");
 		}
 }
-
-
-
 void PlayScene::Start()
 {
 	Camera::Instance().SetEnabled(true);
@@ -84,6 +80,7 @@ void PlayScene::Start()
 	AddChild(m_pBackground,BACKGROUND);
 	// Player Sprite
 	m_pPlayer = new Player;
+	Game::Instance().SetPlayer(m_pPlayer);
 	m_pPlayer->SetIsCentered(true);
 	AddChild(m_pPlayer,PLAYERS);
 	m_playerFacingRight = true;
@@ -92,6 +89,11 @@ void PlayScene::Start()
 	m_pShark = new Shark; 
 	m_pEnemies.push_back(m_pShark);
 	AddChild(m_pShark,ENEMIES);
+
+	m_pObstacle = new Obstacle;
+	m_pObstacle->GetTransform()->position={600.0f,600.0f};
+	m_pObstacles.push_back(m_pObstacle);
+	AddChild(m_pObstacle, FOREGROUND);
 
 	// FPS Counter Set-Up
 	m_pFpsCounter = new Label;
@@ -122,7 +124,10 @@ void PlayScene::Collision()
 			if (CollisionManager::AABBCheck(enemy,m_pPlayer)) 
 			{
 				std::cout <<  "Enemy player collision" <<::std::endl;
-			} else
+				enemy->GetRigidBody()->isColliding=true;
+				m_pPlayer->GetRigidBody()->isColliding=true;
+			}
+			else
 			{
 				m_pPlayer->GetRigidBody()->isColliding = false;
 			}
@@ -137,7 +142,10 @@ void PlayScene::Collision()
 					{
 						std::cout <<  "Bullet enemy collision" <<::std::endl;
 						enemy->SetHealth(enemy->GetHealth()-projectile->GetDamage());
-					} else
+						projectile->GetRigidBody()->isColliding=true;
+						enemy->GetRigidBody()->isColliding=true;
+					}
+					else
 					{
 						projectile->GetRigidBody()->isColliding = false;
 					}

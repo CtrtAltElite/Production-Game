@@ -5,10 +5,10 @@
 #include "TextureManager.h"
 #include "Util.h"
 
-Torpedo::Torpedo(Player* player)
+Torpedo::Torpedo()
 {
 	
-    SetPlayer(player);
+    SetPlayer(Game::Instance().GetPlayer());
     Start();
 }
 void Torpedo::Draw()
@@ -37,25 +37,48 @@ void Torpedo::Start()
     SetIsColliding(false);
     SetDeleteBuffer(100.0f);
     SetDamage(50.0f);
+    SetExplodeAfter(1.5f);
     SetProjectileSource(GetPlayer());
+    SetType(GameObjectType::TORPEDO);
     GetTransform()->rotation.r= GetPlayer()->GetTransform()->rotation.r;
     GetRigidBody()->velocity+= glm::vec2{cos(GetPlayer()->GetTransform()->rotation.r)*GetSpeed(),sin(GetPlayer()->GetTransform()->rotation.r)*GetSpeed()};
     GetTransform()->position = GetPlayer()->GetTransform()->position;
-    SetType(GameObjectType::PROJECTILE);
+    
 
     //debug
     //std::cout << "Spawned projectile at:" << GetTransform()->position.x << " , " << GetTransform()->position.y<<std::endl;
     //std::cout << GetRigidBody()->velocity.x << " , " << GetRigidBody()->velocity.y<<std::endl;
 }
+
+void Torpedo::SetExplodeAfter(float explodeAfter)
+{
+    m_explodeAfter = explodeAfter;
+}
+
+
+float Torpedo::GetExplodeAfter() const
+{
+    return m_explodeAfter;
+}
+
+
 void Torpedo::Update()
 {
     Move();
     CheckBounds();
-    if(GetIsColliding())
+    if(GetIsColliding()||(SDL_GetTicks()-GetStartTime())/1000 > GetExplodeAfter())
     {
-        SetDeleteMe(true);
+        Explode();
     }
 }
+void Torpedo::Explode()
+{
+    //explode stuff
+    //animation
+    std::cout << "Explode\n";
+    SetDeleteMe(true);
+}
+
 void Torpedo::Clean()
 {
 	

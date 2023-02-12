@@ -23,6 +23,7 @@ public:
 	void SetMaxSpeed (float maxSpeed);
 	void SetVeloDamp (glm::vec2 veloDamp);
 	void SetScoreValue (float scoreValue);
+	void SetDeleteMe(bool deleteMe);
 
 	[[nodiscard]] float GetSpeed() const;
 	[[nodiscard]] float GetMaxSpeed() const;
@@ -31,6 +32,7 @@ public:
 	[[nodiscard]] bool GetIsDead() const;
 	[[nodiscard]] float GetHealth() const;
 	[[nodiscard]] float GetScoreValue() const;
+	[[nodiscard]] bool GetDeleteMe() const;
 	
 
 	
@@ -41,6 +43,7 @@ private:
 	float m_maxSpeed;
 	bool m_isColliding;
 	bool m_isDead;
+	bool m_deleteMe;
 	float m_scorevalue;
 	glm::vec2 m_veloDamp;
 };

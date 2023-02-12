@@ -1,6 +1,7 @@
 #include "Obstacle.h"
 
 
+#include "Camera.h"
 #include "SoundManager.h"
 #include "TextureManager.h"
 
@@ -25,7 +26,7 @@ Obstacle::~Obstacle()
 
 void Obstacle::Draw()
 {
-	TextureManager::Instance().Draw("obstacle", GetTransform()->position, 0, 255, true);
+	TextureManager::Instance().Draw("obstacle", Camera::Instance().CameraDisplace(this), 0, 255, true);
 }
 
 void Obstacle::Update()

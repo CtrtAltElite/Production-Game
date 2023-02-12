@@ -31,6 +31,10 @@ public:
 	void SetProjectileSource(GameObject* source);
 	void SetDeleteBuffer(float buffer);
 	void SetDamage(float damage);
+	void SetStartTime (Uint32 startTime);
+	
+
+	
 
 	glm::vec2 GetVeloDamp();
 	[[nodiscard]] Player* GetPlayer() const;
@@ -41,6 +45,8 @@ public:
 	[[nodiscard]] GameObject* GetProjectileSource() const;
 	[[nodiscard]] float GetDeleteBuffer() const;
 	[[nodiscard]] float GetDamage() const;
+	[[nodiscard]] Uint32 GetStartTime() const;
+	
 
 private:
 	GameObject* m_pProjectileSource;
@@ -52,5 +58,7 @@ private:
 	float m_maxSpeed;
 	bool m_deleteMe;
 	float m_OffScreenDeleteBuffer;
+	Uint32 m_startTime;
+	
 };
 #endif /* defined (__PROJECTILE__)*/

@@ -45,6 +45,11 @@ void Enemy::SetScoreValue(float scoreValue)
     m_scorevalue = scoreValue;
 }
 
+void Enemy::SetDeleteMe(bool deleteMe)
+{
+    m_deleteMe = deleteMe;
+}
+
 float Enemy::GetSpeed() const
 {
     return m_Speed;
@@ -78,6 +83,11 @@ float Enemy::GetHealth() const
 float Enemy::GetScoreValue() const
 {
     return m_scorevalue;
+}
+
+bool Enemy::GetDeleteMe() const
+{
+    return m_deleteMe;
 }
 
 void Enemy::Move()

@@ -18,6 +18,7 @@ enum class GameObjectType {
 	NUM_OF_TYPES,
 	BACKGROUND,
 	PROJECTILE,
-	SHARK
+	SHARK,
+	TORPEDO
 };
 #endif /* defined (__GAME_OBJECT_TYPE__) */

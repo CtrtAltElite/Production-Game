@@ -2,18 +2,14 @@
 #include "Agent.h"
 #include "Enemy.h"
 
-
-class Shark final : public Enemy, public Agent
+class Carl final : public Enemy, public Agent
 {
 public:
-    Shark();
+    Carl();
     void Draw() override;
     void Update() override;
     void Clean() override;
-
-    void LookForPlayer();
-    void LookTowardsPlayer();
-    
 private:
+    
     
 };

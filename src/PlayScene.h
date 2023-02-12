@@ -8,6 +8,7 @@
 #include "Button.h"
 #include "Camera.h"
 #include "Label.h"
+#include "Obstacle.h"
 #include "Projectile.h"
 #include "Shark.h"
 
@@ -34,8 +35,10 @@ private:
 	Background* m_pBackground{};
 	Projectile* m_pProjectile{};
 	Shark* m_pShark{};
+	Obstacle* m_pObstacle{};
 	std::vector<Enemy*>m_pEnemies{};
 	std::vector<Projectile*>m_ProjVec;
+	std::vector<Obstacle*>m_pObstacles;
 	bool m_playerFacingRight{};
 	Label* m_pFpsCounter{};
 
