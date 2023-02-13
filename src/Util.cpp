@@ -42,6 +42,22 @@ float Util::Clamp(float value, const float min, const float max)
 	return value;
 }
 
+float Util::ClampMin(float value, const float min)
+{
+	if (value < min) {
+		value = min;
+	}
+	return value;
+}
+
+float Util::ClampMax(float value, const float max)
+{
+	if (value > max) {
+		value = max;
+	}
+	return value;
+}
+
 /** This method confines a vector magnitude to the max_length parameter */
 glm::vec2 Util::Clamp(const glm::vec2 vec, const float max_length)
 {

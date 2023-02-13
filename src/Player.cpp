@@ -107,6 +107,8 @@ void Player::Move()
 	Camera::Instance().GetTransform()->position.y = Util::Clamp(Camera::Instance().GetTransform()->position.y,-Config::LEVEL_BOUNDARIES_Y,Config::LEVEL_BOUNDARIES_Y);
 	CollisionManager::RotateAABB(this, this->GetTransform()->rotation.r*Util::Rad2Deg);
 }
+
+
 void Player::Clean()
 {
 }

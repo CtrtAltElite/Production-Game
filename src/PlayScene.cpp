@@ -117,6 +117,7 @@ void PlayScene::Start()
 
 void PlayScene::Collision()
 {
+	
 	for (auto enemy : m_pEnemies)
 	{
 		if(Util::Distance(enemy->GetTransform()->position,m_pPlayer->GetTransform()->position)<50.0f)
@@ -129,7 +130,7 @@ void PlayScene::Collision()
 			}
 			else
 			{
-				m_pPlayer->GetRigidBody()->isColliding = false;
+				m_pPlayer->GetRigidBody()->isColliding = false; //probably not good cause there are other things they could be colliding with
 			}
 		}
 		for (auto projectile : m_ProjVec)
@@ -152,6 +153,18 @@ void PlayScene::Collision()
 				}
 			}
 		}
+		
+	}
+	for (auto obstacle: m_pObstacles)
+	{
+		//std::cout << m_pPlayer->GetTransform()->position.x << " , " << m_pPlayer->GetTransform()->position.y <<  std::endl;
+		//std::cout << obstacle->GetTransform()->position.x<<" , " <<  obstacle->GetTransform()->position.y <<  std::endl;
+		//std::cout << m_pShark->GetTransform()->position.x << " , " << m_pShark->GetTransform()->position.y << std::endl;
+			
+		if(CollisionManager::AABBCheck(obstacle,m_pPlayer))
+		{
+		}
+		
 	}
 	
 	//only needed in play state, not start or end or pause.

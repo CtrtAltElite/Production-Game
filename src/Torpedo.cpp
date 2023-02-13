@@ -75,7 +75,7 @@ void Torpedo::Explode()
 {
     //explode stuff
     //animation
-    std::cout << "Explode\n";
+    //std::cout << "Explode\n";
     SetDeleteMe(true);
 }
 

@@ -47,12 +47,18 @@ bool CollisionManager::SquaredRadiusCheck(GameObject* object1, GameObject* objec
 bool CollisionManager::AABBCheck(GameObject* object1, GameObject* object2)
 {
 	// prepare relevant variables
-	const auto p1 = object1->GetTransform()->position;
-	const auto p2 = object2->GetTransform()->position;
+	auto p1 = object1->GetTransform()->position;
+	auto p2 = object2->GetTransform()->position;
 	const auto p1_width = static_cast<float>(object1->GetWidth());
 	const auto p1_height = static_cast<float>(object1->GetHeight());
 	const auto p2_width = static_cast<float>(object2->GetWidth());
 	const auto p2_height = static_cast<float>(object2->GetHeight());
+	p1.x-= 0.5* p1_width;
+	p1.y-=0.5* p1_height;
+	p2.x-= 0.5* p2_width;
+	p2.y-=0.5* p2_height;
+	
+	
 
 	if (
 		p1.x < p2.x + p2_width &&

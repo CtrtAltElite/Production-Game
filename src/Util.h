@@ -20,6 +20,10 @@ public:
 	static float Sign(float value);
 	static float Clamp(float value, float min, float max);
 
+	static float ClampMin(float value, float min);
+
+	static float ClampMax(float value, float max);
+
 	static glm::vec2 Clamp(glm::vec2 vec, float max_length);
 
 	static float Clamp01(float value);

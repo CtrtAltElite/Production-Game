@@ -2,8 +2,10 @@
 
 
 #include "Camera.h"
+#include "Game.h"
 #include "SoundManager.h"
 #include "TextureManager.h"
+#include "Util.h"
 
 Obstacle::Obstacle()
 {
@@ -26,7 +28,14 @@ Obstacle::~Obstacle()
 
 void Obstacle::Draw()
 {
-	TextureManager::Instance().Draw("obstacle", Camera::Instance().CameraDisplace(this), 0, 255, true);
+	if(Game::Instance().GetDebugMode())
+	{
+		Util::DrawRect(Camera::Instance().CameraDisplace(this) -
+			glm::vec2(this->GetWidth() * 0.5f, this->GetHeight() * 0.5f),
+			this->GetWidth(), this->GetHeight());
+		
+	}
+	TextureManager::Instance().Draw("obstacle", Camera::Instance().CameraDisplace(this), 0, 100, true);
 }
 
 void Obstacle::Update()

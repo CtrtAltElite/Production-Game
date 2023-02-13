@@ -16,6 +16,7 @@ public:
 	void Update() override;
 	void Clean() override;
 	void Move();
+	void Collision();
 
 	void MoveAtMouse();
 	void LookAtMouse();
