@@ -90,7 +90,7 @@ void PlayScene::Start()
 	AddChild(m_torpedoPool, PROJECTILES);
 
 	// Spawning a test shark for now
-	m_enemyPool = new EnemyPool();
+	m_enemyPool = new EnemyPool(); 
 	AddChild(m_enemyPool,ENEMIES);
 
 	m_enemyPool->Spawn(new Shark);

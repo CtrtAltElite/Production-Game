@@ -145,6 +145,10 @@ void Player::SetIsDead(bool isDead)
 
 void Player::MoveAtMouse()
 {
+	if (GetTransform()->position.y < Camera::Instance().GetTransform()->position.y)
+	{
+		GetTransform()->position.y = Camera::Instance().GetTransform()->position.y;
+	}
 	GetRigidBody()->velocity+=glm::vec2{cos(GetTransform()->rotation.r),sin(GetTransform()->rotation.r)}*m_speed;
 	animVelo+=0.12f;
 }
