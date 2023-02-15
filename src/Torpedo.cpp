@@ -28,7 +28,6 @@ void TorpedoPool::Update()
             m_torpedoes[i] = nullptr;
             m_torpedoes.erase(i + m_torpedoes.begin());
             m_torpedoes.shrink_to_fit();
-            std::cout << "deleted torpedo\n";
         } else
         {
             m_torpedoes[i]->Update();

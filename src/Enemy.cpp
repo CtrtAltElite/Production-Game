@@ -90,6 +90,48 @@ bool Enemy::GetDeleteMe() const
     return m_deleteMe;
 }
 
+EnemyPool::EnemyPool()
+{ }
+
+void EnemyPool::Update()
+{
+    for (int i = 0; i < m_enemies.size(); i++)
+    {
+	    if (m_enemies[i]->GetDeleteMe() == true)
+	    {
+            delete m_enemies[i];
+            m_enemies[i] = nullptr;
+            m_enemies.erase(i + m_enemies.begin());
+            m_enemies.shrink_to_fit();
+	    } else
+	    {
+            m_enemies[i]->Update();
+	    }
+    }
+}
+
+void EnemyPool::Clean()
+{
+}
+
+void EnemyPool::Draw()
+{
+    for (Enemy* enemy : m_enemies)
+    {
+        enemy->Draw(); 
+    }
+}
+
+std::vector<Enemy*> EnemyPool::GetPool()
+{
+    return m_enemies;
+}
+
+void EnemyPool::Spawn(Enemy* enemyType)
+{
+    m_enemies.push_back(enemyType);
+}
+
 void Enemy::Move()
 {
     const float dt = Game::Instance().GetDeltaTime();

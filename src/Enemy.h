@@ -47,4 +47,23 @@ private:
 	float m_scorevalue;
 	glm::vec2 m_veloDamp;
 };
+
+// Holds all the enemies in the scene and deals with the deletion
+class EnemyPool : public DisplayObject
+{
+public:
+	EnemyPool();
+
+	// Lifecycle functions
+	void Update() override;
+	void Clean();
+	void Draw() override;
+
+	// Specific functions
+	std::vector<Enemy*> GetPool();
+	void Spawn(Enemy* enemyType);
+
+private:
+	std::vector<Enemy*> m_enemies;
+}; 
 #endif /* defined (__ENEMY__) */

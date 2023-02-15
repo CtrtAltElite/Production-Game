@@ -29,7 +29,6 @@ void PlayScene::Update()
 {
 	Collision();
 	UpdateDisplayList();
-	DeleteFlagged();
 	//std::cout << Camera::Instance().GetTransform()->position.x << " , " << Camera::Instance().GetTransform()->position.y << std::endl;
 
 	// Set FPS display on screen.
@@ -88,9 +87,11 @@ void PlayScene::Start()
 	AddChild(m_torpedoPool, PROJECTILES);
 
 	// Spawning a test shark for now
-	m_pShark = new Shark; 
-	m_pEnemies.push_back(m_pShark);
-	AddChild(m_pShark,ENEMIES);
+	m_enemyPool = new EnemyPool();
+	AddChild(m_enemyPool,ENEMIES);
+
+	m_enemyPool->Spawn(new Shark());
+
 
 	m_pObstacle = new Obstacle;
 	m_pObstacle->GetTransform()->position={600.0f,600.0f};
@@ -119,8 +120,8 @@ void PlayScene::Start()
 
 void PlayScene::Collision()
 {
-	
-	for (auto enemy : m_pEnemies)
+	// Enemy and player collision
+	for (auto enemy : m_enemyPool->GetPool())
 	{
 		if(Util::Distance(enemy->GetTransform()->position,m_pPlayer->GetTransform()->position)<50.0f)
 		{
@@ -159,10 +160,6 @@ void PlayScene::Collision()
 	}
 	for (auto obstacle: m_pObstacles)
 	{
-		//std::cout << m_pPlayer->GetTransform()->position.x << " , " << m_pPlayer->GetTransform()->position.y <<  std::endl;
-		//std::cout << obstacle->GetTransform()->position.x<<" , " <<  obstacle->GetTransform()->position.y <<  std::endl;
-		//std::cout << m_pShark->GetTransform()->position.x << " , " << m_pShark->GetTransform()->position.y << std::endl;
-			
 		if(CollisionManager::AABBCheck(obstacle,m_pPlayer))
 		{
 		}
@@ -173,12 +170,6 @@ void PlayScene::Collision()
 	//each game object type will probably want to use a different type of collision
 	//dont want to do object->checkcollision with all objects because then each collision will be checked twice
 	//want to use distance checker to be within a certain range before checking collision.
-}
-
-void PlayScene::DeleteFlagged()
-{
-	//delete code here
-	
 }
 
 void PlayScene::GUI_Function() 
