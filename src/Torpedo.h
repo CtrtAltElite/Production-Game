@@ -11,9 +11,28 @@ public:
     void Start() override;
     void Explode();
     void SetExplodeAfter(float explodeAfter);
-    float GetExplodeAfter() const;
-    
+    [[nodiscard]] float GetExplodeAfter() const;
+
 private:
     glm::vec2 m_mousePos;
     float m_explodeAfter;
 };
+
+class TorpedoPool final : public DisplayObject
+{
+public:
+    TorpedoPool();
+    std::vector<Torpedo*> GetPool();
+
+    void Fire();
+
+private:
+    // Just overrides of the basic functions 
+    void Update() override;
+    void Clean() override;
+    void Draw();
+
+    std::vector<Torpedo*> m_torpedoes;
+};
+
+

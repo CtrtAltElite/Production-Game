@@ -67,9 +67,7 @@ void PlayScene::GetPlayerInput()
 	}
 	if(EventManager::Instance().MousePressed(1)) //left mouse button
 		{
-		m_pProjectile = new Torpedo();
-		AddChild(m_pProjectile,PROJECTILES);
-		m_ProjVec.push_back(m_pProjectile);
+		m_torpedoPool->Fire();
 		//SoundManager::Instance().PlaySound("playerShoot");
 		}
 }
@@ -89,6 +87,10 @@ void PlayScene::Start()
 	m_pPlayer->SetIsCentered(true);
 	AddChild(m_pPlayer,PLAYERS);
 	m_playerFacingRight = true;
+
+	// Instantiating the torpedo pool.
+	m_torpedoPool = new TorpedoPool();
+	AddChild(m_torpedoPool, PROJECTILES);
 
 	// Spawning a test shark for now
 	m_pShark = new Shark; 
@@ -138,7 +140,7 @@ void PlayScene::Collision()
 				m_pPlayer->GetRigidBody()->isColliding = false; //probably not good cause there are other things they could be colliding with
 			}
 		}
-		for (auto projectile : m_ProjVec)
+		for (auto projectile : m_torpedoPool->GetPool())
 		{
 			if(projectile->GetProjectileSource()->GetType()== GameObjectType::PLAYER)
 			{
