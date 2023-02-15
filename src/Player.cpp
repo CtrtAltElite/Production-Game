@@ -17,7 +17,7 @@ Player::Player(): m_currentAnimationState(PlayerAnimationState::PLAYER_IDLE_RIGH
 	SetHeight(30);
 	m_speed = 5.0f;
 	m_maxSpeed = 200.0f;
-	GetTransform()->position = glm::vec2(400.0f, 300.0f);
+	GetTransform()->position = glm::vec2(0.0f, 300.0f);
 	GetRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
 	GetRigidBody()->bounds=glm::vec2(GetWidth(), GetHeight());
 	GetRigidBody()->acceleration = glm::vec2(0.0f, 0.0f);
@@ -63,6 +63,7 @@ void Player::Draw()
 
 void Player::Update()
 {
+	//std::cout << GetTransform()->position.x << " , " << GetTransform()->position.y << std::endl;
 	while (GetTransform()->rotation.r < 0 * Util::Deg2Rad) GetTransform()->rotation.r += 360 * Util::Deg2Rad;
 	while (GetTransform()->rotation.r > 360 * Util::Deg2Rad) GetTransform()->rotation.r -= 360 * Util::Deg2Rad;
 	if (GetTransform()->rotation.r*Util::Rad2Deg > 90 && GetTransform()->rotation.r*Util::Rad2Deg < 270)
@@ -103,8 +104,6 @@ void Player::Move()
 	GetRigidBody()->angularVelocity*=GetRigidBody()->angularVelocityDampening;
 	Camera::Instance().GetTransform()->position.x = GetTransform()->position.x - static_cast<float>(Config::SCREEN_WIDTH)/2;
 	Camera::Instance().GetTransform()->position.y = GetTransform()->position.y - static_cast<float>(Config::SCREEN_HEIGHT)/2;
-	Camera::Instance().GetTransform()->position.x = Util::Clamp(Camera::Instance().GetTransform()->position.x,-Config::LEVEL_BOUNDARIES_X,Config::LEVEL_BOUNDARIES_X);
-	Camera::Instance().GetTransform()->position.y = Util::Clamp(Camera::Instance().GetTransform()->position.y,-Config::LEVEL_BOUNDARIES_Y,Config::LEVEL_BOUNDARIES_Y);
 	CollisionManager::RotateAABB(this, this->GetTransform()->rotation.r*Util::Rad2Deg);
 }
 

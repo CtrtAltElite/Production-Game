@@ -3,7 +3,7 @@
 #define __OBSTACLE__
 #include "DisplayObject.h"
 
-class Obstacle : public DisplayObject
+class Obstacle : virtual public DisplayObject
 {
 public:
 	// constructors

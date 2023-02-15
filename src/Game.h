@@ -63,6 +63,9 @@ public:
 	Player* GetPlayer() const;
 	void SetPlayer(Player* player);
 
+	glm::vec4 GetLevelBoundaries();
+	void SetLevelBoundaries(glm::vec4 bounds);
+
 private:
 	Game();
 	~Game();
@@ -78,6 +81,7 @@ private:
 	// scene variables
 	Scene* m_pCurrentScene;
 	SceneState m_currentSceneState;
+	glm::vec4 m_levelBoundaries;
 
 	// storage structures
 	std::shared_ptr<SDL_Window> m_pWindow;
