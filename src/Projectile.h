@@ -19,8 +19,7 @@ public:
 	void Clean() override = 0; 
 	virtual void Start() =0;
 	virtual void Move();
-
-	void CheckBounds();
+	
 	
 	void SetVeloDamp(glm::vec2 veloDamp);
 	void SetPlayer(Player* player);

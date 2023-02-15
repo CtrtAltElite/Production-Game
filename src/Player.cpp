@@ -63,7 +63,6 @@ void Player::Draw()
 
 void Player::Update()
 {
-	//std::cout << GetTransform()->position.x << " , " << GetTransform()->position.y << std::endl;
 	while (GetTransform()->rotation.r < 0 * Util::Deg2Rad) GetTransform()->rotation.r += 360 * Util::Deg2Rad;
 	while (GetTransform()->rotation.r > 360 * Util::Deg2Rad) GetTransform()->rotation.r -= 360 * Util::Deg2Rad;
 	if (GetTransform()->rotation.r*Util::Rad2Deg > 90 && GetTransform()->rotation.r*Util::Rad2Deg < 270)
@@ -81,8 +80,6 @@ void Player::Update()
 	m_mousePos = Util::GetMousePos();
 	LookAtMouse();
 	Move();
-	//std::cout << GetTransform()->rotation.r*Util::Rad2Deg << std::endl;
-	//std::cout << animVelo << std::endl;
 }
 void Player::Move()
 {

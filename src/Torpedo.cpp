@@ -108,7 +108,6 @@ float Torpedo::GetExplodeAfter() const
 void Torpedo::Update()
 {
     Move();
-    CheckBounds();
     if(GetIsColliding()||(SDL_GetTicks()-GetStartTime())/1000 > GetExplodeAfter())
     {
         Explode();

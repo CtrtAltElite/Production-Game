@@ -135,14 +135,5 @@ void Projectile::Move()
    //CollisionManager::RotateAABB(this, this->GetTransform()->rotation.r*Util::Rad2Deg); DOESNT LIKE THIS FOR SOME REASON
 }
 
-void Projectile::CheckBounds()
-{
-    if (GetTransform()->position.x<0-GetDeleteBuffer()||
-        GetTransform()->position.y<0-GetDeleteBuffer()||
-        GetTransform()->position.x>Config::SCREEN_WIDTH+GetDeleteBuffer()||
-        GetTransform()->position.y>Config::SCREEN_HEIGHT+GetDeleteBuffer())
-    {
-        SetDeleteMe(true);
-    }
-}
+
 

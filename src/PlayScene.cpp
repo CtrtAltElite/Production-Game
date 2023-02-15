@@ -33,8 +33,6 @@ void PlayScene::Update()
 	Game::Instance().SetLevelBoundaries({Game::Instance().GetLevelBoundaries().x,Game::Instance().GetLevelBoundaries().y,Game::Instance().GetLevelBoundaries().z+0.25f,Game::Instance().GetLevelBoundaries().w+0.25f});
 	Camera::Instance().GetTransform()->position.x = Util::Clamp(Camera::Instance().GetTransform()->position.x,Game::Instance().GetLevelBoundaries().x,Game::Instance().GetLevelBoundaries().y);
 	Camera::Instance().GetTransform()->position.y = Util::Clamp(Camera::Instance().GetTransform()->position.y,Game::Instance().GetLevelBoundaries().z,Game::Instance().GetLevelBoundaries().w);
-	std::cout << Camera::Instance().GetTransform()->position.x << " , " << Camera::Instance().GetTransform()->position.y << std::endl;
-	std::cout << Game::Instance().GetLevelBoundaries().x<< " , " <<Game::Instance().GetLevelBoundaries().y << " , " <<Game::Instance().GetLevelBoundaries().z << " , " << Game::Instance().GetLevelBoundaries().w << std::endl;
 
 	// Set FPS display on screen.
 	if ((SDL_GetTicks64() / 1000) > 0)
