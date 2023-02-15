@@ -29,7 +29,6 @@ void PlayScene::Update()
 {
 	Collision();
 	UpdateDisplayList();
-	DeleteFlagged();
 	Game::Instance().SetLevelBoundaries({Game::Instance().GetLevelBoundaries().x,Game::Instance().GetLevelBoundaries().y,Game::Instance().GetLevelBoundaries().z+0.25f,Game::Instance().GetLevelBoundaries().w+0.25f});
 	Camera::Instance().GetTransform()->position.x = Util::Clamp(Camera::Instance().GetTransform()->position.x,Game::Instance().GetLevelBoundaries().x,Game::Instance().GetLevelBoundaries().y);
 	Camera::Instance().GetTransform()->position.y = Util::Clamp(Camera::Instance().GetTransform()->position.y,Game::Instance().GetLevelBoundaries().z,Game::Instance().GetLevelBoundaries().w);
@@ -91,9 +90,11 @@ void PlayScene::Start()
 	AddChild(m_torpedoPool, PROJECTILES);
 
 	// Spawning a test shark for now
-	m_pShark = new Shark; 
-	m_pEnemies.push_back(m_pShark);
-	AddChild(m_pShark,ENEMIES);
+	m_enemyPool = new EnemyPool();
+	AddChild(m_enemyPool,ENEMIES);
+
+	m_enemyPool->Spawn(new Shark);
+
 
 	m_pObstacle = new Obstacle;
 	m_pObstacle->GetTransform()->position={600.0f,600.0f};
@@ -123,7 +124,7 @@ void PlayScene::Start()
 void PlayScene::Collision()
 {
 	
-	for (auto enemy : m_pEnemies)
+	for (auto enemy : m_enemyPool->GetPool())
 	{
 		if(Util::Distance(enemy->GetTransform()->position,m_pPlayer->GetTransform()->position)<50.0f)
 		{
@@ -178,11 +179,7 @@ void PlayScene::Collision()
 	//want to use distance checker to be within a certain range before checking collision.
 }
 
-void PlayScene::DeleteFlagged()
-{
-	//delete code here
-	
-}
+
 
 void PlayScene::GUI_Function() 
 {

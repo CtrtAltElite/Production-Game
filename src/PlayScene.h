@@ -37,7 +37,6 @@ private:
 
 	// Objects for the PlayScene
 	Background* m_pBackground{};
-	Shark* m_pShark{};
 	Obstacle* m_pObstacle{};
 	EnemyPool* m_enemyPool;
 	TorpedoPool* m_torpedoPool;
