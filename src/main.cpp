@@ -8,6 +8,9 @@
 constexpr float FPS = 300.0f;
 constexpr float DELAY_TIME = 1000.0f / FPS;
 
+constexpr int WIDTH = 1280;
+constexpr int HEIGHT = 720;
+
 /**
  * \brief Program Entry Point
  */
@@ -22,7 +25,7 @@ int main(int argc, char* args[])
 	MoveWindow(window_handle, 100, 700, 800, 200, TRUE);
 
 	// Display Main SDL Window
-	Game::Instance().Init("SDL_Engine v0.29", 100, 100, 1280, 720, false);
+	Game::Instance().Init("SDL_Engine v0.29", 100, 100, WIDTH, HEIGHT, false);
 
 	// Main Game Loop
 	while (Game::Instance().IsRunning())

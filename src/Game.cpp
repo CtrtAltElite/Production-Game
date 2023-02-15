@@ -27,6 +27,8 @@ void Game::Init()
 bool Game::Init(const char* title, const int x, const int y, const int width, const int height, const bool fullscreen)
 {
 	auto flags = 0;
+	SCREEN_HEIGHT = height;
+	SCREEN_WIDTH = width;
 
 	if (fullscreen)
 	{

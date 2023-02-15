@@ -66,6 +66,8 @@ public:
 	glm::vec4 GetLevelBoundaries();
 	void SetLevelBoundaries(glm::vec4 bounds);
 
+	// Public screen width / height variables
+
 private:
 	Game();
 	~Game();
@@ -87,6 +89,8 @@ private:
 	std::shared_ptr<SDL_Window> m_pWindow;
 };
 
+static int SCREEN_WIDTH;
+static int SCREEN_HEIGHT;
 
 #endif /* defined (__GAME__) */
 

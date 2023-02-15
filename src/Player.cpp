@@ -75,11 +75,13 @@ void Player::Update()
 		SetAnimationState(PlayerAnimationState::PLAYER_IDLE_RIGHT);
 		SetFlipped(false);
 	}
+
 	animVelo*=animVeloDamp;
 	animVelo = Util::Clamp(animVelo,0.33f,1.5f);
 	m_mousePos = Util::GetMousePos();
 	LookAtMouse();
 	Move();
+	// Keeps camera at border.
 }
 void Player::Move()
 {
@@ -88,7 +90,17 @@ void Player::Move()
 	const glm::vec2 velocity_term = GetRigidBody()->velocity * dt;
 	const glm::vec2 acceleration_term = GetRigidBody()->acceleration * 0.5f;
 	const glm::vec2 final_position = initial_position + velocity_term + acceleration_term;
+
+	// Sets player position
 	GetTransform()->position = final_position;
+
+	// Makes sure while camera is moving down player cannot go back up
+	if (GetTransform()->position.y < Camera::Instance().GetTransform()->position.y + GetHeight() / 2)
+	{
+		GetTransform()->position.y = (Camera::Instance().GetTransform()->position.y) + GetHeight() / 2;
+	}
+	
+
 	GetRigidBody()->velocity += GetRigidBody()->acceleration;
 	GetRigidBody()->velocity = Util::Clamp(GetRigidBody()->velocity,GetMaxSpeed());
 	const float initial_rotation = GetTransform()->rotation.r;
@@ -145,12 +157,8 @@ void Player::SetIsDead(bool isDead)
 
 void Player::MoveAtMouse()
 {
-	if (GetTransform()->position.y < Camera::Instance().GetTransform()->position.y)
-	{
-		GetTransform()->position.y = Camera::Instance().GetTransform()->position.y;
-	}
-	GetRigidBody()->velocity+=glm::vec2{cos(GetTransform()->rotation.r),sin(GetTransform()->rotation.r)}*m_speed;
-	animVelo+=0.12f;
+	GetRigidBody()->velocity += glm::vec2{ cos(GetTransform()->rotation.r),sin(GetTransform()->rotation.r) }*m_speed;
+	animVelo += 0.12f;
 }
 void Player::LookAtMouse()
 {
