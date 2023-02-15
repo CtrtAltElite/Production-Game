@@ -6,7 +6,7 @@
 
 Carl::Carl()
 {
-    
+    SetType(GameObjectType::CARL);
 }
 void Carl::Draw()
 {

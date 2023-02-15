@@ -202,6 +202,16 @@ void Game::SetPlayer(Player* player)
 	m_pPlayer = player;
 }
 
+glm::vec4 Game::GetLevelBoundaries()
+{
+	return m_levelBoundaries;
+}
+
+void Game::SetLevelBoundaries(glm::vec4 bounds)
+{
+	m_levelBoundaries = bounds;
+}
+
 void Game::Quit()
 {
 	m_bRunning = false;
