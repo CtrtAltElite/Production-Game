@@ -10,6 +10,7 @@
 #include "Label.h"
 #include "Obstacle.h"
 #include "Torpedo.h"
+#include "Enemy.h"
 #include "Shark.h"
 
 class PlayScene : public Scene
@@ -24,19 +25,21 @@ public:
 	void Clean() override;
 	void HandleEvents() override;
 	void Start() override;
+
+	// Specific functions dedicated to PlayScene
 	void Collision();
-	void DeleteFlagged();
 private:
 	// IMGUI Function
 	void GUI_Function();
 	std::string m_guiTitle;
 	
 	Player* m_pPlayer{};
+
+	// Objects for the PlayScene
 	Background* m_pBackground{};
-	Projectile* m_pProjectile{};
 	Shark* m_pShark{};
 	Obstacle* m_pObstacle{};
-	std::vector<Enemy*>m_pEnemies{};
+	EnemyPool* m_enemyPool;
 	TorpedoPool* m_torpedoPool;
 	std::vector<Obstacle*>m_pObstacles;
 	bool m_playerFacingRight{};
