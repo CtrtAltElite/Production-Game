@@ -142,7 +142,6 @@ void Projectile::CheckBounds()
         GetTransform()->position.x>Config::SCREEN_WIDTH+GetDeleteBuffer()||
         GetTransform()->position.y>Config::SCREEN_HEIGHT+GetDeleteBuffer())
     {
-        std::cout << "Projectile set to delete\n"; 
         SetDeleteMe(true);
     }
 }

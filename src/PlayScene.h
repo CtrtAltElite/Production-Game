@@ -9,7 +9,7 @@
 #include "Camera.h"
 #include "Label.h"
 #include "Obstacle.h"
-#include "Projectile.h"
+#include "Torpedo.h"
 #include "Shark.h"
 
 class PlayScene : public Scene
@@ -37,7 +37,7 @@ private:
 	Shark* m_pShark{};
 	Obstacle* m_pObstacle{};
 	std::vector<Enemy*>m_pEnemies{};
-	std::vector<Projectile*>m_ProjVec;
+	TorpedoPool* m_torpedoPool;
 	std::vector<Obstacle*>m_pObstacles;
 	bool m_playerFacingRight{};
 	Label* m_pFpsCounter{};
