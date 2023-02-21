@@ -4,6 +4,7 @@
 
 #include "Scene.h"
 #include "Label.h"
+#include "Ship.h"
 #include "Button.h"
 
 class StartScene final : public Scene
@@ -13,19 +14,18 @@ public:
 	~StartScene() override;
 
 	// Inherited via Scene
-	virtual void Draw() override;
-	virtual void Update() override;
-	virtual void Clean() override;
-	virtual void HandleEvents() override;
-	virtual void Start() override;
-	virtual void InitRigidBody() override;
-	b2Body* GetRigidBody() override;
+	void Draw() override;
+	void Update() override;
+	void Clean() override;
+	void HandleEvents() override;
+	void Start() override;
 	
 private:
-	b2Body* m_rigidBody;
 	Label* m_pStartLabel{};
 	Label* m_pInstructionsLabel{};
-	Button* m_pStartButton;
+	
+
+	Button* m_pStartButton{};
 };
 
 #endif /* defined (__START_SCENE__) */

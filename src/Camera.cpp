@@ -1,13 +1,26 @@
-﻿#include <Camera.h>
+﻿#include "Camera.h"
 
-b2Vec2 Camera::CameraDisplace(b2Vec2 position)
+#include "Config.h"
+
+Camera::Camera()
 {
-	//return b2Vec2{ position.x - m_position.x + m_size.x / 2,position.y - m_position.y + m_size.y / 2 };
-	return position;
+    SetWidth(Config::SCREEN_WIDTH);
+    SetHeight(Config::SCREEN_HEIGHT);
 }
 
-glm::ivec2 Camera::CameraDisplace(glm::ivec2 position)
+Camera::~Camera()
+=default;
+
+
+glm::vec2 Camera::CameraDisplace(DisplayObject* object)
 {
-	//return glm::ivec2{ position.x - m_position.x +m_size.x/2,position.y - m_position.y+m_size.y/2};
-	return position;
+    if (IsEnabled())
+    {
+        glm::vec2 displace = {object->GetTransform()->position.x-GetTransform()->position.x,object->GetTransform()->position.y-GetTransform()->position.y};
+        return displace;
+    }
+    return object->GetTransform()->position;
 }
+
+
+

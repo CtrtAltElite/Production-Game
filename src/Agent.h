@@ -17,16 +17,16 @@ public:
 	void Clean() override = 0;
 
 	// getters
-	[[nodiscard]] b2Vec2 GetTargetPosition() const;
-	[[nodiscard]] b2Vec2 GetCurrentDirection() const;
+	[[nodiscard]] glm::vec2 GetTargetPosition() const;
+	[[nodiscard]] glm::vec2 GetCurrentDirection() const;
 	[[nodiscard]] float GetLOSDistance() const;
 	[[nodiscard]] bool HasLOS() const;
 	[[nodiscard]] float GetCurrentHeading() const;
 	[[nodiscard]] glm::vec4 GetLOSColour() const;
 
 	// setters
-	void SetTargetPosition(b2Vec2 new_position);
-	void SetCurrentDirection(b2Vec2 new_direction);
+	void SetTargetPosition(glm::vec2 new_position);
+	void SetCurrentDirection(glm::vec2 new_direction);
 	void SetLOSDistance(float distance);
 	void SetHasLOS(bool state);
 	void SetCurrentHeading(float heading);
@@ -35,8 +35,8 @@ public:
 private:
 	void ChangeDirection();
 	float m_currentHeading;
-	b2Vec2 m_currentDirection;
-	b2Vec2 m_targetPosition;
+	glm::vec2 m_currentDirection;
+	glm::vec2 m_targetPosition;
 
 	// LOS
 	float m_LOSDistance;

@@ -1,109 +1,236 @@
 #include "Player.h"
 
-#include <Windows.h>
-
 #include "Camera.h"
-#include "Game.h"
 #include "TextureManager.h"
 #include "Util.h"
-#include "WorldManager.h"
+#include "Game.h"
 
-Player::Player()
+Player::Player(): m_currentAnimationState(PlayerAnimationState::PLAYER_IDLE_RIGHT)
 {
-	TextureManager::Instance().Load("../Assets/textures/ncl.png", "player");
-	InitRigidBody();
-	// set frame width
-	SetWidth(53);
-	// set frame height
-	SetHeight(58);
-	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(GetWidth()/3, GetHeight()/3);
-	b2FixtureDef fixtureDef;
-	fixtureDef.shape = &dynamicBox;
-	fixtureDef.density = 1.0f;
-	fixtureDef.friction = 0.5f;
-	GetRigidBody()->CreateFixture(&fixtureDef);
-	isColliding = false;
-	SetType(GameObjectType::PLAYER);
+	TextureManager::Instance().LoadSpriteSheet(
+		"../Assets/sprites/sub_sprite.txt",
+		"../Assets/sprites/sub_sprite.png", 
+		"sub_spritesheet");
 
+	SetSpriteSheet(TextureManager::Instance().GetSpriteSheet("sub_spritesheet"));
+	SetWidth(58);
+	SetHeight(30);
+	m_speed = 5.0f;
+	m_maxSpeed = 200.0f;
+	GetTransform()->position = glm::vec2(0.0f, 300.0f);
+	GetRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
+	GetRigidBody()->bounds=glm::vec2(GetWidth(), GetHeight());
+	GetRigidBody()->acceleration = glm::vec2(0.0f, 0.0f);
+	GetRigidBody()->isColliding = false;
+	GetRigidBody()->velocityDampening = {0.985, 0.985};
+	GetRigidBody()->angularVelocityDampening = 0.96f;
+	SetType(GameObjectType::PLAYER);
+	animVelo = 0.33f;
+	animVeloDamp = 0.99f;
+
+	BuildAnimations();
 }
 
 Player::~Player()
 = default;
-void Player::InitRigidBody()
-{
-	b2BodyDef bodyDef;
-	bodyDef.position.Set(500.0f, 500.0f);
-	bodyDef.angle = 0;
-	bodyDef.type = b2_dynamicBody;
-	bodyDef.linearDamping = 0.8f;
-	bodyDef.angularDamping = 1.0f;
-	bodyDef.enabled = true;
-	m_rigidBody = WorldManager::Instance().GetWorld()->CreateBody(&bodyDef);
-}
 
 void Player::Draw()
 {
-	//add fixture and rigid body render
-	TextureManager::Instance().Draw("player", Camera::Instance().CameraDisplace(m_rigidBody->GetPosition()), GetRigidBody()->GetAngle() * Util::Rad2Deg, 255, true);
-	/*for (b2Fixture* f = GetRigidBody()->GetFixtureList(); f; f = f->GetNext())
-	{
-		b2Shape::Type shapeType = f->GetType();
-		if (shapeType == b2Shape::e_polygon)
-		{
-			b2PolygonShape* polygon = (b2PolygonShape*)f->GetShape();
-			SDL_RenderDrawLinesF(Renderer::Instance().GetRenderer(), polygon->m_vertices, 4);
-		}
-	}*/
 	
+	// draw the player according to animation state
+	if(Game::Instance().GetDebugMode())
+	{
+		Util::DrawRect(Camera::Instance().CameraDisplace(this) -
+			glm::vec2(this->GetWidth() * 0.5f, this->GetHeight() * 0.5f),
+			this->GetWidth(), this->GetHeight());
+		
+	}
+	//SDL_RenderDrawRectF(Renderer::Instance().GetRenderer(),new SDL_FRect{Camera::Instance().CameraDisplace(this).x,Camera::Instance().CameraDisplace(this).y,static_cast<float>(GetWidth()),static_cast<float>(GetHeight())});
+	switch(m_currentAnimationState)
+	{
+	case PlayerAnimationState::PLAYER_IDLE_RIGHT:
+		TextureManager::Instance().PlayAnimation("sub_spritesheet", GetAnimation("idle"),
+			Camera::Instance().CameraDisplace(this), animVelo, GetTransform()->rotation.r*Util::Rad2Deg, 255, true);
+		break;
+	case PlayerAnimationState::PLAYER_IDLE_LEFT:
+		TextureManager::Instance().PlayAnimation("sub_spritesheet", GetAnimation("idle"),
+			Camera::Instance().CameraDisplace(this), animVelo, GetTransform()->rotation.r*Util::Rad2Deg, 255, true, SDL_FLIP_VERTICAL);
+		break;
+	default:
+		break;
+	}
 }
 
 void Player::Update()
 {
-	//Camera displace and mouse position cause a ton of problems. remove comment in Camera.cpp to disable camera
-	m_mousePos = Camera::Instance().CameraDisplace(Game::Instance().GetMousePosition());
-	b2Vec2 displacedPos = Camera::Instance().CameraDisplace(GetRigidBody()->GetPosition());
-	b2Vec2 toTarget = { m_mousePos.x - displacedPos.x, m_mousePos.y - displacedPos.y };
-	m_angleToMouse = b2Atan2(toTarget.y, toTarget.x);
-	RotateToMouse();
+	while (GetTransform()->rotation.r < 0 * Util::Deg2Rad) GetTransform()->rotation.r += 360 * Util::Deg2Rad;
+	while (GetTransform()->rotation.r > 360 * Util::Deg2Rad) GetTransform()->rotation.r -= 360 * Util::Deg2Rad;
+	if (GetTransform()->rotation.r*Util::Rad2Deg > 90 && GetTransform()->rotation.r*Util::Rad2Deg < 270)
+	{
+		SetAnimationState(PlayerAnimationState::PLAYER_IDLE_LEFT);
+		SetFlipped(true);
+	}
+	else
+	{
+		SetAnimationState(PlayerAnimationState::PLAYER_IDLE_RIGHT);
+		SetFlipped(false);
+	}
+
+	animVelo*=animVeloDamp;
+	animVelo = Util::Clamp(animVelo,0.33f,1.5f);
+	m_mousePos = Util::GetMousePos();
+	LookAtMouse();
+	Move();
+	// Keeps camera at border.
 }
+void Player::Move()
+{
+	const float dt =Game::Instance().GetDeltaTime();
+	const glm::vec2 initial_position = GetTransform()->position;
+	const glm::vec2 velocity_term = GetRigidBody()->velocity * dt;
+	const glm::vec2 acceleration_term = GetRigidBody()->acceleration * 0.5f;
+	const glm::vec2 final_position = initial_position + velocity_term + acceleration_term;
+
+	// Sets player position
+	GetTransform()->position = final_position;
+
+	// Makes sure while camera is moving down player cannot go back up
+	if (GetTransform()->position.y < Camera::Instance().GetTransform()->position.y + GetHeight() / 2)
+	{
+		GetTransform()->position.y = (Camera::Instance().GetTransform()->position.y) + GetHeight() / 2;
+	}
+	
+
+	GetRigidBody()->velocity += GetRigidBody()->acceleration;
+	GetRigidBody()->velocity = Util::Clamp(GetRigidBody()->velocity,GetMaxSpeed());
+	const float initial_rotation = GetTransform()->rotation.r;
+	const float angularVelocity_term = GetRigidBody()->angularVelocity * dt;
+	const float angularAcceleration_term = GetRigidBody()->angularAcceleration * 0.5f;
+	const float final_rotation = initial_rotation + angularVelocity_term + angularAcceleration_term;
+	GetTransform()->rotation.r = final_rotation;
+	GetRigidBody()->angularVelocity += GetRigidBody()->angularAcceleration;
+	GetRigidBody()->velocity*=GetRigidBody()->velocityDampening;
+	GetRigidBody()->angularVelocity*=GetRigidBody()->angularVelocityDampening;
+	Camera::Instance().GetTransform()->position.x = GetTransform()->position.x - static_cast<float>(Config::SCREEN_WIDTH)/2;
+	Camera::Instance().GetTransform()->position.y = GetTransform()->position.y - static_cast<float>(Config::SCREEN_HEIGHT)/2;
+	CollisionManager::RotateAABB(this, this->GetTransform()->rotation.r*Util::Rad2Deg);
+}
+
 
 void Player::Clean()
 {
 }
+void Player::SetAnimationState(const PlayerAnimationState new_state)
+{
+	m_currentAnimationState = new_state;
+}
+
+void Player::SetMaxSpeed(float maxSpeed)
+{
+	m_maxSpeed = maxSpeed;
+}
+
+void Player::SetFlipped(bool flipped)
+{
+	m_flipped = flipped;
+}
+
+void Player::SetScore(float score)
+{
+	m_score = score;
+}
+
+void Player::SetKillcount(int killcount)
+{
+	m_killCount = killcount;
+}
+
+void Player::SetHealth(float health)
+{
+	m_Health = health;
+}
+
+void Player::SetIsDead(bool isDead)
+{
+	isDead = m_isDead;
+}
+
 void Player::MoveAtMouse()
 {
-	
-	b2Vec2 vector = { cos(GetRigidBody()->GetAngle()),sin(GetRigidBody()->GetAngle()) };
-	GetRigidBody()->ApplyForceToCenter({ vector.x * 1000000.0f,vector.y * 1000000.0f }, true);
-
-
-
-	//std::cout << "Body Angle: " << GetRigidBody()->GetAngle() * Util::Rad2Deg << std::endl;
-	//std::cout << "Angle to mouse: " << m_angleToMouse * Util::Rad2Deg << std::endl;
-	//std::cout << "Angular Velo: " << GetRigidBody()->GetAngularVelocity() << std::endl;
-	//std::cout << "Inertia: " << GetRigidBody()->GetInertia() << std::endl;
-	//std::cout << "X: "<<GetRigidBody()->GetPosition().x << " Y: " << GetRigidBody()->GetPosition().y << std::endl;
-	//std::cout << "MOUSE POS X:" << m_mousePos.x << ", Y: " << m_mousePos.y << std::endl;
-	//std::cout << "Linear Velocity X: " << GetRigidBody()->GetLinearVelocity().x <<", Y: "<< GetRigidBody()->GetLinearVelocity().y<< std::endl;
-	
+	GetRigidBody()->velocity += glm::vec2{ cos(GetTransform()->rotation.r),sin(GetTransform()->rotation.r) }*m_speed;
+	animVelo += 0.12f;
 }
-void Player::RotateToMouse()
+void Player::LookAtMouse()
 {
-	float nextAngle = GetRigidBody()->GetAngle() + GetRigidBody()->GetAngularVelocity() / 10.0;
-	float totalRotation = m_angleToMouse - nextAngle;
+	float angleToMouse = atan2(m_mousePos.y-Camera::Instance().CameraDisplace(this).y,m_mousePos.x-Camera::Instance().CameraDisplace(this).x);
+	float nextAngle = GetTransform()->rotation.r + GetRigidBody()->angularVelocity/10;
+	float totalRotation = angleToMouse - nextAngle;
 	while (totalRotation < -180 * Util::Deg2Rad) totalRotation += 360 * Util::Deg2Rad;
 	while (totalRotation > 180 * Util::Deg2Rad) totalRotation -= 360 * Util::Deg2Rad;
-	float desiredAngularVelocity = totalRotation * 10;
-	float change = 1 * Util::Deg2Rad; //allow 1 degree rotation per time step
+	float desiredAngularVelocity = totalRotation*10;
+	float change = 1000 * Util::Deg2Rad;
 	desiredAngularVelocity = std::min(change, std::max(-change, desiredAngularVelocity));
-	float impulse = GetRigidBody()->GetInertia() * desiredAngularVelocity;
-	GetRigidBody()->ApplyAngularImpulse(impulse*10.0f,true);
-	
+	GetRigidBody()->angularVelocity+=desiredAngularVelocity/10;
 	
 }
 
-b2Body* Player::GetRigidBody()
+float Player::GetMaxSpeed() const
 {
-	return m_rigidBody;
+	return m_maxSpeed;
+}
+
+bool Player::GetFlipped() const
+{
+	return m_flipped;
+}
+
+float Player::GetScore()
+{
+	return m_score;
+}
+
+int Player::GetKillcount()
+{
+	return m_killCount;
+}
+
+float Player::GetHealth()
+{
+	return m_Health;
+}
+
+bool Player::GetIsDead()
+{
+	return m_isDead;
+}
+
+void Player::BuildAnimations()
+{
+	auto idle_animation = Animation();
+
+	idle_animation.name = "idle";
+	idle_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub1"));
+	idle_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub2"));
+	idle_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub3"));
+	idle_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub4"));
+	idle_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub5"));
+	idle_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub6"));
+	idle_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub7"));
+	idle_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub8"));
+
+	SetAnimation(idle_animation);
+
+	auto run_animation = Animation();
+
+	run_animation.name = "run";
+	run_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub1"));
+	run_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub2"));
+	run_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub3"));
+	run_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub4"));
+	run_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub5"));
+	run_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub6"));
+	run_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub7"));
+	run_animation.frames.push_back(GetSpriteSheet()->GetFrame("sub8"));
+
+	SetAnimation(run_animation);
 }

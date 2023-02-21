@@ -1,19 +1,19 @@
 ﻿#pragma once
+#include "Agent.h"
 #include "Enemy.h"
 
-class Shark : Enemy 
+
+class Shark final : public Enemy, public Agent
 {
 public:
-	virtual void Draw() override;
-	virtual void Update() override;
-	virtual void Clean() override;
-	virtual void TakeDamage(float damage) override;
-	virtual void Die() override;
-	virtual void InitRigidBody() override;
-	virtual b2Body* GetRigidBody() override;
+    Shark();
+    void Draw() override;
+    void Update() override;
+    void Clean() override;
+
+    void LookForPlayer();
+    void LookTowardsPlayer();
+    
 private:
-	b2Body* m_rigidBody;
-	float m_health = 100.0f;
-	float m_maxHealth = 100.0f;
-	bool isDead = false;
+    
 };

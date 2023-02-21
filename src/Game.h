@@ -19,7 +19,6 @@
 #include "EndScene.h"
 
 #include "Config.h"
-#include "b2_draw.h"
 
 #include "ImGuiWindowFrame.h"
 
@@ -45,7 +44,7 @@ public:
 	void Quit();
 
 	// getter and setter functions
-	[[nodiscard]] glm::ivec2 GetMousePosition(); //probably should move to Util
+	[[nodiscard]] glm::vec2 GetMousePosition() const;
 
 	void SetFrames(Uint32 frames);
 	[[nodiscard]] Uint32 GetFrames() const;
@@ -57,32 +56,41 @@ public:
 	void ChangeSceneState(SceneState new_state);
 
 	[[nodiscard]] SDL_Window* GetWindow() const;
-	int GetWindowWidth() const { return m_ScreenWidth; }
-	int GetWindowHeight() const { return m_ScreenHeight; }
-	
+
+	bool GetDebugMode() const;
+	void SetDebugMode(bool mode);
+
+	Player* GetPlayer() const;
+	void SetPlayer(Player* player);
+
+	glm::vec4 GetLevelBoundaries();
+	void SetLevelBoundaries(glm::vec4 bounds);
+
+	// Public screen width / height variables
+
 private:
 	Game();
+	~Game();
 
 	// game properties
 	bool m_bRunning;
+	bool m_DebugMode;
 	Uint32 m_frames;
 	float m_deltaTime{};
-	glm::ivec2 m_mousePosition;
+	glm::vec2 m_mousePosition;
+	Player* m_pPlayer;
+
 	// scene variables
 	Scene* m_pCurrentScene;
 	SceneState m_currentSceneState;
-	float timeStep = 1.0f / 60.f;
-	int32 velocityIterations = 10;
-	int32 positionIterations = 8;
-	int m_ScreenWidth;
-	int m_ScreenHeight;
-	
-	
-	
+	glm::vec4 m_levelBoundaries;
+
 	// storage structures
 	std::shared_ptr<SDL_Window> m_pWindow;
 };
 
+static int SCREEN_WIDTH;
+static int SCREEN_HEIGHT;
 
 #endif /* defined (__GAME__) */
 

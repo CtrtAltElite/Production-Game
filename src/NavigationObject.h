@@ -1,11 +1,9 @@
 #pragma once
 #ifndef __NAVIGATION_OBJECT__
 #define __NAVIGATION_OBJECT__
-#include <glm/detail/type_vec.hpp>
-
 #include "DisplayObject.h"
 
-class NavigationObject : public DisplayObject
+class NavigationObject : virtual public DisplayObject
 {
 public:
 	// Constructor
@@ -20,11 +18,11 @@ public:
 	void Clean() override = 0;
 
 	// getters and setters
-	[[nodiscard]] b2Vec2 GetGridPosition() const;
+	[[nodiscard]] glm::vec2 GetGridPosition() const;
 	void SetGridPosition(float col, float row);
 
 private:
-	b2Vec2 m_gridPosition;
+	glm::vec2 m_gridPosition;
 };
 
 #endif /* defined (__NAVIGATION_OBJECT__) */

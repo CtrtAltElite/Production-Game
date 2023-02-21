@@ -1,10 +1,11 @@
 #include "Obstacle.h"
 
 
+#include "Camera.h"
 #include "Game.h"
 #include "SoundManager.h"
 #include "TextureManager.h"
-#include "WorldManager.h"
+#include "Util.h"
 
 Obstacle::Obstacle()
 {
@@ -13,10 +14,11 @@ Obstacle::Obstacle()
 	const auto size = TextureManager::Instance().GetTextureSize("obstacle");
 	SetWidth(static_cast<int>(size.x));
 	SetHeight(static_cast<int>(size.y));
-	InitRigidBody();
+
+	GetTransform()->position = glm::vec2(300.0f, 300.0f);
 
 	SetType(GameObjectType::OBSTACLE);
-	isColliding = false;
+	GetRigidBody()->isColliding = false;
 
 	SoundManager::Instance().Load("../Assets/audio/yay.ogg", "yay", SoundType::SOUND_SFX);
 }
@@ -26,7 +28,14 @@ Obstacle::~Obstacle()
 
 void Obstacle::Draw()
 {
-	TextureManager::Instance().Draw("obstacle", GetRigidBody()->GetPosition(), 0, 255, true);
+	if(Game::Instance().GetDebugMode())
+	{
+		Util::DrawRect(Camera::Instance().CameraDisplace(this) -
+			glm::vec2(this->GetWidth() * 0.5f, this->GetHeight() * 0.5f),
+			this->GetWidth(), this->GetHeight());
+		
+	}
+	TextureManager::Instance().Draw("obstacle", Camera::Instance().CameraDisplace(this), 0, 100, true);
 }
 
 void Obstacle::Update()
@@ -35,15 +44,4 @@ void Obstacle::Update()
 
 void Obstacle::Clean()
 {
-}
-void Obstacle::InitRigidBody()
-{
-	b2BodyDef bodyDef;
-	bodyDef.position.Set(400.0f, 400.0f);
-	bodyDef.enabled = true;
-	m_rigidBody = WorldManager::Instance().GetWorld()->CreateBody(&bodyDef);
-}
-b2Body* Obstacle::GetRigidBody()
-{
-	return m_rigidBody;
 }

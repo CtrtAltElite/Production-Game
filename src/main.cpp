@@ -5,21 +5,29 @@
 
 #include "Game.h"
 
-constexpr float FPS = 60.0f;
+constexpr float FPS = 300.0f;
 constexpr float DELAY_TIME = 1000.0f / FPS;
 
+constexpr int WIDTH = 1280;
+constexpr int HEIGHT = 720;
 
-
+/**
+ * \brief Program Entry Point
+ */
 int main(int argc, char* args[])
 {
 	Uint32 frames = 0;
 
-	// show console
+	// show and position the application console
 	AllocConsole();
 	auto console = freopen("CON", "w", stdout);
+	const auto window_handle = GetConsoleWindow();
+	MoveWindow(window_handle, 100, 700, 800, 200, TRUE);
 
-	Game::Instance().Init("SDL_Engine v0.28", 100, 100, 1280, 720, false);
+	// Display Main SDL Window
+	Game::Instance().Init("SDL_Engine v0.29", 100, 100, WIDTH, HEIGHT, false);
 
+	// Main Game Loop
 	while (Game::Instance().IsRunning())
 	{
 		const auto frame_start = static_cast<float>(SDL_GetTicks());
@@ -28,14 +36,14 @@ int main(int argc, char* args[])
 		Game::Instance().Update();
 		Game::Instance().Render();
 
-		if (const float frame_time = static_cast<float>(SDL_GetTicks()) - frame_start; 
+		if (const float frame_time = static_cast<float>(SDL_GetTicks()) - frame_start;
 			frame_time < DELAY_TIME)
 		{
 			SDL_Delay(static_cast<int>(DELAY_TIME - frame_time));
 		}
 
 		// delta time
-		const auto delta_time = static_cast<float>(SDL_GetTicks()) - frame_start / 1000.0f;
+		const auto delta_time = (static_cast<float>(SDL_GetTicks()) - frame_start) / 1000.0f;
 		Game::Instance().SetDeltaTime(delta_time);
 
 		frames++;

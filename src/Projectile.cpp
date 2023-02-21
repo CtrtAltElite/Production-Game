@@ -1,75 +1,139 @@
 #include "Projectile.h"
 
-#include "Camera.h"
 #include "Game.h"
-#include "TextureManager.h"
-#include "WorldManager.h"
+#include "Util.h"
 
-Projectile::Projectile(Player* player)
+Projectile::Projectile()
 {
-	TextureManager::Instance().Load("../Assets/textures/Circle.png", "projectile");
+    SetStartTime(SDL_GetTicks());
+}
+Projectile::~Projectile()
+    =default;
 
-	const auto size = TextureManager::Instance().GetTextureSize("projectile");
-	SetWidth(static_cast<int>(size.x));
-	SetHeight(static_cast<int>(size.y));
-	isColliding = false;
-	m_player = player;
-	m_angle = player->GetRigidBody()->GetAngle();
-	m_vector = { cos(m_angle) * 65,sin(m_angle) * 65 };
-	Start();
-	
-	
 
-	SetType(GameObjectType::PROJECTILE);
-	
+void Projectile::SetVeloDamp(glm::vec2 veloDamp)
+{
+    GetRigidBody()->velocityDampening = veloDamp;
 }
 
 
-void Projectile::Draw()
+void Projectile::SetPlayer(Player* player)
 {
-	// draw the target
-	TextureManager::Instance().Draw("projectile", Camera::Instance().CameraDisplace(m_rigidBody->GetPosition()), 0, 180, true);
-}
-void Projectile::Start()
-{
-	InitRigidBody();
-	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(GetWidth()/2, GetHeight()/2);
-	b2FixtureDef fixtureDef;
-	fixtureDef.shape = &dynamicBox;
-	fixtureDef.density = 0.1f;
-	fixtureDef.friction = 0.1f;
-	GetRigidBody()->CreateFixture(&fixtureDef);
-	
-	std::cout << m_rigidBody->GetPosition().x << std::endl << m_rigidBody->GetPosition().y << std::endl;
-	GetRigidBody()->ApplyForceToCenter({ m_vector.x * 100000,m_vector.y * 100000 }, true);
-	m_player->GetRigidBody()->ApplyForceToCenter({ -m_vector.x * 20000.0f, -m_vector.y * 20000.0f }, true);
+    m_pPlayer = player;
 }
 
-void Projectile::Update()
+void Projectile::SetIsColliding(bool colliding)
 {
-	b2Vec2 pos = GetRigidBody()->GetPosition();
-	if (pos.x<-deleteBuffer || pos.x>Game::Instance().GetWindowWidth() + deleteBuffer || pos.y<-deleteBuffer || pos.y>Game::Instance().GetWindowHeight() + deleteBuffer)
-	{
-		m_deleteMe = true;
-		//std::cout << "Projectile set to delete" << std::endl;
-	}
-	
-}
-void Projectile::Clean()
-{
+    m_isColliding = colliding;
 }
 
-void Projectile::InitRigidBody()
+void Projectile::SetSpeed(float speed)
 {
-	b2BodyDef bodyDef;
-	bodyDef.position.Set(m_player->GetRigidBody()->GetPosition().x + m_vector.x, m_player->GetRigidBody()->GetPosition().y + m_vector.y);
-	bodyDef.enabled = true;
-	bodyDef.bullet = true;
-	bodyDef.type = b2_dynamicBody;
-	m_rigidBody = WorldManager::Instance().GetWorld()->CreateBody(&bodyDef);
+    m_speed = speed;
 }
-b2Body* Projectile::GetRigidBody()
+
+void Projectile::SetMaxSpeed(float maxSpeed)
 {
-	return m_rigidBody;
+    m_maxSpeed = maxSpeed;
 }
+
+void Projectile::SetDeleteMe(bool deleteMe)
+{
+    m_deleteMe = deleteMe;
+}
+
+void Projectile::SetProjectileSource(GameObject* source)
+{
+    m_pProjectileSource = source;
+}
+
+void Projectile::SetDeleteBuffer(float buffer)
+{
+    m_OffScreenDeleteBuffer = buffer;
+}
+
+void Projectile::SetDamage(float damage)
+{
+    m_damage = damage;
+}
+
+void Projectile::SetStartTime(Uint32 startTime)
+{
+    m_startTime = startTime;
+}
+
+Uint32 Projectile::GetStartTime() const
+{
+    return m_startTime;
+}
+
+glm::vec2 Projectile::GetVeloDamp()
+{
+   return GetRigidBody()->velocityDampening;
+}
+
+
+Player* Projectile::GetPlayer() const
+{
+    return m_pPlayer;
+}
+
+bool Projectile::GetIsColliding() const
+{
+    return m_isColliding;
+}
+
+float Projectile::GetSpeed() const
+{
+    return m_speed;
+}
+
+float Projectile::GetMaxSpeed() const
+{
+    return m_maxSpeed;
+}
+
+bool Projectile::GetDeleteMe() const
+{
+    return m_deleteMe;
+}
+
+GameObject* Projectile::GetProjectileSource() const
+{
+    return m_pProjectileSource;
+}
+
+float Projectile::GetDeleteBuffer() const
+{
+    return m_OffScreenDeleteBuffer;
+}
+
+float Projectile::GetDamage() const
+{
+    return m_damage;
+}
+
+
+void Projectile::Move()
+{
+    const float dt = Game::Instance().GetDeltaTime();
+    const glm::vec2 initial_position = GetTransform()->position;
+    const glm::vec2 velocity_term = GetRigidBody()->velocity * dt;
+    const glm::vec2 acceleration_term = GetRigidBody()->acceleration * 0.5f;
+    const glm::vec2 final_position = initial_position + velocity_term + acceleration_term;
+    GetTransform()->position = final_position;
+    GetRigidBody()->velocity += GetRigidBody()->acceleration;
+    GetRigidBody()->velocity = Util::Clamp(GetRigidBody()->velocity,GetMaxSpeed());
+    const float initial_rotation = GetTransform()->rotation.r;
+    const float angularVelocity_term = GetRigidBody()->angularVelocity * dt;
+    const float angularAcceleration_term = GetRigidBody()->angularAcceleration * 0.5f;
+    const float final_rotation = initial_rotation + angularVelocity_term + angularAcceleration_term;
+    GetTransform()->rotation.r = final_rotation;
+    GetRigidBody()->angularVelocity += GetRigidBody()->angularAcceleration;
+    //GetRigidBody()->velocity*=GetRigidBody()->velocityDampening;
+    //GetRigidBody()->angularVelocity*=GetRigidBody()->angularVelocityDampening;
+   //CollisionManager::RotateAABB(this, this->GetTransform()->rotation.r*Util::Rad2Deg); DOESNT LIKE THIS FOR SOME REASON
+}
+
+
+

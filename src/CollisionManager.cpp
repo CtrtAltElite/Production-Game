@@ -4,7 +4,7 @@
 
 
 
-int CollisionManager::SquaredDistance(const b2Vec2 p1, const b2Vec2 p2)
+int CollisionManager::SquaredDistance(const glm::vec2 p1, const glm::vec2 p2)
 {
 	const auto diff_of_xs = static_cast<int>(p2.x - p1.x);
 	const auto diff_of_ys = static_cast<int>(p2.y - p1.y);
@@ -14,15 +14,15 @@ int CollisionManager::SquaredDistance(const b2Vec2 p1, const b2Vec2 p2)
 
 bool CollisionManager::SquaredRadiusCheck(GameObject* object1, GameObject* object2)
 {
-	const b2Vec2 p1 = object1->GetRigidBody()->GetPosition();
-	const b2Vec2 p2 = object2->GetRigidBody()->GetPosition();
+	const glm::vec2 p1 = object1->GetTransform()->position;
+	const glm::vec2 p2 = object2->GetTransform()->position;
 
 	if (const int half_heights = static_cast<int>((object1->GetHeight() + object2->GetHeight()) * 0.5); 
 		SquaredDistance(p1, p2) < (half_heights * half_heights)) 
 	{
-		if (!object2->isColliding) 
+		if (!object2->GetRigidBody()->isColliding) 
 		{
-			object2->isColliding = true;
+			object2->GetRigidBody()->isColliding = true;
 
 			switch (object2->GetType()) {
 			case GameObjectType::TARGET:
@@ -39,7 +39,7 @@ bool CollisionManager::SquaredRadiusCheck(GameObject* object1, GameObject* objec
 		}
 		return false;
 	}
-	object2->isColliding = false;
+	object2->GetRigidBody()->isColliding = false;
 	return false;
 
 }
@@ -47,12 +47,18 @@ bool CollisionManager::SquaredRadiusCheck(GameObject* object1, GameObject* objec
 bool CollisionManager::AABBCheck(GameObject* object1, GameObject* object2)
 {
 	// prepare relevant variables
-	const auto p1 = object1->GetRigidBody()->GetPosition();
-	const auto p2 = object2->GetRigidBody()->GetPosition();
+	auto p1 = object1->GetTransform()->position;
+	auto p2 = object2->GetTransform()->position;
 	const auto p1_width = static_cast<float>(object1->GetWidth());
 	const auto p1_height = static_cast<float>(object1->GetHeight());
 	const auto p2_width = static_cast<float>(object2->GetWidth());
 	const auto p2_height = static_cast<float>(object2->GetHeight());
+	p1.x-= 0.5* p1_width;
+	p1.y-=0.5* p1_height;
+	p2.x-= 0.5* p2_width;
+	p2.y-=0.5* p2_height;
+	
+	
 
 	if (
 		p1.x < p2.x + p2_width &&
@@ -61,10 +67,10 @@ bool CollisionManager::AABBCheck(GameObject* object1, GameObject* object2)
 		p1.y + p1_height > p2.y
 		)
 	{
-		if (!object2->isColliding) 
+		if (!object2->GetRigidBody()->isColliding) 
 		{
 
-			object2->isColliding = true;
+			object2->GetRigidBody()->isColliding = true;
 
 			switch (object2->GetType()) {
 			case GameObjectType::TARGET:
@@ -75,6 +81,9 @@ bool CollisionManager::AABBCheck(GameObject* object1, GameObject* object2)
 				std::cout << "Collision with Obstacle!" << std::endl;
 				SoundManager::Instance().PlaySound("yay", 0);
 				break;
+			case GameObjectType::PLAYER:
+				std::cout << "Collision with player" << std::endl;
+				break;
 			default:
 
 				break;
@@ -84,12 +93,12 @@ bool CollisionManager::AABBCheck(GameObject* object1, GameObject* object2)
 		}
 		return false;
 	}
-	object2->isColliding = false;
+	object2->GetRigidBody()->isColliding = false;
 	return false;
 
 }
 
-bool CollisionManager::LineLineCheck(const b2Vec2 line1_start, const b2Vec2 line1_end, const b2Vec2 line2_start, const b2Vec2 line2_end)
+bool CollisionManager::LineLineCheck(const glm::vec2 line1_start, const glm::vec2 line1_end, const glm::vec2 line2_start, const glm::vec2 line2_end)
 {
 	const auto x1 = line1_start.x;
 	const auto x2 = line1_end.x;
@@ -112,7 +121,7 @@ bool CollisionManager::LineLineCheck(const b2Vec2 line1_start, const b2Vec2 line
 	return false;
 }
 
-bool CollisionManager::LineRectCheck(const b2Vec2 line_start, const b2Vec2 line_end, const b2Vec2 rect_start, const float rect_width, const float rect_height)
+bool CollisionManager::LineRectCheck(const glm::vec2 line_start, const glm::vec2 line_end, const glm::vec2 rect_start, const float rect_width, const float rect_height)
 {
 	const auto x1 = line_start.x;
 	const auto x2 = line_end.x;
@@ -125,10 +134,10 @@ bool CollisionManager::LineRectCheck(const b2Vec2 line_start, const b2Vec2 line_
 
 	// check if the line has hit any of the rectangle's sides
 	// uses the Line/Line function below
-	const auto left = LineLineCheck(b2Vec2(x1, y1), b2Vec2(x2, y2), b2Vec2(rx, ry), b2Vec2(rx, ry + rh));
-	const auto right = LineLineCheck(b2Vec2(x1, y1), b2Vec2(x2, y2), b2Vec2(rx + rw, ry), b2Vec2(rx + rw, ry + rh));
-	const auto top = LineLineCheck(b2Vec2(x1, y1), b2Vec2(x2, y2), b2Vec2(rx, ry), b2Vec2(rx + rw, ry));
-	const auto bottom = LineLineCheck(b2Vec2(x1, y1), b2Vec2(x2, y2), b2Vec2(rx, ry + rh), b2Vec2(rx + rw, ry + rh));
+	const auto left = LineLineCheck(glm::vec2(x1, y1), glm::vec2(x2, y2), glm::vec2(rx, ry), glm::vec2(rx, ry + rh));
+	const auto right = LineLineCheck(glm::vec2(x1, y1), glm::vec2(x2, y2), glm::vec2(rx + rw, ry), glm::vec2(rx + rw, ry + rh));
+	const auto top = LineLineCheck(glm::vec2(x1, y1), glm::vec2(x2, y2), glm::vec2(rx, ry), glm::vec2(rx + rw, ry));
+	const auto bottom = LineLineCheck(glm::vec2(x1, y1), glm::vec2(x2, y2), glm::vec2(rx, ry + rh), glm::vec2(rx + rw, ry + rh));
 
 	// if ANY of the above are true, the line
 	// has hit the rectangle
@@ -140,7 +149,7 @@ bool CollisionManager::LineRectCheck(const b2Vec2 line_start, const b2Vec2 line_
 	return false;
 }
 
-bool CollisionManager::LineRectEdgeCheck(const b2Vec2 line_start, const b2Vec2 rect_start, const float rect_width, const float rect_height)
+bool CollisionManager::LineRectEdgeCheck(const glm::vec2 line_start, const glm::vec2 rect_start, const float rect_width, const float rect_height)
 {
 	bool state = false;
 
@@ -153,30 +162,30 @@ bool CollisionManager::LineRectEdgeCheck(const b2Vec2 line_start, const b2Vec2 r
 	const auto rh = rect_height;
 
 	// configure the left edge
-	const auto left_edge_start = b2Vec2(rx, ry);
-	const auto left_edge_end = b2Vec2(rx, ry + rh);
+	const auto left_edge_start = glm::vec2(rx, ry);
+	const auto left_edge_end = glm::vec2(rx, ry + rh);
 	const auto left_edge_mid_point = Util::Lerp(left_edge_start, left_edge_end, 0.5f);
 
 	// configure the right edge
-	const auto right_edge_start = b2Vec2(rx + rw, ry);
-	const auto right_edge_end = b2Vec2(rx + rw, ry + rh);
+	const auto right_edge_start = glm::vec2(rx + rw, ry);
+	const auto right_edge_end = glm::vec2(rx + rw, ry + rh);
 	const auto right_edge_mid_point = Util::Lerp(right_edge_start, right_edge_end, 0.5f);
 
 	// configure the top edge
-	const auto top_edge_start = b2Vec2(rx, ry);
-	const auto top_edge_end = b2Vec2(rx + rw, ry);
+	const auto top_edge_start = glm::vec2(rx, ry);
+	const auto top_edge_end = glm::vec2(rx + rw, ry);
 	const auto top_edge_mid_point = Util::Lerp(top_edge_start, top_edge_end, 0.5f);
 
 	// configure the bottom edge
-	const auto bottom_edge_start = b2Vec2(rx, ry + rh);
-	const auto bottom_edge_end = b2Vec2(rx + rw, ry + rh);
+	const auto bottom_edge_start = glm::vec2(rx, ry + rh);
+	const auto bottom_edge_end = glm::vec2(rx + rw, ry + rh);
 	const auto bottom_edge_mid_point = Util::Lerp(bottom_edge_start, bottom_edge_end, 0.5f);
 
 	// line / line comparisons
-	const auto left = LineLineCheck(b2Vec2(x1, y1), left_edge_mid_point, left_edge_start, left_edge_end);
-	const auto right = LineLineCheck(b2Vec2(x1, y1), right_edge_mid_point, right_edge_start, right_edge_end);
-	const auto top = LineLineCheck(b2Vec2(x1, y1), top_edge_mid_point, top_edge_start, top_edge_end);
-	const auto bottom = LineLineCheck(b2Vec2(x1, y1), bottom_edge_mid_point, bottom_edge_start, bottom_edge_end);
+	const auto left = LineLineCheck(glm::vec2(x1, y1), left_edge_mid_point, left_edge_start, left_edge_end);
+	const auto right = LineLineCheck(glm::vec2(x1, y1), right_edge_mid_point, right_edge_start, right_edge_end);
+	const auto top = LineLineCheck(glm::vec2(x1, y1), top_edge_mid_point, top_edge_start, top_edge_end);
+	const auto bottom = LineLineCheck(glm::vec2(x1, y1), bottom_edge_mid_point, bottom_edge_start, bottom_edge_end);
 
 	// return true if any line collides with the edge
 	if (left || right || top || bottom)
@@ -186,7 +195,7 @@ bool CollisionManager::LineRectEdgeCheck(const b2Vec2 line_start, const b2Vec2 r
 	return state;
 }
 
-int CollisionManager::MinSquaredDistanceLineLine(b2Vec2 line1_start, b2Vec2 line1_end, b2Vec2 line2_start, b2Vec2 line2_end)
+int CollisionManager::MinSquaredDistanceLineLine(glm::vec2 line1_start, glm::vec2 line1_end, glm::vec2 line2_start, glm::vec2 line2_end)
 {
 	auto u = line1_end - line1_start;
 	auto v = line2_end - line2_start;
@@ -215,7 +224,7 @@ int CollisionManager::MinSquaredDistanceLineLine(b2Vec2 line1_start, b2Vec2 line
 	// return the normal
 	return static_cast<int>(Util::Dot(d_p, d_p));
 }
-/*
+
 bool CollisionManager::LineAABBCheck(Ship* object1, GameObject* object2)
 {
 	const auto line_start = object1->GetTransform()->position;
@@ -225,7 +234,7 @@ bool CollisionManager::LineAABBCheck(Ship* object1, GameObject* object2)
 	const auto half_box_width = box_width * 0.5f;
 	const auto box_height = static_cast<float>(object2->GetHeight());
 	const auto half_box_height = box_height * 0.5f;
-	const auto box_start = object2->GetRigidBody()->GetPosition() - b2Vec2(half_box_width, half_box_height);
+	const auto box_start = object2->GetTransform()->position - glm::vec2(half_box_width, half_box_height);
 
 	if (LineRectCheck(line_start, line_end, box_start, box_width, box_height))
 	{
@@ -244,8 +253,8 @@ bool CollisionManager::LineAABBCheck(Ship* object1, GameObject* object2)
 	}
 	return false;
 }
-*/
-int CollisionManager::CircleAABBSquaredDistance(const b2Vec2 circle_centre, int circle_radius, const b2Vec2 box_start, const int box_width, const int box_height)
+
+int CollisionManager::CircleAABBSquaredDistance(const glm::vec2 circle_centre, int circle_radius, const glm::vec2 box_start, const int box_width, const int box_height)
 {
 	auto dx = std::max(box_start.x - circle_centre.x, 0.0f);
 	dx = std::max(dx, circle_centre.x - (box_start.x + static_cast<float>(box_width)));
@@ -264,21 +273,22 @@ bool CollisionManager::CircleAABBCheck(GameObject* object1, GameObject* object2)
 	const auto half_box_height = box_height * 0.5f;
 
 	// circle
-	const auto circle_centre = object1->GetRigidBody()->GetPosition();
+	const auto circle_centre = object1->GetTransform()->position;
 	const auto circle_radius = static_cast<int>(std::max(half_box_width, half_box_height));
 
 	// aabb
 
-	if (const auto box_start = object2->GetRigidBody()->GetPosition() - b2Vec2(half_box_width, half_box_height);
+	if (const auto box_start = object2->GetTransform()->position - glm::vec2(half_box_width, half_box_height); 
 		CircleAABBSquaredDistance(circle_centre, circle_radius, box_start, object2->GetWidth(), object2->GetHeight()) <= (circle_radius * circle_radius))
 	{
-		if (!object2->isColliding) 
+		if (!object2->GetRigidBody()->isColliding) 
 		{
-			object2->isColliding = true;
+			object2->GetRigidBody()->isColliding = true;
 
-			const auto attack_vector = object1->GetRigidBody()->GetPosition() - object2->GetRigidBody()->GetPosition();
-			//constexpr auto normal = b2Vec2(0.0f, -1.0f);
-			const auto dot = Util::Dot(attack_vector, {0.0f,-1.0f});
+			const auto attack_vector = object1->GetTransform()->position - object2->GetTransform()->position;
+			constexpr auto normal = glm::vec2(0.0f, -1.0f);
+
+			const auto dot = Util::Dot(attack_vector, normal);
 			const auto angle = acos(dot / Util::Magnitude(attack_vector)) * Util::Rad2Deg;
 
 			switch (object2->GetType())
@@ -287,7 +297,43 @@ bool CollisionManager::CircleAABBCheck(GameObject* object1, GameObject* object2)
 				std::cout << "Collision with Planet!" << std::endl;
 				SoundManager::Instance().PlaySound("yay", 0);
 				break;
-			
+			case GameObjectType::SHIP:
+			{
+				SoundManager::Instance().PlaySound("thunder", 0);
+				const auto velocity_x = object1->GetRigidBody()->velocity.x;
+				const auto velocity_y = object1->GetRigidBody()->velocity.y;
+
+				if ((attack_vector.x > 0 && attack_vector.y < 0) || (attack_vector.x < 0 && attack_vector.y < 0))
+					// top right or top left
+				{
+					if (angle <= 45)
+					{
+						object1->GetRigidBody()->velocity = glm::vec2(velocity_x, -velocity_y);
+					}
+					else
+					{
+						object1->GetRigidBody()->velocity = glm::vec2(-velocity_x, velocity_y);
+					}
+				}
+
+				if ((attack_vector.x > 0 && attack_vector.y > 0) || (attack_vector.x < 0 && attack_vector.y > 0))
+					// bottom right or bottom left
+				{
+					if (angle <= 135)
+					{
+						object1->GetRigidBody()->velocity = glm::vec2(-velocity_x, velocity_y);
+					}
+					else
+					{
+						object1->GetRigidBody()->velocity = glm::vec2(velocity_x, -velocity_y);
+					}
+				}
+			}
+			case GameObjectType::AGENT:
+			{
+				SoundManager::Instance().PlaySound("yay", 0);
+			}
+			break;
 			default:
 
 				break;
@@ -297,12 +343,12 @@ bool CollisionManager::CircleAABBCheck(GameObject* object1, GameObject* object2)
 		}
 		return false;
 	}
-	object2->isColliding = false;
+	object2->GetRigidBody()->isColliding = false;
 	return false;
 
 }
 
-bool CollisionManager::PointRectCheck(const b2Vec2 point, const b2Vec2 rect_start, const float rect_width, const float rect_height)
+bool CollisionManager::PointRectCheck(const glm::vec2 point, const glm::vec2 rect_start, const float rect_width, const float rect_height)
 {
 	const float top_left_x = rect_start.x - rect_width * 0.5f;
 	const float top_left_y = rect_start.y - rect_height * 0.5f;
@@ -320,16 +366,16 @@ bool CollisionManager::PointRectCheck(const b2Vec2 point, const b2Vec2 rect_star
 }
 
 // assumptions - the list of objects are stored so that they are facing the target and the target is loaded last
-bool CollisionManager::LOSCheck(Agent* agent, const b2Vec2 end_point, const std::vector<DisplayObject*>& objects, DisplayObject* target)
+bool CollisionManager::LOSCheck(Agent* agent, const glm::vec2 end_point, const std::vector<DisplayObject*>& objects, DisplayObject* target)
 {
-	const auto start_point = agent->GetRigidBody()->GetPosition();
+	const auto start_point = agent->GetTransform()->position;
 
 	for (const auto object : objects)
 	{
 		const auto width = static_cast<float>(object->GetWidth());
 		const auto height = static_cast<float>(object->GetHeight());
-		auto object_offset = b2Vec2(width * 0.5f, height * 0.5f);
-		const auto rect_start = object->GetRigidBody()->GetPosition() - object_offset;
+		auto object_offset = glm::vec2(width * 0.5f, height * 0.5f);
+		const auto rect_start = object->GetTransform()->position - object_offset;
 		
 
 		switch (object->GetType())
@@ -373,6 +419,75 @@ bool CollisionManager::LOSCheck(Agent* agent, const b2Vec2 end_point, const std:
 
 	// if the line does not collide with an object that is the target then LOS is false
 	return false;
+}
+
+void CollisionManager::RotateAABB(GameObject* object1, const float angle)
+{
+	// create an array of vec2s using right winding order (TL, TR, BR, BL)
+	glm::vec2 points[4];
+
+	const glm::vec2 position = object1->GetTransform()->position;
+
+	const auto width = object1->GetRigidBody()->bounds.x;
+	const float half_width = width * 0.5f;
+	const auto height = object1->GetRigidBody()->bounds.y;
+	const float half_height = height * 0.5f;
+
+	// check if object1 is centered
+	if (object1->isCentered())
+	{
+		// compute points
+		points[0] = glm::vec2(position.x - half_width, position.y - half_height);
+		points[1] = glm::vec2(position.x + half_width, position.y - half_height);
+		points[2] = glm::vec2(position.x + half_width, position.y + half_height);
+		points[3] = glm::vec2(position.x - half_width, position.y + half_height);
+	}
+	else
+	{
+		// compute points
+		points[0] = glm::vec2(position.x, position.y);
+		points[1] = glm::vec2(position.x + width, position.y);
+		points[2] = glm::vec2(position.x + width, position.y + height);
+		points[3] = glm::vec2(position.x, position.y + height);
+	}
+
+	// rotate each point by the desired angle
+	for (int i = 0; i < 4; ++i)
+	{
+		points[i] = Util::RotatePoint(points[i], angle, position);
+	}
+
+	// initialize extents
+	auto top_left = glm::vec2(INFINITY, INFINITY);
+	auto bot_right = glm::vec2(-INFINITY, -INFINITY);
+
+	// compute extents (top_left and bot_right)
+	for (const auto point : points)
+	{
+		if (top_left.x > point.x)
+		{
+			top_left.x = point.x;
+		}
+
+		if (top_left.y > point.y)
+		{
+			top_left.y = point.y;
+		}
+
+		if (bot_right.x < point.x)
+		{
+			bot_right.x = point.x;
+		}
+
+		if (bot_right.y < point.y)
+		{
+			bot_right.y = point.y;
+		}
+	}
+
+	// compute new width and height values for object1
+	object1->SetWidth(static_cast<int>(bot_right.x - top_left.x));
+	object1->SetHeight(static_cast<int>(bot_right.y - top_left.y));
 }
 
 

@@ -29,7 +29,7 @@ UIControl::EventHandler UIControl::GetEventHandler(const Event event)
 void UIControl::OnMouseOver()
 {
 	if (const auto mouse_position = EventManager::Instance().GetMousePosition(); 
-		CollisionManager::PointRectCheck( mouse_position, GetRigidBody()->GetPosition(), static_cast<float>(GetWidth()), static_cast<float>(GetHeight()) ))
+		CollisionManager::PointRectCheck( mouse_position, GetTransform()->position, static_cast<float>(GetWidth()), static_cast<float>(GetHeight()) ))
 	{
 		m_mouseOver = true;
 	}

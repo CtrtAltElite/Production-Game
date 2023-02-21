@@ -5,19 +5,18 @@
 #include "glm/gtx/string_cast.hpp"
 #include "Renderer.h"
 #include "EventManager.h"
-#include "TextureManager.h"
-#include "WorldManager.h"
-static void CreateBody()
-{
-}
+
+
 // Game functions - DO NOT REMOVE ***********************************************
 
 Game::Game() :
 	m_bRunning(true), m_frames(0), m_pCurrentScene(nullptr), m_currentSceneState(SceneState::NO_SCENE), m_pWindow(nullptr)
 {
-	
 	srand(static_cast<unsigned>(time(nullptr)));  // random seed
 }
+
+Game::~Game()
+= default;
 
 
 void Game::Init()
@@ -28,8 +27,9 @@ void Game::Init()
 bool Game::Init(const char* title, const int x, const int y, const int width, const int height, const bool fullscreen)
 {
 	auto flags = 0;
-	m_ScreenHeight = height;
-	m_ScreenWidth = width;
+	SCREEN_HEIGHT = height;
+	SCREEN_WIDTH = width;
+
 	if (fullscreen)
 	{
 		flags = SDL_WINDOW_FULLSCREEN;
@@ -87,6 +87,7 @@ bool Game::Init(const char* title, const int x, const int y, const int width, co
 		std::cout << "SDL init failure" << std::endl;
 		return false; //SDL could not initialize
 	}
+
 	std::cout << "init success" << std::endl;
 	m_bRunning = true; // everything initialized successfully - start the main loop
 
@@ -96,6 +97,7 @@ bool Game::Init(const char* title, const int x, const int y, const int width, co
 void Game::Start()
 {
 	m_currentSceneState = SceneState::NO_SCENE;
+
 	ChangeSceneState(SceneState::PLAY);
 }
 
@@ -105,9 +107,8 @@ bool Game::IsRunning() const
 }
 
 
-glm::ivec2 Game::GetMousePosition()
+glm::vec2 Game::GetMousePosition() const
 {
-	SDL_GetMouseState(&m_mousePosition.x,&m_mousePosition.y);
 	return m_mousePosition;
 }
 
@@ -183,6 +184,36 @@ SDL_Window* Game::GetWindow() const
 	return m_pWindow.get();
 }
 
+bool Game::GetDebugMode() const
+{
+	return m_DebugMode;
+}
+
+void Game::SetDebugMode(bool mode)
+{
+	m_DebugMode = mode;
+}
+
+Player* Game::GetPlayer() const
+{
+	return m_pPlayer;
+}
+
+void Game::SetPlayer(Player* player)
+{
+	m_pPlayer = player;
+}
+
+glm::vec4 Game::GetLevelBoundaries()
+{
+	return m_levelBoundaries;
+}
+
+void Game::SetLevelBoundaries(glm::vec4 bounds)
+{
+	m_levelBoundaries = bounds;
+}
+
 void Game::Quit()
 {
 	m_bRunning = false;
@@ -202,8 +233,6 @@ void Game::Render() const
 void Game::Update() const
 {
 	m_pCurrentScene->Update();
-	WorldManager::Instance().GetWorld()->Step(timeStep, velocityIterations, positionIterations);
-	WorldManager::Instance().GetWorld()->ClearForces();
 }
 
 void Game::Clean() const
@@ -223,4 +252,3 @@ void Game::HandleEvents() const
 {
 	m_pCurrentScene->HandleEvents();
 }
-//documentation says doesnt work during callbacks? probably has something to do with why it wont work
