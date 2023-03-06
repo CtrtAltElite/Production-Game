@@ -1,33 +1,33 @@
-#include "StartScene.h"
+#include "LPScene.h"
 #include <algorithm>
 #include "Game.h"
 #include "glm/gtx/string_cast.hpp"
 #include "EventManager.h"
 
-StartScene::StartScene()
+LPS::LPS()
 {
-	StartScene::Start();
+	LPS::Start();
 }
 
-StartScene::~StartScene()
+LPS::~LPS()
 = default;
 
-void StartScene::Draw()
+void LPS::Draw()
 {
 	DrawDisplayList();
 }
 
-void StartScene::Update()
+void LPS::Update()
 {
 	UpdateDisplayList();
 }
 
-void StartScene::Clean()
+void LPS::Clean()
 {
 	RemoveAllChildren();
 }
 
-void StartScene::HandleEvents()
+void LPS::HandleEvents()
 {
 	EventManager::Instance().Update();
 
@@ -37,16 +37,28 @@ void StartScene::HandleEvents()
 		Game::Instance().Quit();
 	}
 
-	if(EventManager::Instance().IsKeyDown(SDL_SCANCODE_1))
+	if(EventManager::Instance().IsKeyDown(SDL_SCANCODE_P))
 	{
-		Game::Instance().ChangeSceneState(SceneState::LSP);
+		Game::Instance().ChangeSceneState(SceneState::PLAY);
+	}
+	if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_LEFT))
+	{
+		Game::Instance().ChangeSceneState(SceneState::WHAT);
+	}
+	if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_RIGHT))
+	{
+		Game::Instance().ChangeSceneState(SceneState::LS1);
+	}
+	if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_M))
+	{
+		Game::Instance().ChangeSceneState(SceneState::START);
 	}
 }
 
-void StartScene::Start()
+void LPS::Start()
 {
 	constexpr SDL_Color blue = { 0, 0, 255, 255 };
-	m_pStartLabel = new Label("Project CARL", "Dock51", 80, blue, glm::vec2(1280/2,100));
+	m_pStartLabel = new Label("PRO", "Dock51", 80, blue, glm::vec2(1280/2,100));
 	m_pStartLabel->SetParent(this);
 	AddChild(m_pStartLabel);
 
@@ -63,7 +75,7 @@ void StartScene::Start()
 	m_pStartButton->AddEventListener(Event::CLICK, [&]()-> void
 	{
 		m_pStartButton->SetActive(false);
-		Game::Instance().ChangeSceneState(SceneState::LSP);
+		Game::Instance().ChangeSceneState(SceneState::PLAY);
 	});
 	
 	m_pStartButton->AddEventListener(Event::MOUSE_OVER, [&]()->void

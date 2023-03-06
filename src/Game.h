@@ -16,7 +16,14 @@
 // Scenes
 #include "StartScene.h"
 #include "PlayScene.h"
+#include "LPScene.h"
+#include "L1Scene.h"
+#include "L2Scene.h"
+#include "L3Scene.h"
+#include "LBScene.h"
 #include "EndScene.h"
+#include "WHATScene.h"
+#include "OPPScene.h"
 
 #include "Config.h"
 
