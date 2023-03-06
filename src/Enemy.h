@@ -24,6 +24,7 @@ public:
 	void SetVeloDamp (glm::vec2 veloDamp);
 	void SetScoreValue (float scoreValue);
 	void SetDeleteMe(bool deleteMe);
+	void SetTargetPlayer(DisplayObject* targetPlayer);
 
 	[[nodiscard]] float GetSpeed() const;
 	[[nodiscard]] float GetMaxSpeed() const;
@@ -33,7 +34,6 @@ public:
 	[[nodiscard]] float GetHealth() const;
 	[[nodiscard]] float GetScoreValue() const;
 	[[nodiscard]] bool GetDeleteMe() const;
-	
 
 	
 	//void SetAnimationState()
@@ -46,6 +46,7 @@ private:
 	bool m_deleteMe;
 	float m_scorevalue;
 	glm::vec2 m_veloDamp;
+	DisplayObject* m_pTargetPlayer;
 };
 
 // Holds all the enemies in the scene and deals with the deletion
@@ -62,6 +63,7 @@ public:
 	// Specific functions
 	std::vector<Enemy*> GetPool();
 	void Spawn(Enemy* enemyType);
+	void UpdateTargetPlayer(DisplayObject* targetObject) const;
 
 private:
 	std::vector<Enemy*> m_enemies;

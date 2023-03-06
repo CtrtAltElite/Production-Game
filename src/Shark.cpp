@@ -12,7 +12,7 @@ Shark::Shark()
     SetWidth(53.0f);
     SetHeight(40.0f);
     SetHealth(100.0f);
-    GetTransform()->position = glm::vec2(200.0f, 200.0f);
+    GetTransform()->position = glm::vec2(rand() % 200, rand() % 200);
     GetRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
     GetRigidBody()->bounds=glm::vec2(GetWidth(), GetHeight());
     GetRigidBody()->acceleration = glm::vec2(0.0f, 0.0f);

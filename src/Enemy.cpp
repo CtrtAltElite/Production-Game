@@ -50,6 +50,11 @@ void Enemy::SetDeleteMe(bool deleteMe)
     m_deleteMe = deleteMe;
 }
 
+void Enemy::SetTargetPlayer(DisplayObject* targetPlayer)
+{
+    m_pTargetPlayer = targetPlayer;
+}
+
 float Enemy::GetSpeed() const
 {
     return m_Speed;
@@ -132,24 +137,41 @@ void EnemyPool::Spawn(Enemy* enemyType)
     m_enemies.push_back(enemyType);
 }
 
+void EnemyPool::UpdateTargetPlayer(DisplayObject* targetObject) const
+{
+    for (auto enemy : m_enemies)
+    {
+        enemy->SetTargetPlayer(targetObject);
+    }
+}
+
 void Enemy::Move()
 {
-    const float dt = Game::Instance().GetDeltaTime();
-    const glm::vec2 initial_position = GetTransform()->position;
-    const glm::vec2 velocity_term = GetRigidBody()->velocity * dt;
-    const glm::vec2 acceleration_term = GetRigidBody()->acceleration * 0.5f;
-    const glm::vec2 final_position = initial_position + velocity_term + acceleration_term;
-    GetTransform()->position = final_position;
-    GetRigidBody()->velocity += GetRigidBody()->acceleration;
-    GetRigidBody()->velocity = Util::Clamp(GetRigidBody()->velocity,GetMaxSpeed());
-    const float initial_rotation = GetTransform()->rotation.r;
-    const float angularVelocity_term = GetRigidBody()->angularVelocity * dt;
-    const float angularAcceleration_term = GetRigidBody()->angularAcceleration * 0.5f;
-    const float final_rotation = initial_rotation + angularVelocity_term + angularAcceleration_term;
-    GetTransform()->rotation.r = final_rotation;
-    GetRigidBody()->angularVelocity += GetRigidBody()->angularAcceleration;
-    GetRigidBody()->velocity*=GetRigidBody()->velocityDampening;
-    GetRigidBody()->angularVelocity*=GetRigidBody()->angularVelocityDampening;
-    CollisionManager::RotateAABB(this, this->GetTransform()->rotation.r*Util::Rad2Deg);
+    if (m_pTargetPlayer != nullptr)
+    {
+        const float dt = Game::Instance().GetDeltaTime();
+        const glm::vec2 initial_position = GetTransform()->position;
+        const glm::vec2 desired_velocity = m_pTargetPlayer->GetTransform()->position;
+
+        const glm::vec2 steering_direction = desired_velocity - initial_position;
+
+        
+        /* Will fix this tonight, making seek work for shark*/
+        /*const glm::vec2 velocity_term = GetRigidBody()->velocity * dt;
+        const glm::vec2 acceleration_term = GetRigidBody()->acceleration * 0.5f;
+        const glm::vec2 final_position = initial_position + velocity_term + acceleration_term;
+        GetTransform()->position = final_position;
+        GetRigidBody()->velocity += GetRigidBody()->acceleration;
+        GetRigidBody()->velocity = Util::Clamp(GetRigidBody()->velocity, GetMaxSpeed());
+        const float initial_rotation = GetTransform()->rotation.r;
+        const float angularVelocity_term = GetRigidBody()->angularVelocity * dt;
+        const float angularAcceleration_term = GetRigidBody()->angularAcceleration * 0.5f;
+        const float final_rotation = initial_rotation + angularVelocity_term + angularAcceleration_term;
+        GetTransform()->rotation.r = final_rotation;
+        GetRigidBody()->angularVelocity += GetRigidBody()->angularAcceleration;
+        GetRigidBody()->velocity *= GetRigidBody()->velocityDampening;
+        GetRigidBody()->angularVelocity *= GetRigidBody()->angularVelocityDampening;*/
+        CollisionManager::RotateAABB(this, this->GetTransform()->rotation.r * Util::Rad2Deg);
+    }
 }
 

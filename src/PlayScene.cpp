@@ -33,6 +33,16 @@ void PlayScene::Update()
 	Camera::Instance().GetTransform()->position.x = Util::Clamp(Camera::Instance().GetTransform()->position.x,Game::Instance().GetLevelBoundaries().x,Game::Instance().GetLevelBoundaries().y);
 	Camera::Instance().GetTransform()->position.y = Util::Clamp(Camera::Instance().GetTransform()->position.y,Game::Instance().GetLevelBoundaries().z,Game::Instance().GetLevelBoundaries().w);
 
+	m_pEnemyPool->Update();
+	m_pEnemyPool->UpdateTargetPlayer(m_pPlayer);
+
+	if (timer <= 0)
+	{
+		timer = NEXT_ENEMY_SPAWN;
+		m_pEnemyPool->Spawn(new Shark);
+	}
+
+
 	// Set FPS display on screen.
 	if ((SDL_GetTicks64() / 1000) > 0)
 	{
@@ -40,6 +50,7 @@ void PlayScene::Update()
 		const std::string fpsText = "FPS: " + std::to_string(fps);
 		m_pFpsCounter->SetText(fpsText);
 	}
+	timer -= 0.1f;
 }
 
 void PlayScene::Clean()
@@ -64,7 +75,7 @@ void PlayScene::GetPlayerInput()
 	}
 	if(EventManager::Instance().MousePressed(1)) //left mouse button
 		{
-		m_torpedoPool->Fire();
+		m_pTorpedoPool->Fire();
 		//SoundManager::Instance().PlaySound("playerShoot");
 		}
 }
@@ -86,16 +97,16 @@ void PlayScene::Start()
 	m_playerFacingRight = true;
 
 	// Instantiating the torpedo pool.
-	m_torpedoPool = new TorpedoPool();
-	AddChild(m_torpedoPool, PROJECTILES);
+	m_pTorpedoPool = new TorpedoPool();
+	AddChild(m_pTorpedoPool, PROJECTILES);
 
 	// Spawning a test shark for now
-	m_enemyPool = new EnemyPool(); 
-	AddChild(m_enemyPool,ENEMIES);
+	m_pEnemyPool = new EnemyPool(); 
+	AddChild(m_pEnemyPool,ENEMIES);
 
-	m_enemyPool->Spawn(new Shark);
+	m_pEnemyPool->Spawn(new Shark);
 
-	// Instantiating the obstcale pool.
+	// Instantiating the obstacle pool.
 	m_pObstaclePool = new ObstaclePool();
 	AddChild(m_pObstaclePool, OBSTACLE);
 
@@ -126,7 +137,7 @@ void PlayScene::Start()
 void PlayScene::Collision()
 {
 	
-	for (auto enemy : m_enemyPool->GetPool())
+	for (auto enemy : m_pEnemyPool->GetPool())
 	{
 		if(Util::Distance(enemy->GetTransform()->position,m_pPlayer->GetTransform()->position)<50.0f)
 		{
@@ -141,7 +152,7 @@ void PlayScene::Collision()
 				m_pPlayer->GetRigidBody()->isColliding = false; //probably not good cause there are other things they could be colliding with
 			}
 		}
-		for (auto projectile : m_torpedoPool->GetPool())
+		for (auto projectile : m_pTorpedoPool->GetPool())
 		{
 			if(projectile->GetProjectileSource()->GetType()== GameObjectType::PLAYER)
 			{
