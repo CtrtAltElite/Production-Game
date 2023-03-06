@@ -37,7 +37,7 @@ private:
 
 	// Objects for the PlayScene
 	Background* m_pBackground{};
-	Obstacle* m_pObstacle{};
+	ObstaclePool* m_pObstaclePool{};
 	EnemyPool* m_enemyPool;
 	TorpedoPool* m_torpedoPool;
 	std::vector<Obstacle*>m_pObstacles;

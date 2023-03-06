@@ -95,11 +95,13 @@ void PlayScene::Start()
 
 	m_enemyPool->Spawn(new Shark);
 
+	// Instantiating the obstcale pool.
+	m_pObstaclePool = new ObstaclePool();
+	AddChild(m_pObstaclePool, OBSTACLE);
 
-	m_pObstacle = new Obstacle;
+	Obstacle* m_pObstacle = new Obstacle();
 	m_pObstacle->GetTransform()->position={600.0f,600.0f};
-	m_pObstacles.push_back(m_pObstacle);
-	AddChild(m_pObstacle, FOREGROUND);
+	m_pObstaclePool->Spawn(m_pObstacle);
 
 	// FPS Counter Set-Up
 	m_pFpsCounter = new Label;
