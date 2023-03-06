@@ -63,15 +63,15 @@ void LPS::HandleEvents()
 void LPS::Start()
 {
 
-	SoundManager::Instance().Load("../Assets/audio/TM.mp3", "Start", SoundType::SOUND_MUSIC);
+	SoundManager::Instance().Load("../Assets/audio/TM.mp3", "pro", SoundType::SOUND_MUSIC);
 	SoundManager::Instance().PlayMusic("pro", 0);
 
 	constexpr SDL_Color blue = { 0, 0, 255, 255 };
-	m_pStartLabel = new Label("PRO", "Dock51", 80, blue, glm::vec2(1280/2,100));
+	m_pStartLabel = new Label("PROLOG", "Dock51", 80, blue, glm::vec2(1280/2,100));
 	m_pStartLabel->SetParent(this);
 	AddChild(m_pStartLabel);
 
-	m_pInstructionsLabel = new Label("Click to Shoot. Press SPACE to move.", "Consolas", 40, blue, glm::vec2(1280/2, 720/2-150));
+	m_pInstructionsLabel = new Label("Learn Shit. Click to Shoot. Press SPACE to move.", "Consolas", 40, blue, glm::vec2(1280/2, 720/2-150));
 	m_pInstructionsLabel->SetParent(this);
 	AddChild(m_pInstructionsLabel);
 
