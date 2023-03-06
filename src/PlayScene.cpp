@@ -99,8 +99,8 @@ void PlayScene::Start()
 	m_pObstaclePool = new ObstaclePool();
 	AddChild(m_pObstaclePool, OBSTACLE);
 
-	Obstacle* m_pObstacle = new Obstacle();
-	m_pObstacle->GetTransform()->position={600.0f,600.0f};
+	auto m_pObstacle = new Obstacle();
+	m_pObstacle->GetTransform()->position= {600.0f,600.0f};
 	m_pObstaclePool->Spawn(m_pObstacle);
 
 	// FPS Counter Set-Up
