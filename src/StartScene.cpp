@@ -40,11 +40,16 @@ void StartScene::HandleEvents()
 	if(EventManager::Instance().IsKeyDown(SDL_SCANCODE_1))
 	{
 		Game::Instance().ChangeSceneState(SceneState::LSP);
+		SoundManager::Instance().stop_music("Start", 0);
+		
 	}
 }
 
 void StartScene::Start()
 {
+	SoundManager::Instance().Load("../Assets/audio/start.mp3", "Start", SoundType::SOUND_MUSIC);
+	SoundManager::Instance().PlayMusic("Start", 0);
+
 	constexpr SDL_Color blue = { 0, 0, 255, 255 };
 	m_pStartLabel = new Label("Project CARL", "Dock51", 80, blue, glm::vec2(1280/2,100));
 	m_pStartLabel->SetParent(this);
@@ -64,6 +69,7 @@ void StartScene::Start()
 	{
 		m_pStartButton->SetActive(false);
 		Game::Instance().ChangeSceneState(SceneState::LSP);
+		SoundManager::Instance().stop_music("Start", 0);
 	});
 	
 	m_pStartButton->AddEventListener(Event::MOUSE_OVER, [&]()->void

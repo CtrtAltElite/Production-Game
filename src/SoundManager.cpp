@@ -77,6 +77,15 @@ void SoundManager::StopMusic(const int fade_out/* = 0 */) const
 	}
 }
 
+void SoundManager::stop_music(const char* str, int i)
+{
+	if (Mix_PlayingMusic())
+	{
+		Mix_FadeOutMusic(i);
+	}
+
+}
+
 void SoundManager::PauseMusic() const
 {
 	if (Mix_PlayingMusic())

@@ -24,10 +24,12 @@ public:
 	bool Load(const std::string& file_name, const std::string& id, SoundType type);
 	void Unload(const std::string& id, SoundType type);
 	void PlayMusic(const std::string& id, int loop = -1, int fade_in = 0);
-	void StopMusic(int fade_out = 0) const;
+	void StopMusic(int fade_out) const;
+	void stop_music(const char* str, int i);
 	void PauseMusic() const;
 	void ResumeMusic() const;
 	void PlaySound(const std::string& id, int loop = 0, int channel = -1);
+	//void StopSound(int fade_out = 0) const;
 	void SetMusicVolume(const int vol) const;
 	void SetSoundVolume(const int vol) const;
 	void SetAllVolume(const int vol) const;
@@ -38,6 +40,7 @@ public:
 	void PanReset(const int channel = MIX_CHANNEL_POST);
 	void PanSet(const int amount, const int channel = MIX_CHANNEL_POST);
 	void Quit();
+
 
 private: // Methods.
 	SoundManager();

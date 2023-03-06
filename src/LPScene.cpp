@@ -40,23 +40,32 @@ void LPS::HandleEvents()
 	if(EventManager::Instance().IsKeyDown(SDL_SCANCODE_P))
 	{
 		Game::Instance().ChangeSceneState(SceneState::PLAY);
+		SoundManager::Instance().stop_music("pro", 0);
 	}
 	if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_LEFT))
 	{
 		Game::Instance().ChangeSceneState(SceneState::WHAT);
+		SoundManager::Instance().stop_music("pro", 0);
 	}
 	if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_RIGHT))
 	{
 		Game::Instance().ChangeSceneState(SceneState::LS1);
+		SoundManager::Instance().stop_music("pro", 0);
 	}
 	if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_M))
 	{
+		SoundManager::Instance().stop_music("pro", 0);
 		Game::Instance().ChangeSceneState(SceneState::START);
+
 	}
 }
 
 void LPS::Start()
 {
+
+	SoundManager::Instance().Load("../Assets/audio/TM.mp3", "Start", SoundType::SOUND_MUSIC);
+	SoundManager::Instance().PlayMusic("pro", 0);
+
 	constexpr SDL_Color blue = { 0, 0, 255, 255 };
 	m_pStartLabel = new Label("PRO", "Dock51", 80, blue, glm::vec2(1280/2,100));
 	m_pStartLabel->SetParent(this);
