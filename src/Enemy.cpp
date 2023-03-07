@@ -149,13 +149,30 @@ void Enemy::Move()
 {
     if (m_pTargetPlayer != nullptr)
     {
+        // Getting initial instances of position, velocity, and target position
         const float dt = Game::Instance().GetDeltaTime();
-        const glm::vec2 initial_position = GetTransform()->position;
-        const glm::vec2 desired_velocity = m_pTargetPlayer->GetTransform()->position;
+        glm::vec2 plr_position = GetTransform()->position;
+        glm::vec2 new_velocity = GetRigidBody()->velocity;
+        glm::vec2 steering = glm::vec2();
+        glm::vec2 target_position = m_pTargetPlayer->GetTransform()->position;
 
-        const glm::vec2 steering_direction = desired_velocity - initial_position;
+        // Getting length of veloicty vector (controls how much it moves via length between target and player) 
+        new_velocity = Util::Normalize(target_position - plr_position) * GetMaxSpeed();
 
-        
+        // Adding steering forces so we can rotate user in the right direction, influences character movement
+        steering = new_velocity - GetRigidBody()->velocity;
+
+        // Adding forces to the player (specifically the velocity force)
+        // Should make enemy smoothly head towards their target taking into account mass
+        steering = std::min(steering, glm::vec2(GetMaxSpeed(), GetMaxSpeed()));
+        steering = steering / GetRigidBody()->mass;
+
+        GetRigidBody()->velocity = std::min(GetRigidBody()->velocity + steering, glm::vec2(GetMaxSpeed(), GetMaxSpeed()));
+
+        // Adding velocity to position via Euler integration
+        GetTransform()->position = plr_position + GetRigidBody()->velocity;
+
+
         /* Will fix this tonight, making seek work for shark*/
         /*const glm::vec2 velocity_term = GetRigidBody()->velocity * dt;
         const glm::vec2 acceleration_term = GetRigidBody()->acceleration * 0.5f;
@@ -171,7 +188,7 @@ void Enemy::Move()
         GetRigidBody()->angularVelocity += GetRigidBody()->angularAcceleration;
         GetRigidBody()->velocity *= GetRigidBody()->velocityDampening;
         GetRigidBody()->angularVelocity *= GetRigidBody()->angularVelocityDampening;*/
-        CollisionManager::RotateAABB(this, this->GetTransform()->rotation.r * Util::Rad2Deg);
+        //CollisionManager::RotateAABB(this, this->GetTransform()->rotation.r * Util::Rad2Deg);
     }
 }
 
