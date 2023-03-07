@@ -34,12 +34,12 @@ void PlayScene::Update()
 	Camera::Instance().GetTransform()->position.y = Util::Clamp(Camera::Instance().GetTransform()->position.y,Game::Instance().GetLevelBoundaries().z,Game::Instance().GetLevelBoundaries().w);
 
 	m_pEnemyPool->Update();
-	m_pEnemyPool->UpdateTargetPlayer(m_pPlayer);
 
 	if (timer <= 0)
 	{
 		timer = NEXT_ENEMY_SPAWN;
 		m_pEnemyPool->Spawn(new Shark);
+		m_pEnemyPool->UpdateTargetPlayer(m_pPlayer);
 	}
 
 

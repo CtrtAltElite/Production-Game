@@ -50,7 +50,7 @@ void Enemy::SetDeleteMe(bool deleteMe)
     m_deleteMe = deleteMe;
 }
 
-void Enemy::SetTargetPlayer(DisplayObject* targetPlayer)
+void Enemy::SetTargetPlayer(GameObject* targetPlayer)
 {
     m_pTargetPlayer = targetPlayer;
 }
@@ -137,7 +137,7 @@ void EnemyPool::Spawn(Enemy* enemyType)
     m_enemies.push_back(enemyType);
 }
 
-void EnemyPool::UpdateTargetPlayer(DisplayObject* targetObject) const
+void EnemyPool::UpdateTargetPlayer(GameObject* targetObject) const
 {
     for (auto enemy : m_enemies)
     {
@@ -151,20 +151,19 @@ void Enemy::Move()
     {
         // Getting initial instances of position, velocity, and target position
         const float dt = Game::Instance().GetDeltaTime();
-        glm::vec2 plr_position = GetTransform()->position;
         glm::vec2 new_velocity;
         glm::vec2 steering;
-        glm::vec2 target_position = m_pTargetPlayer->GetTransform()->position;
+        const glm::vec2 enemy_position = GetTransform()->position;
+        const glm::vec2 target_position = m_pTargetPlayer->GetTransform()->position;
+
+        GetTransform()->position = GetTransform()->position + GetRigidBody()->velocity;
 
         // Something is making this equal glm::vec2(-nan,-nan); and idk what
 
+        std::cout << enemy_position.x << " " << enemy_position.y << std::endl;
 
-
-        // Getting length of veloicty vector (controls how much it moves via length between target and player) 
-        new_velocity = Util::Normalize(target_position - plr_position) * GetMaxSpeed();
-
-
-        std::cout << Util::Normalize(target_position - plr_position).x * GetSpeed() << " " << Util::Normalize(target_position - plr_position).y << std::endl;
+        // Getting length of velocity vector (controls how much it moves via length between target and player) 
+        new_velocity = Util::Normalize(target_position - enemy_position) * GetSpeed();
 
 
         // Adding steering forces so we can rotate user in the right direction, influences character movement
@@ -174,15 +173,20 @@ void Enemy::Move()
 
         // Adding forces to the player (specifically the velocity force)
         // Should make enemy smoothly head towards their target taking into account mass
-        //steering = std::min(steering, ));
+        steering.x = std::min(steering.x, GetSpeed());
+        steering.y = std::min(steering.y, GetSpeed());
+
         steering = steering / GetRigidBody()->mass;
 
 
-        GetRigidBody()->velocity = GetRigidBody()->velocity + steering;
-
 
         // Adding velocity to position via Euler integration
-        GetTransform()->position = plr_position + GetRigidBody()->velocity;
+        GetRigidBody()->velocity += GetRigidBody()->velocity + steering * dt;
+
+        GetRigidBody()->velocity.x = std::min(GetRigidBody()->velocity.x, GetSpeed());
+        GetRigidBody()->velocity.y = std::min(GetRigidBody()->velocity.y, GetSpeed());
+
+        GetTransform()->position = enemy_position + GetRigidBody()->velocity * dt;
 
         //std::cout << GetTransform()->position.x << " " << GetTransform()->position.y << std::endl;
         /* Will fix this tonight, making seek work for shark*/
