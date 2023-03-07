@@ -23,7 +23,6 @@ public:
 	
 	void SetVeloDamp(glm::vec2 veloDamp);
 	void SetPlayer(Player* player);
-	void SetIsColliding(bool colliding);
 	void SetSpeed(float speed);
 	void SetMaxSpeed(float maxSpeed);
 	void SetDeleteMe(bool deleteMe);
@@ -37,7 +36,6 @@ public:
 
 	glm::vec2 GetVeloDamp();
 	[[nodiscard]] Player* GetPlayer() const;
-	[[nodiscard]] bool GetIsColliding() const;
 	[[nodiscard]] float GetSpeed() const;
 	[[nodiscard]] float GetMaxSpeed() const;
 	[[nodiscard]] bool GetDeleteMe() const;
@@ -51,7 +49,6 @@ private:
 	GameObject* m_pProjectileSource;
 	glm::vec2 m_veloDamp;
 	Player* m_pPlayer;
-	bool m_isColliding;
 	float m_damage;
 	float m_speed;
 	float m_maxSpeed;

@@ -13,7 +13,7 @@
 #include "Enemy.h"
 #include "Shark.h"
 
-constexpr int NEXT_ENEMY_SPAWN = 20;
+constexpr int NEXT_ENEMY_SPAWN = 50;
 
 class PlayScene : public Scene
 {
@@ -40,8 +40,8 @@ private:
 	// Objects for the PlayScene
 	Background* m_pBackground{};
 	ObstaclePool* m_pObstaclePool{};
-	EnemyPool* m_pEnemyPool;
-	TorpedoPool* m_pTorpedoPool;
+	EnemyPool* m_pEnemyPool{};
+	TorpedoPool* m_pTorpedoPool{};
 	std::vector<Obstacle*>m_pObstacles;
 	bool m_playerFacingRight{};
 	Label* m_pFpsCounter{};

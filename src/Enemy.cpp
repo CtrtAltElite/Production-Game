@@ -55,6 +55,13 @@ void Enemy::SetTargetPlayer(GameObject* targetPlayer)
     m_pTargetPlayer = targetPlayer;
 }
 
+void Enemy::TakeDamage(float damage)
+{
+    m_Health-=damage;
+    //do something in overloads like flash sprite or play sound
+    std::cout << "Enemy took " << damage << " damage." << std::endl;
+}
+
 float Enemy::GetSpeed() const
 {
     return m_Speed;
@@ -160,7 +167,7 @@ void Enemy::Move()
 
         // Something is making this equal glm::vec2(-nan,-nan); and idk what
 
-        std::cout << enemy_position.x << " " << enemy_position.y << std::endl;
+        //std::cout << enemy_position.x << " " << enemy_position.y << std::endl;
 
         // Getting length of velocity vector (controls how much it moves via length between target and player) 
         new_velocity = Util::Normalize(target_position - enemy_position) * GetSpeed();

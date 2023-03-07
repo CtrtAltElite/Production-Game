@@ -161,7 +161,7 @@ void PlayScene::Collision()
 					if (CollisionManager::AABBCheck(enemy,projectile)) 
 					{
 						std::cout <<  "Bullet enemy collision" <<::std::endl;
-						enemy->SetHealth(enemy->GetHealth()-projectile->GetDamage());
+						enemy->TakeDamage(projectile->GetDamage());
 						projectile->GetRigidBody()->isColliding=true;
 						enemy->GetRigidBody()->isColliding=true;
 					}

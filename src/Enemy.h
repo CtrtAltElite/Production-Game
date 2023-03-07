@@ -25,6 +25,7 @@ public:
 	void SetScoreValue (float scoreValue);
 	void SetDeleteMe(bool deleteMe);
 	void SetTargetPlayer(GameObject* targetPlayer);
+	virtual void TakeDamage(float damage);
 
 	[[nodiscard]] float GetSpeed() const;
 	[[nodiscard]] float GetMaxSpeed() const;

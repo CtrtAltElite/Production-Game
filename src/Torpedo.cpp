@@ -75,7 +75,6 @@ void Torpedo::Start()
     SetMaxSpeed(300.0f);
     // Setting specific stats (dmg, delete buffer, etc.) as well as getting mouse position
     m_mousePos = Util::GetMousePos();
-    SetIsColliding(false);
     SetDeleteBuffer(100.0f);
     SetDamage(50.0f);
     SetExplodeAfter(1.5f);
@@ -107,7 +106,7 @@ float Torpedo::GetExplodeAfter() const
 void Torpedo::Update()
 {
     Move();
-    if(GetIsColliding()||(SDL_GetTicks()-GetStartTime())/1000 > GetExplodeAfter())
+    if(GetRigidBody()->isColliding||(SDL_GetTicks()-GetStartTime())/1000 > GetExplodeAfter())
     {
         Explode();
     }

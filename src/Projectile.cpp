@@ -22,10 +22,6 @@ void Projectile::SetPlayer(Player* player)
     m_pPlayer = player;
 }
 
-void Projectile::SetIsColliding(bool colliding)
-{
-    m_isColliding = colliding;
-}
 
 void Projectile::SetSpeed(float speed)
 {
@@ -76,11 +72,6 @@ glm::vec2 Projectile::GetVeloDamp()
 Player* Projectile::GetPlayer() const
 {
     return m_pPlayer;
-}
-
-bool Projectile::GetIsColliding() const
-{
-    return m_isColliding;
 }
 
 float Projectile::GetSpeed() const
