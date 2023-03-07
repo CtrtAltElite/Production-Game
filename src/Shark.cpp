@@ -17,6 +17,7 @@ Shark::Shark()
     GetRigidBody()->bounds=glm::vec2(GetWidth(), GetHeight());
     GetRigidBody()->acceleration = glm::vec2(0.0f, 0.0f);
     GetRigidBody()->isColliding = false;
+    SetMaxSpeed(5.0f);
     SetType(GameObjectType::SHARK);
 }
 

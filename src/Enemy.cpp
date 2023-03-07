@@ -152,27 +152,39 @@ void Enemy::Move()
         // Getting initial instances of position, velocity, and target position
         const float dt = Game::Instance().GetDeltaTime();
         glm::vec2 plr_position = GetTransform()->position;
-        glm::vec2 new_velocity = GetRigidBody()->velocity;
-        glm::vec2 steering = glm::vec2();
+        glm::vec2 new_velocity;
+        glm::vec2 steering;
         glm::vec2 target_position = m_pTargetPlayer->GetTransform()->position;
+
+        // Something is making this equal glm::vec2(-nan,-nan); and idk what
+
+
 
         // Getting length of veloicty vector (controls how much it moves via length between target and player) 
         new_velocity = Util::Normalize(target_position - plr_position) * GetMaxSpeed();
 
+
+        std::cout << Util::Normalize(target_position - plr_position).x * GetSpeed() << " " << Util::Normalize(target_position - plr_position).y << std::endl;
+
+
         // Adding steering forces so we can rotate user in the right direction, influences character movement
         steering = new_velocity - GetRigidBody()->velocity;
 
+
+
         // Adding forces to the player (specifically the velocity force)
         // Should make enemy smoothly head towards their target taking into account mass
-        steering = std::min(steering, glm::vec2(GetMaxSpeed(), GetMaxSpeed()));
+        //steering = std::min(steering, ));
         steering = steering / GetRigidBody()->mass;
 
-        GetRigidBody()->velocity = std::min(GetRigidBody()->velocity + steering, glm::vec2(GetMaxSpeed(), GetMaxSpeed()));
+
+        GetRigidBody()->velocity = GetRigidBody()->velocity + steering;
+
 
         // Adding velocity to position via Euler integration
         GetTransform()->position = plr_position + GetRigidBody()->velocity;
 
-
+        //std::cout << GetTransform()->position.x << " " << GetTransform()->position.y << std::endl;
         /* Will fix this tonight, making seek work for shark*/
         /*const glm::vec2 velocity_term = GetRigidBody()->velocity * dt;
         const glm::vec2 acceleration_term = GetRigidBody()->acceleration * 0.5f;
@@ -188,7 +200,7 @@ void Enemy::Move()
         GetRigidBody()->angularVelocity += GetRigidBody()->angularAcceleration;
         GetRigidBody()->velocity *= GetRigidBody()->velocityDampening;
         GetRigidBody()->angularVelocity *= GetRigidBody()->angularVelocityDampening;*/
-        //CollisionManager::RotateAABB(this, this->GetTransform()->rotation.r * Util::Rad2Deg);
+        CollisionManager::RotateAABB(this, this->GetTransform()->rotation.r * Util::Rad2Deg);
     }
 }
 
