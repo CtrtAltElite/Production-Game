@@ -46,7 +46,7 @@ void PlayScene::Update()
 	// Set FPS display on screen.
 	if ((SDL_GetTicks64() / 1000) > 0)
 	{
-		int fps = Game::Instance().GetFrames() / (SDL_GetTicks64() / 1000);
+		const Uint64 fps = Game::Instance().GetFrames() / (SDL_GetTicks64() / 1000);
 		const std::string fpsText = "FPS: " + std::to_string(fps);
 		m_pFpsCounter->SetText(fpsText);
 	}

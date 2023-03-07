@@ -13,7 +13,7 @@
 #include "Enemy.h"
 #include "Shark.h"
 
-const int NEXT_ENEMY_SPAWN = 20.0f;
+constexpr int NEXT_ENEMY_SPAWN = 20;
 
 class PlayScene : public Scene
 {

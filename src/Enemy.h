@@ -66,6 +66,6 @@ public:
 	void UpdateTargetPlayer(GameObject* targetObject) const;
 
 private:
-	std::vector<Enemy*> m_enemies;
+	std::vector<Enemy*> m_pEnemies;
 }; 
 #endif /* defined (__ENEMY__) */

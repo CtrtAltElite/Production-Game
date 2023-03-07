@@ -64,7 +64,7 @@ ObstaclePool::ObstaclePool()
 
 void ObstaclePool::Update()
 {
-	for (int i = 0; i < m_obstacles.size(); i++)
+	for (unsigned i = 0; i < m_obstacles.size(); i++)
 	{
 		if (m_obstacles[i]->GetDeleteMe() == true)
 		{

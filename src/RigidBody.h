@@ -5,7 +5,7 @@
 
 struct RigidBody
 {
-	float mass = 0.0f;
+	float mass = 1.0f;
 	glm::vec2 bounds;
 
 	glm::vec2 velocity;

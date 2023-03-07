@@ -20,7 +20,7 @@ void TorpedoPool::Fire()
 
 void TorpedoPool::Update()
 {
-    for(int i = 0; i < m_torpedoes.size(); i++)
+    for(unsigned i = 0; i < m_torpedoes.size(); i++)
     {
         if (m_torpedoes[i]->GetDeleteMe() == true) // If we need to delete the torpedoes
         {

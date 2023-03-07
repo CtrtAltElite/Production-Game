@@ -53,13 +53,14 @@ bool CollisionManager::AABBCheck(GameObject* object1, GameObject* object2)
 	const auto p1_height = static_cast<float>(object1->GetHeight());
 	const auto p2_width = static_cast<float>(object2->GetWidth());
 	const auto p2_height = static_cast<float>(object2->GetHeight());
-	p1.x-= 0.5* p1_width;
-	p1.y-=0.5* p1_height;
-	p2.x-= 0.5* p2_width;
-	p2.y-=0.5* p2_height;
-	
-	
-
+	if(object1->isCentered())
+	{
+		p1 += glm::vec2(-p1_width * 0.5f, -p1_height * 0.5f);
+	}
+	if (object2->isCentered())
+	{
+		p2 += glm::vec2(-p2_width * 0.5f, -p2_height * 0.5f);
+	}
 	if (
 		p1.x < p2.x + p2_width &&
 		p1.x + p1_width > p2.x &&

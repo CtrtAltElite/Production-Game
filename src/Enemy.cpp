@@ -100,17 +100,17 @@ EnemyPool::EnemyPool()
 
 void EnemyPool::Update()
 {
-    for (int i = 0; i < m_enemies.size(); i++)
+    for (unsigned i = 0; i < m_pEnemies.size(); i++)
     {
-	    if (m_enemies[i]->GetDeleteMe() == true)
+	    if (m_pEnemies[i]->GetDeleteMe() == true)
 	    {
-            delete m_enemies[i];
-            m_enemies[i] = nullptr;
-            m_enemies.erase(i + m_enemies.begin());
-            m_enemies.shrink_to_fit();
+            delete m_pEnemies[i];
+            m_pEnemies[i] = nullptr;
+            m_pEnemies.erase(i + m_pEnemies.begin());
+            m_pEnemies.shrink_to_fit();
 	    } else
 	    {
-            m_enemies[i]->Update();
+            m_pEnemies[i]->Update();
 	    }
     }
 }
@@ -121,7 +121,7 @@ void EnemyPool::Clean()
 
 void EnemyPool::Draw()
 {
-    for (Enemy* enemy : m_enemies)
+    for (Enemy* enemy : m_pEnemies)
     {
         enemy->Draw(); 
     }
@@ -129,17 +129,17 @@ void EnemyPool::Draw()
 
 std::vector<Enemy*> EnemyPool::GetPool()
 {
-    return m_enemies;
+    return m_pEnemies;
 }
 
 void EnemyPool::Spawn(Enemy* enemyType)
 {
-    m_enemies.push_back(enemyType);
+    m_pEnemies.push_back(enemyType);
 }
 
 void EnemyPool::UpdateTargetPlayer(GameObject* targetObject) const
 {
-    for (auto enemy : m_enemies)
+    for (auto enemy : m_pEnemies)
     {
         enemy->SetTargetPlayer(targetObject);
     }
@@ -181,7 +181,7 @@ void Enemy::Move()
 
 
         // Adding velocity to position via Euler integration
-        GetRigidBody()->velocity += GetRigidBody()->velocity + steering * dt;
+        GetRigidBody()->velocity += GetRigidBody()->acceleration + steering * dt;
 
         GetRigidBody()->velocity.x = std::min(GetRigidBody()->velocity.x, GetSpeed());
         GetRigidBody()->velocity.y = std::min(GetRigidBody()->velocity.y, GetSpeed());
