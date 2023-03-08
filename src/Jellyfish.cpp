@@ -28,8 +28,8 @@ Jellyfish::Jellyfish()
 	animation.frames.push_back(GetSpriteSheet()->GetFrame("jellyfish4"));
 
 	SetAnimation(animation);
-	SetWidth(64);
-	SetHeight(64);
+	SetWidth(32);
+	SetHeight(32);
 	GetRigidBody()->mass = 10.0f;
 	animVelo = 0.22f;
 	SetType(GameObjectType::JELLYFISH);
@@ -49,7 +49,7 @@ void Jellyfish::Draw()
 
 void Jellyfish::Update()
 {
-	GetTransform()->position.y += 10.0f;
+	GetTransform()->position.y += 1.0f;
 }
 
 void Jellyfish::Clean()

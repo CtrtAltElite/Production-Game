@@ -67,7 +67,7 @@ void PlayScene::Update()
 		const std::string fpsText = "FPS: " + std::to_string(fps);
 		m_pFpsCounter->SetText(fpsText);
 	}
-	timer -= 0.1;
+	timer -= 0.1f;
 }
 
 void PlayScene::Clean()
