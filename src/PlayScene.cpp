@@ -83,7 +83,7 @@ void PlayScene::Start()
 {
 	Camera::Instance().SetEnabled(true);
 	Game::Instance().SetDebugMode(true);
-	Game::Instance().SetLevelBoundaries({-600.0f,600.0f,-600.0f,600.0f});
+	Game::Instance().SetLevelBoundaries({-800.0f,-400.0f,-600.0f,600.0f});
 	// Set GUI Title
 	m_guiTitle = "Play Scene";
 
