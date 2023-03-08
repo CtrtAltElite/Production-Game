@@ -8,6 +8,7 @@ enum Layers
     ENEMIES,
     PLAYERS,
     PROJECTILES,
+    OBSTACLE,
     UI
 };
 #endif /* defined (__LAYERS__) */

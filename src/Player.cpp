@@ -95,9 +95,9 @@ void Player::Move()
 	GetTransform()->position = final_position;
 
 	// Makes sure while camera is moving down player cannot go back up
-	if (GetTransform()->position.y < Camera::Instance().GetTransform()->position.y + GetHeight() / 2)
+	if (GetTransform()->position.y < Camera::Instance().GetTransform()->position.y + GetHeight() / 2.0f)
 	{
-		GetTransform()->position.y = (Camera::Instance().GetTransform()->position.y) + GetHeight() / 2;
+		GetTransform()->position.y = (Camera::Instance().GetTransform()->position.y) + GetHeight() / 2.0f;
 	}
 	
 

@@ -19,6 +19,7 @@ Obstacle::Obstacle()
 
 	SetType(GameObjectType::OBSTACLE);
 	GetRigidBody()->isColliding = false;
+	m_deleteMe = false;
 
 	SoundManager::Instance().Load("../Assets/audio/yay.ogg", "yay", SoundType::SOUND_SFX);
 }
@@ -44,4 +45,58 @@ void Obstacle::Update()
 
 void Obstacle::Clean()
 {
+}
+
+bool Obstacle::GetDeleteMe() const
+{
+	return m_deleteMe;
+}
+
+void Obstacle::SetDeleteMe(bool deleteMe)
+{
+	m_deleteMe = deleteMe;
+}
+
+ObstaclePool::ObstaclePool()
+{
+
+}
+
+void ObstaclePool::Update()
+{
+	for (unsigned i = 0; i < m_obstacles.size(); i++)
+	{
+		if (m_obstacles[i]->GetDeleteMe() == true)
+		{
+			delete m_obstacles[i];
+			m_obstacles[i] = nullptr;
+			m_obstacles.erase(i + m_obstacles.begin());
+			m_obstacles.shrink_to_fit();
+		} else
+		{
+			m_obstacles[i]->Update();
+		}
+	}
+}
+
+void ObstaclePool::Clean()
+{
+}
+
+void ObstaclePool::Draw()
+{
+	for (auto obstacle : m_obstacles)
+	{
+		obstacle->Draw();
+	}
+}
+
+std::vector<Obstacle*> ObstaclePool::GetPool()
+{
+	return m_obstacles;
+}
+
+void ObstaclePool::Spawn(Obstacle* obstacleType)
+{
+	m_obstacles.push_back(obstacleType);
 }

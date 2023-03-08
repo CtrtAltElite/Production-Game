@@ -5,6 +5,13 @@
 #include "glm/gtx/string_cast.hpp"
 #include "Renderer.h"
 #include "EventManager.h"
+#include "L1Scene.h"
+#include "L2Scene.h"
+#include "L3Scene.h"
+#include "LBScene.h"
+#include "LPScene.h"
+#include "OPPScene.h"
+#include "WHATScene.h"
 
 
 // Game functions - DO NOT REMOVE ***********************************************
@@ -161,7 +168,7 @@ void Game::ChangeSceneState(const SceneState new_state)
 			m_pCurrentScene = new StartScene();
 			std::cout << "Main Menu scene activated" << std::endl;
 			break;
-			
+
 		case SceneState::LSP:
 			m_pCurrentScene = new LPS();
 			std::cout << "LPS scene activated" << std::endl;
@@ -182,7 +189,7 @@ void Game::ChangeSceneState(const SceneState new_state)
 			m_pCurrentScene = new LBS();
 			std::cout << "LBS scene activated" << std::endl;
 			break;
-			case SceneState::WHAT:
+		case SceneState::WHAT:
 			m_pCurrentScene = new WHAT();
 			std::cout << "WHAT scene activated" << std::endl;
 			break;
@@ -190,7 +197,7 @@ void Game::ChangeSceneState(const SceneState new_state)
 			m_pCurrentScene = new OPP();
 			std::cout << "OPP scene activated" << std::endl;
 			break;
-			
+
 		case SceneState::PLAY:
 			m_pCurrentScene = new PlayScene();
 			std::cout << "play scene activated" << std::endl;
@@ -203,7 +210,7 @@ void Game::ChangeSceneState(const SceneState new_state)
 		default:
 			std::cout << "default case activated" << std::endl;
 			break;
-		
+
 		}
 	}
 

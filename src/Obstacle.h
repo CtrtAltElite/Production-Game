@@ -16,8 +16,31 @@ public:
 	void Draw() override;
 	void Update() override;
 	void Clean() override;
+
+	// Misc functions
+	[[nodiscard]] bool GetDeleteMe() const;
+	void SetDeleteMe(bool deleteMe);
 private:
-	
+	bool m_deleteMe;
 };
+
+class ObstaclePool : public DisplayObject
+{
+public:
+	ObstaclePool();
+
+	// Lifecycle functions
+	void Update() override;
+	void Clean();
+	void Draw() override;
+
+	// Specific functions
+	std::vector<Obstacle*> GetPool();
+	void Spawn(Obstacle* obstacleType);
+
+private:
+	std::vector<Obstacle*> m_obstacles;
+};
+
 
 #endif /* defined (__OBSTACLE__) */

@@ -13,7 +13,8 @@ public:
 
     void LookForPlayer();
     void LookTowardsPlayer();
-    
+    void TakeDamage(float damage) override;
+
 private:
     
 };

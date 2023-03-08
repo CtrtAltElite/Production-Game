@@ -15,7 +15,7 @@ void SoundManager::AllocateChannels(const int channels)
 	Mix_AllocateChannels(channels);
 }
 
-bool SoundManager::Load(const std::string & file_name, const std::string & id, const SoundType type)
+bool SoundManager::Load(const std::string& file_name, const std::string& id, const SoundType type)
 {
 	if (type == SoundType::SOUND_MUSIC)
 	{
@@ -42,7 +42,7 @@ bool SoundManager::Load(const std::string & file_name, const std::string & id, c
 	return false;
 }
 
-void SoundManager::Unload(const std::string & id, const SoundType type)
+void SoundManager::Unload(const std::string& id, const SoundType type)
 {
 	if (type == SoundType::SOUND_MUSIC && m_music.find(id) != m_music.end())
 	{
@@ -60,7 +60,7 @@ void SoundManager::Unload(const std::string & id, const SoundType type)
 	}
 }
 
-void SoundManager::PlayMusic(const std::string & id, const int loop/* = -1 */, const int fade_in/* = 0 */)
+void SoundManager::PlayMusic(const std::string& id, const int loop/* = -1 */, const int fade_in/* = 0 */)
 {
 	std::cout << "Playing music..." << fade_in << std::endl;
 	if (Mix_FadeInMusic(m_music[id], loop, fade_in) == -1)
@@ -102,7 +102,7 @@ void SoundManager::ResumeMusic()
 	}
 }
 
-void SoundManager::PlaySound(const std::string & id, const int loop/* = 0 */, const int channel/* = -1 */)
+void SoundManager::PlaySound(const std::string& id, const int loop/* = 0 */, const int channel/* = -1 */)
 {
 	if (Mix_PlayChannel(channel, m_sfxs[id], loop) == -1)
 	{

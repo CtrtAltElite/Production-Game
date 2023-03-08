@@ -9,14 +9,16 @@
 Shark::Shark()
 {
     TextureManager::Instance().Load("../Assets/textures/Brute_Shark.png", "shark");
-    SetWidth(53.0f);
-    SetHeight(40.0f);
+    SetWidth(53);
+    SetHeight(40);
     SetHealth(100.0f);
-    GetTransform()->position = glm::vec2(200.0f, 200.0f);
+    GetTransform()->position = glm::vec2(rand() % 200, rand() % 200);
     GetRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
     GetRigidBody()->bounds=glm::vec2(GetWidth(), GetHeight());
     GetRigidBody()->acceleration = glm::vec2(0.0f, 0.0f);
     GetRigidBody()->isColliding = false;
+    GetRigidBody()->mass = 10.0f;
+    SetSpeed(25.0f);
     SetType(GameObjectType::SHARK);
 }
 
@@ -29,7 +31,9 @@ void Shark::Draw()
                 this->GetWidth(), this->GetHeight());
     }
     //SDL_RenderDrawRectF(Renderer::Instance().GetRenderer(),new SDL_FRect{Camera::Instance().CameraDisplace(this).x,Camera::Instance().CameraDisplace(this).y,static_cast<float>(GetWidth()),static_cast<float>(GetHeight())});
-    TextureManager::Instance().Draw("shark", Camera::Instance().CameraDisplace(this),0, 255, true);
+    TextureManager::Instance().Draw("shark", Camera::Instance().CameraDisplace(this),0, 255, true);  
+    
+    
 }
 
 void Shark::Update()
@@ -39,8 +43,20 @@ void Shark::Update()
     {
         SetIsDead(true);
     }
+    if(GetIsDead())
+    {
+        //do death stuff
+        //play death animation
+        SetDeleteMe(true);
+    }
 }
 
 void Shark::Clean()
 {
+}
+
+void Shark::TakeDamage(float damage)
+{
+    SetHealth(GetHealth()-damage);
+    
 }

@@ -33,13 +33,24 @@ void PlayScene::Update()
 	Camera::Instance().GetTransform()->position.x = Util::Clamp(Camera::Instance().GetTransform()->position.x,Game::Instance().GetLevelBoundaries().x,Game::Instance().GetLevelBoundaries().y);
 	Camera::Instance().GetTransform()->position.y = Util::Clamp(Camera::Instance().GetTransform()->position.y,Game::Instance().GetLevelBoundaries().z,Game::Instance().GetLevelBoundaries().w);
 
+	m_pEnemyPool->Update();
+
+	if (timer <= 0)
+	{
+		timer = NEXT_ENEMY_SPAWN;
+		m_pEnemyPool->Spawn(new Shark);
+		m_pEnemyPool->UpdateTargetPlayer(m_pPlayer);
+	}
+
+
 	// Set FPS display on screen.
 	if ((SDL_GetTicks64() / 1000) > 0)
 	{
-		int fps = Game::Instance().GetFrames() / (SDL_GetTicks64() / 1000);
+		const Uint64 fps = Game::Instance().GetFrames() / (SDL_GetTicks64() / 1000);
 		const std::string fpsText = "FPS: " + std::to_string(fps);
 		m_pFpsCounter->SetText(fpsText);
 	}
+	timer -= 0.1f;
 }
 
 void PlayScene::Clean()
@@ -64,12 +75,15 @@ void PlayScene::GetPlayerInput()
 	}
 	if(EventManager::Instance().MousePressed(1)) //left mouse button
 		{
-		m_torpedoPool->Fire();
+		m_pTorpedoPool->Fire();
 		//SoundManager::Instance().PlaySound("playerShoot");
 		}
 }
 void PlayScene::Start()
 {
+	SoundManager::Instance().Load("../Assets/audio/searching.mp3", "Start", SoundType::SOUND_MUSIC);
+	SoundManager::Instance().PlayMusic("Start", 0);
+
 	Camera::Instance().SetEnabled(true);
 	Game::Instance().SetDebugMode(true);
 	Game::Instance().SetLevelBoundaries({-600.0f,600.0f,-600.0f,600.0f});
@@ -86,20 +100,22 @@ void PlayScene::Start()
 	m_playerFacingRight = true;
 
 	// Instantiating the torpedo pool.
-	m_torpedoPool = new TorpedoPool();
-	AddChild(m_torpedoPool, PROJECTILES);
+	m_pTorpedoPool = new TorpedoPool();
+	AddChild(m_pTorpedoPool, PROJECTILES);
 
 	// Spawning a test shark for now
-	m_enemyPool = new EnemyPool(); 
-	AddChild(m_enemyPool,ENEMIES);
+	m_pEnemyPool = new EnemyPool(); 
+	AddChild(m_pEnemyPool,ENEMIES);
 
-	m_enemyPool->Spawn(new Shark);
+	m_pEnemyPool->Spawn(new Shark);
 
+	// Instantiating the obstacle pool.
+	m_pObstaclePool = new ObstaclePool();
+	AddChild(m_pObstaclePool, OBSTACLE);
 
-	m_pObstacle = new Obstacle;
-	m_pObstacle->GetTransform()->position={600.0f,600.0f};
-	m_pObstacles.push_back(m_pObstacle);
-	AddChild(m_pObstacle, FOREGROUND);
+	auto m_pObstacle = new Obstacle();
+	m_pObstacle->GetTransform()->position= {600.0f,600.0f};
+	m_pObstaclePool->Spawn(m_pObstacle);
 
 	// FPS Counter Set-Up
 	m_pFpsCounter = new Label;
@@ -124,7 +140,7 @@ void PlayScene::Start()
 void PlayScene::Collision()
 {
 	
-	for (auto enemy : m_enemyPool->GetPool())
+	for (auto enemy : m_pEnemyPool->GetPool())
 	{
 		if(Util::Distance(enemy->GetTransform()->position,m_pPlayer->GetTransform()->position)<50.0f)
 		{
@@ -139,7 +155,7 @@ void PlayScene::Collision()
 				m_pPlayer->GetRigidBody()->isColliding = false; //probably not good cause there are other things they could be colliding with
 			}
 		}
-		for (auto projectile : m_torpedoPool->GetPool())
+		for (auto projectile : m_pTorpedoPool->GetPool())
 		{
 			if(projectile->GetProjectileSource()->GetType()== GameObjectType::PLAYER)
 			{
@@ -148,7 +164,7 @@ void PlayScene::Collision()
 					if (CollisionManager::AABBCheck(enemy,projectile)) 
 					{
 						std::cout <<  "Bullet enemy collision" <<::std::endl;
-						enemy->SetHealth(enemy->GetHealth()-projectile->GetDamage());
+						enemy->TakeDamage(projectile->GetDamage());
 						projectile->GetRigidBody()->isColliding=true;
 						enemy->GetRigidBody()->isColliding=true;
 					}

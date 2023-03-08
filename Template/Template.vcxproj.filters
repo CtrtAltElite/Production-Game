@@ -151,25 +151,25 @@
     <ClCompile Include="..\src\Swordfish.cpp" />
     <ClCompile Include="..\src\Torpedo.cpp" />
     <ClCompile Include="..\src\Turtle.cpp" />
+    <ClCompile Include="..\src\L1Scene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\LPScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\WHATScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\L2Scene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\L3Scene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="..\src\LBScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\LPScene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\L1Scene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\L2Scene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\OPPScene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\WHATScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
   </ItemGroup>
@@ -339,6 +339,12 @@
     <ClInclude Include="..\src\Swordfish.h" />
     <ClInclude Include="..\src\Torpedo.h" />
     <ClInclude Include="..\src\Turtle.h" />
+    <ClInclude Include="..\src\LPScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\L1Scene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\L2Scene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
@@ -346,12 +352,6 @@
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="..\src\LBScene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\LPScene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\L1Scene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="..\src\OPPScene.h">
