@@ -17,13 +17,13 @@ RestartButton::~RestartButton()
 
 bool RestartButton::ButtonClick()
 {
-	if (m_mouseOver() && m_leftMouseButtonClicked)
+	if (m_mouseOver && m_leftMouseButtonClicked)
 	{
 		if (!m_isClicked)
 		{
-			ScoreBoardManager::Instance()->Start();
+			/*ScoreBoardManager::Instance()->Start();
 			ScoreBoardManager::Instance()->setLives(5);
-			ScoreBoardManager::Instance()->setScore(0);
+			ScoreBoardManager::Instance()->setScore(0);*/
 			Game::Instance().ChangeSceneState(SceneState::LS1);
 			m_isClicked = true;
 		}

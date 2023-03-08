@@ -17,7 +17,7 @@ StartButton::~StartButton()
 
 bool StartButton::ButtonClick()
 {
-	if (m_mouseOver() && m_leftMouseButtonClicked)
+	if (m_mouseOver && m_leftMouseButtonClicked)
 	{
 		if(!m_isClicked)
 		{
