@@ -1,0 +1,4 @@
+jellyfish1 0 0 32 32
+jellyfish2 32 0 32 32
+jellyfish3 64 0 32 32
+jellyfish4 96 0 32 32

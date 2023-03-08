@@ -7,6 +7,7 @@
 #include "Camera.h"
 #include "imgui.h"
 #include "imgui_sdl.h"
+#include "Jellyfish.h"
 #include "Renderer.h"
 #include "Torpedo.h"
 #include "Util.h"
@@ -29,7 +30,8 @@ void PlayScene::Draw()
 
 void PlayScene::Update()
 {
-	Collision();
+	Game::Instance().SetDebugMode(false);
+		Collision();
 	UpdateDisplayList();
 	Game::Instance().SetLevelBoundaries({Game::Instance().GetLevelBoundaries().x,Game::Instance().GetLevelBoundaries().y,Game::Instance().GetLevelBoundaries().z+0.25f,Game::Instance().GetLevelBoundaries().w+0.25f});
 	Camera::Instance().GetTransform()->position.x = Util::Clamp(Camera::Instance().GetTransform()->position.x,Game::Instance().GetLevelBoundaries().x,Game::Instance().GetLevelBoundaries().y);
@@ -50,6 +52,10 @@ void PlayScene::Update()
 		auto stingray = new Stingray;
 		stingray->GetTransform()->position = glm::vec2(Camera::Instance().GetTransform()->position.x, rand() % 5 + m_pPlayer->GetTransform()->position.y);
 		m_pObstaclePool->Spawn(stingray);
+
+		auto jellyfish = new Jellyfish;
+		jellyfish->GetTransform()->position = glm::vec2(m_pPlayer->GetTransform()->position.x, m_pPlayer->GetTransform()->position.y - 800.0f);
+		m_pObstaclePool->Spawn(jellyfish);
 		//m_pEnemyPool->UpdateTargetPlayer(m_pPlayer);
 	}
 
@@ -61,7 +67,7 @@ void PlayScene::Update()
 		const std::string fpsText = "FPS: " + std::to_string(fps);
 		m_pFpsCounter->SetText(fpsText);
 	}
-	timer -= 0.1f;
+	timer -= 0.1;
 }
 
 void PlayScene::Clean()
@@ -92,7 +98,7 @@ void PlayScene::GetPlayerInput()
 
 void PlayScene::Start()
 {
-	SoundManager::Instance().Load("../Assets/audio/the_last_dance.mp3", "Start", SoundType::SOUND_SFX);
+	SoundManager::Instance().Load("../Assets/audio/conquest.mp3", "Start", SoundType::SOUND_SFX);
 	SoundManager::Instance().PlaySound("Start",-1);
 	Camera::Instance().SetEnabled(true);
 	Game::Instance().SetDebugMode(true);
@@ -112,22 +118,6 @@ void PlayScene::Start()
 	InitPools();
 
 	// Random obstacles spawned in
-
-	auto m_pObstacle = new Obstacle();
-	m_pObstacle->GetTransform()->position= {300.0f,700.0f};
-	m_pObstaclePool->Spawn(m_pObstacle);
-
-	m_pObstacle = new Obstacle();
-	m_pObstacle->GetTransform()->position = { -500.0f,1000.0f };
-	m_pObstaclePool->Spawn(m_pObstacle);
-
-	m_pObstacle = new Obstacle();
-	m_pObstacle->GetTransform()->position = { -300.0f,1250.0f };
-	m_pObstaclePool->Spawn(m_pObstacle);
-
-	m_pObstacle = new Obstacle();
-	m_pObstacle->GetTransform()->position = { 600.0f,1760.0f };
-	m_pObstaclePool->Spawn(m_pObstacle);
 
 	m_pObstaclePool->Spawn(new Stingray);
 

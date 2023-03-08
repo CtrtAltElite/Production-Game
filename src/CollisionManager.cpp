@@ -34,7 +34,7 @@ bool CollisionManager::SquaredRadiusCheck(GameObject* object1, GameObject* objec
 			switch (object2->GetType()) {
 			case GameObjectType::TARGET:
 				std::cout << "Collision with Target!" << std::endl;
-				SoundManager::Instance().PlaySound("yay", 0);
+				//SoundManager::Instance().PlaySound("yay", 0);
 
 				break;
 			default:
@@ -83,11 +83,11 @@ bool CollisionManager::AABBCheck(GameObject* object1, GameObject* object2)
 			switch (object2->GetType()) {
 			case GameObjectType::TARGET:
 				std::cout << "Collision with Target!" << std::endl;
-				SoundManager::Instance().PlaySound("yay", 0);
+				//SoundManager::Instance().PlaySound("yay", 0);
 				break;
 			case GameObjectType::OBSTACLE:
 				std::cout << "Collision with Obstacle!" << std::endl;
-				SoundManager::Instance().PlaySound("yay", 0);
+				//SoundManager::Instance().PlaySound("yay", 0);
 				break;
 			case GameObjectType::PLAYER:
 				std::cout << "Collision with player" << std::endl;
@@ -135,7 +135,7 @@ void CollisionManager::ResolveCollisions(GameObject* object1, GameObject* object
 	{
 		inverseMassB = 1 / object2->GetRigidBody()->mass;
 	}
-
+		
 
 	float x_overlap = std::max(0.0f, std::min(p1.x + p1_width, p2.x + p2_width) - std::max(p1.x, p2.x));
 	float y_overlap = std::max(0.0f, std::min(p1.y + p1_height, p2.y + p2_height) - std::max(p1.y, p2.y));
@@ -316,7 +316,7 @@ bool CollisionManager::LineAABBCheck(Ship* object1, GameObject* object2)
 		{
 		case GameObjectType::TARGET:
 			std::cout << "Collision with Obstacle!" << std::endl;
-			SoundManager::Instance().PlaySound("yay", 0);
+			//SoundManager::Instance().PlaySound("yay", 0);
 
 			break;
 		default:
@@ -369,7 +369,7 @@ bool CollisionManager::CircleAABBCheck(GameObject* object1, GameObject* object2)
 			{
 			case GameObjectType::TARGET:
 				std::cout << "Collision with Planet!" << std::endl;
-				SoundManager::Instance().PlaySound("yay", 0);
+				//SoundManager::Instance().PlaySound("yay", 0);
 				break;
 			case GameObjectType::SHIP:
 			{

@@ -161,6 +161,7 @@
     <ClCompile Include="..\src\StartButton.cpp" />
     <ClCompile Include="..\src\WHATScene.cpp" />
     <ClCompile Include="..\src\Stingray.cpp" />
+    <ClCompile Include="..\src\Jellyfish.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\StartScene.h">
@@ -338,6 +339,7 @@
     <ClInclude Include="..\src\StartButton.h" />
     <ClInclude Include="..\src\WHATScene.h" />
     <ClInclude Include="..\src\Stingray.h" />
+    <ClInclude Include="..\src\Jellyfish.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md">

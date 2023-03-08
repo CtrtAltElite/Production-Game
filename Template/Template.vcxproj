@@ -170,6 +170,7 @@
     <ClCompile Include="..\src\CollisionManager.cpp" />
     <ClCompile Include="..\src\Enemy.cpp" />
     <ClCompile Include="..\src\ImGuiWindowFrame.cpp" />
+    <ClCompile Include="..\src\Jellyfish.cpp" />
     <ClCompile Include="..\src\L1Scene.cpp" />
     <ClCompile Include="..\src\L2Scene.cpp" />
     <ClCompile Include="..\src\L3Scene.cpp" />
@@ -234,6 +235,7 @@
     <ClInclude Include="..\src\Heuristic.h" />
     <ClInclude Include="..\src\ImGuiWindowFrame.h" />
     <ClInclude Include="..\src\InputType.h" />
+    <ClInclude Include="..\src\Jellyfish.h" />
     <ClInclude Include="..\src\L1Scene.h" />
     <ClInclude Include="..\src\L2Scene.h" />
     <ClInclude Include="..\src\L3Scene.h" />
