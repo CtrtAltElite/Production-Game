@@ -184,6 +184,7 @@ void PlayScene::Collision()
 			
 		if(CollisionManager::AABBCheck(obstacle,m_pPlayer))
 		{
+			m_pPlayer->GetTransform()->position = obstacle->GetTransform()->position;
 		}
 		
 	}

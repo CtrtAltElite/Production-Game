@@ -94,9 +94,6 @@ void Player::Move()
 	// Sets player position
 	GetTransform()->position = final_position;
 
-	std::cout << final_position.x << " " << final_position.y << std::endl;
-
-	std::cout << Camera::Instance().GetTransform()->position.x << " " << Camera::Instance().GetTransform()->position.y << std::endl;
 
 	// Makes sure while camera is moving down player cannot go back up
 	if (GetTransform()->position.y < Camera::Instance().GetTransform()->position.y + GetHeight() / 2.0f)

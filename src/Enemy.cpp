@@ -157,9 +157,6 @@ void Enemy::Move()
 
         GetTransform()->position = GetTransform()->position + GetRigidBody()->velocity;
 
-        // Something is making this equal glm::vec2(-nan,-nan); and idk what
-
-        //std::cout << enemy_position.x << " " << enemy_position.y << std::endl;
 
         // Getting length of velocity vector (controls how much it moves via length between target and player) 
         new_velocity = Util::Normalize(target_position - enemy_position) * GetSpeed();
