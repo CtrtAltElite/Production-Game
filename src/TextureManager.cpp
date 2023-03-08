@@ -149,6 +149,26 @@ void TextureManager::Draw(const std::string& id, const glm::vec2 position, const
 	Draw(id, static_cast<int>(position.x), static_cast<int>(position.y), angle, alpha, centered, flip);
 }
 
+void TextureManager::Draw(const std::string& id, glm::vec2 position, double angle, int alpha, Uint8 red, Uint8 green,
+	Uint8 blue, bool centered, SDL_RendererFlip flip)
+{
+	Uint8 r,g,b;
+	SDL_GetTextureColorMod(m_textureMap[id].get(),&r,&g,&b);
+	if(r!=red || g!= green || b!=blue)
+	{
+		SDL_SetTextureColorMod(m_textureMap[id].get(),red,green,blue);
+		Draw(id,position,angle,alpha,centered,flip);
+		SDL_SetTextureColorMod(m_textureMap[id].get(),r,g,b);
+	}
+	else
+	{
+		Draw(id,position,angle,alpha,centered,flip);
+	}
+	
+	
+}
+
+
 void TextureManager::Draw(const std::string& id, const int x, const int y, const GameObject* go, const double angle, const int alpha, const bool centered, const SDL_RendererFlip flip)
 {
 	SDL_Rect src_rect{};

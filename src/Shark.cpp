@@ -31,7 +31,9 @@ void Shark::Draw()
                 this->GetWidth(), this->GetHeight());
     }
     //SDL_RenderDrawRectF(Renderer::Instance().GetRenderer(),new SDL_FRect{Camera::Instance().CameraDisplace(this).x,Camera::Instance().CameraDisplace(this).y,static_cast<float>(GetWidth()),static_cast<float>(GetHeight())});
-    TextureManager::Instance().Draw("shark", Camera::Instance().CameraDisplace(this),0, 255, true);
+    TextureManager::Instance().Draw("shark", Camera::Instance().CameraDisplace(this),0, 255, true);  
+    
+    
 }
 
 void Shark::Update()
@@ -51,4 +53,10 @@ void Shark::Update()
 
 void Shark::Clean()
 {
+}
+
+void Shark::TakeDamage(float damage)
+{
+    SetHealth(GetHealth()-damage);
+    
 }

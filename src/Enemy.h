@@ -15,8 +15,7 @@ public:
 
 	virtual void Move();
 
-
-	void SetIsColliding(bool collide);
+	
 	void SetIsDead (bool dead);
 	void SetHealth (float health);
 	void SetSpeed (float speed);
@@ -29,8 +28,7 @@ public:
 
 	[[nodiscard]] float GetSpeed() const;
 	[[nodiscard]] float GetMaxSpeed() const;
-	[[nodiscard]] glm::vec2 GetVeloDamp();
-	[[nodiscard]] bool GetIsColliding() const;
+	[[nodiscard]] glm::vec2 GetVeloDamp();;
 	[[nodiscard]] bool GetIsDead() const;
 	[[nodiscard]] float GetHealth() const;
 	[[nodiscard]] float GetScoreValue() const;
@@ -42,7 +40,6 @@ private:
 	float m_Health;
 	float m_Speed;
 	float m_maxSpeed;
-	bool m_isColliding;
 	bool m_isDead;
 	bool m_deleteMe;
 	float m_scorevalue;

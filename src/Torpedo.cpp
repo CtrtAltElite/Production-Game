@@ -61,12 +61,21 @@ void Torpedo::Draw()
                 this->GetWidth(), this->GetHeight());
     }
     // draw the target
-    TextureManager::Instance().Draw("torpedo", Camera::Instance().CameraDisplace(this), GetTransform()->rotation.r*Util::Rad2Deg, 255, true);
+    if(m_isExploded)
+    {
+        TextureManager::Instance().Draw("explosion", Camera::Instance().CameraDisplace(this), GetTransform()->rotation.r*Util::Rad2Deg, 255, true);
+    }
+    else
+    {
+        TextureManager::Instance().Draw("torpedo", Camera::Instance().CameraDisplace(this), GetTransform()->rotation.r*Util::Rad2Deg, 255, true);
+    }
+    
 }
 void Torpedo::Start()
 {
     // Getting sprite + setting transform.
     TextureManager::Instance().Load("../Assets/textures/Small_Torpedo.png", "torpedo");
+    TextureManager::Instance().Load("../Assets/textures/Explosion.png", "explosion");
     SetWidth(20);
     SetHeight(20);
     // Setting velocity and speed
@@ -77,7 +86,8 @@ void Torpedo::Start()
     m_mousePos = Util::GetMousePos();
     SetDeleteBuffer(100.0f);
     SetDamage(50.0f);
-    SetExplodeAfter(1.5f);
+    SetExplodeAfter(1.35f);
+    m_deleteAfter = 0.1f;
     // Setting source of projectile and the type, as well as setting the rotation, position, and velocity.
     SetProjectileSource(GetPlayer());
     SetType(GameObjectType::TORPEDO);
@@ -106,19 +116,23 @@ float Torpedo::GetExplodeAfter() const
 void Torpedo::Update()
 {
     Move();
-    if(GetRigidBody()->isColliding||(SDL_GetTicks()-GetStartTime())/1000 > GetExplodeAfter())
+    if(GetRigidBody()->isColliding||(SDL_GetTicks()-GetStartTime())/1000.0f > GetExplodeAfter())
     {
-        Explode();
+        if(!m_isExploded)
+        {
+            m_isExploded = true;
+            SetWidth(GetWidth()*2);
+            SetHeight(GetHeight()*2);
+            m_explodeTime = SDL_GetTicks();
+            GetRigidBody()->velocity={0.0f,0.0f};
+        }
+    }
+    if(m_isExploded&&(SDL_GetTicks()-m_explodeTime)/1000.0f > m_deleteAfter)
+    {
+        SetDeleteMe(true);
     }
 }
 void Torpedo::Clean()
 { }
 
-void Torpedo::Explode()
-{
-    //explode stuff
-    //animation
-    //std::cout << "Explode\n";
-    SetDeleteMe(true);
-}
 

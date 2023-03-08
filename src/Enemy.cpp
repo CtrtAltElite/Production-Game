@@ -10,10 +10,6 @@ Enemy::Enemy()
 Enemy::~Enemy()
 =default;
 
-void Enemy::SetIsColliding(bool collide)
-{
-    m_isColliding = collide;
-}
 
 void Enemy::SetIsDead(bool dead)
 {
@@ -77,10 +73,6 @@ glm::vec2 Enemy::GetVeloDamp()
     return m_veloDamp;
 }
 
-bool Enemy::GetIsColliding() const
-{
-    return m_isColliding;
-}
 
 bool Enemy::GetIsDead() const
 {
