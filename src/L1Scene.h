@@ -26,6 +26,9 @@ private:
 	
 
 	Button* m_pStartButton{};
+	Button* m_pNextButton{};
+	Button* m_pPrevButton{};
+
 };
 
 #endif /* defined (__L1_SCENE__) */
