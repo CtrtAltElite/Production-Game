@@ -16,5 +16,5 @@ public:
     void TakeDamage(float damage) override;
 
 private:
-    
+    float animVelo;
 };

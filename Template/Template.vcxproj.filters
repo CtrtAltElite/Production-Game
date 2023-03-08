@@ -151,30 +151,16 @@
     <ClCompile Include="..\src\Swordfish.cpp" />
     <ClCompile Include="..\src\Torpedo.cpp" />
     <ClCompile Include="..\src\Turtle.cpp" />
-    <ClCompile Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\L2Scene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\L3Scene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\LBScene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\OPPScene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\StartScene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\L1Scene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\LPScene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\WHATScene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
+    <ClCompile Include="..\src\L1Scene.cpp" />
+    <ClCompile Include="..\src\L2Scene.cpp" />
+    <ClCompile Include="..\src\L3Scene.cpp" />
+    <ClCompile Include="..\src\LBScene.cpp" />
+    <ClCompile Include="..\src\LPScene.cpp" />
+    <ClCompile Include="..\src\OPPScene.cpp" />
+    <ClCompile Include="..\src\RestartButton.cpp" />
+    <ClCompile Include="..\src\StartButton.cpp" />
+    <ClCompile Include="..\src\WHATScene.cpp" />
+    <ClCompile Include="..\src\Stingray.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\StartScene.h">
@@ -342,30 +328,16 @@
     <ClInclude Include="..\src\Swordfish.h" />
     <ClInclude Include="..\src\Torpedo.h" />
     <ClInclude Include="..\src\Turtle.h" />
-    <ClInclude Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\LPScene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\L1Scene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\L2Scene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\L3Scene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\LBScene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\OPPScene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\StartScene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\WHATScene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
+    <ClInclude Include="..\src\L1Scene.h" />
+    <ClInclude Include="..\src\L2Scene.h" />
+    <ClInclude Include="..\src\L3Scene.h" />
+    <ClInclude Include="..\src\LBScene.h" />
+    <ClInclude Include="..\src\LPScene.h" />
+    <ClInclude Include="..\src\OPPScene.h" />
+    <ClInclude Include="..\src\RestartButton.h" />
+    <ClInclude Include="..\src\StartButton.h" />
+    <ClInclude Include="..\src\WHATScene.h" />
+    <ClInclude Include="..\src\Stingray.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md">

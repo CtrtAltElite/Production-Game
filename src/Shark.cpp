@@ -16,7 +16,7 @@ Shark::Shark()
     SetSpriteSheet(TextureManager::Instance().GetSpriteSheet("shark_spritesheet"));
     auto animation = Animation();
 
-    animation.name = "default";
+    animation.name = "move";
     animation.frames.push_back(GetSpriteSheet()->GetFrame("shark1"));
     animation.frames.push_back(GetSpriteSheet()->GetFrame("shark2"));
     animation.frames.push_back(GetSpriteSheet()->GetFrame("shark3"));
@@ -37,6 +37,7 @@ Shark::Shark()
     GetRigidBody()->isColliding = false;
     GetRigidBody()->mass = 10.0f;
     SetSpeed(100.0f);
+    animVelo = 0.33f;
     SetType(GameObjectType::SHARK);
 }
 
@@ -52,12 +53,13 @@ void Shark::Draw()
     if(GetFlipped())
     {
         //TextureManager::Instance().PlayAnimation("shark_spritesheet", GetAnimation("default") ,Camera::Instance().CameraDisplace(this),GetTransform()->rotation.r*Util::Rad2Deg-180, 255, true);
-        TextureManager::Instance().Draw("shark", Camera::Instance().CameraDisplace(this),GetTransform()->rotation.r*Util::Rad2Deg-180, 255, true);
+        TextureManager::Instance().PlayAnimation("shark_spritesheet", GetAnimation("move"), Camera::Instance().CameraDisplace(this), animVelo, GetTransform()->rotation.r * Util::Rad2Deg - 180, 255, true);
     }
     else
     {
         //TextureManager::Instance().PlayAnimation("shark_spritesheet", GetAnimation("default") ,Camera::Instance().CameraDisplace(this),GetTransform()->rotation.r*Util::Rad2Deg-180, 255, true,SDL_FLIP_VERTICAL);
-        TextureManager::Instance().Draw("shark", Camera::Instance().CameraDisplace(this),GetTransform()->rotation.r*Util::Rad2Deg-180, 255, true,SDL_FLIP_VERTICAL);
+        TextureManager::Instance().PlayAnimation("shark_spritesheet", GetAnimation("move"), Camera::Instance().CameraDisplace(this), animVelo, GetTransform()->rotation.r * Util::Rad2Deg - 180, 255, true, SDL_FLIP_VERTICAL);
+
     }
     
     
@@ -67,6 +69,7 @@ void Shark::Draw()
 void Shark::Update()
 {
     Move();
+    
     if(GetHealth()<=0)
     {
         SetIsDead(true);

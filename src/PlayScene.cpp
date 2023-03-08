@@ -11,6 +11,8 @@
 #include "Torpedo.h"
 #include "Util.h"
 #include "Layers.h"
+#include "Stingray.h"
+
 PlayScene::PlayScene()
 {
 	PlayScene::Start();
@@ -44,6 +46,10 @@ void PlayScene::Update()
 		auto shark = new Shark;
 		shark->SetTargetPlayer(m_pPlayer);
 		m_pEnemyPool->Spawn(shark);
+
+		auto stingray = new Stingray;
+		stingray->GetTransform()->position = glm::vec2(Camera::Instance().GetTransform()->position.x, rand() % 5 + m_pPlayer->GetTransform()->position.y);
+		m_pObstaclePool->Spawn(stingray);
 		//m_pEnemyPool->UpdateTargetPlayer(m_pPlayer);
 	}
 
@@ -111,15 +117,27 @@ void PlayScene::Start()
 	m_pEnemyPool = new EnemyPool(); 
 	AddChild(m_pEnemyPool,ENEMIES);
 
-	m_pEnemyPool->Spawn(new Shark);
-
 	// Instantiating the obstacle pool.
 	m_pObstaclePool = new ObstaclePool();
 	AddChild(m_pObstaclePool, OBSTACLE);
 
 	auto m_pObstacle = new Obstacle();
-	m_pObstacle->GetTransform()->position= {600.0f,600.0f};
+	m_pObstacle->GetTransform()->position= {300.0f,700.0f};
 	m_pObstaclePool->Spawn(m_pObstacle);
+
+	m_pObstacle = new Obstacle();
+	m_pObstacle->GetTransform()->position = { 500.0f,1000.0f };
+	m_pObstaclePool->Spawn(m_pObstacle);
+
+	m_pObstacle = new Obstacle();
+	m_pObstacle->GetTransform()->position = { 750.0f,1250.0f };
+	m_pObstaclePool->Spawn(m_pObstacle);
+
+	m_pObstacle = new Obstacle();
+	m_pObstacle->GetTransform()->position = { 600.0f,1760.0f };
+	m_pObstaclePool->Spawn(m_pObstacle);
+
+	m_pObstaclePool->Spawn(new Stingray);
 
 	// FPS Counter Set-Up
 	m_pFpsCounter = new Label;
@@ -153,7 +171,7 @@ void PlayScene::Collision()
 				std::cout <<  "Enemy player collision" <<::std::endl;
 				enemy->GetRigidBody()->isColliding=true;
 				m_pPlayer->GetRigidBody()->isColliding=true;
-				Game::Instance().ChangeSceneState(SceneState::END);
+				//Game::Instance().ChangeSceneState(SceneState::END);
 				break;
 			}
 			else
@@ -167,7 +185,7 @@ void PlayScene::Collision()
 			{
 				if(Util::Distance(enemy->GetTransform()->position,projectile->GetTransform()->position)<30.0f)
 				{
-					if (CollisionManager::AABBCheck(enemy,projectile)) 
+					if (CollisionManager::AABBCheck(enemy,projectile) || CollisionManager::AABBCheck(projectile, enemy))  
 					{
 						std::cout <<  "Bullet enemy collision" <<::std::endl;
 						enemy->TakeDamage(projectile->GetDamage());
