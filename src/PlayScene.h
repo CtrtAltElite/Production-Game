@@ -30,6 +30,8 @@ public:
 
 	// Specific functions dedicated to PlayScene
 	void Collision();
+	void InitPools();
+	void InitFPSCounter();
 private:
 	// IMGUI Function
 	void GUI_Function();

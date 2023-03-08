@@ -75,7 +75,6 @@ void PlayScene::HandleEvents()
 	EventManager::Instance().Update();
 
 	GetPlayerInput();
-	
 }
 
 void PlayScene::GetPlayerInput()
@@ -90,6 +89,7 @@ void PlayScene::GetPlayerInput()
 		//SoundManager::Instance().PlaySound("playerShoot");
 		}
 }
+
 void PlayScene::Start()
 {
 	SoundManager::Instance().Load("../Assets/audio/the_last_dance.mp3", "Start", SoundType::SOUND_SFX);
@@ -109,28 +109,20 @@ void PlayScene::Start()
 	AddChild(m_pPlayer,PLAYERS);
 	m_playerFacingRight = true;
 
-	// Instantiating the torpedo pool.
-	m_pTorpedoPool = new TorpedoPool();
-	AddChild(m_pTorpedoPool, PROJECTILES);
+	InitPools();
 
-	// Spawning a test shark for now
-	m_pEnemyPool = new EnemyPool(); 
-	AddChild(m_pEnemyPool,ENEMIES);
-
-	// Instantiating the obstacle pool.
-	m_pObstaclePool = new ObstaclePool();
-	AddChild(m_pObstaclePool, OBSTACLE);
+	// Random obstacles spawned in
 
 	auto m_pObstacle = new Obstacle();
 	m_pObstacle->GetTransform()->position= {300.0f,700.0f};
 	m_pObstaclePool->Spawn(m_pObstacle);
 
 	m_pObstacle = new Obstacle();
-	m_pObstacle->GetTransform()->position = { 500.0f,1000.0f };
+	m_pObstacle->GetTransform()->position = { -500.0f,1000.0f };
 	m_pObstaclePool->Spawn(m_pObstacle);
 
 	m_pObstacle = new Obstacle();
-	m_pObstacle->GetTransform()->position = { 750.0f,1250.0f };
+	m_pObstacle->GetTransform()->position = { -300.0f,1250.0f };
 	m_pObstaclePool->Spawn(m_pObstacle);
 
 	m_pObstacle = new Obstacle();
@@ -139,21 +131,8 @@ void PlayScene::Start()
 
 	m_pObstaclePool->Spawn(new Stingray);
 
-	// FPS Counter Set-Up
-	m_pFpsCounter = new Label;
-	m_pFpsCounter->SetEnabled(true);
-	m_pFpsCounter->SetHeight(50);
-	m_pFpsCounter->SetWidth(50);
-	m_pFpsCounter->SetText("0 fps");
-	m_pFpsCounter->GetTransform()->position = {90.0f,30.0f};
-	m_pFpsCounter->SetSize(40);
-	m_pFpsCounter->SetColour({255,255,0,255});
-	if(!Game::Instance().GetDebugMode())
-	{
-		m_pFpsCounter->SetVisible(false);
-	}
-	AddChild(m_pFpsCounter,UI);
-
+	
+	InitFPSCounter();
 	
 	/* DO NOT REMOVE */
 	ImGuiWindowFrame::Instance().SetGuiFunction([this] { GUI_Function(); });
@@ -222,6 +201,39 @@ void PlayScene::Collision()
 	//want to use distance checker to be within a certain range before checking collision.
 }
 
+void PlayScene::InitPools()
+{
+	// Instantiating the torpedo pool.
+	m_pTorpedoPool = new TorpedoPool();
+	AddChild(m_pTorpedoPool, PROJECTILES);
+
+	// Spawning a test shark for now
+	m_pEnemyPool = new EnemyPool();
+	AddChild(m_pEnemyPool, ENEMIES);
+
+	// Instantiating the obstacle pool.
+	m_pObstaclePool = new ObstaclePool();
+	AddChild(m_pObstaclePool, OBSTACLE);
+
+}
+
+void PlayScene::InitFPSCounter()
+{
+	// FPS Counter Set-Up
+	m_pFpsCounter = new Label;
+	m_pFpsCounter->SetEnabled(true);
+	m_pFpsCounter->SetHeight(50);
+	m_pFpsCounter->SetWidth(50);
+	m_pFpsCounter->SetText("0 fps");
+	m_pFpsCounter->GetTransform()->position = { 90.0f,30.0f };
+	m_pFpsCounter->SetSize(40);
+	m_pFpsCounter->SetColour({ 255,255,0,255 });
+	if (!Game::Instance().GetDebugMode())
+	{
+		m_pFpsCounter->SetVisible(false);
+	}
+	AddChild(m_pFpsCounter, UI);
+}
 
 
 void PlayScene::GUI_Function() 
