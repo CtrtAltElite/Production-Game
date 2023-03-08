@@ -141,6 +141,40 @@
     <ClCompile Include="..\src\Background.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Camera.cpp" />
+    <ClCompile Include="..\src\Carl.cpp" />
+    <ClCompile Include="..\src\Enemy.cpp" />
+    <ClCompile Include="..\src\Projectile.cpp" />
+    <ClCompile Include="..\src\Pufferfish.cpp" />
+    <ClCompile Include="..\src\Sardine.cpp" />
+    <ClCompile Include="..\src\Shark.cpp" />
+    <ClCompile Include="..\src\Swordfish.cpp" />
+    <ClCompile Include="..\src\Torpedo.cpp" />
+    <ClCompile Include="..\src\Turtle.cpp" />
+    <ClCompile Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\L2Scene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\L3Scene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\LBScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\OPPScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\StartScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\L1Scene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\LPScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\WHATScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\StartScene.h">
@@ -295,6 +329,42 @@
     </ClInclude>
     <ClInclude Include="..\src\Background.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Camera.h" />
+    <ClInclude Include="..\src\Carl.h" />
+    <ClInclude Include="..\src\Enemy.h" />
+    <ClInclude Include="..\src\Heuristic.h" />
+    <ClInclude Include="..\src\Layers.h" />
+    <ClInclude Include="..\src\Projectile.h" />
+    <ClInclude Include="..\src\Pufferfish.h" />
+    <ClInclude Include="..\src\Sardine.h" />
+    <ClInclude Include="..\src\Shark.h" />
+    <ClInclude Include="..\src\Swordfish.h" />
+    <ClInclude Include="..\src\Torpedo.h" />
+    <ClInclude Include="..\src\Turtle.h" />
+    <ClInclude Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\LPScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\L1Scene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\L2Scene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\L3Scene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\LBScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\OPPScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\StartScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\WHATScene.h">
+      <Filter>Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

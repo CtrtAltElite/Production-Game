@@ -156,6 +156,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\L1Scene.cpp" />
+    <ClCompile Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\L2Scene.cpp" />
+    <ClCompile Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\L3Scene.cpp" />
+    <ClCompile Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\LBScene.cpp" />
+    <ClCompile Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\LPScene.cpp" />
+    <ClCompile Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\OPPScene.cpp" />
+    <ClCompile Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\StartScene.cpp" />
+    <ClCompile Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\WHATScene.cpp" />
     <ClCompile Include="..\include\IMGUI\imgui.cpp" />
     <ClCompile Include="..\include\IMGUI\imgui_demo.cpp" />
     <ClCompile Include="..\include\IMGUI\imgui_draw.cpp" />
@@ -204,6 +212,14 @@
     <ClCompile Include="..\src\Util.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\L1Scene.h" />
+    <ClInclude Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\L2Scene.h" />
+    <ClInclude Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\L3Scene.h" />
+    <ClInclude Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\LBScene.h" />
+    <ClInclude Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\LPScene.h" />
+    <ClInclude Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\OPPScene.h" />
+    <ClInclude Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\StartScene.h" />
+    <ClInclude Include="..\..\..\..\Downloads\Production-Game-main (1)\Production-Game-main\src\WHATScene.h" />
     <ClInclude Include="..\include\IMGUI\imconfig.h" />
     <ClInclude Include="..\include\IMGUI\imgui.h" />
     <ClInclude Include="..\include\IMGUI\imgui_internal.h" />

@@ -81,6 +81,8 @@ void PlayScene::GetPlayerInput()
 }
 void PlayScene::Start()
 {
+	SoundManager::Instance().Load("../Assets/audio/searching.mp3", "Start", SoundType::SOUND_MUSIC);
+	SoundManager::Instance().PlayMusic("Start", 0);
 	Camera::Instance().SetEnabled(true);
 	Game::Instance().SetDebugMode(true);
 	Game::Instance().SetLevelBoundaries({-800.0f,-400.0f,-600.0f,600.0f});

@@ -5,6 +5,13 @@
 #include "glm/gtx/string_cast.hpp"
 #include "Renderer.h"
 #include "EventManager.h"
+#include "L1Scene.h"
+#include "L2Scene.h"
+#include "L3Scene.h"
+#include "LBScene.h"
+#include "LPScene.h"
+#include "OPPScene.h"
+#include "WHATScene.h"
 
 
 // Game functions - DO NOT REMOVE ***********************************************
@@ -98,7 +105,7 @@ void Game::Start()
 {
 	m_currentSceneState = SceneState::NO_SCENE;
 
-	ChangeSceneState(SceneState::PLAY);
+	ChangeSceneState(SceneState::START);
 }
 
 bool Game::IsRunning() const
@@ -159,8 +166,38 @@ void Game::ChangeSceneState(const SceneState new_state)
 		{
 		case SceneState::START:
 			m_pCurrentScene = new StartScene();
-			std::cout << "start scene activated" << std::endl;
+			std::cout << "Main Menu scene activated" << std::endl;
 			break;
+
+		case SceneState::LSP:
+			m_pCurrentScene = new LPS();
+			std::cout << "LPS scene activated" << std::endl;
+			break;
+		case SceneState::LS1:
+			m_pCurrentScene = new L1S();
+			std::cout << "L1S scene activated" << std::endl;
+			break;
+		case SceneState::LS2:
+			m_pCurrentScene = new L2S();
+			std::cout << "L2S scene activated" << std::endl;
+			break;
+		case SceneState::LS3:
+			m_pCurrentScene = new L3S();
+			std::cout << "L3S scene activated" << std::endl;
+			break;
+		case SceneState::LSB:
+			m_pCurrentScene = new LBS();
+			std::cout << "LBS scene activated" << std::endl;
+			break;
+		case SceneState::WHAT:
+			m_pCurrentScene = new WHAT();
+			std::cout << "WHAT scene activated" << std::endl;
+			break;
+		case SceneState::OPP:
+			m_pCurrentScene = new OPP();
+			std::cout << "OPP scene activated" << std::endl;
+			break;
+
 		case SceneState::PLAY:
 			m_pCurrentScene = new PlayScene();
 			std::cout << "play scene activated" << std::endl;
@@ -173,7 +210,7 @@ void Game::ChangeSceneState(const SceneState new_state)
 		default:
 			std::cout << "default case activated" << std::endl;
 			break;
-		
+
 		}
 	}
 
