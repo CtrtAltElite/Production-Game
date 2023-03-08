@@ -51,6 +51,11 @@ void Enemy::SetTargetPlayer(GameObject* targetPlayer)
     m_pTargetPlayer = targetPlayer;
 }
 
+void Enemy::SetFlipped(bool flip)
+{
+    m_flipped = flip;
+}
+
 void Enemy::TakeDamage(float damage)
 {
     m_Health-=damage;
@@ -92,6 +97,16 @@ float Enemy::GetScoreValue() const
 bool Enemy::GetDeleteMe() const
 {
     return m_deleteMe;
+}
+
+GameObject* Enemy::GetTargetPlayer() const
+{
+    return m_pTargetPlayer;
+}
+
+bool Enemy::GetFlipped()
+{
+    return m_flipped;
 }
 
 EnemyPool::EnemyPool()
@@ -184,6 +199,18 @@ void Enemy::Move()
 
         GetTransform()->position = enemy_position + GetRigidBody()->velocity * dt;
 
+        GetTransform()->rotation.r = atan2(GetTransform()->position.y-target_position.y,GetTransform()->position.x-target_position.x);
+        while (GetTransform()->rotation.r < 0 * Util::Deg2Rad) GetTransform()->rotation.r += 360 * Util::Deg2Rad;
+        while (GetTransform()->rotation.r > 360 * Util::Deg2Rad) GetTransform()->rotation.r -= 360 * Util::Deg2Rad;
+
+        if (GetTransform()->rotation.r*Util::Rad2Deg > 90 && GetTransform()->rotation.r*Util::Rad2Deg < 270)
+        {
+            SetFlipped(true);
+        }
+        else
+        {
+            SetFlipped(false);
+        }
         //std::cout << GetTransform()->position.x << " " << GetTransform()->position.y << std::endl;
         /* Will fix this tonight, making seek work for shark*/
         /*const glm::vec2 velocity_term = GetRigidBody()->velocity * dt;

@@ -1,0 +1,8 @@
+shark1 1 1 64 64
+shark2 65 1 64 64
+shark3 129 1 64 64
+shark4 193 1 64 64
+shark5 257 1 64 64
+shark6 321 1 64 64
+shark7 385 1 64 64
+shark8 449 1 64 64

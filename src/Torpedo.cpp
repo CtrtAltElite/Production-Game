@@ -76,11 +76,14 @@ void Torpedo::Start()
     // Getting sprite + setting transform.
     TextureManager::Instance().Load("../Assets/textures/Small_Torpedo.png", "torpedo");
     TextureManager::Instance().Load("../Assets/textures/Explosion.png", "explosion");
+    SoundManager::Instance().Load("../Assets/audio/hitHurt.wav", "hitHurt", SoundType::SOUND_SFX);
+    SoundManager::Instance().Load("../Assets/audio/submarineShoot.wav", "subShoot", SoundType::SOUND_SFX);
+    SoundManager::Instance().PlaySound("subShoot");
     SetWidth(20);
     SetHeight(20);
     // Setting velocity and speed
     SetVeloDamp({0.9975,0.9975});
-    SetSpeed(150.0f);
+    SetSpeed(200.0f);
     SetMaxSpeed(300.0f);
     // Setting specific stats (dmg, delete buffer, etc.) as well as getting mouse position
     m_mousePos = Util::GetMousePos();
@@ -120,7 +123,7 @@ void Torpedo::Update()
     {
         if(!m_isExploded)
         {
-            SoundManager::Instance().PlaySound("yay");
+            SoundManager::Instance().PlaySound("hitHurt");
             m_isExploded = true;
             SetWidth(GetWidth()*2);
             SetHeight(GetHeight()*2);

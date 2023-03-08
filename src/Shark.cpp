@@ -9,6 +9,24 @@
 Shark::Shark()
 {
     TextureManager::Instance().Load("../Assets/textures/Brute_Shark.png", "shark");
+    TextureManager::Instance().LoadSpriteSheet(
+        "../Assets/sprites/shark_sprite.txt",
+        "../Assets/sprites/Brute_Sharkanimatedsheet.png", 
+        "shark_spritesheet");
+    SetSpriteSheet(TextureManager::Instance().GetSpriteSheet("shark_spritesheet"));
+    auto animation = Animation();
+
+    animation.name = "default";
+    animation.frames.push_back(GetSpriteSheet()->GetFrame("shark1"));
+    animation.frames.push_back(GetSpriteSheet()->GetFrame("shark2"));
+    animation.frames.push_back(GetSpriteSheet()->GetFrame("shark3"));
+    animation.frames.push_back(GetSpriteSheet()->GetFrame("shark4"));
+    animation.frames.push_back(GetSpriteSheet()->GetFrame("shark5"));
+    animation.frames.push_back(GetSpriteSheet()->GetFrame("shark6"));
+    animation.frames.push_back(GetSpriteSheet()->GetFrame("shark7"));
+    animation.frames.push_back(GetSpriteSheet()->GetFrame("shark8"));
+
+    SetAnimation(animation);
     SetWidth(53);
     SetHeight(40);
     SetHealth(100.0f);
@@ -31,7 +49,17 @@ void Shark::Draw()
                 this->GetWidth(), this->GetHeight());
     }
     //SDL_RenderDrawRectF(Renderer::Instance().GetRenderer(),new SDL_FRect{Camera::Instance().CameraDisplace(this).x,Camera::Instance().CameraDisplace(this).y,static_cast<float>(GetWidth()),static_cast<float>(GetHeight())});
-    TextureManager::Instance().Draw("shark", Camera::Instance().CameraDisplace(this),0, 255, true);  
+    if(GetFlipped())
+    {
+        //TextureManager::Instance().PlayAnimation("shark_spritesheet", GetAnimation("default") ,Camera::Instance().CameraDisplace(this),GetTransform()->rotation.r*Util::Rad2Deg-180, 255, true);
+        TextureManager::Instance().Draw("shark", Camera::Instance().CameraDisplace(this),GetTransform()->rotation.r*Util::Rad2Deg-180, 255, true);
+    }
+    else
+    {
+        //TextureManager::Instance().PlayAnimation("shark_spritesheet", GetAnimation("default") ,Camera::Instance().CameraDisplace(this),GetTransform()->rotation.r*Util::Rad2Deg-180, 255, true,SDL_FLIP_VERTICAL);
+        TextureManager::Instance().Draw("shark", Camera::Instance().CameraDisplace(this),GetTransform()->rotation.r*Util::Rad2Deg-180, 255, true,SDL_FLIP_VERTICAL);
+    }
+    
     
     
 }

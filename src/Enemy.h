@@ -24,6 +24,7 @@ public:
 	void SetScoreValue (float scoreValue);
 	void SetDeleteMe(bool deleteMe);
 	void SetTargetPlayer(GameObject* targetPlayer);
+	void SetFlipped(bool flip);
 	virtual void TakeDamage(float damage);
 
 	[[nodiscard]] float GetSpeed() const;
@@ -33,6 +34,8 @@ public:
 	[[nodiscard]] float GetHealth() const;
 	[[nodiscard]] float GetScoreValue() const;
 	[[nodiscard]] bool GetDeleteMe() const;
+	[[nodiscard]] GameObject* GetTargetPlayer() const;
+	[[nodiscard]] bool GetFlipped();
 
 	
 	//void SetAnimationState()
@@ -42,6 +45,7 @@ private:
 	float m_maxSpeed;
 	bool m_isDead;
 	bool m_deleteMe;
+	bool m_flipped;
 	float m_scorevalue;
 	glm::vec2 m_veloDamp;
 	GameObject* m_pTargetPlayer;

@@ -38,8 +38,10 @@ void PlayScene::Update()
 	if (timer <= 0)
 	{
 		timer = NEXT_ENEMY_SPAWN;
-		m_pEnemyPool->Spawn(new Shark);
-		m_pEnemyPool->UpdateTargetPlayer(m_pPlayer);
+		auto shark = new Shark;
+		shark->SetTargetPlayer(m_pPlayer);
+		m_pEnemyPool->Spawn(shark);
+		//m_pEnemyPool->UpdateTargetPlayer(m_pPlayer);
 	}
 
 
@@ -81,8 +83,8 @@ void PlayScene::GetPlayerInput()
 }
 void PlayScene::Start()
 {
-	SoundManager::Instance().Load("../Assets/audio/searching.mp3", "Start", SoundType::SOUND_MUSIC);
-	SoundManager::Instance().PlayMusic("Start", 0);
+	SoundManager::Instance().Load("../Assets/audio/the_last_dance.mp3", "Start", SoundType::SOUND_SFX);
+	SoundManager::Instance().PlaySound("Start",-1);
 	Camera::Instance().SetEnabled(true);
 	Game::Instance().SetDebugMode(true);
 	Game::Instance().SetLevelBoundaries({-800.0f,-400.0f,-600.0f,600.0f});
