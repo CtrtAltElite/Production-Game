@@ -10,6 +10,15 @@
 #include <glm/gtx/norm.hpp>
 #include "SoundManager.h"
 
+enum Direction
+{
+	UP,
+	RIGHT,
+	DOWN,
+	LEFT
+};
+
+
 class CollisionManager
 {
 public:
@@ -17,6 +26,7 @@ public:
 	static bool SquaredRadiusCheck(GameObject* object1, GameObject* object2);
 
 	static bool AABBCheck(GameObject* object1, GameObject* object2);
+	static void ResolveCollisions(GameObject* object1, GameObject* object2);
 
 	static bool LineLineCheck(glm::vec2 line1_start, glm::vec2 line1_end, glm::vec2 line2_start, glm::vec2 line2_end);
 
@@ -38,6 +48,8 @@ public:
 private:
 	CollisionManager();
 	~CollisionManager();
+
+	static glm::vec2 compass[];
 };
 
 #endif /* defined (__COLLISION_MANAGER__) */

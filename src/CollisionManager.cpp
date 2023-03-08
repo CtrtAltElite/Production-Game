@@ -2,6 +2,13 @@
 #include "Util.h"
 #include <algorithm>
 
+glm::vec2 CollisionManager::compass[] = { // Direction Vectors.
+	glm::vec2(0.0f, 1.0f), // Up
+	glm::vec2(1.0f, 0.0f), // Right
+	glm::vec2(0.0f, -1.0f), // Down
+	glm::vec2(-1.0f, 0.0) // Left
+};
+
 
 
 int CollisionManager::SquaredDistance(const glm::vec2 p1, const glm::vec2 p2)
@@ -96,6 +103,72 @@ bool CollisionManager::AABBCheck(GameObject* object1, GameObject* object2)
 	}
 	object2->GetRigidBody()->isColliding = false;
 	return false;
+
+}
+
+void CollisionManager::ResolveCollisions(GameObject* object1, GameObject* object2)
+{
+	// prepare relevant variables
+	auto p1 = object1->GetTransform()->position;
+	auto p2 = object2->GetTransform()->position;
+	const auto p1_width = static_cast<float>(object1->GetWidth());
+	const auto p1_height = static_cast<float>(object1->GetHeight());
+	const auto p2_width = static_cast<float>(object2->GetWidth());
+	const auto p2_height = static_cast<float>(object2->GetHeight());
+
+	const float percent = 0.2f;
+	const float slop = 0.1f;
+	float inverseMassA;
+	float inverseMassB;
+
+	if (object1->GetRigidBody()->mass == 0)
+	{
+		inverseMassA = 0.0f;
+	} else
+	{
+		inverseMassA = 1 / object1->GetRigidBody()->mass;
+	}
+	if (object2->GetRigidBody()->mass == 0)
+	{
+		inverseMassB = 0.0f;
+	} else
+	{
+		inverseMassB = 1 / object2->GetRigidBody()->mass;
+	}
+
+
+	float x_overlap = std::max(0.0f, std::min(p1.x + p1_width, p2.x + p2_width) - std::max(p1.x, p2.x));
+	float y_overlap = std::max(0.0f, std::min(p1.y + p1_height, p2.y + p2_height) - std::max(p1.y, p2.y));
+
+	float overlapArea = x_overlap * y_overlap;
+
+	glm::vec2 relative_velocity = object2->GetRigidBody()->velocity - object1->GetRigidBody()->velocity;
+	glm::vec2 normal = Util::Normalize(object2->GetTransform()->position - object1->GetTransform()->position);
+	
+	float velocity_along_normal = glm::dot(relative_velocity, normal);
+
+
+
+	if (velocity_along_normal > 0)
+	{
+	} else
+	{
+		float j = -(1 + overlapArea) * velocity_along_normal;
+		j /= inverseMassA + inverseMassB;
+
+		glm::vec2 impulse = j * normal;
+		object1->GetRigidBody()->velocity = glm::vec2();
+		object2->GetRigidBody()->velocity = glm::vec2();
+
+		object1->GetRigidBody()->velocity -= inverseMassA * impulse;
+		object2->GetRigidBody()->velocity -= inverseMassB * impulse;
+
+		glm::vec2 correction = std::max(overlapArea - slop, 0.0f) / (inverseMassA + inverseMassB) * percent * normal;
+		object1->GetTransform()->position -= inverseMassA * correction;
+		object2->GetTransform()->position += inverseMassB * correction;
+	}
+
+
 
 }
 

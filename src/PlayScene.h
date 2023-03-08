@@ -42,7 +42,6 @@ private:
 	ObstaclePool* m_pObstaclePool{};
 	EnemyPool* m_pEnemyPool{};
 	TorpedoPool* m_pTorpedoPool{};
-	std::vector<Obstacle*>m_pObstacles;
 	bool m_playerFacingRight{};
 	Label* m_pFpsCounter{};
 	float timer;

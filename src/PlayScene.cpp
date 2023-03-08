@@ -33,7 +33,10 @@ void PlayScene::Update()
 	Camera::Instance().GetTransform()->position.x = Util::Clamp(Camera::Instance().GetTransform()->position.x,Game::Instance().GetLevelBoundaries().x,Game::Instance().GetLevelBoundaries().y);
 	Camera::Instance().GetTransform()->position.y = Util::Clamp(Camera::Instance().GetTransform()->position.y,Game::Instance().GetLevelBoundaries().z,Game::Instance().GetLevelBoundaries().w);
 
-	m_pEnemyPool->Update();
+	if (m_pEnemyPool != nullptr)
+	{
+		m_pEnemyPool->Update();
+	}
 
 	if (timer <= 0)
 	{
@@ -143,13 +146,15 @@ void PlayScene::Collision()
 	
 	for (auto enemy : m_pEnemyPool->GetPool())
 	{
-		if(Util::Distance(enemy->GetTransform()->position,m_pPlayer->GetTransform()->position)<50.0f)
+		if(Util::Distance(enemy->GetTransform()->position,m_pPlayer->GetTransform()->position)<100.0f)
 		{
-			if (CollisionManager::AABBCheck(enemy,m_pPlayer)) 
+			if (CollisionManager::AABBCheck(enemy, m_pPlayer))
 			{
 				std::cout <<  "Enemy player collision" <<::std::endl;
 				enemy->GetRigidBody()->isColliding=true;
 				m_pPlayer->GetRigidBody()->isColliding=true;
+				Game::Instance().ChangeSceneState(SceneState::END);
+				break;
 			}
 			else
 			{
@@ -178,15 +183,17 @@ void PlayScene::Collision()
 		}
 		
 	}
-	for (auto obstacle: m_pObstacles)
+	for (auto obstacle: m_pObstaclePool->GetPool())
 	{
 		//std::cout << m_pPlayer->GetTransform()->position.x << " , " << m_pPlayer->GetTransform()->position.y <<  std::endl;
 		//std::cout << obstacle->GetTransform()->position.x<<" , " <<  obstacle->GetTransform()->position.y <<  std::endl;
 		//std::cout << m_pShark->GetTransform()->position.x << " , " << m_pShark->GetTransform()->position.y << std::endl;
-			
-		if(CollisionManager::AABBCheck(obstacle,m_pPlayer))
+
+		// Hard-coded for now, can be moved into a function for the game object in general later so collision between all obstacles is seamless.
+		if(CollisionManager::AABBCheck(obstacle,m_pPlayer) || CollisionManager::AABBCheck(m_pPlayer, obstacle))
 		{
-			m_pPlayer->GetTransform()->position = obstacle->GetTransform()->position;
+			std::cout << "obstacle collision" << std::endl;
+			CollisionManager::ResolveCollisions(m_pPlayer, obstacle);
 		}
 		
 	}

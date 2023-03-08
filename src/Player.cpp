@@ -91,7 +91,13 @@ void Player::Move()
 	const glm::vec2 acceleration_term = GetRigidBody()->acceleration * 0.5f;
 	const glm::vec2 final_position = initial_position + velocity_term + acceleration_term;
 
-	// Sets player position
+
+	//// Sets player position
+	//if (GetRigidBody()->isColliding)
+	//{
+	//	GetRigidBody()->velocity = glm::vec2();
+	//	final_position = initial_position - GetRigidBody()->angularVelocity;
+	//}
 	GetTransform()->position = final_position;
 
 
