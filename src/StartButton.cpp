@@ -6,7 +6,7 @@ StartButton::StartButton()
 	:Button(
 		"../Assets/textures/StartButton.png",
 		"startButton",
-		START_BUTTON, glm::vec2(400.0f, 300.0f)), m_isClicked(false)
+		GameObjectType::START_BUTTON, glm::vec2(400.0f, 300.0f)), m_isClicked(false)
 {
 	
 }
@@ -17,11 +17,11 @@ StartButton::~StartButton()
 
 bool StartButton::ButtonClick()
 {
-	if (m_mouseOver() && m_mouseButtonClicked)
+	if (m_mouseOver() && m_leftMouseButtonClicked)
 	{
 		if(!m_isClicked)
 		{
-			Game::Instance()->changeSceneState(LEVEL1_SCENE);
+			Game::Instance().ChangeSceneState(SceneState::LS1);
 			m_isClicked = true;
 		}
 		return true;

@@ -10,7 +10,7 @@ public:
 	StartButton();
 	~StartButton();
 
-	bool ButtonClick() override;
+	bool ButtonClick();
 
 private:
 	bool m_isClicked;

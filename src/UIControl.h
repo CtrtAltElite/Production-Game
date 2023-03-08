@@ -27,16 +27,18 @@ protected:
 	void OnMouseOver();
 	void OnMouseOut();
 	void OnLeftMouseButtonClick();
+	bool m_mouseOver;
+	bool m_leftMouseButtonClicked;
 
 private:
 	bool CheckIfEventExists(Event id);
 
 	// mouse events
-	bool m_mouseOver;
+	
 	bool m_mouseOverActive;
 	bool m_mouseOutActive;
 	
-	bool m_leftMouseButtonClicked;
+	
 
 	// event structure
 	std::unordered_map<Event, EventHandler> m_events;

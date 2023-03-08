@@ -10,7 +10,7 @@ public:
 	~RestartButton();
 
 
-	bool ButtonClick() override;
+	bool ButtonClick();
 private:
 	bool m_isClicked;
 };

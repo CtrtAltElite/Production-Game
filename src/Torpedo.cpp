@@ -120,6 +120,7 @@ void Torpedo::Update()
     {
         if(!m_isExploded)
         {
+            SoundManager::Instance().PlaySound("yay");
             m_isExploded = true;
             SetWidth(GetWidth()*2);
             SetHeight(GetHeight()*2);
