@@ -177,7 +177,7 @@ void PlayScene::Collision()
 		//std::cout << m_pShark->GetTransform()->position.x << " , " << m_pShark->GetTransform()->position.y << std::endl;
 
 		// Hard-coded for now, can be moved into a function for the game object in general later so collision between all obstacles is seamless.
-		if(CollisionManager::AABBCheck(obstacle,m_pPlayer) || CollisionManager::AABBCheck(m_pPlayer, obstacle))
+		if(CollisionManager::AABBCheck(m_pPlayer, obstacle))
 		{
 			std::cout << "obstacle collision" << std::endl;
 			CollisionManager::ResolveCollisions(m_pPlayer, obstacle);

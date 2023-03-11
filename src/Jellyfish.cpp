@@ -9,7 +9,7 @@ Jellyfish::Jellyfish()
 {
 	TextureManager::Instance().LoadSpriteSheet(
 		"../Assets/sprites/jellyfish_sprite.txt",
-		"../Assets/sprites/jellyfish-Sheet.png",
+		"../Assets/sprites/jellyfish-Sheetbig.png",
 		"jellyfish_spritesheet"
 	);
 	SetSpriteSheet(TextureManager::Instance().GetSpriteSheet("jellyfish_spritesheet"));
@@ -30,7 +30,7 @@ Jellyfish::Jellyfish()
 	SetAnimation(animation);
 	SetWidth(32);
 	SetHeight(32);
-	GetRigidBody()->mass = 10.0f;
+	GetRigidBody()->mass = 1.0f;
 	animVelo = 0.22f;
 	SetType(GameObjectType::JELLYFISH);
 }

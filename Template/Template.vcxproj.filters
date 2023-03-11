@@ -31,6 +31,18 @@
     <Filter Include="DOCS">
       <UniqueIdentifier>{a44d29c3-2835-4901-a310-0039121b84b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Enemies">
+      <UniqueIdentifier>{ca649beb-09a9-498d-93b6-34966f24cfcb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemies\EnemyTypes">
+      <UniqueIdentifier>{c611e93c-fd55-4c93-9920-dc0fa2dcd471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemies\ObstacleTypes">
+      <UniqueIdentifier>{adb11e85-4441-4ca1-8b28-538e89c47710}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{05d13936-422b-4545-b6c5-25350ba9b666}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\StartScene.cpp">
@@ -50,9 +62,6 @@
     </ClCompile>
     <ClCompile Include="..\src\TextureManager.cpp">
       <Filter>Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Player.cpp">
-      <Filter>Game Objects</Filter>
     </ClCompile>
     <ClCompile Include="..\src\PlayScene.cpp">
       <Filter>Scenes</Filter>
@@ -141,27 +150,68 @@
     <ClCompile Include="..\src\Background.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Camera.cpp" />
-    <ClCompile Include="..\src\Carl.cpp" />
-    <ClCompile Include="..\src\Enemy.cpp" />
-    <ClCompile Include="..\src\Projectile.cpp" />
-    <ClCompile Include="..\src\Pufferfish.cpp" />
-    <ClCompile Include="..\src\Sardine.cpp" />
-    <ClCompile Include="..\src\Shark.cpp" />
-    <ClCompile Include="..\src\Swordfish.cpp" />
-    <ClCompile Include="..\src\Torpedo.cpp" />
-    <ClCompile Include="..\src\Turtle.cpp" />
-    <ClCompile Include="..\src\L1Scene.cpp" />
-    <ClCompile Include="..\src\L2Scene.cpp" />
-    <ClCompile Include="..\src\L3Scene.cpp" />
-    <ClCompile Include="..\src\LBScene.cpp" />
-    <ClCompile Include="..\src\LPScene.cpp" />
-    <ClCompile Include="..\src\OPPScene.cpp" />
     <ClCompile Include="..\src\RestartButton.cpp" />
     <ClCompile Include="..\src\StartButton.cpp" />
-    <ClCompile Include="..\src\WHATScene.cpp" />
-    <ClCompile Include="..\src\Stingray.cpp" />
-    <ClCompile Include="..\src\Jellyfish.cpp" />
+    <ClCompile Include="..\src\Enemy.cpp">
+      <Filter>Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Carl.cpp">
+      <Filter>Enemies\EnemyTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\L1Scene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\L2Scene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\L3Scene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\LBScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\LPScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\OPPScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Pufferfish.cpp">
+      <Filter>Enemies\EnemyTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Shark.cpp">
+      <Filter>Enemies\EnemyTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Jellyfish.cpp">
+      <Filter>Enemies\ObstacleTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Stingray.cpp">
+      <Filter>Enemies\ObstacleTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Swordfish.cpp">
+      <Filter>Enemies\EnemyTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Sardine.cpp">
+      <Filter>Enemies\EnemyTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Turtle.cpp">
+      <Filter>Enemies\EnemyTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\WHATScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Projectile.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Camera.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Torpedo.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Player.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\StartScene.h">
@@ -187,9 +237,6 @@
     </ClInclude>
     <ClInclude Include="..\src\SceneState.h">
       <Filter>Enums</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Player.h">
-      <Filter>Game Objects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\PlayerAnimationState.h">
       <Filter>Enums</Filter>
@@ -317,29 +364,70 @@
     <ClInclude Include="..\src\Background.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Camera.h" />
-    <ClInclude Include="..\src\Carl.h" />
-    <ClInclude Include="..\src\Enemy.h" />
     <ClInclude Include="..\src\Heuristic.h" />
     <ClInclude Include="..\src\Layers.h" />
-    <ClInclude Include="..\src\Projectile.h" />
-    <ClInclude Include="..\src\Pufferfish.h" />
-    <ClInclude Include="..\src\Sardine.h" />
-    <ClInclude Include="..\src\Shark.h" />
-    <ClInclude Include="..\src\Swordfish.h" />
-    <ClInclude Include="..\src\Torpedo.h" />
-    <ClInclude Include="..\src\Turtle.h" />
-    <ClInclude Include="..\src\L1Scene.h" />
-    <ClInclude Include="..\src\L2Scene.h" />
-    <ClInclude Include="..\src\L3Scene.h" />
-    <ClInclude Include="..\src\LBScene.h" />
-    <ClInclude Include="..\src\LPScene.h" />
-    <ClInclude Include="..\src\OPPScene.h" />
     <ClInclude Include="..\src\RestartButton.h" />
     <ClInclude Include="..\src\StartButton.h" />
-    <ClInclude Include="..\src\WHATScene.h" />
-    <ClInclude Include="..\src\Stingray.h" />
-    <ClInclude Include="..\src\Jellyfish.h" />
+    <ClInclude Include="..\src\Enemy.h">
+      <Filter>Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Carl.h">
+      <Filter>Enemies\EnemyTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\L1Scene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\L2Scene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\L3Scene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\LBScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\LPScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\OPPScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Pufferfish.h">
+      <Filter>Enemies\EnemyTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Shark.h">
+      <Filter>Enemies\EnemyTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Jellyfish.h">
+      <Filter>Enemies\ObstacleTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Stingray.h">
+      <Filter>Enemies\ObstacleTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Swordfish.h">
+      <Filter>Enemies\EnemyTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Sardine.h">
+      <Filter>Enemies\EnemyTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Turtle.h">
+      <Filter>Enemies\EnemyTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\WHATScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Projectile.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Camera.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Torpedo.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Player.h">
+      <Filter>Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md">
