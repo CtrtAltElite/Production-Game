@@ -161,7 +161,7 @@ void EnemyPool::UpdateTargetPlayer(GameObject* targetObject) const
 
 void Enemy::Move()
 {
-    if (m_pTargetPlayer != nullptr)
+    if (m_pTargetPlayer != nullptr && Util::Distance(GetTransform()->position,m_pTargetPlayer->GetTransform()->position)<300.00f)
     {
         // Getting initial instances of position, velocity, and target position
         const float dt = Game::Instance().GetDeltaTime();
@@ -200,17 +200,7 @@ void Enemy::Move()
         GetTransform()->position = enemy_position + GetRigidBody()->velocity * dt;
 
         GetTransform()->rotation.r = atan2(GetTransform()->position.y-target_position.y,GetTransform()->position.x-target_position.x);
-        while (GetTransform()->rotation.r < 0 * Util::Deg2Rad) GetTransform()->rotation.r += 360 * Util::Deg2Rad;
-        while (GetTransform()->rotation.r > 360 * Util::Deg2Rad) GetTransform()->rotation.r -= 360 * Util::Deg2Rad;
-
-        if (GetTransform()->rotation.r*Util::Rad2Deg > 90 && GetTransform()->rotation.r*Util::Rad2Deg < 270)
-        {
-            SetFlipped(true);
-        }
-        else
-        {
-            SetFlipped(false);
-        }
+        
         //std::cout << GetTransform()->position.x << " " << GetTransform()->position.y << std::endl;
         /* Will fix this tonight, making seek work for shark*/
         /*const glm::vec2 velocity_term = GetRigidBody()->velocity * dt;
@@ -227,7 +217,23 @@ void Enemy::Move()
         GetRigidBody()->angularVelocity += GetRigidBody()->angularAcceleration;
         GetRigidBody()->velocity *= GetRigidBody()->velocityDampening;
         GetRigidBody()->angularVelocity *= GetRigidBody()->angularVelocityDampening;*/
-        CollisionManager::RotateAABB(this, this->GetTransform()->rotation.r * Util::Rad2Deg);
+        
     }
+    else
+    {
+       //wander
+    }
+    while (GetTransform()->rotation.r < 0 * Util::Deg2Rad) GetTransform()->rotation.r += 360 * Util::Deg2Rad;
+    while (GetTransform()->rotation.r > 360 * Util::Deg2Rad) GetTransform()->rotation.r -= 360 * Util::Deg2Rad;
+
+    if (GetTransform()->rotation.r*Util::Rad2Deg > 90 && GetTransform()->rotation.r*Util::Rad2Deg < 270)
+    {
+        SetFlipped(true);
+    }
+    else
+    {
+        SetFlipped(false);
+    }
+    CollisionManager::RotateAABB(this, this->GetTransform()->rotation.r * Util::Rad2Deg);
 }
 

@@ -1,6 +1,7 @@
 #pragma once
 #ifndef __RIGID_BODY__
 #define __RIGID_BODY__
+#include <vector>
 #include <glm/vec2.hpp>
 
 struct RigidBody
@@ -15,5 +16,6 @@ struct RigidBody
 	float angularVelocityDampening;
 	float angularAcceleration;
 	bool isColliding = false;
+	std::vector<RigidBody*> currentCollisions;
 };
 #endif /* defined (__RIGID_BODY__) */

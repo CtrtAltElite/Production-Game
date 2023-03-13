@@ -139,13 +139,28 @@ void PlayScene::Collision()
 			{
 				std::cout <<  "Enemy player collision" <<::std::endl;
 				enemy->GetRigidBody()->isColliding=true;
+				enemy->GetRigidBody()->currentCollisions.push_back(m_pPlayer->GetRigidBody());
 				m_pPlayer->GetRigidBody()->isColliding=true;
+				m_pPlayer->GetRigidBody()->currentCollisions.push_back(enemy->GetRigidBody());
+				//make vector of current collisions and pass enemy and m_pPlayer in. so we can have multiple collisions at the same time and access damage values
 				//Game::Instance().ChangeSceneState(SceneState::END);
 				break;
 			}
 			else
 			{
-				m_pPlayer->GetRigidBody()->isColliding = false; //probably not good cause there are other things they could be colliding with
+				m_pPlayer->GetRigidBody()->currentCollisions.erase(std::remove(m_pPlayer->GetRigidBody()->currentCollisions.begin(),m_pPlayer->GetRigidBody()->currentCollisions.end(),m_pPlayer->GetRigidBody()),
+				                                                   m_pPlayer->GetRigidBody()->currentCollisions.end());
+				enemy->GetRigidBody()->currentCollisions.erase(std::remove(enemy->GetRigidBody()->currentCollisions.begin(),enemy->GetRigidBody()->currentCollisions.end(),enemy->GetRigidBody()),
+				                                               enemy->GetRigidBody()->currentCollisions.end());
+				
+				if (m_pPlayer->GetRigidBody()->currentCollisions.empty())
+				{
+					m_pPlayer->GetRigidBody()->isColliding = false;
+				}
+				if (enemy->GetRigidBody()->currentCollisions.empty())
+				{
+					enemy->GetRigidBody()->isColliding=false;
+				}
 			}
 		}
 		for (auto projectile : m_pTorpedoPool->GetPool())
@@ -160,10 +175,24 @@ void PlayScene::Collision()
 						enemy->TakeDamage(projectile->GetDamage());
 						projectile->GetRigidBody()->isColliding=true;
 						enemy->GetRigidBody()->isColliding=true;
+						projectile->GetRigidBody()->currentCollisions.push_back(enemy->GetRigidBody());
+						enemy->GetRigidBody()->currentCollisions.push_back(projectile->GetRigidBody());
 					}
 					else
 					{
-						projectile->GetRigidBody()->isColliding = false;
+						//move this somewhere else
+						projectile->GetRigidBody()->currentCollisions.erase(std::remove(projectile->GetRigidBody()->currentCollisions.begin(),projectile->GetRigidBody()->currentCollisions.end(),projectile->GetRigidBody()),
+																   projectile->GetRigidBody()->currentCollisions.end());
+						enemy->GetRigidBody()->currentCollisions.erase(std::remove(enemy->GetRigidBody()->currentCollisions.begin(),enemy->GetRigidBody()->currentCollisions.end(),enemy->GetRigidBody()),
+																	   enemy->GetRigidBody()->currentCollisions.end());
+						if (projectile->GetRigidBody()->currentCollisions.empty())
+						{
+							projectile->GetRigidBody()->isColliding = false;
+						}
+						if (enemy->GetRigidBody()->currentCollisions.empty())
+						{
+							enemy->GetRigidBody()->isColliding=false;
+						}
 					}
 				}
 			}
