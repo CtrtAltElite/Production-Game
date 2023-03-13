@@ -130,6 +130,10 @@ void PlayScene::Start()
 
 void PlayScene::Collision()
 {
+	//there is a better way to do this
+	//we need each rigid body to have a vector of collisions anyway to be able to collide with multiple objects (i think)
+	//we could use something like this to build the vectors
+	//then iterate, manage and do actions with the information fomr the vectors in the objects own updates
 	
 	for (auto enemy : m_pEnemyPool->GetPool())
 	{
@@ -142,6 +146,7 @@ void PlayScene::Collision()
 				enemy->GetRigidBody()->currentCollisions.push_back(m_pPlayer->GetRigidBody());
 				m_pPlayer->GetRigidBody()->isColliding=true;
 				m_pPlayer->GetRigidBody()->currentCollisions.push_back(enemy->GetRigidBody());
+				m_pPlayer->TakeDamage(enemy->GetAttackDamage());
 				//make vector of current collisions and pass enemy and m_pPlayer in. so we can have multiple collisions at the same time and access damage values
 				//Game::Instance().ChangeSceneState(SceneState::END);
 				break;

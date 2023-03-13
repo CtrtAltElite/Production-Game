@@ -56,6 +56,11 @@ void Enemy::SetFlipped(bool flip)
     m_flipped = flip;
 }
 
+void Enemy::SetAttackDamage(float damage)
+{
+    m_attackDamage = damage;
+}
+
 void Enemy::TakeDamage(float damage)
 {
     m_Health-=damage;
@@ -107,6 +112,11 @@ GameObject* Enemy::GetTargetPlayer() const
 bool Enemy::GetFlipped()
 {
     return m_flipped;
+}
+
+float Enemy::GetAttackDamage()
+{
+    return m_attackDamage;
 }
 
 EnemyPool::EnemyPool()
@@ -222,6 +232,7 @@ void Enemy::Move()
     else
     {
        //wander
+        
     }
     while (GetTransform()->rotation.r < 0 * Util::Deg2Rad) GetTransform()->rotation.r += 360 * Util::Deg2Rad;
     while (GetTransform()->rotation.r > 360 * Util::Deg2Rad) GetTransform()->rotation.r -= 360 * Util::Deg2Rad;

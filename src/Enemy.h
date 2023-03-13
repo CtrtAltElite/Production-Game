@@ -25,17 +25,19 @@ public:
 	void SetDeleteMe(bool deleteMe);
 	void SetTargetPlayer(GameObject* targetPlayer);
 	void SetFlipped(bool flip);
+	void SetAttackDamage(float damage);
 	virtual void TakeDamage(float damage);
 
 	[[nodiscard]] float GetSpeed() const;
 	[[nodiscard]] float GetMaxSpeed() const;
-	[[nodiscard]] glm::vec2 GetVeloDamp();;
+	[[nodiscard]] glm::vec2 GetVeloDamp();
 	[[nodiscard]] bool GetIsDead() const;
 	[[nodiscard]] float GetHealth() const;
 	[[nodiscard]] float GetScoreValue() const;
 	[[nodiscard]] bool GetDeleteMe() const;
 	[[nodiscard]] GameObject* GetTargetPlayer() const;
 	[[nodiscard]] bool GetFlipped();
+	[[nodiscard]] float GetAttackDamage();
 
 	
 	//void SetAnimationState()
@@ -49,6 +51,7 @@ private:
 	float m_scorevalue;
 	glm::vec2 m_veloDamp;
 	GameObject* m_pTargetPlayer;
+	float m_attackDamage;
 };
 
 // Holds all the enemies in the scene and deals with the deletion

@@ -2,7 +2,6 @@
 
 #include "Camera.h"
 #include "Game.h"
-#include "Renderer.h"
 #include "TextureManager.h"
 #include "Util.h"
 
@@ -30,6 +29,7 @@ Shark::Shark()
     SetWidth(53);
     SetHeight(40);
     SetHealth(100.0f);
+    SetAttackDamage(30.0f);
     GetTransform()->position = glm::vec2(rand() % 200, rand() % 200);
     GetRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
     GetRigidBody()->bounds=glm::vec2(GetWidth(), GetHeight());
@@ -46,19 +46,19 @@ void Shark::Draw()
     if(Game::Instance().GetDebugMode())
     {
         Util::DrawRect(Camera::Instance().CameraDisplace(this) -
-                glm::vec2(this->GetWidth() * 0.5f, this->GetHeight() * 0.5f),
+                glm::vec2(static_cast<float>(this->GetWidth()) * 0.5f, static_cast<float>(this->GetHeight()) * 0.5f),
                 this->GetWidth(), this->GetHeight());
     }
     //SDL_RenderDrawRectF(Renderer::Instance().GetRenderer(),new SDL_FRect{Camera::Instance().CameraDisplace(this).x,Camera::Instance().CameraDisplace(this).y,static_cast<float>(GetWidth()),static_cast<float>(GetHeight())});
     if(GetFlipped())
     {
         //TextureManager::Instance().PlayAnimation("shark_spritesheet", GetAnimation("default") ,Camera::Instance().CameraDisplace(this),GetTransform()->rotation.r*Util::Rad2Deg-180, 255, true);
-        TextureManager::Instance().PlayAnimation("shark_spritesheet", GetAnimation("move"), Camera::Instance().CameraDisplace(this), animVelo, GetTransform()->rotation.r * Util::Rad2Deg - 180, 255, true);
+        TextureManager::Instance().PlayAnimation("shark_spritesheet", GetAnimation("move"), Camera::Instance().CameraDisplace(this), animVelo, GetTransform()->rotation.r * Util::Rad2Deg - 180.0f, 255, true);
     }
     else
     {
         //TextureManager::Instance().PlayAnimation("shark_spritesheet", GetAnimation("default") ,Camera::Instance().CameraDisplace(this),GetTransform()->rotation.r*Util::Rad2Deg-180, 255, true,SDL_FLIP_VERTICAL);
-        TextureManager::Instance().PlayAnimation("shark_spritesheet", GetAnimation("move"), Camera::Instance().CameraDisplace(this), animVelo, GetTransform()->rotation.r * Util::Rad2Deg - 180, 255, true, SDL_FLIP_VERTICAL);
+        TextureManager::Instance().PlayAnimation("shark_spritesheet", GetAnimation("move"), Camera::Instance().CameraDisplace(this), animVelo, GetTransform()->rotation.r * Util::Rad2Deg - 180.0f, 255, true, SDL_FLIP_VERTICAL);
 
     }
     

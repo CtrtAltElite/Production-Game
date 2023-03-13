@@ -29,6 +29,7 @@ public:
 	void SetKillcount(int killcount);
 	void SetHealth(float health);
 	void SetIsDead (bool isDead);
+	void TakeDamage (float damage);
 
 
 	[[nodiscard]] float GetMaxSpeed() const;

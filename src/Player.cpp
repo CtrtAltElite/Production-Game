@@ -15,6 +15,7 @@ Player::Player(): m_currentAnimationState(PlayerAnimationState::PLAYER_IDLE_RIGH
 	SetSpriteSheet(TextureManager::Instance().GetSpriteSheet("sub_spritesheet"));
 	SetWidth(58);
 	SetHeight(30);
+	SetHealth(100.0f);
 	m_speed = 5.0f;
 	m_maxSpeed = 200.0f;
 	GetTransform()->position = glm::vec2(0.0f, 300.0f);
@@ -63,6 +64,7 @@ void Player::Draw()
 
 void Player::Update()
 {
+	
 	while (GetTransform()->rotation.r < 0 * Util::Deg2Rad) GetTransform()->rotation.r += 360 * Util::Deg2Rad;
 	while (GetTransform()->rotation.r > 360 * Util::Deg2Rad) GetTransform()->rotation.r -= 360 * Util::Deg2Rad;
 	if (GetTransform()->rotation.r*Util::Rad2Deg > 90 && GetTransform()->rotation.r*Util::Rad2Deg < 270)
@@ -168,6 +170,13 @@ void Player::SetHealth(float health)
 void Player::SetIsDead(bool isDead)
 {
 	isDead = m_isDead;
+}
+
+void Player::TakeDamage(float damage)
+{
+	SetHealth(GetHealth()-damage);
+	std::cout<< "Player hit for " << damage << " damage." << std::endl;
+	//do some effects or sound here
 }
 
 void Player::MoveAtMouse()
