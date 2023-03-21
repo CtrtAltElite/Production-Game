@@ -27,6 +27,27 @@ Obstacle::Obstacle()
 	SoundManager::Instance().Load("../Assets/audio/yay.ogg", "yay", SoundType::SOUND_SFX);
 }
 
+Obstacle::Obstacle(const char* fileName, const char* texture)
+{
+	TextureManager::Instance().Load(texture, fileName);
+
+	const auto size = TextureManager::Instance().GetTextureSize(fileName);
+	SetWidth(static_cast<int>(size.x));
+	SetHeight(static_cast<int>(size.y));
+
+	GetTransform()->position = glm::vec2(300.0f, 300.0f);
+	GetRigidBody()->bounds = glm::vec2(GetWidth(), GetHeight());
+	GetRigidBody()->mass = 0.0f; // infinite mass essentially.
+
+	SetIsCentered(true);
+	SetType(GameObjectType::OBSTACLE);
+	GetRigidBody()->isColliding = false;
+	m_deleteMe = false;
+
+	SoundManager::Instance().Load("../Assets/audio/yay.ogg", "yay", SoundType::SOUND_SFX);
+}
+
+
 Obstacle::~Obstacle()
 = default;
 
@@ -39,7 +60,7 @@ void Obstacle::Draw()
 			this->GetWidth(), this->GetHeight());
 		
 	}
-	TextureManager::Instance().Draw("obstacle", Camera::Instance().CameraDisplace(this), 0, 100, true);
+	TextureManager::Instance().Draw(textureName, Camera::Instance().CameraDisplace(this), 0, 100, true);
 }
 
 void Obstacle::Update()

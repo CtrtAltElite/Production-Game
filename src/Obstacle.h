@@ -8,7 +8,8 @@ class Obstacle : virtual public DisplayObject
 public:
 	// constructors
 	Obstacle();
-	
+	Obstacle(const char* fileName, const char* texture);
+
 	// destructor
 	~Obstacle() override;
 	
@@ -22,6 +23,7 @@ public:
 	void SetDeleteMe(bool deleteMe);
 private:
 	bool m_deleteMe;
+	std::string textureName;
 };
 
 class ObstaclePool : public DisplayObject

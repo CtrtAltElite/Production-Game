@@ -1,0 +1,1 @@
+Rock ../Assets/sprites/obstacles/rock.png

@@ -42,22 +42,22 @@ void PlayScene::Update()
 		m_pEnemyPool->Update();
 	}
 
-	if (timer <= 0)
-	{
-		timer = NEXT_ENEMY_SPAWN;
-		auto shark = new Shark;
-		shark->SetTargetPlayer(m_pPlayer);
-		m_pEnemyPool->Spawn(shark);
+	//if (timer <= 0)
+	//{
+	//	timer = NEXT_ENEMY_SPAWN;
+	//	auto shark = new Shark;
+	//	shark->SetTargetPlayer(m_pPlayer);
+	//	m_pEnemyPool->Spawn(shark);
 
-		auto stingray = new Stingray;
-		stingray->GetTransform()->position = glm::vec2(Camera::Instance().GetTransform()->position.x, rand() % 5 + m_pPlayer->GetTransform()->position.y);
-		m_pObstaclePool->Spawn(stingray);
+	//	auto stingray = new Stingray;
+	//	stingray->GetTransform()->position = glm::vec2(Camera::Instance().GetTransform()->position.x, rand() % 5 + m_pPlayer->GetTransform()->position.y);
+	//	m_pObstaclePool->Spawn(stingray);
 
-		auto jellyfish = new Jellyfish;
-		jellyfish->GetTransform()->position = glm::vec2(m_pPlayer->GetTransform()->position.x, m_pPlayer->GetTransform()->position.y - 800.0f);
-		m_pObstaclePool->Spawn(jellyfish);
-		//m_pEnemyPool->UpdateTargetPlayer(m_pPlayer);
-	}
+	//	auto jellyfish = new Jellyfish;
+	//	jellyfish->GetTransform()->position = glm::vec2(m_pPlayer->GetTransform()->position.x, m_pPlayer->GetTransform()->position.y - 800.0f);
+	//	m_pObstaclePool->Spawn(jellyfish);
+	//	//m_pEnemyPool->UpdateTargetPlayer(m_pPlayer);
+	//}
 
 
 	// Set FPS display on screen.
@@ -98,13 +98,15 @@ void PlayScene::GetPlayerInput()
 
 void PlayScene::Start()
 {
+	m_guiTitle = "Play Scene";
+
+
 	SoundManager::Instance().Load("../Assets/audio/conquest.mp3", "Start", SoundType::SOUND_SFX);
 	SoundManager::Instance().PlaySound("Start",-1);
 	Camera::Instance().SetEnabled(true);
 	Game::Instance().SetDebugMode(true);
 	Game::Instance().SetLevelBoundaries({-800.0f,-400.0f,-600.0f,600.0f});
 	// Set GUI Title
-	m_guiTitle = "Play Scene";
 
 	m_pBackground = new Background;
 	AddChild(m_pBackground,BACKGROUND);
@@ -119,9 +121,27 @@ void PlayScene::Start()
 
 	// Random obstacles spawned in
 
-	m_pObstaclePool->Spawn(new Stingray);
+	//m_pObstaclePool->Spawn(new Stingray);
 
-	
+	// Opening and initializing obstacle file!
+	std::ifstream obstacleFile(OBSTACLE_FILE_NAME);
+
+	// Writing obstacles to the map along with their name
+	if (obstacleFile.is_open()) {
+		std::string fileName = "";
+		std::string textureName = "";
+		while (obstacleFile >> fileName >> textureName) {
+			Obstacle* temp = new Obstacle(fileName.c_str(), textureName.c_str());
+			m_pTotalObstacles.emplace(std::pair<std::string, Obstacle*>(fileName, temp));
+
+			std::cout << fileName << std::endl << textureName << std::endl;
+		}
+		obstacleFile.close();
+	}
+	else {
+		std::cout << "Could not open file!\n";
+	}
+
 	InitFPSCounter();
 	
 	/* DO NOT REMOVE */

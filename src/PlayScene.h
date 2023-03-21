@@ -12,8 +12,12 @@
 #include "Torpedo.h"
 #include "Enemy.h"
 #include "Shark.h"
+#include <string>
+#include <fstream>
+#include <map>
 
 constexpr int NEXT_ENEMY_SPAWN = 50;
+constexpr char* OBSTACLE_FILE_NAME = "../Assets/sprites/obstacles/obstacleList.txt";
 
 class PlayScene : public Scene
 {
@@ -48,6 +52,8 @@ private:
 	Label* m_pFpsCounter{};
 	float timer;
 	
+	// Variables for grabbing total obstacles and storing them
+	std::map<std::string, Obstacle*> m_pTotalObstacles;
 
 	
 	// Input Control
