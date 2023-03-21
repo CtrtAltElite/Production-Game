@@ -1,1 +1,2 @@
 Rock ../Assets/sprites/obstacles/rock.png
+Henry ../Assets/sprites/obstacles/henry.png

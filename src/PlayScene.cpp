@@ -41,6 +41,9 @@ void PlayScene::Update()
 	{
 		m_pEnemyPool->Update();
 	}
+	if (m_pObstaclePool != nullptr) {
+		m_pObstaclePool->Update();
+	}
 
 	//if (timer <= 0)
 	//{
@@ -102,7 +105,7 @@ void PlayScene::Start()
 
 
 	SoundManager::Instance().Load("../Assets/audio/conquest.mp3", "Start", SoundType::SOUND_SFX);
-	SoundManager::Instance().PlaySound("Start",-1);
+	//SoundManager::Instance().PlaySound("Start",-1);
 	Camera::Instance().SetEnabled(true);
 	Game::Instance().SetDebugMode(true);
 	Game::Instance().SetLevelBoundaries({-800.0f,-400.0f,-600.0f,600.0f});
@@ -297,19 +300,15 @@ void PlayScene::GUI_Function()
 
 	ImGui::Separator();
 
-	if(ImGui::Button("Add Selected"))
-	{
-		std::cout << "My Button Pressed" << std::endl;
-	}
-
-	ImGui::Separator();
-
 	ImGui::TextColored(ImVec4(1, 0, 0, 1), "Obstacles To Place");
 	ImGui::BeginChild("Scrolling");
 		for (std::pair<std::string, Obstacle*> obstacle : m_pTotalObstacles)
 		{
 			if (ImGui::Button(obstacle.first.c_str()))
 			{
+				obstacle.second->m_isPlacing = true;
+
+				m_pObstaclePool->Spawn(obstacle.second);
 				std::cout << obstacle.first;
 			}
 

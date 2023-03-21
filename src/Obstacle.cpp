@@ -31,6 +31,8 @@ Obstacle::Obstacle(const char* fileName, const char* texture)
 {
 	TextureManager::Instance().Load(texture, fileName);
 
+	textureName = fileName;
+
 	const auto size = TextureManager::Instance().GetTextureSize(fileName);
 	SetWidth(static_cast<int>(size.x));
 	SetHeight(static_cast<int>(size.y));
@@ -65,6 +67,9 @@ void Obstacle::Draw()
 
 void Obstacle::Update()
 {
+	if (m_isPlacing) { // If we are currently placing the obstacle
+		GetTransform()->position = glm::vec2(Util::GetMousePos().x, Util::GetMousePos().y);
+	}
 }
 
 void Obstacle::Clean()

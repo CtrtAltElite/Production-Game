@@ -21,6 +21,8 @@ public:
 	// Misc functions
 	[[nodiscard]] bool GetDeleteMe() const;
 	void SetDeleteMe(bool deleteMe);
+	bool m_isPlacing = false;
+
 private:
 	bool m_deleteMe;
 	std::string textureName;
