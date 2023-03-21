@@ -306,9 +306,11 @@ void PlayScene::GUI_Function()
 		{
 			if (ImGui::Button(obstacle.first.c_str()))
 			{
-				obstacle.second->m_isPlacing = true;
+				const auto temp = new Obstacle(obstacle.first.c_str(), obstacle.second->textureName.c_str());
 
-				m_pObstaclePool->Spawn(obstacle.second);
+				temp->m_isPlacing = true;
+
+				m_pObstaclePool->Spawn(temp);
 				std::cout << obstacle.first;
 			}
 

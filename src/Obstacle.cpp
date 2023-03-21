@@ -2,6 +2,7 @@
 
 
 #include "Camera.h"
+#include "EventManager.h"
 #include "Game.h"
 #include "SoundManager.h"
 #include "TextureManager.h"
@@ -68,7 +69,12 @@ void Obstacle::Draw()
 void Obstacle::Update()
 {
 	if (m_isPlacing) { // If we are currently placing the obstacle
-		GetTransform()->position = glm::vec2(Util::GetMousePos().x, Util::GetMousePos().y);
+		GetTransform()->position = Util::GetMousePos();
+
+		if (EventManager::Instance().MousePressed(1))
+		{
+			m_isPlacing = false;
+		}
 	}
 }
 

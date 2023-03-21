@@ -22,10 +22,11 @@ public:
 	[[nodiscard]] bool GetDeleteMe() const;
 	void SetDeleteMe(bool deleteMe);
 	bool m_isPlacing = false;
+	std::string textureName;
+
 
 private:
 	bool m_deleteMe;
-	std::string textureName;
 };
 
 class ObstaclePool : public DisplayObject
