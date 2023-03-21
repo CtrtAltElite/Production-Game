@@ -128,10 +128,10 @@ void PlayScene::Start()
 
 	// Writing obstacles to the map along with their name
 	if (obstacleFile.is_open()) {
-		std::string fileName = "";
-		std::string textureName = "";
+		std::string fileName;
+		std::string textureName;
 		while (obstacleFile >> fileName >> textureName) {
-			Obstacle* temp = new Obstacle(fileName.c_str(), textureName.c_str());
+			auto temp = new Obstacle(fileName.c_str(), textureName.c_str());
 			m_pTotalObstacles.emplace(std::pair<std::string, Obstacle*>(fileName, temp));
 
 			std::cout << fileName << std::endl << textureName << std::endl;
@@ -288,7 +288,7 @@ void PlayScene::GUI_Function()
 	// See examples by uncommenting the following - also look at imgui_demo.cpp in the IMGUI filter
 	//ImGui::ShowDemoWindow();
 	
-	ImGui::Begin("Your Window Title Goes Here", nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoMove);
+	ImGui::Begin("Level Editor", nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoMove);
 
 	ImGui::Text("Player Input");
 	ImGui::RadioButton("Keyboard / Mouse", &m_pCurrentInputType, static_cast<int>(InputType::KEYBOARD_MOUSE)); ImGui::SameLine();
@@ -297,10 +297,25 @@ void PlayScene::GUI_Function()
 
 	ImGui::Separator();
 
-	if(ImGui::Button("My Button"))
+	if(ImGui::Button("Add Selected"))
 	{
 		std::cout << "My Button Pressed" << std::endl;
 	}
+
+	ImGui::Separator();
+
+	ImGui::TextColored(ImVec4(1, 0, 0, 1), "Obstacles To Place");
+	ImGui::BeginChild("Scrolling");
+		for (std::pair<std::string, Obstacle*> obstacle : m_pTotalObstacles)
+		{
+			if (ImGui::Button(obstacle.first.c_str()))
+			{
+				std::cout << obstacle.first;
+			}
+
+		}
+	ImGui::EndChild();
+
 
 	ImGui::Separator();
 
