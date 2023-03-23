@@ -55,6 +55,8 @@ private:
 	// Variables for grabbing total obstacles and storing them
 	std::map<std::string, Obstacle*> m_pTotalObstacles;
 
+	// Level Editor variables
+	bool isLevelEditing;
 	
 	// Input Control
 	int m_pCurrentInputType{};

@@ -162,6 +162,7 @@ void Game::ChangeSceneState(const SceneState new_state)
 
 		EventManager::Instance().Reset();
 
+		// oh wow, this is a huge and complete mess i'll fix later
 		switch (m_currentSceneState)
 		{
 		case SceneState::START:
@@ -229,6 +230,16 @@ bool Game::GetDebugMode() const
 void Game::SetDebugMode(bool mode)
 {
 	m_DebugMode = mode;
+}
+
+bool Game::GetLevelEditorMode() const
+{
+	return m_levelEditorMode;
+}
+
+void Game::SetLevelEditorMode(bool mode)
+{
+	m_levelEditorMode = mode;
 }
 
 Player* Game::GetPlayer() const

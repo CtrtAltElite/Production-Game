@@ -60,6 +60,9 @@ public:
 	bool GetDebugMode() const;
 	void SetDebugMode(bool mode);
 
+	bool GetLevelEditorMode() const;
+	void SetLevelEditorMode(bool mode);
+
 	Player* GetPlayer() const;
 	void SetPlayer(Player* player);
 
@@ -75,6 +78,7 @@ private:
 	// game properties
 	bool m_bRunning;
 	bool m_DebugMode;
+	bool m_levelEditorMode;
 	Uint32 m_frames;
 	float m_deltaTime{};
 	glm::vec2 m_mousePosition;

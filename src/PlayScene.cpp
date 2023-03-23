@@ -300,6 +300,12 @@ void PlayScene::GUI_Function()
 
 	ImGui::Separator();
 
+	if (ImGui::Checkbox("Enable Level Editing", &isLevelEditing)) {
+		Game::Instance().SetLevelEditorMode(isLevelEditing);
+	}
+
+	ImGui::Separator();
+
 	ImGui::TextColored(ImVec4(1, 0, 0, 1), "Obstacles To Place");
 	ImGui::BeginChild("Scrolling");
 		for (std::pair<std::string, Obstacle*> obstacle : m_pTotalObstacles)
