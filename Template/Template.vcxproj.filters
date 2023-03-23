@@ -43,14 +43,14 @@
     <Filter Include="Player">
       <UniqueIdentifier>{05d13936-422b-4545-b6c5-25350ba9b666}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scenes\MainScenes">
+      <UniqueIdentifier>{14f7dc88-07d8-4196-947e-07a97a0dd497}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes\LevelScenes">
+      <UniqueIdentifier>{d25f581f-f530-4216-a35a-64a5a54bcdc0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\StartScene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\EndScene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\CollisionManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
@@ -62,9 +62,6 @@
     </ClCompile>
     <ClCompile Include="..\src\TextureManager.cpp">
       <Filter>Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\PlayScene.cpp">
-      <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Button.cpp">
       <Filter>UI Objects</Filter>
@@ -158,24 +155,6 @@
     <ClCompile Include="..\src\Carl.cpp">
       <Filter>Enemies\EnemyTypes</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\L1Scene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\L2Scene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\L3Scene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\LBScene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\LPScene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\OPPScene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\Pufferfish.cpp">
       <Filter>Enemies\EnemyTypes</Filter>
     </ClCompile>
@@ -197,9 +176,6 @@
     <ClCompile Include="..\src\Turtle.cpp">
       <Filter>Enemies\EnemyTypes</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\WHATScene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\Projectile.cpp">
       <Filter>Player</Filter>
     </ClCompile>
@@ -212,14 +188,38 @@
     <ClCompile Include="..\src\Player.cpp">
       <Filter>Player</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\LevelManager.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\SelectScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\StartScene.cpp">
+      <Filter>Scenes\MainScenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\PrologueScene.cpp">
+      <Filter>Scenes\LevelScenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\LevelOneScene.cpp">
+      <Filter>Scenes\LevelScenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\LevelTwoScene.cpp">
+      <Filter>Scenes\LevelScenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\LevelThreeScene.cpp">
+      <Filter>Scenes\LevelScenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\PlayScene.cpp">
+      <Filter>Scenes\MainScenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\EndScene.cpp">
+      <Filter>Scenes\MainScenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\BossScene.cpp">
+      <Filter>Scenes\LevelScenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\StartScene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\EndScene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\CollisionManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
@@ -249,9 +249,6 @@
     </ClInclude>
     <ClInclude Include="..\src\Event.h">
       <Filter>Enums</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\PlayScene.h">
-      <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Button.h">
       <Filter>UI Objects</Filter>
@@ -374,24 +371,6 @@
     <ClInclude Include="..\src\Carl.h">
       <Filter>Enemies\EnemyTypes</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\L1Scene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\L2Scene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\L3Scene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\LBScene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\LPScene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\OPPScene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\Pufferfish.h">
       <Filter>Enemies\EnemyTypes</Filter>
     </ClInclude>
@@ -413,9 +392,6 @@
     <ClInclude Include="..\src\Turtle.h">
       <Filter>Enemies\EnemyTypes</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\WHATScene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\Projectile.h">
       <Filter>Player</Filter>
     </ClInclude>
@@ -427,6 +403,36 @@
     </ClInclude>
     <ClInclude Include="..\src\Player.h">
       <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\LevelManager.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\SelectScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\StartScene.h">
+      <Filter>Scenes\MainScenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\PrologueScene.h">
+      <Filter>Scenes\LevelScenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\LevelOneScene.h">
+      <Filter>Scenes\LevelScenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\LevelTwoScene.h">
+      <Filter>Scenes\LevelScenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\LevelThreeScene.h">
+      <Filter>Scenes\LevelScenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\PlayScene.h">
+      <Filter>Scenes\MainScenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\EndScene.h">
+      <Filter>Scenes\MainScenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\BossScene.h">
+      <Filter>Scenes\LevelScenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

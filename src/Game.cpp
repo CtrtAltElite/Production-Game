@@ -5,14 +5,7 @@
 #include "glm/gtx/string_cast.hpp"
 #include "Renderer.h"
 #include "EventManager.h"
-#include "L1Scene.h"
-#include "L2Scene.h"
-#include "L3Scene.h"
-#include "LBScene.h"
-#include "LPScene.h"
-#include "OPPScene.h"
-#include "WHATScene.h"
-
+#include "LevelManager.h"
 
 // Game functions - DO NOT REMOVE ***********************************************
 
@@ -98,6 +91,9 @@ bool Game::Init(const char* title, const int x, const int y, const int width, co
 	std::cout << "init success" << std::endl;
 	m_bRunning = true; // everything initialized successfully - start the main loop
 
+	// Initializes the level manager
+	LevelManager::Init();
+
 	return true;
 }
 
@@ -162,57 +158,7 @@ void Game::ChangeSceneState(const SceneState new_state)
 
 		EventManager::Instance().Reset();
 
-		// oh wow, this is a huge and complete mess i'll fix later
-		switch (m_currentSceneState)
-		{
-		case SceneState::START:
-			m_pCurrentScene = new StartScene();
-			std::cout << "Main Menu scene activated" << std::endl;
-			break;
-
-		case SceneState::LSP:
-			m_pCurrentScene = new LPS();
-			std::cout << "LPS scene activated" << std::endl;
-			break;
-		case SceneState::LS1:
-			m_pCurrentScene = new L1S();
-			std::cout << "L1S scene activated" << std::endl;
-			break;
-		case SceneState::LS2:
-			m_pCurrentScene = new L2S();
-			std::cout << "L2S scene activated" << std::endl;
-			break;
-		case SceneState::LS3:
-			m_pCurrentScene = new L3S();
-			std::cout << "L3S scene activated" << std::endl;
-			break;
-		case SceneState::LSB:
-			m_pCurrentScene = new LBS();
-			std::cout << "LBS scene activated" << std::endl;
-			break;
-		case SceneState::WHAT:
-			m_pCurrentScene = new WHAT();
-			std::cout << "WHAT scene activated" << std::endl;
-			break;
-		case SceneState::OPP:
-			m_pCurrentScene = new OPP();
-			std::cout << "OPP scene activated" << std::endl;
-			break;
-
-		case SceneState::PLAY:
-			m_pCurrentScene = new PlayScene();
-			std::cout << "play scene activated" << std::endl;
-			break;
-		case SceneState::END:
-			m_pCurrentScene = new EndScene();
-			std::cout << "end scene activated" << std::endl;
-			break;
-
-		default:
-			std::cout << "default case activated" << std::endl;
-			break;
-
-		}
+		LevelManager::ChangeLevelSelection(new_state);
 	}
 
 }
@@ -271,7 +217,7 @@ void Game::Render() const
 {
 	SDL_RenderClear(Renderer::Instance().GetRenderer()); // clear the renderer to the draw colour
 
-	m_pCurrentScene->Draw();
+	LevelManager::RenderLevel();
 
 	SDL_RenderPresent(Renderer::Instance().GetRenderer()); // draw to the screen
 
@@ -280,7 +226,7 @@ void Game::Render() const
 
 void Game::Update() const
 {
-	m_pCurrentScene->Update();
+	LevelManager::UpdateLevel();
 }
 
 void Game::Clean() const
@@ -293,10 +239,12 @@ void Game::Clean() const
 
 	//TTF_Quit();
 
+	LevelManager::Clean();
+
 	SDL_Quit();
 }
 
 void Game::HandleEvents() const
 {
-	m_pCurrentScene->HandleEvents();
+	//m_pCurrentScene->HandleEvents();
 }

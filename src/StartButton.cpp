@@ -21,7 +21,7 @@ bool StartButton::ButtonClick()
 	{
 		if(!m_isClicked)
 		{
-			Game::Instance().ChangeSceneState(SceneState::LS1);
+			//Game::Instance().ChangeSceneState(SceneState::LS1);
 			m_isClicked = true;
 		}
 		return true;

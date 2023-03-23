@@ -171,18 +171,19 @@
     <ClCompile Include="..\src\Enemy.cpp" />
     <ClCompile Include="..\src\ImGuiWindowFrame.cpp" />
     <ClCompile Include="..\src\Jellyfish.cpp" />
-    <ClCompile Include="..\src\L1Scene.cpp" />
-    <ClCompile Include="..\src\L2Scene.cpp" />
-    <ClCompile Include="..\src\L3Scene.cpp" />
-    <ClCompile Include="..\src\LBScene.cpp" />
-    <ClCompile Include="..\src\LPScene.cpp" />
+    <ClCompile Include="..\src\LevelOneScene.cpp" />
+    <ClCompile Include="..\src\LevelTwoScene.cpp" />
+    <ClCompile Include="..\src\LevelThreeScene.cpp" />
+    <ClCompile Include="..\src\BossScene.cpp" />
+    <ClCompile Include="..\src\LevelManager.cpp" />
+    <ClCompile Include="..\src\PrologueScene.cpp" />
     <ClCompile Include="..\src\NavigationObject.cpp" />
     <ClCompile Include="..\src\Obstacle.cpp" />
-    <ClCompile Include="..\src\OPPScene.cpp" />
     <ClCompile Include="..\src\Projectile.cpp" />
     <ClCompile Include="..\src\Pufferfish.cpp" />
     <ClCompile Include="..\src\RestartButton.cpp" />
     <ClCompile Include="..\src\Sardine.cpp" />
+    <ClCompile Include="..\src\SelectScene.cpp" />
     <ClCompile Include="..\src\Shark.cpp" />
     <ClCompile Include="..\src\Sprite.cpp" />
     <ClCompile Include="..\src\StartButton.cpp" />
@@ -212,7 +213,6 @@
     <ClCompile Include="..\src\Target.cpp" />
     <ClCompile Include="..\src\TextureManager.cpp" />
     <ClCompile Include="..\src\Util.cpp" />
-    <ClCompile Include="..\src\WHATScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\IMGUI\imconfig.h" />
@@ -236,19 +236,20 @@
     <ClInclude Include="..\src\ImGuiWindowFrame.h" />
     <ClInclude Include="..\src\InputType.h" />
     <ClInclude Include="..\src\Jellyfish.h" />
-    <ClInclude Include="..\src\L1Scene.h" />
-    <ClInclude Include="..\src\L2Scene.h" />
-    <ClInclude Include="..\src\L3Scene.h" />
+    <ClInclude Include="..\src\LevelOneScene.h" />
+    <ClInclude Include="..\src\LevelTwoScene.h" />
+    <ClInclude Include="..\src\LevelThreeScene.h" />
     <ClInclude Include="..\src\Layers.h" />
-    <ClInclude Include="..\src\LBScene.h" />
-    <ClInclude Include="..\src\LPScene.h" />
+    <ClInclude Include="..\src\BossScene.h" />
+    <ClInclude Include="..\src\LevelManager.h" />
+    <ClInclude Include="..\src\PrologueScene.h" />
     <ClInclude Include="..\src\NavigationObject.h" />
     <ClInclude Include="..\src\Obstacle.h" />
-    <ClInclude Include="..\src\OPPScene.h" />
     <ClInclude Include="..\src\Projectile.h" />
     <ClInclude Include="..\src\Pufferfish.h" />
     <ClInclude Include="..\src\RestartButton.h" />
     <ClInclude Include="..\src\Sardine.h" />
+    <ClInclude Include="..\src\SelectScene.h" />
     <ClInclude Include="..\src\Shark.h" />
     <ClInclude Include="..\src\SoundType.h" />
     <ClInclude Include="..\src\Sprite.h" />
@@ -287,7 +288,6 @@
     <ClInclude Include="..\src\TextureManager.h" />
     <ClInclude Include="..\src\Transform.h" />
     <ClInclude Include="..\src\Util.h" />
-    <ClInclude Include="..\src\WHATScene.h" />
     <ClInclude Include="..\src\WindowName.h" />
   </ItemGroup>
   <ItemGroup>

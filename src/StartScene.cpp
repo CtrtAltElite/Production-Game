@@ -36,13 +36,6 @@ void StartScene::HandleEvents()
 	{
 		Game::Instance().Quit();
 	}
-
-	if(EventManager::Instance().IsKeyDown(SDL_SCANCODE_1))
-	{
-		Game::Instance().ChangeSceneState(SceneState::LSP);
-		SoundManager::Instance().stop_music("Start", 0);
-		
-	}
 }
 
 void StartScene::Start()
@@ -70,7 +63,7 @@ void StartScene::Start()
 	m_pStartButton->AddEventListener(Event::CLICK, [&]()-> void
 	{
 		m_pStartButton->SetActive(false);
-		Game::Instance().ChangeSceneState(SceneState::LSP);
+		Game::Instance().ChangeSceneState(SceneState::LEVEL_SELECT);
 		SoundManager::Instance().stop_music("Start", 0);
 	});
 	

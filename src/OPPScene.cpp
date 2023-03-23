@@ -37,26 +37,6 @@ void OPP::HandleEvents()
 		Game::Instance().Quit();
 	}
 
-	if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_P))
-	{
-		Game::Instance().ChangeSceneState(SceneState::PLAY);
-		SoundManager::Instance().stop_music("opp", 0);
-	}
-	if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_LEFT))
-	{
-		Game::Instance().ChangeSceneState(SceneState::LSB);
-		SoundManager::Instance().stop_music("opp", 0);
-	}
-	if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_RIGHT))
-	{
-		Game::Instance().ChangeSceneState(SceneState::WHAT);
-		SoundManager::Instance().stop_music("opp", 0);
-	}
-	if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_M))
-	{
-		Game::Instance().ChangeSceneState(SceneState::START);
-		SoundManager::Instance().stop_music("opp", 0);
-	}
 }
 
 void OPP::Start()
