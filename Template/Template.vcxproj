@@ -176,6 +176,7 @@
     <ClCompile Include="..\src\LevelThreeScene.cpp" />
     <ClCompile Include="..\src\BossScene.cpp" />
     <ClCompile Include="..\src\LevelManager.cpp" />
+    <ClCompile Include="..\src\MenuPlayer.cpp" />
     <ClCompile Include="..\src\PrologueScene.cpp" />
     <ClCompile Include="..\src\NavigationObject.cpp" />
     <ClCompile Include="..\src\Obstacle.cpp" />
@@ -242,6 +243,7 @@
     <ClInclude Include="..\src\Layers.h" />
     <ClInclude Include="..\src\BossScene.h" />
     <ClInclude Include="..\src\LevelManager.h" />
+    <ClInclude Include="..\src\MenuPlayer.h" />
     <ClInclude Include="..\src\PrologueScene.h" />
     <ClInclude Include="..\src\NavigationObject.h" />
     <ClInclude Include="..\src\Obstacle.h" />

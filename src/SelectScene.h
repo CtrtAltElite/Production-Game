@@ -6,6 +6,7 @@
 #include "Label.h"
 #include "Ship.h"
 #include "Button.h"
+#include "MenuPlayer.h"
 
 class SelectScene : public Scene {
 public:
@@ -23,6 +24,7 @@ private:
 	Label* m_pStartLabel{};
 	Label* m_pInstructionsLabel{};
 
+	MenuPlayer* m_player;
 
 	Button* m_pStartButton{};
 };

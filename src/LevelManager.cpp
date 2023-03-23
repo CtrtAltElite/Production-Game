@@ -23,10 +23,12 @@ void LevelManager::ChangeLevelSelection(SceneState state_to_change)
 {
 	if (m_levelScreens[static_cast<int>(state_to_change)] != nullptr) {
 		m_pCurrentLevel = m_levelScreens[static_cast<int>(state_to_change)];
+		m_pCurrentLevel->Start();
 	}
 	else {
 		std::cout << "Error, Scene does not exist.\n\n";
 	}
+
 }
 
 // Updates anything inside the current level.

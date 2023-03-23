@@ -218,6 +218,9 @@
     <ClCompile Include="..\src\BossScene.cpp">
       <Filter>Scenes\LevelScenes</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\MenuPlayer.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\CollisionManager.h">
@@ -433,6 +436,9 @@
     </ClInclude>
     <ClInclude Include="..\src\BossScene.h">
       <Filter>Scenes\LevelScenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\MenuPlayer.h">
+      <Filter>Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
