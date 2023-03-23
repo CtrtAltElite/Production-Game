@@ -32,6 +32,7 @@ void LevelManager::ChangeLevelSelection(SceneState state_to_change)
 // Updates anything inside the current level.
 void LevelManager::UpdateLevel()
 {
+	m_pCurrentLevel->HandleEvents();
 	m_pCurrentLevel->Update();
 }
 
@@ -41,7 +42,12 @@ void LevelManager::RenderLevel()
 	m_pCurrentLevel->Draw();
 }
 
-// Cleans up any pointer variables and frees up allocated memory (no head frag :p)
+void LevelManager::ExitLevel()
+{
+	m_pCurrentLevel->Clean();
+}
+
+// Cleans up any pointer variables and frees up allocated memory (no heap frag :p)
 void LevelManager::Clean()
 {
 }

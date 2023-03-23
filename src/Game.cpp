@@ -142,7 +142,7 @@ void Game::ChangeSceneState(const SceneState new_state)
 		// scene clean up
 		if (m_currentSceneState != SceneState::NO_SCENE)
 		{
-			m_pCurrentScene->Clean();
+			LevelManager::ExitLevel();
 			std::cout << "cleaning previous scene" << std::endl;
 			FontManager::Instance().Clean();
 			std::cout << "cleaning FontManager" << std::endl;

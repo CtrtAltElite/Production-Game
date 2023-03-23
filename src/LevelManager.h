@@ -34,6 +34,7 @@ public:
 	static void ChangeLevelSelection(SceneState state_to_change);
 	static void UpdateLevel();
 	static void RenderLevel();
+	static void ExitLevel();
 	static void Clean();
 
 
