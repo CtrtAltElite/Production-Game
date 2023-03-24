@@ -16,7 +16,7 @@
 
 PlayScene::PlayScene()
 {
-	PlayScene::Start();
+	//PlayScene::Start();
 }
 
 PlayScene::~PlayScene()
@@ -95,7 +95,7 @@ void PlayScene::GetPlayerInput()
 	if(EventManager::Instance().MousePressed(1)) //left mouse button
 		{
 		m_pTorpedoPool->Fire();
-		//SoundManager::Instance().PlaySound("playerShoot");
+		//SoundManager::Instance().PlaySound("playerShoot"); //ITS SO LOUD LOL
 		}
 }
 

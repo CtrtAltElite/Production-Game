@@ -7,6 +7,10 @@
 #include "Ship.h"
 #include "Button.h"
 #include "MenuPlayer.h"
+#include "Background.h"
+
+const int SELECT_SCREEN_WIDTH = 1024;
+const int SELECT_SCREEN_HEIGHT = 768;
 
 class SelectScene : public Scene {
 public:
@@ -24,8 +28,8 @@ private:
 	Label* m_pStartLabel{};
 	Label* m_pInstructionsLabel{};
 
-	MenuPlayer* m_player;
-
+	MenuPlayer* m_player{};
+	Background* m_pBackground{};
 	Button* m_pStartButton{};
 };
 

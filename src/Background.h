@@ -3,11 +3,13 @@
 #define __BACKGROUND__
 
 #include "DisplayObject.h"
+#include <string>
 
 class Background final : public DisplayObject
 {
 public:
 	Background();
+	Background(std::string imgFile, std::string key);
 	~Background() override;
 
 	// Life Cycle Methods
@@ -17,7 +19,7 @@ public:
 	// setters
 	
 private:
-	
+	std::string m_key;
 	
 };
 

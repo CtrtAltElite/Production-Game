@@ -17,9 +17,12 @@ class MenuPlayer final : public Sprite
 	void Clean() override;
 
 	// Player movement functions
-	void Move();
+	void Move(bool isLeft);
 
 private:
+
+	float m_maxSpeed;
+	void BuildAnimations();
 
 };
 
