@@ -11,9 +11,9 @@
 
 ## CREATORS
 -------------
-Robert Oxley
-Cameron Bryson
-Tyrell Perez-Rutherford
-Joshua Frady
-John Husky
-Jae-Min Park
+- Robert Oxley
+- Cameron Bryson
+- Tyrell Perez-Rutherford
+- Joshua Frady
+- John Husky
+- Jae-Min Park
