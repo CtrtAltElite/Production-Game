@@ -88,7 +88,6 @@ void LevelOneScene::Start()
 	SoundManager::Instance().PlaySound("Start", -1);
 
 	Camera::Instance().SetEnabled(true);
-	Camera::Instance().SetIsCentered(true);
 	Game::Instance().SetDebugMode(true);
 
 	// Player Sprite
@@ -103,7 +102,7 @@ void LevelOneScene::Start()
 	m_pBackground->GetTransform()->position = glm::vec2(m_pPlayer->GetTransform()->position.x - (m_pBackground->GetWidth() / 2.0f), 0);
 	AddChild(m_pBackground, BACKGROUND);
 
-	Game::Instance().SetLevelBoundaries({ 0 - m_pBackground->GetWidth() / 2, m_pBackground->GetWidth() / 2,0,  m_pBackground->GetHeight()});
+	Game::Instance().SetLevelBoundaries({ 0 - m_pBackground->GetWidth() / 2, m_pBackground->GetWidth(),0,  m_pBackground->GetHeight()});
 
 
 	

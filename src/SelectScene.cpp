@@ -70,7 +70,7 @@ void SelectScene::HandleEvents()
 		for (auto obstacle : m_pObstaclePool->GetPool()) {
 			if (static_cast<LevelSelectionObject*>(obstacle)->GetLabel()) { // If label is enabled for the player and we can change scenes
 				std::cout << "changing scenes...\n\n";
-				LevelManager::ChangeLevelSelection(SceneState::LEVEL_ONE);
+				Game::Instance().ChangeSceneState(SceneState::LEVEL_ONE);
 			}
 		}
 	}
