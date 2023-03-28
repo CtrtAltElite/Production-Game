@@ -17,9 +17,11 @@ public:
 	virtual void Update() override;
 	virtual void Clean() override;
 	// setters
+	void SetScale(float scale);
 	
 private:
 	std::string m_key;
+	float m_scale;
 	
 };
 

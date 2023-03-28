@@ -78,7 +78,9 @@ void SelectScene::HandleEvents()
 
 void SelectScene::Start()
 {
-	m_pBackground = new Background("../Assets/textures/MenuBackground.png", "menuBG");
+	m_pBackground = new Background("../Assets/textures/SelectScreen/Select_screen.png", "menuBG");
+	m_pBackground->GetTransform()->position={0,-55};
+	m_pBackground->SetScale(1.25f);
 	AddChild(m_pBackground, BACKGROUND);
 
 	// Adding gameObjects to scene.
@@ -92,7 +94,7 @@ void SelectScene::Start()
 	Game::Instance().SetDebugMode(true);
 	Camera::Instance().SetEnabled(true);
 
-	Game::Instance().SetLevelBoundaries({-200, 500,-600.0f, 600.0f});
+	Game::Instance().SetLevelBoundaries({0, 0,-600.0f, 600.0f});
 
 	InitLevelSelectionObstacles();
 
@@ -103,7 +105,7 @@ void SelectScene::InitLevelSelectionObstacles()
 {
 	for (int i = 0; i < LEVELS; i++) {
 		LevelSelectionObject* temp = new LevelSelectionObject();
-		temp->GetTransform()->position = glm::vec2(400 + (400 * i), 300);
+		temp->GetTransform()->position = glm::vec2(250 + (400 * i), 500);
 		m_pObstaclePool->Spawn(temp);
 	}
 }

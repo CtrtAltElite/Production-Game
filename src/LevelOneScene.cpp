@@ -101,6 +101,7 @@ void LevelOneScene::Start()
 
 	m_pBackground = new Background("../Assets/textures/Levels/1st_level.png", "firstLevel");
 	m_pBackground->GetTransform()->position = glm::vec2(-Config::SCREEN_WIDTH/2-160, 0);
+	m_pBackground->SetScale(2.5f);
 	AddChild(m_pBackground, BACKGROUND);
 
 	Game::Instance().SetLevelBoundaries({ 0- m_pBackground->GetWidth()*2.5 / 2, m_pBackground->GetWidth()*2.5/2-Config::SCREEN_WIDTH,0,  m_pBackground->GetHeight()*2.5});
