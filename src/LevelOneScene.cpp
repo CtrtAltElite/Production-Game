@@ -90,6 +90,7 @@ void LevelOneScene::Start()
 	Camera::Instance().SetEnabled(true);
 	Game::Instance().SetDebugMode(true);
 	Game::Instance().SetLevelBoundaries({ -800.0f,-400.0f,-600.0f,600.0f });
+	Camera::Instance().GetTransform()->position = glm::vec2(0, 0);
 
 	m_pBackground = new Background;
 	AddChild(m_pBackground, BACKGROUND);
