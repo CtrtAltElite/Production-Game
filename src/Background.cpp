@@ -41,11 +41,12 @@ void Background::Draw()
 {
 	// alias for x and y
 	glm::vec2 temp = Camera::Instance().CameraDisplace(this);
+	TextureManager::Instance().Draw(m_key, temp.x, temp.y);
+
 	for (int i =-10 ;i<10;i++)
 	{
 		for(int p = -10; p<10; p++)
 		{
-			TextureManager::Instance().Draw(m_key, temp.x+GetHeight()*i, temp.y+GetWidth()*p);
 			//better way to do this
 		}
 	}

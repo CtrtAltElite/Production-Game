@@ -92,7 +92,7 @@ void LevelOneScene::Start()
 	Game::Instance().SetLevelBoundaries({ -800.0f,-400.0f,-600.0f,600.0f });
 	Camera::Instance().GetTransform()->position = glm::vec2(0, 0);
 
-	m_pBackground = new Background;
+	m_pBackground = new Background("../Assets/textures/Levels/1st_level.png", "firstLevel");
 	AddChild(m_pBackground, BACKGROUND);
 	// Player Sprite
 	m_pPlayer = new Player;
