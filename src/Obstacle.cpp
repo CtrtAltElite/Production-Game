@@ -26,6 +26,8 @@ Obstacle::Obstacle()
 	m_deleteMe = false;
 
 	SoundManager::Instance().Load("../Assets/audio/yay.ogg", "yay", SoundType::SOUND_SFX);
+
+	tag = "obstacle";
 }
 
 Obstacle::Obstacle(const char* fileName, const char* texture)

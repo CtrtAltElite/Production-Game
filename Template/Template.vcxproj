@@ -172,6 +172,7 @@
     <ClCompile Include="..\src\ImGuiWindowFrame.cpp" />
     <ClCompile Include="..\src\Jellyfish.cpp" />
     <ClCompile Include="..\src\LevelOneScene.cpp" />
+    <ClCompile Include="..\src\LevelSelectionObject.cpp" />
     <ClCompile Include="..\src\LevelTwoScene.cpp" />
     <ClCompile Include="..\src\LevelThreeScene.cpp" />
     <ClCompile Include="..\src\BossScene.cpp" />
@@ -238,6 +239,7 @@
     <ClInclude Include="..\src\InputType.h" />
     <ClInclude Include="..\src\Jellyfish.h" />
     <ClInclude Include="..\src\LevelOneScene.h" />
+    <ClInclude Include="..\src\LevelSelectionObject.h" />
     <ClInclude Include="..\src\LevelTwoScene.h" />
     <ClInclude Include="..\src\LevelThreeScene.h" />
     <ClInclude Include="..\src\Layers.h" />

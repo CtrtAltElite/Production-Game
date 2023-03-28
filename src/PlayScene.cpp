@@ -101,51 +101,10 @@ void PlayScene::GetPlayerInput()
 
 void PlayScene::Start()
 {
+	// Set GUI Title
 	m_guiTitle = "Play Scene";
 
 
-	SoundManager::Instance().Load("../Assets/audio/conquest.mp3", "Start", SoundType::SOUND_SFX);
-	//SoundManager::Instance().PlaySound("Start",-1);
-	Camera::Instance().SetEnabled(true);
-	Game::Instance().SetDebugMode(true);
-	Game::Instance().SetLevelBoundaries({-800.0f,-400.0f,-600.0f,600.0f});
-	// Set GUI Title
-
-	m_pBackground = new Background;
-	AddChild(m_pBackground,BACKGROUND);
-	// Player Sprite
-	m_pPlayer = new Player;
-	Game::Instance().SetPlayer(m_pPlayer);
-	m_pPlayer->SetIsCentered(true);
-	AddChild(m_pPlayer,PLAYERS);
-	m_playerFacingRight = true;
-
-	InitPools();
-
-	// Random obstacles spawned in
-
-	//m_pObstaclePool->Spawn(new Stingray);
-
-	// Opening and initializing obstacle file!
-	std::ifstream obstacleFile(OBSTACLE_FILE_NAME);
-
-	// Writing obstacles to the map along with their name
-	if (obstacleFile.is_open()) {
-		std::string fileName;
-		std::string textureName;
-		while (obstacleFile >> fileName >> textureName) {
-			auto temp = new Obstacle(fileName.c_str(), textureName.c_str());
-			m_pTotalObstacles.emplace(std::pair<std::string, Obstacle*>(fileName, temp));
-
-			std::cout << fileName << std::endl << textureName << std::endl;
-		}
-		obstacleFile.close();
-	}
-	else {
-		std::cout << "Could not open file!\n";
-	}
-
-	InitFPSCounter();
 	
 	/* DO NOT REMOVE */
 	ImGuiWindowFrame::Instance().SetGuiFunction([this] { GUI_Function(); });
@@ -254,7 +213,7 @@ void PlayScene::InitPools()
 	m_pTorpedoPool = new TorpedoPool();
 	AddChild(m_pTorpedoPool, PROJECTILES);
 
-	// Spawning a test shark for now
+	// Instantiating the enemy pool.
 	m_pEnemyPool = new EnemyPool();
 	AddChild(m_pEnemyPool, ENEMIES);
 

@@ -23,6 +23,7 @@ public:
 	void SetDeleteMe(bool deleteMe);
 	bool m_isPlacing = false;
 	std::string textureName;
+	std::string tag;
 
 
 private:

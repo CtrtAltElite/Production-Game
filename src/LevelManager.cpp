@@ -4,6 +4,7 @@
 std::array<Scene*, static_cast<int>(SceneState::NUM_OF_SCENES)> LevelManager::m_levelScreens;
 Scene* LevelManager::m_pCurrentLevel;
 
+
 // Default constructor and destructor.
 LevelManager::LevelManager()
 = default;
