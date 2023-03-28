@@ -143,6 +143,40 @@ void TextureManager::Draw(const std::string & id, const int x, const int y, cons
 	SDL_RenderCopyEx(Renderer::Instance().GetRenderer(), m_textureMap[id].get(), &src_rect, &dest_rect, angle, nullptr, flip);
 }
 
+void TextureManager::DrawScale(const std::string& id, int x, int y, float scale, double angle, int alpha, bool centered,
+	SDL_RendererFlip flip)
+{
+	SDL_Rect src_rect{};
+	SDL_Rect dest_rect{};
+
+	src_rect.x = 0;
+	src_rect.y = 0;
+
+	int texture_width;
+	int texture_height;
+
+	SDL_QueryTexture(m_textureMap[id].get(), nullptr, nullptr, &texture_width, &texture_height);
+
+	src_rect.w =  texture_width;
+	dest_rect.w = texture_width * scale;
+	src_rect.h = texture_height;
+	dest_rect.h = texture_height * scale;
+
+	if (centered) {
+		const auto x_offset = static_cast<int>(texture_width * 0.5);
+		const auto y_offset = static_cast<int>(texture_height * 0.5);
+		dest_rect.x = x - x_offset;
+		dest_rect.y = y - y_offset;
+	}
+	else {
+		dest_rect.x = x;
+		dest_rect.y = y;
+	}
+
+	SDL_SetTextureAlphaMod(m_textureMap[id].get(), static_cast<Uint8>(alpha));
+	SDL_RenderCopyEx(Renderer::Instance().GetRenderer(), m_textureMap[id].get(), &src_rect, &dest_rect, angle, nullptr, flip);
+}
+
 void TextureManager::Draw(const std::string& id, const glm::vec2 position, const double angle, const int alpha, const bool centered,
                           const SDL_RendererFlip flip)
 {
