@@ -41,7 +41,7 @@ void Background::Draw()
 {
 	// alias for x and y
 	glm::vec2 temp = Camera::Instance().CameraDisplace(this);
-	TextureManager::Instance().DrawScale(m_key, temp.x, temp.y,2);
+	TextureManager::Instance().DrawScale(m_key, temp.x, temp.y,2.5);
 
 	/*for (int i =-10 ;i<10;i++)
 	{
