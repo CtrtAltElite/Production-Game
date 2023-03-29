@@ -80,7 +80,7 @@ void SelectScene::Start()
 {
 	SoundManager::Instance().SetMusicVolume(128);
 	SoundManager::Instance().Load("../Assets/audio/LevelMusic/SelectScreen/boop.mp3", "Radio", SoundType::SOUND_MUSIC);
-	SoundManager::Instance().PlayMusic("Radio");
+	SoundManager::Instance().PlayMusic("Radio", -1);
 
 	m_pBackground = new Background("../Assets/textures/SelectScreen/wall.png", "wall");
 	m_pBackground->GetTransform()->position={0, -55};

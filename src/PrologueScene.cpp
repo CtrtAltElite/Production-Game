@@ -6,7 +6,6 @@
 
 PrologueScene::PrologueScene()
 {
-	PrologueScene::Start();
 }
 
 PrologueScene::~PrologueScene()

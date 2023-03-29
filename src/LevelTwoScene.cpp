@@ -6,7 +6,6 @@
 
 LevelTwoScene::LevelTwoScene()
 {
-	LevelTwoScene::Start();
 }
 
 LevelTwoScene::~LevelTwoScene()

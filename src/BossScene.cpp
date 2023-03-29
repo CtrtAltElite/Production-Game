@@ -6,7 +6,6 @@
 
 BossScene::BossScene()
 {
-	BossScene::Start();
 }
 
 BossScene::~BossScene()

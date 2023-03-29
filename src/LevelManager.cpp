@@ -17,6 +17,7 @@ void LevelManager::Init()
 {
 	InitLevelSelectionScreens();
 	m_pCurrentLevel = m_levelScreens[static_cast<int>(SceneState::START)]; // Setting to start scene.
+	m_pCurrentLevel->Start();
 }
 
 // Changes level.

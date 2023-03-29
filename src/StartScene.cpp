@@ -6,7 +6,7 @@
 
 StartScene::StartScene()
 {
-	StartScene::Start();
+	//StartScene::Start();
 }
 
 StartScene::~StartScene()
@@ -65,7 +65,7 @@ void StartScene::Start()
 	{
 		m_pStartButton->SetActive(false);
 		Game::Instance().ChangeSceneState(SceneState::LEVEL_SELECT);
-		SoundManager::Instance().stop_music("Start", 0);
+		//SoundManager::Instance().stop_music("Start", 0);
 	});
 	
 	m_pStartButton->AddEventListener(Event::MOUSE_OVER, [&]()->void

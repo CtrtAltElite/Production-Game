@@ -6,7 +6,6 @@
 
 EndScene::EndScene()
 {
-	EndScene::Start();
 }
 
 EndScene::~EndScene()

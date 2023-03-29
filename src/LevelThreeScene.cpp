@@ -6,7 +6,6 @@
 
 LevelThreeScene::LevelThreeScene()
 {
-	LevelThreeScene::Start();
 }
 
 LevelThreeScene::~LevelThreeScene()
