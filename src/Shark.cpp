@@ -30,7 +30,7 @@ Shark::Shark()
     SetHeight(40);
     SetHealth(100.0f);
     SetAttackDamage(30.0f);
-    GetTransform()->position = glm::vec2(rand() % 400, rand() % 400);
+    GetTransform()->position = glm::vec2(rand() % 500, Game::Instance().GetPlayer()->GetTransform()->position.y+Config::SCREEN_HEIGHT);
     GetRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
     GetRigidBody()->bounds=glm::vec2(GetWidth(), GetHeight());
     GetRigidBody()->acceleration = glm::vec2(0.0f, 0.0f);
