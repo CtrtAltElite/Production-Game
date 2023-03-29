@@ -30,7 +30,7 @@ void LevelOneScene::Draw()
 
 void LevelOneScene::Update()
 {
-	Game::Instance().SetDebugMode(false);
+	//Game::Instance().SetDebugMode(false);
 	Collision();
 	UpdateDisplayList();
 	Game::Instance().SetLevelBoundaries({ Game::Instance().GetLevelBoundaries().x,Game::Instance().GetLevelBoundaries().y,(Game::Instance().GetLevelBoundaries().z - Game::Instance().GetLevelBoundaries().w) < 0 ? Game::Instance().GetLevelBoundaries().z + 0.25f : Game::Instance().GetLevelBoundaries().z ,Game::Instance().GetLevelBoundaries().w});
