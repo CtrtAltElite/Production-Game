@@ -13,6 +13,7 @@ Player::Player(): m_currentAnimationState(PlayerAnimationState::PLAYER_IDLE_RIGH
 		"sub_spritesheet");
 
 	SetSpriteSheet(TextureManager::Instance().GetSpriteSheet("sub_spritesheet"));
+	SoundManager::Instance().Load("../Assets/audio/hitHurt.wav", "hitHurt", SoundType::SOUND_SFX);
 	SetWidth(58);
 	SetHeight(30);
 	SetHealth(100.0f);
@@ -176,6 +177,7 @@ void Player::TakeDamage(float damage)
 {
 	SetHealth(GetHealth()-damage);
 	std::cout<< "Player hit for " << damage << " damage." << std::endl;
+	SoundManager::Instance().PlaySound("hitHurt");
 	if(GetHealth()<=0)
 	{
 		std::cout<<"You died frfr\n";

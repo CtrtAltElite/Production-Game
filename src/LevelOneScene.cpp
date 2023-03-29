@@ -80,6 +80,9 @@ void LevelOneScene::Update()
 
 void LevelOneScene::Clean()
 {
+	m_pEnemyPool = nullptr;
+	m_pObstaclePool = nullptr;
+	m_pTorpedoPool = nullptr;
 	RemoveAllChildren();
 }
 

@@ -12,6 +12,7 @@
 #include "Torpedo.h"
 #include "Util.h"
 #include "Layers.h"
+#include "LevelManager.h"
 #include "Stingray.h"
 
 
@@ -30,22 +31,45 @@ void LevelThreeScene::Draw()
 
 void LevelThreeScene::Update()
 {
-	Game::Instance().SetDebugMode(false);
-	Collision();
-	UpdateDisplayList();
-	Game::Instance().SetLevelBoundaries({ Game::Instance().GetLevelBoundaries().x,Game::Instance().GetLevelBoundaries().y,(Game::Instance().GetLevelBoundaries().z - Game::Instance().GetLevelBoundaries().w) < 0 ? Game::Instance().GetLevelBoundaries().z + 0.25f : Game::Instance().GetLevelBoundaries().z ,Game::Instance().GetLevelBoundaries().w });
-	Camera::Instance().GetTransform()->position.x = Util::Clamp(Camera::Instance().GetTransform()->position.x, Game::Instance().GetLevelBoundaries().x, Game::Instance().GetLevelBoundaries().y);
-	Camera::Instance().GetTransform()->position.y = Util::Clamp(Camera::Instance().GetTransform()->position.y, Game::Instance().GetLevelBoundaries().z, Game::Instance().GetLevelBoundaries().w);
+	if (m_pPlayer != nullptr && !m_pPlayer->GetIsDead()) { // As long as the player is not dead.
+		if (!LevelManager::IsLevelPaused()) { // If we currently are not paused.
+		//Game::Instance().SetDebugMode(false);
+			Collision();
+			UpdateDisplayList();
+			Game::Instance().SetLevelBoundaries({ Game::Instance().GetLevelBoundaries().x,Game::Instance().GetLevelBoundaries().y,(Game::Instance().GetLevelBoundaries().z - Game::Instance().GetLevelBoundaries().w) < 0 ? Game::Instance().GetLevelBoundaries().z + 0.2f : Game::Instance().GetLevelBoundaries().z ,Game::Instance().GetLevelBoundaries().w });
+			Camera::Instance().GetTransform()->position.x = Util::Clamp(Camera::Instance().GetTransform()->position.x, Game::Instance().GetLevelBoundaries().x, Game::Instance().GetLevelBoundaries().y);
+			Camera::Instance().GetTransform()->position.y = Util::Clamp(Camera::Instance().GetTransform()->position.y, Game::Instance().GetLevelBoundaries().z, Game::Instance().GetLevelBoundaries().w);
 
-	if (m_pEnemyPool != nullptr)
-	{
-		m_pEnemyPool->Update();
-		m_pEnemyPool->UpdateTargetPlayer(m_pPlayer);
-	}
-	if (m_pObstaclePool != nullptr) {
-		m_pObstaclePool->Update();
-	}
+			if (m_pEnemyPool != nullptr)
+			{
+				m_pEnemyPool->Update();
+				m_pEnemyPool->UpdateTargetPlayer(m_pPlayer);
+			}
+			if (m_pObstaclePool != nullptr) {
+				m_pObstaclePool->Update();
+			}
 
+			if (timer <= 0)
+			{
+				timer = NEXT_ENEMY_SPAWN;
+				auto shark = new Shark;
+				shark->SetTargetPlayer(m_pPlayer);
+				m_pEnemyPool->Spawn(shark);
+
+				auto stingray = new Stingray;
+				stingray->GetTransform()->position = glm::vec2(Camera::Instance().GetTransform()->position.x, rand() % 5 + m_pPlayer->GetTransform()->position.y);
+				m_pObstaclePool->Spawn(stingray);
+
+				auto jellyfish = new Jellyfish;
+				jellyfish->GetTransform()->position = glm::vec2(m_pPlayer->GetTransform()->position.x, m_pPlayer->GetTransform()->position.y - 800.0f);
+				m_pObstaclePool->Spawn(jellyfish);
+				//m_pEnemyPool->UpdateTargetPlayer(m_pPlayer);
+			}
+			timer -= 0.1f;
+		}
+	}
+	
+	
 	// Set FPS display on screen.
 	if ((SDL_GetTicks64() / 1000) > 0)
 	{
@@ -53,7 +77,6 @@ void LevelThreeScene::Update()
 		const std::string fpsText = "FPS: " + std::to_string(fps);
 		m_pFpsCounter->SetText(fpsText);
 	}
-	timer -= 0.1f;
 }
 
 void LevelThreeScene::Clean()
@@ -87,7 +110,7 @@ void LevelThreeScene::GetPlayerInput()
 
 void LevelThreeScene::Start()
 {
-	m_guiTitle = "Level 2";
+	m_guiTitle = "Level 3";
 
 	SoundManager::Instance().SetMusicVolume(25);
 	SoundManager::Instance().Load("../Assets/audio/LevelMusic/LevelThree/the_depths.mp3", "thirdLevelMusic", SoundType::SOUND_MUSIC);
