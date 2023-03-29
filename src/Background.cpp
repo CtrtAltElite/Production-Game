@@ -64,6 +64,11 @@ void Background::Clean()
 	
 }
 
+float Background::GetScale() const
+{
+	return m_scale;
+}
+
 void Background::SetScale(float scale)
 {
 	m_scale = scale;

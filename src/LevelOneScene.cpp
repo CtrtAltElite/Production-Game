@@ -33,7 +33,7 @@ void LevelOneScene::Update()
 	Game::Instance().SetDebugMode(false);
 	Collision();
 	UpdateDisplayList();
-	Game::Instance().SetLevelBoundaries({ Game::Instance().GetLevelBoundaries().x,Game::Instance().GetLevelBoundaries().y,Game::Instance().GetLevelBoundaries().z + 0.25f,Game::Instance().GetLevelBoundaries().w + 0.25f });
+	Game::Instance().SetLevelBoundaries({ Game::Instance().GetLevelBoundaries().x,Game::Instance().GetLevelBoundaries().y,(Game::Instance().GetLevelBoundaries().z - Game::Instance().GetLevelBoundaries().w) < 0 ? Game::Instance().GetLevelBoundaries().z + 0.25f : Game::Instance().GetLevelBoundaries().z ,Game::Instance().GetLevelBoundaries().w});
 	Camera::Instance().GetTransform()->position.x = Util::Clamp(Camera::Instance().GetTransform()->position.x, Game::Instance().GetLevelBoundaries().x, Game::Instance().GetLevelBoundaries().y);
 	Camera::Instance().GetTransform()->position.y = Util::Clamp(Camera::Instance().GetTransform()->position.y, Game::Instance().GetLevelBoundaries().z, Game::Instance().GetLevelBoundaries().w);
 
@@ -108,7 +108,7 @@ void LevelOneScene::Start()
 	m_pBackground->SetScale(2.5f);
 	AddChild(m_pBackground, BACKGROUND);
 
-	Game::Instance().SetLevelBoundaries({ 0- m_pBackground->GetWidth()*2.5 / 2, m_pBackground->GetWidth()*2.5/2-Config::SCREEN_WIDTH,0,  m_pBackground->GetHeight()*2.5});
+	Game::Instance().SetLevelBoundaries({ 0- m_pBackground->GetWidth()*m_pBackground->GetScale() / 2, m_pBackground->GetWidth()*m_pBackground->GetScale()/2-Config::SCREEN_WIDTH,0, m_pBackground->GetHeight()*m_pBackground->GetScale()-Config::SCREEN_HEIGHT});
 
 
 	
