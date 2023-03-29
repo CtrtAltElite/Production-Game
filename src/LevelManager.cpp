@@ -4,6 +4,7 @@
 std::array<Scene*, static_cast<int>(SceneState::NUM_OF_SCENES)> LevelManager::m_levelScreens;
 Scene* LevelManager::m_pCurrentLevel;
 bool LevelManager::m_isPaused;
+bool LevelManager::m_isGameOver;
 
 // Default constructor and destructor.
 LevelManager::LevelManager()
@@ -43,6 +44,11 @@ void LevelManager::UpdateLevel()
 		m_levelScreens[static_cast<int>(SceneState::PAUSE)]->HandleEvents();
 		m_levelScreens[static_cast<int>(SceneState::PAUSE)]->Update();
 	}
+	if (m_isGameOver)
+	{
+		m_levelScreens[static_cast<int>(SceneState::GAME_OVER)]->HandleEvents();
+		m_levelScreens[static_cast<int>(SceneState::GAME_OVER)]->Update();
+	}
 }
 
 void LevelManager::SetPause(bool value)
@@ -58,12 +64,30 @@ bool LevelManager::IsLevelPaused()
 	return m_isPaused;
 }
 
+void LevelManager::SetGameOver(bool value)
+{
+	m_isGameOver = value;
+	if (m_isGameOver)
+	{
+		m_levelScreens[static_cast<int>(SceneState::GAME_OVER)]->Start();
+	}
+}
+
+bool LevelManager::IsGameOver()
+{
+	return m_isGameOver;
+}
+
 // Renders the current level.
 void LevelManager::RenderLevel()
 {
 	m_pCurrentLevel->Draw();
 	if (m_isPaused) {
 		m_levelScreens[static_cast<int>(SceneState::PAUSE)]->Draw();
+	}
+	if (m_isGameOver)
+	{
+		m_levelScreens[static_cast<int>(SceneState::GAME_OVER)]->Draw();
 	}
 }
 
@@ -91,6 +115,7 @@ void LevelManager::InitLevelSelectionScreens() {
 		new BossScene, // Boss Level
 		new PlayScene, // Play Scene
 		new PauseScene, // Pause Scene
+		new GameOverScene, // Game Over Screen
 		new EndScene // End Scene
 	};
 }

@@ -19,7 +19,7 @@
 #include "PlayScene.h"
 #include "PauseScene.h"
 #include "EndScene.h"
-
+#include "GameOverScene.h"
 
 
 class LevelManager final 
@@ -36,6 +36,8 @@ public:
 	static void UpdateLevel();
 	static void SetPause(bool value);
 	static bool IsLevelPaused();
+	static void SetGameOver(bool value);
+	static bool IsGameOver();
 	static void RenderLevel();
 	static void ExitLevel();
 	static void Clean();
@@ -47,6 +49,7 @@ private:
 	static std::array<Scene*, static_cast<int>(SceneState::NUM_OF_SCENES)> m_levelScreens;
 	static Scene* m_pCurrentLevel;
 	static bool m_isPaused;
+	static bool m_isGameOver;
 };
 
 #endif //!__LEVEL_SELECTOR_H__

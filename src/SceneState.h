@@ -13,6 +13,7 @@ enum class SceneState
 	BOSS_LEVEL, // Boss fight pick
 	PLAY,
 	PAUSE,
+	GAME_OVER,
 	END,
 	NUM_OF_SCENES
 };

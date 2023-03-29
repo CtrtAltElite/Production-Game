@@ -67,6 +67,11 @@ void LevelOneScene::Update()
 			timer -= 0.1f;
 		}
 	}
+
+	if (m_pPlayer != nullptr && m_pPlayer->GetIsDead() && !LevelManager::IsGameOver())
+	{
+		LevelManager::SetGameOver(true);
+	}
 	
 	
 	// Set FPS display on screen.
