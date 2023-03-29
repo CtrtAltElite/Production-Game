@@ -45,8 +45,8 @@ void PauseScene::HandleEvents()
 void PauseScene::Start()
 {
 	SoundManager::Instance().SetMusicVolume(10);
-	SoundManager::Instance().Load("../Assets/audio/LevelMusic/PauseScreen/Bossa_Nova.mp3", "Pause", SoundType::SOUND_MUSIC);
-	SoundManager::Instance().PlayMusic("Pause", -1, 3000);
+	//SoundManager::Instance().Load("../Assets/audio/LevelMusic/PauseScreen/Bossa_Nova.mp3", "Pause", SoundType::SOUND_MUSIC);
+	//SoundManager::Instance().PlayMusic("Pause", -1, 3000);
 
 	constexpr SDL_Color blue = { 0, 0, 255, 255 };
 	constexpr SDL_Color Black = { 255, 255, 255, 255 };
@@ -54,7 +54,7 @@ void PauseScene::Start()
 	m_pStartLabel->SetParent(this);
 	AddChild(m_pStartLabel);
 
-	m_pInstructionsLabel = new Label("You're currently paused.", "Consolas", 40, blue, glm::vec2(1280 / 2, 720 / 2 - 150));
+	m_pInstructionsLabel = new Label("Your currently paused.", "Consolas", 40, blue, glm::vec2(1280 / 2, 720 / 2 - 150));
 	m_pInstructionsLabel->SetParent(this);
 	AddChild(m_pInstructionsLabel);
 
@@ -68,9 +68,8 @@ void PauseScene::Start()
 	// We are clicking the Resume button.
 	m_pStartButton->AddEventListener(Event::CLICK, [&]()-> void
 		{
-			m_pStartButton->SetActive(false);
-			SoundManager::Instance().StopMusic(0);
 			SoundManager::Instance().SetMusicVolume(25);
+			m_pStartButton->SetActive(false);
 			LevelManager::SetPause(false);
 			//SoundManager::Instance().stop_music("Start", 0);
 		});

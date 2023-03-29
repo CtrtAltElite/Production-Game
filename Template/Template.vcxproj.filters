@@ -191,9 +191,6 @@
     <ClCompile Include="..\src\LevelManager.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\SelectScene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\StartScene.cpp">
       <Filter>Scenes\MainScenes</Filter>
     </ClCompile>
@@ -225,6 +222,12 @@
       <Filter>Game Objects</Filter>
     </ClCompile>
     <ClCompile Include="..\src\PauseScene.cpp">
+      <Filter>Scenes\MainScenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\SelectScene.cpp">
+      <Filter>Scenes\LevelScenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GameOverScene.cpp">
       <Filter>Scenes\MainScenes</Filter>
     </ClCompile>
   </ItemGroup>
@@ -416,9 +419,6 @@
     <ClInclude Include="..\src\LevelManager.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\SelectScene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\StartScene.h">
       <Filter>Scenes\MainScenes</Filter>
     </ClInclude>
@@ -450,6 +450,12 @@
       <Filter>Game Objects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\PauseScene.h">
+      <Filter>Scenes\MainScenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\SelectScene.h">
+      <Filter>Scenes\LevelScenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GameOverScene.h">
       <Filter>Scenes\MainScenes</Filter>
     </ClInclude>
   </ItemGroup>

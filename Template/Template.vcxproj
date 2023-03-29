@@ -169,6 +169,7 @@
     <ClCompile Include="..\src\Carl.cpp" />
     <ClCompile Include="..\src\CollisionManager.cpp" />
     <ClCompile Include="..\src\Enemy.cpp" />
+    <ClCompile Include="..\src\GameOverScene.cpp" />
     <ClCompile Include="..\src\ImGuiWindowFrame.cpp" />
     <ClCompile Include="..\src\Jellyfish.cpp" />
     <ClCompile Include="..\src\LevelOneScene.cpp" />
@@ -235,6 +236,7 @@
     <ClInclude Include="..\src\CollisionShape.h" />
     <ClInclude Include="..\src\Config.h" />
     <ClInclude Include="..\src\Enemy.h" />
+    <ClInclude Include="..\src\GameOverScene.h" />
     <ClInclude Include="..\src\Heuristic.h" />
     <ClInclude Include="..\src\ImGuiWindowFrame.h" />
     <ClInclude Include="..\src\InputType.h" />
