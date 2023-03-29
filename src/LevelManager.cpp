@@ -48,7 +48,7 @@ void LevelManager::UpdateLevel()
 void LevelManager::SetPause(bool value)
 {
 	m_isPaused = value;
-	if (value == true) {
+	if (m_isPaused) {
 		m_levelScreens[static_cast<int>(SceneState::PAUSE)]->Start();
 	}
 }

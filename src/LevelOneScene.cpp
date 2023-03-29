@@ -47,7 +47,23 @@ void LevelOneScene::Update()
 			m_pObstaclePool->Update();
 		}
 
-		
+		if (timer <= 0)
+		{
+			timer = NEXT_ENEMY_SPAWN;
+			auto shark = new Shark;
+			shark->SetTargetPlayer(m_pPlayer);
+			m_pEnemyPool->Spawn(shark);
+
+			auto stingray = new Stingray;
+			stingray->GetTransform()->position = glm::vec2(Camera::Instance().GetTransform()->position.x, rand() % 5 + m_pPlayer->GetTransform()->position.y);
+			m_pObstaclePool->Spawn(stingray);
+
+			auto jellyfish = new Jellyfish;
+			jellyfish->GetTransform()->position = glm::vec2(m_pPlayer->GetTransform()->position.x, m_pPlayer->GetTransform()->position.y - 800.0f);
+			m_pObstaclePool->Spawn(jellyfish);
+			//m_pEnemyPool->UpdateTargetPlayer(m_pPlayer);
+		}
+		timer -= 0.1f;
 	}
 	
 	// Set FPS display on screen.
@@ -69,7 +85,9 @@ void LevelOneScene::HandleEvents()
 	EventManager::Instance().Update();
 
 	if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_P)) {
-		LevelManager::SetPause(true);
+		if (!LevelManager::IsLevelPaused()) {
+			LevelManager::SetPause(true);
+		}
 	}
 
 	if (!LevelManager::IsLevelPaused()) {

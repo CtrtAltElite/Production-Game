@@ -8,7 +8,7 @@
 
 PauseScene::PauseScene()
 {
-	//PauseScene::Start();
+
 }
 
 PauseScene::~PauseScene()
@@ -44,8 +44,9 @@ void PauseScene::HandleEvents()
 
 void PauseScene::Start()
 {
-	SoundManager::Instance().Load("../Assets/audio/start.mp3", "Start", SoundType::SOUND_MUSIC);
-	SoundManager::Instance().PlayMusic("Start");
+	SoundManager::Instance().SetMusicVolume(10);
+	SoundManager::Instance().Load("../Assets/audio/LevelMusic/PauseScreen/Bossa_Nova.mp3", "Pause", SoundType::SOUND_MUSIC);
+	SoundManager::Instance().PlayMusic("Pause", -1, 3000);
 
 	constexpr SDL_Color blue = { 0, 0, 255, 255 };
 	constexpr SDL_Color Black = { 255, 255, 255, 255 };
@@ -64,18 +65,23 @@ void PauseScene::Start()
 	m_pStartButton = new Button();
 	m_pStartButton->GetTransform()->position = glm::vec2(1280.0f / 2.0f, 400.0f);
 
+	// We are clicking the Resume button.
 	m_pStartButton->AddEventListener(Event::CLICK, [&]()-> void
 		{
 			m_pStartButton->SetActive(false);
+			SoundManager::Instance().StopMusic(0);
+			SoundManager::Instance().SetMusicVolume(25);
 			LevelManager::SetPause(false);
 			//SoundManager::Instance().stop_music("Start", 0);
 		});
 
+	// Hovering over the Resume Button
 	m_pStartButton->AddEventListener(Event::MOUSE_OVER, [&]()->void
 		{
 			m_pStartButton->SetAlpha(128);
 		});
 
+	// Not hovering over the Resume button.
 	m_pStartButton->AddEventListener(Event::MOUSE_OUT, [&]()->void
 		{
 			m_pStartButton->SetAlpha(255);
