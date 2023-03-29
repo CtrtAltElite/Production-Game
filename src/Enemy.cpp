@@ -231,8 +231,23 @@ void Enemy::Move()
     }
     else
     {
-       //wander
-        
+        GetRigidBody()->velocity={0.0f,0.0f};
+        GetRigidBody()->acceleration={0.0f,0.0f};
+        if(wanderFlip)
+        {
+            GetTransform()->position.x+=0.2f;
+            GetTransform()->rotation.r=91;
+        }
+        else
+        {
+            GetTransform()->position.x-=0.2f;
+            GetTransform()->rotation.r=0;
+        }
+        GetTransform()->position.y+=0.075f;
+    }
+    if(GetTransform()->position.x < -700|| GetTransform()->position.x > 700 )
+    {
+        wanderFlip = !wanderFlip;
     }
     while (GetTransform()->rotation.r < 0 * Util::Deg2Rad) GetTransform()->rotation.r += 360 * Util::Deg2Rad;
     while (GetTransform()->rotation.r > 360 * Util::Deg2Rad) GetTransform()->rotation.r -= 360 * Util::Deg2Rad;

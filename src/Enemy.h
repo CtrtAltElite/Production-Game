@@ -52,6 +52,7 @@ private:
 	glm::vec2 m_veloDamp;
 	GameObject* m_pTargetPlayer;
 	float m_attackDamage;
+	bool wanderFlip=true;
 };
 
 // Holds all the enemies in the scene and deals with the deletion

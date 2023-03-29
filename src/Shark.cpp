@@ -30,13 +30,13 @@ Shark::Shark()
     SetHeight(40);
     SetHealth(100.0f);
     SetAttackDamage(30.0f);
-    GetTransform()->position = glm::vec2(rand() % 200, rand() % 200);
+    GetTransform()->position = glm::vec2(rand() % 400, rand() % 400);
     GetRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
     GetRigidBody()->bounds=glm::vec2(GetWidth(), GetHeight());
     GetRigidBody()->acceleration = glm::vec2(0.0f, 0.0f);
     GetRigidBody()->isColliding = false;
-    GetRigidBody()->mass = 10.0f;
-    SetSpeed(100.0f);
+    GetRigidBody()->mass = 8.0f;
+    SetSpeed(120.0f);
     animVelo = 0.33f;
     SetType(GameObjectType::SHARK);
 }
