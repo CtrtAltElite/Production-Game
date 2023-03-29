@@ -17,3 +17,5 @@
 - Joshua Frady
 - John Husky
 - Jae-Min Park
+- Brady Mceachran (kekybets)
+- Winton
