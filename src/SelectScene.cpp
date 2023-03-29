@@ -105,7 +105,7 @@ void SelectScene::InitLevelSelectionObstacles()
 {
 	for (int i = 0; i < LEVELS; i++) {
 		LevelSelectionObject* temp = new LevelSelectionObject();
-		temp->GetTransform()->position = glm::vec2(250 + (400 * i), 500);
+		temp->GetTransform()->position = glm::vec2(250 + (400 * i), 300);
 		m_pObstaclePool->Spawn(temp);
 	}
 }

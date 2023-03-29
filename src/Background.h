@@ -17,6 +17,7 @@ public:
 	virtual void Update() override;
 	virtual void Clean() override;
 	// setters
+	float GetScale() const;
 	void SetScale(float scale);
 	
 private:
