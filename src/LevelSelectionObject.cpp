@@ -93,4 +93,14 @@ bool LevelSelectionObject::GetLabel()
 	return m_isLabelEnabled;
 }
 
+void LevelSelectionObject::SetState(SceneState state)
+{
+	m_stateToChange = state;
+}
+
+SceneState LevelSelectionObject::GetState()
+{
+	return m_stateToChange;
+}
+
 
