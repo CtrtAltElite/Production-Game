@@ -71,7 +71,7 @@ void GameOverScene::Start()
 			SoundManager::Instance().SetMusicVolume(25);
 			m_pStartButton->SetActive(false);
 			LevelManager::SetGameOver(false);
-			LevelManager::ChangeLevelSelection(SceneState::LEVEL_SELECT);
+			Game::Instance().ChangeSceneState(SceneState::LEVEL_SELECT);
 			//SoundManager::Instance().stop_music("Start", 0);
 		});
 
