@@ -68,7 +68,12 @@ void LevelThreeScene::Update()
 			timer -= 0.1f;
 		}
 	}
-	
+
+
+	if (m_pPlayer != nullptr && m_pPlayer->GetIsDead() && !LevelManager::IsGameOver())
+	{
+		LevelManager::SetGameOver(true);
+	}
 	
 	// Set FPS display on screen.
 	if ((SDL_GetTicks64() / 1000) > 0)
@@ -91,8 +96,9 @@ void LevelThreeScene::HandleEvents()
 	if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_ESCAPE)) {
 
 	}
-
-	GetPlayerInput();
+	if (!LevelManager::IsLevelPaused() && !LevelManager::IsGameOver()) {
+		GetPlayerInput();
+	}
 }
 
 void LevelThreeScene::GetPlayerInput()

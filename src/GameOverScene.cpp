@@ -71,6 +71,7 @@ void GameOverScene::Start()
 			SoundManager::Instance().SetMusicVolume(25);
 			m_pStartButton->SetActive(false);
 			LevelManager::SetGameOver(false);
+			LevelManager::ChangeLevelSelection(SceneState::LEVEL_SELECT);
 			//SoundManager::Instance().stop_music("Start", 0);
 		});
 
@@ -86,7 +87,7 @@ void GameOverScene::Start()
 			m_pStartButton->SetAlpha(255);
 		});
 	AddChild(m_pStartButton);
-	m_pInstructionsLabel = new Label("RESUME", "Consolas", 30, Black, glm::vec2(1280.0f / 2.0f, 400.0f));
+	m_pInstructionsLabel = new Label("EXIT", "Consolas", 30, Black, glm::vec2(1280.0f / 2.0f, 400.0f));
 	m_pInstructionsLabel->SetParent(this);
 	AddChild(m_pInstructionsLabel);
 

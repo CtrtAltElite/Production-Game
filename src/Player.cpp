@@ -170,7 +170,7 @@ void Player::SetHealth(float health)
 
 void Player::SetIsDead(bool isDead)
 {
-	isDead = m_isDead;
+	m_isDead = isDead;
 }
 
 void Player::TakeDamage(float damage)
@@ -181,7 +181,7 @@ void Player::TakeDamage(float damage)
 	if(GetHealth()<=0)
 	{
 		std::cout<<"You died frfr\n";
-		m_isDead = true;
+		SetIsDead(true);
 	}
 	//do some effects or sound here
 }

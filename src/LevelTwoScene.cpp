@@ -69,7 +69,11 @@ void LevelTwoScene::Update()
 		}
 	}
 	
-	
+	if (m_pPlayer != nullptr && m_pPlayer->GetIsDead() && !LevelManager::IsGameOver())
+	{
+		LevelManager::SetGameOver(true);
+	}
+
 	// Set FPS display on screen.
 	if ((SDL_GetTicks64() / 1000) > 0)
 	{
@@ -97,7 +101,7 @@ void LevelTwoScene::HandleEvents()
 		}
 	}
 
-	if (!LevelManager::IsLevelPaused()) {
+	if (!LevelManager::IsLevelPaused() && !LevelManager::IsGameOver()) {
 		GetPlayerInput();
 	}
 }
