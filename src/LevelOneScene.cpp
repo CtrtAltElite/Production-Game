@@ -40,6 +40,7 @@ void LevelOneScene::Update()
 	if (m_pEnemyPool != nullptr)
 	{
 		m_pEnemyPool->Update();
+		m_pEnemyPool->UpdateTargetPlayer(m_pPlayer);
 	}
 	if (m_pObstaclePool != nullptr) {
 		m_pObstaclePool->Update();
