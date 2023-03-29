@@ -88,8 +88,8 @@ void LevelOneScene::Start()
 {
 	m_guiTitle = "Level 1";
 
-	SoundManager::Instance().Load("../Assets/audio/conquest.mp3", "Start", SoundType::SOUND_SFX);
-	SoundManager::Instance().PlaySound("Start", -1, 1);
+	SoundManager::Instance().Load("../Assets/audio/conquest.mp3", "Start", SoundType::SOUND_MUSIC);
+	SoundManager::Instance().PlayMusic("Start", -1, 1);
 
 	Camera::Instance().SetEnabled(true);
 	Game::Instance().SetDebugMode(true);
