@@ -115,6 +115,9 @@ void LevelOneScene::Start()
 	
 
 	InitPools();
+	
+	Game::Instance().SetPlayer(m_pPlayer);
+	m_pEnemyPool->Spawn(new Shark);
 
 	// Opening and initializing obstacle file!
 	std::ifstream obstacleFile(OBSTACLE_FILE_NAME);
