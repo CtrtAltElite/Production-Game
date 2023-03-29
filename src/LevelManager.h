@@ -17,6 +17,7 @@
 #include "LevelThreeScene.h"
 #include "BossScene.h"
 #include "PlayScene.h"
+#include "PauseScene.h"
 #include "EndScene.h"
 
 
@@ -33,6 +34,8 @@ public:
 	static void Init();
 	static void ChangeLevelSelection(SceneState state_to_change);
 	static void UpdateLevel();
+	static void SetPause(bool value);
+	static bool IsLevelPaused();
 	static void RenderLevel();
 	static void ExitLevel();
 	static void Clean();
@@ -43,6 +46,7 @@ private:
 	static void InitLevelSelectionScreens();
 	static std::array<Scene*, static_cast<int>(SceneState::NUM_OF_SCENES)> m_levelScreens;
 	static Scene* m_pCurrentLevel;
+	static bool m_isPaused;
 };
 
 #endif //!__LEVEL_SELECTOR_H__

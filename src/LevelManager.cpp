@@ -3,7 +3,7 @@
 // Static variable initializers :)
 std::array<Scene*, static_cast<int>(SceneState::NUM_OF_SCENES)> LevelManager::m_levelScreens;
 Scene* LevelManager::m_pCurrentLevel;
-
+bool LevelManager::m_isPaused;
 
 // Default constructor and destructor.
 LevelManager::LevelManager()
@@ -38,12 +38,33 @@ void LevelManager::UpdateLevel()
 {
 	m_pCurrentLevel->HandleEvents();
 	m_pCurrentLevel->Update();
+
+	if (m_isPaused) {
+		m_levelScreens[static_cast<int>(SceneState::PAUSE)]->HandleEvents();
+		m_levelScreens[static_cast<int>(SceneState::PAUSE)]->Update();
+	}
+}
+
+void LevelManager::SetPause(bool value)
+{
+	m_isPaused = value;
+	if (value == true) {
+		m_levelScreens[static_cast<int>(SceneState::PAUSE)]->Start();
+	}
+}
+
+bool LevelManager::IsLevelPaused()
+{
+	return m_isPaused;
 }
 
 // Renders the current level.
 void LevelManager::RenderLevel()
 {
 	m_pCurrentLevel->Draw();
+	if (m_isPaused) {
+		m_levelScreens[static_cast<int>(SceneState::PAUSE)]->Draw();
+	}
 }
 
 void LevelManager::ExitLevel()
@@ -69,6 +90,7 @@ void LevelManager::InitLevelSelectionScreens() {
 		new LevelThreeScene, // Level 3
 		new BossScene, // Boss Level
 		new PlayScene, // Play Scene
+		new PauseScene, // Pause Scene
 		new EndScene // End Scene
 	};
 }

@@ -224,6 +224,9 @@
     <ClCompile Include="..\src\LevelSelectionObject.cpp">
       <Filter>Game Objects</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\PauseScene.cpp">
+      <Filter>Scenes\MainScenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\CollisionManager.h">
@@ -445,6 +448,9 @@
     </ClInclude>
     <ClInclude Include="..\src\LevelSelectionObject.h">
       <Filter>Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\PauseScene.h">
+      <Filter>Scenes\MainScenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

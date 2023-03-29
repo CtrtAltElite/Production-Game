@@ -12,6 +12,7 @@ enum class SceneState
 	LEVEL_THREE, // level 3 pick
 	BOSS_LEVEL, // Boss fight pick
 	PLAY,
+	PAUSE,
 	END,
 	NUM_OF_SCENES
 };
