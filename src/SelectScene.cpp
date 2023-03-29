@@ -82,15 +82,15 @@ void SelectScene::Start()
 	SoundManager::Instance().Load("../Assets/audio/LevelMusic/SelectScreen/boop.mp3", "Radio", SoundType::SOUND_MUSIC);
 	SoundManager::Instance().PlayMusic("Radio", -1);
 
-	m_pBackground = new Background("../Assets/textures/SelectScreen/wall.png", "wall");
-	m_pBackground->GetTransform()->position={0, -55};
-	m_pBackground->SetScale(1.25f);
+	m_pBackground = new Background("../Assets/textures/SelectScreen/select_screen_wide.png", "selectScreen");
+	m_pBackground->GetTransform()->position={0, -30};
+	//m_pBackground->SetScale(1.25f);
 	AddChild(m_pBackground, BACKGROUND);
 
-	m_pFloorBackground = new Background("../Assets/textures/SelectScreen/floor.png", "floor");
-	m_pFloorBackground->GetTransform()->position = { 0, -55 };
-	m_pFloorBackground->SetScale(1.25f);
-	AddChild(m_pFloorBackground, BACKGROUND);
+	//m_pFloorBackground = new Background("../Assets/textures/SelectScreen/floor.png", "floor");
+	//m_pFloorBackground->GetTransform()->position = { 0, -55 };
+	//m_pFloorBackground->SetScale(1.25f);
+	//AddChild(m_pFloorBackground, BACKGROUND);
 
 	// Adding gameObjects to scene.
 	m_player = new MenuPlayer;
