@@ -65,7 +65,7 @@ void Obstacle::Draw()
 			this->GetWidth(), this->GetHeight());
 		
 	}
-	TextureManager::Instance().Draw(textureName, Camera::Instance().CameraDisplace(this), 0, 100, true);
+	TextureManager::Instance().Draw(textureName, Camera::Instance().CameraDisplace(this), 0, 255, true);
 }
 
 void Obstacle::Update()

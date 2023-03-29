@@ -20,6 +20,7 @@ SelectScene::~SelectScene()
 void SelectScene::Draw()
 {
 	DrawDisplayList();
+	SDL_SetRenderDrawColor(Renderer::Instance().GetRenderer(), 255, 255, 255, 255);
 }
 
 void SelectScene::Update()
@@ -101,12 +102,16 @@ void SelectScene::Start()
 	m_pObstaclePool = new ObstaclePool();
 	AddChild(m_pObstaclePool, OBSTACLE);
 
-	Game::Instance().SetDebugMode(true);
+	Game::Instance().SetDebugMode(false);
 	Camera::Instance().SetEnabled(true);
 
 	Game::Instance().SetLevelBoundaries({0, 0,-600.0f, 600.0f});
 
 	InitLevelSelectionObstacles();
+	Obstacle* temp = new Obstacle("radio", "../Assets/sprites/decorations/radio_larger.png");
+	temp->GetTransform()->position = glm::vec2(1200, 465);
+	m_pObstaclePool->Spawn(temp);
+
 
 	ImGuiWindowFrame::Instance().SetDefaultGuiFunction();
 }
