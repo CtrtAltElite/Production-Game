@@ -26,7 +26,7 @@ void SelectScene::Update()
 {
 	Game::Instance().SetLevelBoundaries({ Game::Instance().GetLevelBoundaries().x,Game::Instance().GetLevelBoundaries().y,Game::Instance().GetLevelBoundaries().z + 0.25f,Game::Instance().GetLevelBoundaries().w + 0.25f });
 	Camera::Instance().GetTransform()->position.x = Util::Clamp(Camera::Instance().GetTransform()->position.x, Game::Instance().GetLevelBoundaries().x, Game::Instance().GetLevelBoundaries().y);
-	//Camera::Instance().GetTransform()->position.y = Util::Clamp(Camera::Instance().GetTransform()->position.y, Game::Instance().GetLevelBoundaries().z, Game::Instance().GetLevelBoundaries().w);
+	Camera::Instance().GetTransform()->position.y = -30;
 
 	// Obstacle checker if player is in the distance for level swapper to work.
 	for (Obstacle* obstacle : m_pObstaclePool->GetPool()) {
@@ -78,14 +78,24 @@ void SelectScene::HandleEvents()
 
 void SelectScene::Start()
 {
-	m_pBackground = new Background("../Assets/textures/SelectScreen/Select_screen.png", "menuBG");
-	m_pBackground->GetTransform()->position={0,-55};
+	SoundManager::Instance().SetMusicVolume(128);
+	SoundManager::Instance().Load("../Assets/audio/LevelMusic/SelectScreen/boop.mp3", "Radio", SoundType::SOUND_MUSIC);
+	SoundManager::Instance().PlayMusic("Radio");
+
+	m_pBackground = new Background("../Assets/textures/SelectScreen/wall.png", "wall");
+	m_pBackground->GetTransform()->position={0, -55};
 	m_pBackground->SetScale(1.25f);
 	AddChild(m_pBackground, BACKGROUND);
+
+	m_pFloorBackground = new Background("../Assets/textures/SelectScreen/floor.png", "floor");
+	m_pFloorBackground->GetTransform()->position = { 0, -55 };
+	m_pFloorBackground->SetScale(1.25f);
+	AddChild(m_pFloorBackground, BACKGROUND);
 
 	// Adding gameObjects to scene.
 	m_player = new MenuPlayer;
 	m_player->SetIsCentered(true);
+	m_player->GetTransform()->position = glm::vec2(0, m_pBackground->GetHeight() / 2);
 	AddChild(m_player, PLAYERS);
 
 	m_pObstaclePool = new ObstaclePool();

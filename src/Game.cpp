@@ -152,6 +152,8 @@ void Game::ChangeSceneState(const SceneState new_state)
 			std::cout << "clearing ImGui Window" << std::endl;
 		}
 
+		//SoundManager::Instance().StopMusic(0);
+
 		m_pCurrentScene = nullptr;
 
 		m_currentSceneState = new_state;

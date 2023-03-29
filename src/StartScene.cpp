@@ -24,6 +24,7 @@ void StartScene::Update()
 
 void StartScene::Clean()
 {
+	SoundManager::Instance().StopMusic(0.5f);
 	RemoveAllChildren();
 }
 
@@ -41,7 +42,7 @@ void StartScene::HandleEvents()
 void StartScene::Start()
 {
 	SoundManager::Instance().Load("../Assets/audio/start.mp3", "Start", SoundType::SOUND_MUSIC);
-	SoundManager::Instance().PlayMusic("Start", 0);
+	SoundManager::Instance().PlayMusic("Start");
 
 	constexpr SDL_Color blue = { 0, 0, 255, 255 };
 	constexpr SDL_Color Black = { 255, 255, 255, 255 };

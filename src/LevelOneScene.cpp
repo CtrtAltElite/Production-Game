@@ -64,6 +64,10 @@ void LevelOneScene::HandleEvents()
 {
 	EventManager::Instance().Update();
 
+	if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_ESCAPE)) {
+
+	}
+
 	GetPlayerInput();
 }
 
@@ -134,7 +138,7 @@ void LevelOneScene::Start()
 
 	m_pPlayer->GetTransform()->position = m_pBackground->GetTransform()->position;
 
-	ImGuiWindowFrame::Instance().SetDefaultGuiFunction();
+	ImGuiWindowFrame::Instance().SetGuiFunction([this] { GUI_Function(); });
 }
 
 void LevelOneScene::Collision()

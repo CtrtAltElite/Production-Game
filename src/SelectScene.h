@@ -32,6 +32,7 @@ private:
 
 	MenuPlayer* m_player{};
 	Background* m_pBackground{};
+	Background* m_pFloorBackground{};
 	Button* m_pStartButton{};
 
 	void InitLevelSelectionObstacles();
