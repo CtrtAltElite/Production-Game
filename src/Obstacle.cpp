@@ -76,6 +76,7 @@ void Obstacle::Update()
 		if (EventManager::Instance().MousePressed(1)) // If we left-click, place the object.
 		{
 			m_isPlacing = false;
+			GetTransform()->position = Util::GetMousePos() + Camera::Instance().GetTransform()->position;
 		}
 	}
 }

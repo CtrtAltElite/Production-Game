@@ -30,8 +30,16 @@ void LevelOneScene::Draw()
 
 void LevelOneScene::Update()
 {
+	if (Game::Instance().GetLevelEditorMode()) // If we are currently in level editor mode.
+	{
+		
+
+
+		
+	}
+
 	if (m_pPlayer != nullptr && !m_pPlayer->GetIsDead()) { // As long as the player is not dead.
-		if (!LevelManager::IsLevelPaused()) { // If we currently are not paused.
+		if (!LevelManager::IsLevelPaused() && !Game::Instance().GetLevelEditorMode()) { // If we currently are not paused and level editor mode is not enabled.
 		//Game::Instance().SetDebugMode(false);
 			Collision();
 			UpdateDisplayList();
@@ -92,13 +100,23 @@ void LevelOneScene::HandleEvents()
 {
 	EventManager::Instance().Update();
 
+	if (Game::Instance().GetLevelEditorMode()) {
+		if (EventManager::Instance().MousePressed(1)) { // If left click is pressed
+			Camera::Instance().GetTransform()->position.x = EventManager::Instance().GetMousePosition().x;
+			Camera::Instance().GetTransform()->position.y = EventManager::Instance().GetMousePosition().y;
+
+			//Camera::Instance().GetTransform()->position.x = Util::Clamp(Camera::Instance().GetTransform()->position.x, Game::Instance().GetLevelBoundaries().x, Game::Instance().GetLevelBoundaries().y);
+			//Camera::Instance().GetTransform()->position.y = Util::Clamp(Camera::Instance().GetTransform()->position.y, Game::Instance().GetLevelBoundaries().z, Game::Instance().GetLevelBoundaries().w);
+		}
+	}
+
 	if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_P)) {
 		if (!LevelManager::IsLevelPaused()) {
 			LevelManager::SetPause(true);
 		}
 	}
 
-	if (!LevelManager::IsLevelPaused() && !LevelManager::IsGameOver()) {
+	if (!LevelManager::IsLevelPaused() && !LevelManager::IsGameOver() && !Game::Instance().GetLevelEditorMode()) {
 		GetPlayerInput();
 	}
 }
