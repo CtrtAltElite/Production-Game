@@ -30,12 +30,28 @@ void LevelOneScene::Draw()
 
 void LevelOneScene::Update()
 {
-	if (Game::Instance().GetLevelEditorMode()) // If we are currently in level editor mode.
+	if (m_isMouseHeld) // If we are currently in level editor mode.
 	{
-		
+		// If an obstacle is being placed, don't worry about moving the camera
+		for (auto obstacle : m_pObstaclePool->GetPool()) {
+			if (obstacle->m_isPlacing) {
+				return;
+			}
+		}
 
-
-		
+		// Moves camera based on mouse position
+		if (EventManager::Instance().GetMousePosition().x >= 400) {
+			Camera::Instance().GetTransform()->position.x += 10.0f;
+		}
+		else {
+			Camera::Instance().GetTransform()->position.x -= 10.0f;
+		}
+		if (EventManager::Instance().GetMousePosition().y >= 400) {
+			Camera::Instance().GetTransform()->position.y += 10.0f;
+		}
+		else {
+			Camera::Instance().GetTransform()->position.y -= 10.0f;
+		}
 	}
 
 	if (m_pPlayer != nullptr && !m_pPlayer->GetIsDead()) { // As long as the player is not dead.
@@ -102,11 +118,13 @@ void LevelOneScene::HandleEvents()
 
 	if (Game::Instance().GetLevelEditorMode()) {
 		if (EventManager::Instance().MousePressed(1)) { // If left click is pressed
-			Camera::Instance().GetTransform()->position.x = EventManager::Instance().GetMousePosition().x;
-			Camera::Instance().GetTransform()->position.y = EventManager::Instance().GetMousePosition().y;
+			m_isMouseHeld = true;
 
 			//Camera::Instance().GetTransform()->position.x = Util::Clamp(Camera::Instance().GetTransform()->position.x, Game::Instance().GetLevelBoundaries().x, Game::Instance().GetLevelBoundaries().y);
 			//Camera::Instance().GetTransform()->position.y = Util::Clamp(Camera::Instance().GetTransform()->position.y, Game::Instance().GetLevelBoundaries().z, Game::Instance().GetLevelBoundaries().w);
+		}
+		else if (EventManager::Instance().MouseReleased(1)) {
+			m_isMouseHeld = false;
 		}
 	}
 

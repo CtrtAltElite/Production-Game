@@ -57,6 +57,8 @@ private:
 
 	// Level Editor variables
 	bool isLevelEditing;
+	bool m_isMouseHeld;
+
 
 	// Input Control
 	int m_pCurrentInputType{};

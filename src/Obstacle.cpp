@@ -71,7 +71,7 @@ void Obstacle::Draw()
 void Obstacle::Update()
 {
 	if (m_isPlacing) { // If we are currently placing the obstacle
-		GetTransform()->position = Util::GetMousePos() + Camera::Instance().GetTransform()->position;
+		GetTransform()->position = EventManager::Instance().GetMousePosition() + Camera::Instance().GetTransform()->position;
 
 		if (EventManager::Instance().MousePressed(1)) // If we left-click, place the object.
 		{
