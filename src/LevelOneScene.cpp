@@ -30,28 +30,42 @@ void LevelOneScene::Draw()
 
 void LevelOneScene::Update()
 {
+
+	// Update Obstacle Pool.
+	if (m_pObstaclePool != nullptr) {
+		m_pObstaclePool->Update();
+	}
+
 	if (m_isMouseHeld) // If we are currently in level editor mode.
 	{
-		// If an obstacle is being placed, don't worry about moving the camera
-		for (auto obstacle : m_pObstaclePool->GetPool()) {
-			if (obstacle->m_isPlacing) {
-				return;
+		// If an object is not being placed
+		if (!m_isObstacleBeingPlaced) {
+			// Moves camera based on mouse position
+			if (EventManager::Instance().GetMousePosition().x >= 400) {
+				Camera::Instance().GetTransform()->position.x += 10.0f;
+			}
+			else {
+				Camera::Instance().GetTransform()->position.x -= 10.0f;
+			}
+			if (EventManager::Instance().GetMousePosition().y >= 400) {
+				Camera::Instance().GetTransform()->position.y += 10.0f;
+			}
+			else {
+				Camera::Instance().GetTransform()->position.y -= 10.0f;
 			}
 		}
-
-		// Moves camera based on mouse position
-		if (EventManager::Instance().GetMousePosition().x >= 400) {
-			Camera::Instance().GetTransform()->position.x += 10.0f;
-		}
 		else {
-			Camera::Instance().GetTransform()->position.x -= 10.0f;
+			int counter = 0;
+			for (auto obstacle : m_pObstaclePool->GetPool()) {
+				if (obstacle->m_isPlacing == false) {
+					++counter;
+				}
+				if (counter == m_pObstaclePool->GetPool().size() - 1) {
+					m_isObstacleBeingPlaced = false;
+				}
+			}
 		}
-		if (EventManager::Instance().GetMousePosition().y >= 400) {
-			Camera::Instance().GetTransform()->position.y += 10.0f;
-		}
-		else {
-			Camera::Instance().GetTransform()->position.y -= 10.0f;
-		}
+		
 	}
 
 	if (m_pPlayer != nullptr && !m_pPlayer->GetIsDead()) { // As long as the player is not dead.
@@ -68,9 +82,7 @@ void LevelOneScene::Update()
 				m_pEnemyPool->Update();
 				m_pEnemyPool->UpdateTargetPlayer(m_pPlayer);
 			}
-			if (m_pObstaclePool != nullptr) {
-				m_pObstaclePool->Update();
-			}
+
 
 			if (timer <= 0)
 			{
@@ -104,6 +116,10 @@ void LevelOneScene::Update()
 		const Uint64 fps = Game::Instance().GetFrames() / (SDL_GetTicks64() / 1000);
 		const std::string fpsText = "FPS: " + std::to_string(fps);
 		m_pFpsCounter->SetText(fpsText);
+	}
+
+	for (size_t i = 0; i < m_pObstaclePool->GetPool().size(); i++) {
+			m_isObstacleBeingPlaced = false; // Make this false every frame so the game will check for a new placement.
 	}
 }
 
@@ -373,12 +389,15 @@ void LevelOneScene::GUI_Function()
 	{
 		if (ImGui::Button(obstacle.first.c_str()))
 		{
-			const auto temp = new Obstacle(obstacle.first.c_str(), obstacle.second->textureName.c_str());
+			if (Game::Instance().GetLevelEditorMode()) {
+				const auto temp = new Obstacle(obstacle.first.c_str(), obstacle.second->textureName.c_str());
 
-			temp->m_isPlacing = true;
+				m_isObstacleBeingPlaced = true;
+				temp->m_isPlacing = true;
 
-			m_pObstaclePool->Spawn(temp);
-			std::cout << obstacle.first;
+				m_pObstaclePool->Spawn(temp);
+				std::cout << obstacle.first;
+			}
 		}
 
 	}

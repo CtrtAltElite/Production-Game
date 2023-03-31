@@ -73,8 +73,10 @@ void Obstacle::Update()
 	if (m_isPlacing) { // If we are currently placing the obstacle
 		GetTransform()->position = EventManager::Instance().GetMousePosition() + Camera::Instance().GetTransform()->position;
 
+		std::cout << "placing" << std::endl;
 		if (EventManager::Instance().MousePressed(1)) // If we left-click, place the object.
 		{
+			std::cout << "placed" << std::endl;
 			m_isPlacing = false;
 			GetTransform()->position = Util::GetMousePos() + Camera::Instance().GetTransform()->position;
 		}

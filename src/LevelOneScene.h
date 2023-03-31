@@ -58,6 +58,7 @@ private:
 	// Level Editor variables
 	bool isLevelEditing;
 	bool m_isMouseHeld;
+	bool m_isObstacleBeingPlaced;
 
 
 	// Input Control
