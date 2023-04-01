@@ -119,7 +119,11 @@ void ObstaclePool::Update()
 			m_obstacles.shrink_to_fit();
 		} else
 		{
-			m_obstacles[i]->Update();
+			// ONLY update if we are not level editing.
+			if (!Game::Instance().GetLevelEditorMode()) {
+				m_obstacles[i]->Update();
+			}
+			m_obstacles[i]->UpdatePlacement();
 		}
 	}
 }
@@ -133,13 +137,6 @@ void ObstaclePool::Draw()
 	for (auto obstacle : m_obstacles)
 	{
 		obstacle->Draw();
-	}
-}
-
-void ObstaclePool::UpdatePlacementObstacles()
-{
-	for (auto obstacle : m_obstacles) {
-		obstacle->UpdatePlacement();
 	}
 }
 

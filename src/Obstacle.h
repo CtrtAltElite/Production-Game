@@ -40,7 +40,6 @@ public:
 	void Update() override;
 	void Clean();
 	void Draw() override;
-	void UpdatePlacementObstacles();
 
 	// Specific functions
 	std::vector<Obstacle*> GetPool();

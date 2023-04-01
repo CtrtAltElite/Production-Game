@@ -30,9 +30,9 @@ void LevelOneScene::Draw()
 
 void LevelOneScene::Update()
 {
-	// Update the placement of the obstacles, but not the actual update function.
+	// Update the obstacle pool!
 	if (m_pObstaclePool != nullptr) {
-		m_pObstaclePool->UpdatePlacementObstacles();
+		m_pObstaclePool->Update();
 	}
 	
 
@@ -87,11 +87,6 @@ void LevelOneScene::Update()
 				m_pEnemyPool->UpdateTargetPlayer(m_pPlayer);
 			}
 
-			// Update Obstacle Pool.
-			if (m_pObstaclePool != nullptr) {
-				m_pObstaclePool->Update();
-			}
-
 
 			if (timer <= 0)
 			{
@@ -141,12 +136,17 @@ void LevelOneScene::HandleEvents()
 	if (Game::Instance().GetLevelEditorMode() && EventManager::Instance().IsMainWindowInFocus()) {
 		if (EventManager::Instance().MousePressed(1)) { // If left click is pressed
 			m_isMouseHeld = true;
+			// Check for obstacle collision, if so then delete said obstacle
+			for (auto obstacle : m_pObstaclePool->GetPool()) {
+				if (!m_isObstacleBeingPlaced && isObstacleDeleting) { // Well, we cannot delete something if an obstacle is being placed!
+					if (CollisionManager::PointRectCheck(EventManager::Instance().GetMousePosition() + Camera::Instance().GetTransform()->position, obstacle->GetTransform()->position, obstacle->GetWidth(), obstacle->GetHeight())) {
+						obstacle->SetDeleteMe(true);
+					}
+				}
+				else { // Set obstacle deletion to 0 since we are not placing an obstacle
+					isObstacleDeleting = false;
+				}
 
-			if (EventManager::Instance().GetMouseWheel() > 0) { // If scrolling in
-				Game::Instance().SetLevelBoundaries(Game::Instance().GetLevelBoundaries() - glm::vec4(10, 10, 10, 10));
-			}
-			else if (EventManager::Instance().GetMouseWheel() < 0) { // If scrolling out
-				Game::Instance().SetLevelBoundaries(Game::Instance().GetLevelBoundaries() + glm::vec4(10, 10, 10, 10));
 			}
 		}
 		else if (EventManager::Instance().MouseReleased(1)) {
@@ -389,6 +389,15 @@ void LevelOneScene::GUI_Function()
 
 	if (ImGui::Checkbox("Enable Level Editing", &isLevelEditing)) {
 		Game::Instance().SetLevelEditorMode(isLevelEditing);
+		isObstacleDeleting = false;
+	}
+
+	ImGui::Separator();
+
+	if (Game::Instance().GetLevelEditorMode()) {
+		if (ImGui::Checkbox("Enable Obstacle Deletion Mode", &isObstacleDeleting)) {
+
+		}
 	}
 
 	ImGui::Separator();
@@ -408,6 +417,10 @@ void LevelOneScene::GUI_Function()
 				m_pObstaclePool->Spawn(temp);
 				std::cout << obstacle.first;
 			}
+			else {
+				ImGui::SameLine();
+				ImGui::Text("Please Enable Level Editing First.");
+			}
 		}
 
 	}
@@ -416,14 +429,10 @@ void LevelOneScene::GUI_Function()
 
 	ImGui::Separator();
 
-	static float float3[3] = { 0.0f, 1.0f, 1.5f };
-	if (ImGui::SliderFloat3("My Slider", float3, 0.0f, 2.0f))
-	{
-		std::cout << float3[0] << std::endl;
-		std::cout << float3[1] << std::endl;
-		std::cout << float3[2] << std::endl;
-		std::cout << "---------------------------\n";
-	}
+
+
+
+
 
 	ImGui::End();
 }
