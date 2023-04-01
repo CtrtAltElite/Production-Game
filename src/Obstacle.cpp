@@ -70,6 +70,15 @@ void Obstacle::Draw()
 
 void Obstacle::Update()
 {
+	
+}
+
+void Obstacle::Clean()
+{
+}
+
+void Obstacle::UpdatePlacement()
+{
 	if (m_isPlacing) { // If we are currently placing the obstacle
 		GetTransform()->position = EventManager::Instance().GetMousePosition() + Camera::Instance().GetTransform()->position;
 
@@ -81,10 +90,6 @@ void Obstacle::Update()
 			GetTransform()->position = Util::GetMousePos() + Camera::Instance().GetTransform()->position;
 		}
 	}
-}
-
-void Obstacle::Clean()
-{
 }
 
 bool Obstacle::GetDeleteMe() const
@@ -128,6 +133,13 @@ void ObstaclePool::Draw()
 	for (auto obstacle : m_obstacles)
 	{
 		obstacle->Draw();
+	}
+}
+
+void ObstaclePool::UpdatePlacementObstacles()
+{
+	for (auto obstacle : m_obstacles) {
+		obstacle->UpdatePlacement();
 	}
 }
 

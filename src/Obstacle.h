@@ -17,6 +17,7 @@ public:
 	void Draw() override;
 	void Update() override;
 	void Clean() override;
+	void UpdatePlacement();
 
 	// Misc functions
 	[[nodiscard]] bool GetDeleteMe() const;
@@ -39,6 +40,7 @@ public:
 	void Update() override;
 	void Clean();
 	void Draw() override;
+	void UpdatePlacementObstacles();
 
 	// Specific functions
 	std::vector<Obstacle*> GetPool();

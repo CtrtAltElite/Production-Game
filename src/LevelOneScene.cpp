@@ -30,13 +30,13 @@ void LevelOneScene::Draw()
 
 void LevelOneScene::Update()
 {
-
-	// Update Obstacle Pool.
+	// Update the placement of the obstacles, but not the actual update function.
 	if (m_pObstaclePool != nullptr) {
-		m_pObstaclePool->Update();
+		m_pObstaclePool->UpdatePlacementObstacles();
 	}
+	
 
-	if (m_isMouseHeld) // If we are currently in level editor mode.
+	if (m_isMouseHeld) // If we are currently in level editor mode and are holding the mouse.
 	{
 		// If an object is not being placed
 		if (!m_isObstacleBeingPlaced) {
@@ -53,6 +53,10 @@ void LevelOneScene::Update()
 			else {
 				Camera::Instance().GetTransform()->position.y -= 10.0f;
 			}
+			
+			Camera::Instance().GetTransform()->position.x = Util::Clamp(Camera::Instance().GetTransform()->position.x, Game::Instance().GetLevelBoundaries().x - 250, Game::Instance().GetLevelBoundaries().y + 250);
+			Camera::Instance().GetTransform()->position.y = Util::Clamp(Camera::Instance().GetTransform()->position.y, Game::Instance().GetLevelBoundaries().z - 250, Game::Instance().GetLevelBoundaries().w + 250);
+
 		}
 		else {
 			int counter = 0;
@@ -81,6 +85,11 @@ void LevelOneScene::Update()
 			{
 				m_pEnemyPool->Update();
 				m_pEnemyPool->UpdateTargetPlayer(m_pPlayer);
+			}
+
+			// Update Obstacle Pool.
+			if (m_pObstaclePool != nullptr) {
+				m_pObstaclePool->Update();
 			}
 
 
@@ -117,10 +126,6 @@ void LevelOneScene::Update()
 		const std::string fpsText = "FPS: " + std::to_string(fps);
 		m_pFpsCounter->SetText(fpsText);
 	}
-
-	for (size_t i = 0; i < m_pObstaclePool->GetPool().size(); i++) {
-			m_isObstacleBeingPlaced = false; // Make this false every frame so the game will check for a new placement.
-	}
 }
 
 void LevelOneScene::Clean()
@@ -132,12 +137,17 @@ void LevelOneScene::HandleEvents()
 {
 	EventManager::Instance().Update();
 
-	if (Game::Instance().GetLevelEditorMode()) {
+	// Are we in level editor mode AND this window is the main focus.
+	if (Game::Instance().GetLevelEditorMode() && EventManager::Instance().IsMainWindowInFocus()) {
 		if (EventManager::Instance().MousePressed(1)) { // If left click is pressed
 			m_isMouseHeld = true;
 
-			//Camera::Instance().GetTransform()->position.x = Util::Clamp(Camera::Instance().GetTransform()->position.x, Game::Instance().GetLevelBoundaries().x, Game::Instance().GetLevelBoundaries().y);
-			//Camera::Instance().GetTransform()->position.y = Util::Clamp(Camera::Instance().GetTransform()->position.y, Game::Instance().GetLevelBoundaries().z, Game::Instance().GetLevelBoundaries().w);
+			if (EventManager::Instance().GetMouseWheel() > 0) { // If scrolling in
+				Game::Instance().SetLevelBoundaries(Game::Instance().GetLevelBoundaries() - glm::vec4(10, 10, 10, 10));
+			}
+			else if (EventManager::Instance().GetMouseWheel() < 0) { // If scrolling out
+				Game::Instance().SetLevelBoundaries(Game::Instance().GetLevelBoundaries() + glm::vec4(10, 10, 10, 10));
+			}
 		}
 		else if (EventManager::Instance().MouseReleased(1)) {
 			m_isMouseHeld = false;
