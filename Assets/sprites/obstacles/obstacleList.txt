@@ -1,2 +1,3 @@
 Rock ../Assets/sprites/obstacles/rock.png
 Henry ../Assets/sprites/obstacles/henry.png
+Sea_Urchin ../Assets/sprites/obstacles/sea_urchin.png
