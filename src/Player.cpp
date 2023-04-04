@@ -181,6 +181,8 @@ void Player::TakeDamage(float damage)
 	if(GetHealth()<=0)
 	{
 		std::cout<<"You died frfr\n";
+		SoundManager::Instance().Load("../Assets/audio/NS.mp3", "NS", SoundType::SOUND_SFX);
+		SoundManager::Instance().PlaySound("NS", 0);
 		SetIsDead(true);
 	}
 	//do some effects or sound here
