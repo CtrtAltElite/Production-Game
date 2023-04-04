@@ -57,6 +57,8 @@ void GameOverScene::Start()
 	m_pInstructionsLabel = new Label("You lost!.", "Consolas", 40, blue, glm::vec2(1280 / 2, 720 / 2 - 150));
 	m_pInstructionsLabel->SetParent(this);
 	AddChild(m_pInstructionsLabel);
+	SoundManager::Instance().Load("../Assets/audio/LevelMusic/PauseScreen/cant.mp3", "Cant", SoundType::SOUND_SFX);
+	SoundManager::Instance().PlaySound("Cant", 0);
 
 
 
