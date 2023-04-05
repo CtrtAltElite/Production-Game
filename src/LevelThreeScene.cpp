@@ -123,7 +123,7 @@ void LevelThreeScene::Start()
 	SoundManager::Instance().PlayMusic("thirdLevelMusic", -1, 1);
 
 	Camera::Instance().SetEnabled(true);
-	Game::Instance().SetDebugMode(true);
+	Game::Instance().SetDebugMode(false);
 
 	// Player Sprite
 	m_pPlayer = new Player;
