@@ -35,6 +35,8 @@ public:
 	void Collision();
 	void InitPools();
 	void InitFPSCounter();
+	void SaveObstaclesToFile();
+	void LoadObstaclesToFile();
 
 private:
 	// IMGUI Function

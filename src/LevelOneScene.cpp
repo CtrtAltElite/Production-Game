@@ -125,6 +125,7 @@ void LevelOneScene::Update()
 
 void LevelOneScene::Clean()
 {
+	SaveObstaclesToFile();
 	RemoveAllChildren();
 }
 
@@ -205,9 +206,6 @@ void LevelOneScene::Start()
 
 	Game::Instance().SetLevelBoundaries({ 0- m_pBackground->GetWidth()*m_pBackground->GetScale() / 2, m_pBackground->GetWidth()*m_pBackground->GetScale()/2-Config::SCREEN_WIDTH,0, m_pBackground->GetHeight()*m_pBackground->GetScale()-Config::SCREEN_HEIGHT});
 
-
-	
-
 	InitPools();
 	
 	Game::Instance().SetPlayer(m_pPlayer);
@@ -236,6 +234,7 @@ void LevelOneScene::Start()
 
 	m_pPlayer->GetTransform()->position = m_pBackground->GetTransform()->position;
 
+	LoadObstaclesToFile();
 	ImGuiWindowFrame::Instance().SetGuiFunction([this] { GUI_Function(); });
 }
 
@@ -370,6 +369,45 @@ void LevelOneScene::InitFPSCounter()
 	AddChild(m_pFpsCounter, UI);
 }
 
+void LevelOneScene::SaveObstaclesToFile()
+{
+	std::fstream file("../Assets/data/Levels/Level1Obstacles.txt");
+	if (file.is_open())
+	{
+		file.clear();
+
+		for (auto obstacle : m_pObstaclePool->GetPool())
+		{
+			if (!obstacle->textureName.empty())
+			{
+				file << obstacle->textureName << " " << obstacle->GetTransform()->position.x << " " << obstacle->GetTransform()->position.y;
+				file << "\n";
+			}
+		}
+		file.close();
+		std::cout << "Obstacles Saved!\n";
+	}
+}
+
+void LevelOneScene::LoadObstaclesToFile()
+{
+	std::fstream file("../Assets/data/Levels/Level1Obstacles.txt");
+	if (file.is_open())
+	{
+		std::string name;
+		float x, y;
+
+		while (file >> name >> x >> y)
+		{
+			auto temp = new Obstacle(name.c_str(), m_pTotalObstacles[name]->textureName.c_str());
+			m_pObstaclePool->Spawn(temp);
+
+			temp->GetTransform()->position = { x, y };
+		}
+		file.close();
+	}
+}
+
 void LevelOneScene::GUI_Function()
 {
 	// Always open with a NewFrame
@@ -397,6 +435,10 @@ void LevelOneScene::GUI_Function()
 	if (Game::Instance().GetLevelEditorMode()) {
 		if (ImGui::Checkbox("Enable Obstacle Deletion Mode", &isObstacleDeleting)) {
 
+		}
+		if (ImGui::Button("Save Obstacles"))
+		{
+			SaveObstaclesToFile();
 		}
 	}
 
