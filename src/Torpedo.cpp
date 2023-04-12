@@ -83,8 +83,8 @@ void Torpedo::Start()
     SetHeight(20);
     // Setting velocity and speed
     SetVeloDamp({0.9975,0.9975});
-    SetSpeed(200.0f);
-    SetMaxSpeed(300.0f);
+    SetSpeed(400.0f);
+    SetMaxSpeed(500.0f);
     // Setting specific stats (dmg, delete buffer, etc.) as well as getting mouse position
     m_mousePos = Util::GetMousePos();
     SetDeleteBuffer(100.0f);
