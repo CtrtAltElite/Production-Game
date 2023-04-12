@@ -81,6 +81,11 @@ void Label::SetSize(const int new_size)
 	SetHeight(static_cast<int>(size.y));
 }
 
+std::string Label::GetText()
+{
+	return m_text;
+}
+
 /**
  * \brief Private function that builds a font id to be used with TextureManager
  */

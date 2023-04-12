@@ -194,9 +194,6 @@
     <ClCompile Include="..\src\StartScene.cpp">
       <Filter>Scenes\MainScenes</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\PrologueScene.cpp">
-      <Filter>Scenes\LevelScenes</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\LevelOneScene.cpp">
       <Filter>Scenes\LevelScenes</Filter>
     </ClCompile>
@@ -229,6 +226,9 @@
     </ClCompile>
     <ClCompile Include="..\src\GameOverScene.cpp">
       <Filter>Scenes\MainScenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\TutorialScene.cpp">
+      <Filter>Scenes\LevelScenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -422,9 +422,6 @@
     <ClInclude Include="..\src\StartScene.h">
       <Filter>Scenes\MainScenes</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\PrologueScene.h">
-      <Filter>Scenes\LevelScenes</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\LevelOneScene.h">
       <Filter>Scenes\LevelScenes</Filter>
     </ClInclude>
@@ -457,6 +454,9 @@
     </ClInclude>
     <ClInclude Include="..\src\GameOverScene.h">
       <Filter>Scenes\MainScenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\TutorialScene.h">
+      <Filter>Scenes\LevelScenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

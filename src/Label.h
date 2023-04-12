@@ -25,6 +25,8 @@ public:
 	void SetText(const std::string& new_text);
 	void SetColour(SDL_Color new_colour) const;
 	void SetSize(int new_size);
+	std::string GetText();
+
 
 private:
 	// private data members

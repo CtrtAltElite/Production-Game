@@ -180,7 +180,6 @@
     <ClCompile Include="..\src\LevelManager.cpp" />
     <ClCompile Include="..\src\MenuPlayer.cpp" />
     <ClCompile Include="..\src\PauseScene.cpp" />
-    <ClCompile Include="..\src\PrologueScene.cpp" />
     <ClCompile Include="..\src\NavigationObject.cpp" />
     <ClCompile Include="..\src\Obstacle.cpp" />
     <ClCompile Include="..\src\Projectile.cpp" />
@@ -195,6 +194,7 @@
     <ClCompile Include="..\src\Swordfish.cpp" />
     <ClCompile Include="..\src\Torpedo.cpp" />
     <ClCompile Include="..\src\Turtle.cpp" />
+    <ClCompile Include="..\src\TutorialScene.cpp" />
     <ClCompile Include="..\src\UIControl.cpp" />
     <ClCompile Include="..\src\DisplayObject.cpp" />
     <ClCompile Include="..\src\EndScene.cpp" />
@@ -250,7 +250,6 @@
     <ClInclude Include="..\src\LevelManager.h" />
     <ClInclude Include="..\src\MenuPlayer.h" />
     <ClInclude Include="..\src\PauseScene.h" />
-    <ClInclude Include="..\src\PrologueScene.h" />
     <ClInclude Include="..\src\NavigationObject.h" />
     <ClInclude Include="..\src\Obstacle.h" />
     <ClInclude Include="..\src\Projectile.h" />
@@ -266,6 +265,7 @@
     <ClInclude Include="..\src\Swordfish.h" />
     <ClInclude Include="..\src\Torpedo.h" />
     <ClInclude Include="..\src\Turtle.h" />
+    <ClInclude Include="..\src\TutorialScene.h" />
     <ClInclude Include="..\src\UIControl.h" />
     <ClInclude Include="..\src\DisplayObject.h" />
     <ClInclude Include="..\src\EndScene.h" />

@@ -108,7 +108,7 @@ void LevelManager::InitLevelSelectionScreens() {
 		nullptr, // No scene
 		new StartScene,
 		new SelectScene,
-		new PrologueScene, // Prologue
+		new TutorialScene, // Tutorial
 		new LevelOneScene, // Level 1
 		new LevelTwoScene, // Level 2
 		new LevelThreeScene, // Level 3

@@ -10,7 +10,7 @@
 // All the level selection screens!
 #include "StartScene.h"
 #include "SelectScene.h"
-#include "PrologueScene.h"
+#include "TutorialScene.h"
 
 #include "LevelOneScene.h"
 #include "LevelTwoScene.h"
