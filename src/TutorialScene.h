@@ -28,9 +28,9 @@ private:
 	ObstaclePool* m_pObstaclePool;
 
 	bool m_isInCutscene = false;
-	bool m_isTyping = false;
+	bool m_isTyping = false;	
 	float timerUntilNextType = 0;
-	float maxTimer = 0.5f;
+	float maxTimer = 0.1f;
 	int stringIterator = 0;
 	std::string current_text;
 
