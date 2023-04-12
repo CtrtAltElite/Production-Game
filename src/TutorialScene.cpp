@@ -37,6 +37,28 @@ void TutorialScene::Update()
 	// Set position of text to the midpoint of the text bar ALWAYS
 	m_pText->GetTransform()->position = { textBar->GetTransform()->position.x * 4.25, textBar->GetTransform()->position.y * 1.5 };
 
+	if (m_isTyping)
+	{
+		// Add text if timer is beyond the max limit!
+
+		if (timerUntilNextType >= maxTimer) {
+			timerUntilNextType = 0.0f;
+			stringIterator++;
+			if (stringIterator >= current_text.size()) {
+				m_isTyping = false;
+				std::cout << "false!";
+			}
+			else {
+				std::cout << current_text[stringIterator];
+				m_pText->SetText(m_pText->GetText() + current_text[stringIterator]);
+			}
+		}
+
+
+		timerUntilNextType += Game::Instance().GetDeltaTime();
+	}
+
+
 	UpdateDisplayList();
 }
 
@@ -59,7 +81,7 @@ void TutorialScene::HandleEvents()
 	}
 	
 	if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_F)) {
-		SayText("hi im winton");
+		SayText("winton");
 	}
 	if (!m_isInCutscene)
 	{
@@ -86,7 +108,7 @@ void TutorialScene::Start()
 	textBar->SetScale(0.75f);
 	AddChild(textBar);
 
-	m_pText = new Label("winton time!!!11!!", "Consolas", 24);
+	m_pText = new Label("winton time!!!11!!", "Dock51", 24);
 	m_pText->SetParent(this);
 	m_pText->GetTransform()->position = { textBar->GetTransform()->position.x * 4.25, textBar->GetTransform()->position.y * 1.5};
 	AddChild(m_pText);
@@ -108,30 +130,13 @@ void TutorialScene::Start()
 }
 
 // Speaks text character by character, although rn since it is in a while loop it does not draw properly -_-
-void TutorialScene::SayText(std::string textToSay)
+void TutorialScene::SayText(const std::string textToSay)
 {
-	float timer = 0;
-	float maxTimer = 1.0f;
 	// Clear text for the new dialogue
 	m_isTyping = true;
-	m_pText->SetText(" ");
+	m_pText->SetText("" + textToSay.front());
 
-	bool currentChar = false;
-
-	for (char character : textToSay)
-	{
-		timer = 0;
-		currentChar = true;
-		while (currentChar)
-		{
-			if (timer >= maxTimer) {
-				m_pText->SetText(m_pText->GetText() + character);
-				currentChar = false;
-			}
-			std::cout << timer << std::endl;
-			timer += Game::Instance().GetDeltaTime();
-		}		
-	}
-	m_isTyping = false;
+	current_text = textToSay;
+	stringIterator = textToSay.length();
 }
 

@@ -22,13 +22,17 @@ public:
 	void HandleEvents() override;
 	void Start() override;
 
-	void SayText(std::string textToSay);
+	void SayText(const std::string textToSay);
 
 private:
 	ObstaclePool* m_pObstaclePool;
 
 	bool m_isInCutscene = false;
 	bool m_isTyping = false;
+	float timerUntilNextType = 0;
+	float maxTimer = 0.5f;
+	int stringIterator = 0;
+	std::string current_text;
 
 	MenuPlayer* m_player{};
 	Background* textBar{};
