@@ -21,11 +21,6 @@ void TutorialScene::Draw()
 {
 	DrawDisplayList();
 	SDL_SetRenderDrawColor(Renderer::Instance().GetRenderer(), 255, 255, 255, 255);
-	if (!m_isTyping)
-	{
-		// Render the text bar! (maybe this entire text thing can be a class later) ;p
-		TextureManager::Instance().DrawScale("textenterBar", m_pText->GetTransform()->scale.x + 5.0f, m_pText->GetTransform()->position.y, 0.25f);
-	}
 }
 
 void TutorialScene::Update()
@@ -44,6 +39,7 @@ void TutorialScene::Update()
 		if (timerUntilNextType >= maxTimer) {
 			timerUntilNextType = 0.0f;
 			stringIterator++;
+			std::cout << stringIterator << std::endl;
 			if (stringIterator >= current_text.length()) {
 				m_isTyping = false;
 				std::cout << "false!";
@@ -96,8 +92,6 @@ void TutorialScene::Start()
 	SoundManager::Instance().Load("../Assets/audio/LevelMusic/SelectScreen/boop.mp3", "Radio", SoundType::SOUND_MUSIC);
 	SoundManager::Instance().PlayMusic("Radio", -1);
 
-	TextureManager::Instance().Load("../Assets/sprites/textbox/TextEnterBar.png", "textenterBar");
-
 	m_pBackground = new Background("../Assets/textures/SelectScreen/select_screen_wide.png", "tutorialScreen");
 	m_pBackground->GetTransform()->position={0, -30};
 	//m_pBackground->SetScale(1.25f);
@@ -108,7 +102,7 @@ void TutorialScene::Start()
 	textBar->SetScale(0.75f);
 	AddChild(textBar);
 
-	m_pText = new Label("winton time!!!11!!", "Dock51", 24);
+	m_pText = new Label("winton time!!!11!!", "Consolas", 24);
 	m_pText->SetParent(this);
 	m_pText->GetTransform()->position = { textBar->GetTransform()->position.x * 4.25, textBar->GetTransform()->position.y * 1.5};
 	AddChild(m_pText);
@@ -136,7 +130,7 @@ void TutorialScene::SayText(const std::string &textToSay)
 	m_pText->SetText(std::string(1, textToSay[0]));
 
 	current_text = textToSay;
-	stringIterator = textToSay.length();
+	stringIterator = 0;
 	m_isTyping = true;
 }
 
