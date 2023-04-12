@@ -21,11 +21,6 @@ void TutorialScene::Draw()
 {
 	DrawDisplayList();
 	SDL_SetRenderDrawColor(Renderer::Instance().GetRenderer(), 255, 255, 255, 255);
-	if (!m_isTyping)
-	{
-		// Render the text bar! (maybe this entire text thing can be a class later) ;p
-		TextureManager::Instance().DrawScale("textenterBar", m_pText->GetTransform()->scale.x + 5.0f, m_pText->GetTransform()->position.y, 0.25f);
-	}
 }
 
 void TutorialScene::Update()
@@ -46,7 +41,6 @@ void TutorialScene::Update()
 			stringIterator++;
 			if (stringIterator >= current_text.size()) {
 				m_isTyping = false;
-				std::cout << "false!";
 			}
 			else {
 				std::cout << current_text[stringIterator];
@@ -108,7 +102,7 @@ void TutorialScene::Start()
 	textBar->SetScale(0.75f);
 	AddChild(textBar);
 
-	m_pText = new Label("winton time!!!11!!", "Dock51", 24);
+	m_pText = new Label("winton time!!!11!!", "Consolas", 24);
 	m_pText->SetParent(this);
 	m_pText->GetTransform()->position = { textBar->GetTransform()->position.x * 4.25, textBar->GetTransform()->position.y * 1.5};
 	AddChild(m_pText);
@@ -134,9 +128,9 @@ void TutorialScene::SayText(const std::string textToSay)
 {
 	// Clear text for the new dialogue
 	m_isTyping = true;
-	m_pText->SetText("" + textToSay.front());
+	m_pText->SetText(std::string(1, textToSay[0]));
 
 	current_text = textToSay;
-	stringIterator = textToSay.length();
+	stringIterator = 0;
 }
 
