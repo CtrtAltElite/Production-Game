@@ -73,10 +73,29 @@ void TutorialScene::HandleEvents()
 	{
 		Game::Instance().Quit();
 	}
-	
-	if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_F)) {
-		SayText("winton");
+
+	if (EventManager::Instance().KeyPressed(SDL_SCANCODE_E))
+	{
+		if (!m_textDisplayed)
+		{
+			m_textDisplayed = true;
+			SayText("Space to move to your mouse cursor. Left click to shoot.");
+		}
 	}
+
+	if (m_textDisplayed)
+	{
+		if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_SPACE))
+		{
+			m_pPlayer->MoveAtMouse();
+		}
+		if (EventManager::Instance().MousePressed(1)) //left mouse button
+		{
+			m_pTorpedoPool->Fire();
+			//SoundManager::Instance().PlaySound("playerShoot"); //ITS SO LOUD LOL
+		}
+	}
+
 	if (!m_isInCutscene)
 	{
 		// Player movement events if we are not in a cutscene.
@@ -91,6 +110,15 @@ void TutorialScene::Start()
 	SoundManager::Instance().PlayMusic("Radio", -1);
 
 	TextureManager::Instance().Load("../Assets/sprites/textbox/TextEnterBar.png", "textenterBar");
+
+	// Player Sprite
+	m_pPlayer = new Player;
+	Game::Instance().SetPlayer(m_pPlayer);
+	m_pPlayer->SetIsCentered(true);
+	m_pPlayer->GetTransform()->position = { Config::SCREEN_WIDTH / 2,Config::SCREEN_HEIGHT / 2 };
+	AddChild(m_pPlayer, PLAYERS);
+	m_playerFacingRight = true;
+
 
 	m_pBackground = new Background("../Assets/textures/SelectScreen/select_screen_wide.png", "tutorialScreen");
 	m_pBackground->GetTransform()->position={0, -30};
@@ -119,12 +147,13 @@ void TutorialScene::Start()
 	temp->GetTransform()->position = glm::vec2(1200, 465);
 	m_pObstaclePool->Spawn(temp);
 
+	SayText("Welcome to the Tutorial! Press E to continue.");
 
 	ImGuiWindowFrame::Instance().SetDefaultGuiFunction();
 }
 
 // Speaks text character by character, although rn since it is in a while loop it does not draw properly -_-
-void TutorialScene::SayText(const std::string textToSay)
+void TutorialScene::SayText(const std::string& textToSay)
 {
 	// Clear text for the new dialogue
 	m_isTyping = true;
