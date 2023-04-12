@@ -9,6 +9,7 @@
 #include "MenuPlayer.h"
 #include "Background.h"
 #include "Obstacle.h"
+#include "Torpedo.h"
 
 class TutorialScene : public Scene {
 public:
@@ -22,7 +23,7 @@ public:
 	void HandleEvents() override;
 	void Start() override;
 
-	void SayText(const std::string textToSay);
+	void SayText(const std::string& textToSay);
 
 private:
 	ObstaclePool* m_pObstaclePool;
@@ -34,7 +35,11 @@ private:
 	int stringIterator = 0;
 	std::string current_text;
 
-	MenuPlayer* m_player{};
+	bool m_textDisplayed = false;
+	bool m_playerFacingRight{};
+
+	TorpedoPool* m_pTorpedoPool{};
+	Player* m_pPlayer{};
 	Background* textBar{};
 	Background* m_pBackground{};
 	Label* m_pText;
