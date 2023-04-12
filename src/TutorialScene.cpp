@@ -10,7 +10,7 @@
 #include "LevelSelectionObject.h"
 #include "LevelManager.h"
 
-TutorialScene::TutorialScene() : m_player(nullptr)
+TutorialScene::TutorialScene() 
 {
 }
 
@@ -87,11 +87,11 @@ void TutorialScene::HandleEvents()
 	{
 		if (EventManager::Instance().IsKeyDown(SDL_SCANCODE_SPACE))
 		{
-			m_pPlayer->MoveAtMouse();
+			
 		}
 		if (EventManager::Instance().MousePressed(1)) //left mouse button
 		{
-			m_pTorpedoPool->Fire();
+			//m_pTorpedoPool->Fire();
 			//SoundManager::Instance().PlaySound("playerShoot"); //ITS SO LOUD LOL
 		}
 	}
@@ -110,14 +110,7 @@ void TutorialScene::Start()
 	SoundManager::Instance().PlayMusic("Radio", -1);
 
 	TextureManager::Instance().Load("../Assets/sprites/textbox/TextEnterBar.png", "textenterBar");
-
-	// Player Sprite
-	m_pPlayer = new Player;
-	Game::Instance().SetPlayer(m_pPlayer);
-	m_pPlayer->SetIsCentered(true);
-	m_pPlayer->GetTransform()->position = { Config::SCREEN_WIDTH / 2,Config::SCREEN_HEIGHT / 2 };
-	AddChild(m_pPlayer, PLAYERS);
-	m_playerFacingRight = true;
+	
 
 
 	m_pBackground = new Background("../Assets/textures/SelectScreen/select_screen_wide.png", "tutorialScreen");

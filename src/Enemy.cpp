@@ -171,7 +171,7 @@ void EnemyPool::UpdateTargetPlayer(GameObject* targetObject) const
 
 void Enemy::Move()
 {
-    if (m_pTargetPlayer != nullptr && Util::Distance(GetTransform()->position,m_pTargetPlayer->GetTransform()->position)<300.00f)
+    if (m_pTargetPlayer != nullptr && Util::Distance(GetTransform()->position,m_pTargetPlayer->GetTransform()->position)<400.00f)
     {
         // Getting initial instances of position, velocity, and target position
         const float dt = Game::Instance().GetDeltaTime();

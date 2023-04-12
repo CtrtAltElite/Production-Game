@@ -36,10 +36,8 @@ private:
 	std::string current_text;
 
 	bool m_textDisplayed = false;
-	bool m_playerFacingRight{};
 
 	TorpedoPool* m_pTorpedoPool{};
-	Player* m_pPlayer{};
 	Background* textBar{};
 	Background* m_pBackground{};
 	Label* m_pText;

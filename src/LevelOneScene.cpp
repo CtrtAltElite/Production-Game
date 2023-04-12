@@ -94,6 +94,10 @@ void LevelOneScene::Update()
 				auto shark = new Shark;
 				shark->SetTargetPlayer(m_pPlayer);
 				m_pEnemyPool->Spawn(shark);
+				
+				shark = new Shark;
+				shark->SetTargetPlayer(m_pPlayer);
+				m_pEnemyPool->Spawn(shark);
 
 				auto stingray = new Stingray;
 				stingray->GetTransform()->position = glm::vec2(Camera::Instance().GetTransform()->position.x, rand() % 5 + m_pPlayer->GetTransform()->position.y);
