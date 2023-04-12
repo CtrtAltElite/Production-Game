@@ -10,7 +10,7 @@
 #include "LevelSelectionObject.h"
 #include "LevelManager.h"
 
-TutorialScene::TutorialScene() : m_player(nullptr)
+TutorialScene::TutorialScene() : m_player(nullptr), m_pObstaclePool(nullptr)
 {
 }
 
@@ -44,13 +44,13 @@ void TutorialScene::Update()
 		if (timerUntilNextType >= maxTimer) {
 			timerUntilNextType = 0.0f;
 			stringIterator++;
-			if (stringIterator >= current_text.size()) {
+			if (stringIterator >= current_text.length()) {
 				m_isTyping = false;
 				std::cout << "false!";
 			}
 			else {
 				std::cout << current_text[stringIterator];
-				m_pText->SetText(m_pText->GetText() + current_text[stringIterator]);
+				m_pText->SetText(m_pText->GetText() + std::string(1, current_text[stringIterator]));
 			}
 		}
 
@@ -130,13 +130,13 @@ void TutorialScene::Start()
 }
 
 // Speaks text character by character, although rn since it is in a while loop it does not draw properly -_-
-void TutorialScene::SayText(const std::string textToSay)
+void TutorialScene::SayText(const std::string &textToSay)
 {
 	// Clear text for the new dialogue
-	m_isTyping = true;
-	m_pText->SetText("" + textToSay.front());
+	m_pText->SetText(std::string(1, textToSay[0]));
 
 	current_text = textToSay;
 	stringIterator = textToSay.length();
+	m_isTyping = true;
 }
 

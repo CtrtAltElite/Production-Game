@@ -22,7 +22,7 @@ public:
 	void HandleEvents() override;
 	void Start() override;
 
-	void SayText(const std::string textToSay);
+	void SayText(const std::string &textToSay);
 
 private:
 	ObstaclePool* m_pObstaclePool;
@@ -31,7 +31,7 @@ private:
 	bool m_isTyping = false;
 	float timerUntilNextType = 0;
 	float maxTimer = 0.5f;
-	int stringIterator = 0;
+	size_t stringIterator = 0;
 	std::string current_text;
 
 	MenuPlayer* m_player{};
