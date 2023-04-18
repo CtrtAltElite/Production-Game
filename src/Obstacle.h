@@ -9,6 +9,7 @@ public:
 	// constructors
 	Obstacle();
 	Obstacle(const char* fileName, const char* texture);
+	Obstacle(const char* fileName, const char* texture, const char* txtName);
 
 	// destructor
 	~Obstacle() override;
@@ -26,9 +27,9 @@ public:
 	std::string textureName;
 	std::string tag;
 
-
 private:
 	bool m_deleteMe;
+	bool m_isSpriteSheet;
 };
 
 class ObstaclePool : public DisplayObject

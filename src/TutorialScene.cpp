@@ -145,7 +145,7 @@ void TutorialScene::Start()
 	ImGuiWindowFrame::Instance().SetDefaultGuiFunction();
 }
 
-// Speaks text character by character, although rn since it is in a while loop it does not draw properly -_-
+// Speaks text character by character
 void TutorialScene::SayText(const std::string& textToSay)
 {
 	// Clear text for the new dialogue

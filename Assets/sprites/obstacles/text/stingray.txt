@@ -1,0 +1,4 @@
+stingray1 0 0 64 64
+stingray2 64 0 64 64
+stingray3 128 0 64 64
+stingray4 192 0 64 64

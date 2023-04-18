@@ -137,7 +137,7 @@ void StartScene::ChangeCurrentState(START_SCENE_STATE curState)
 
 
 	case ASK_TUTORIAL:
-		tempLabel = new Label("Would you like to go through the tutorial?", "Dock51", 60, blue, glm::vec2(1280 / 2, 100));
+		tempLabel = new Label("Tutorial?", "Dock51", 60, blue, glm::vec2(1280 / 2, 100));
 		tempLabel->SetParent(this);
 		AddChild(tempLabel);
 
