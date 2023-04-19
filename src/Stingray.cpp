@@ -7,12 +7,12 @@
 
 Stingray::Stingray()
 {
-    TextureManager::Instance().LoadSpriteSheet(
+    /*TextureManager::Instance().LoadSpriteSheet(
         "../Assets/sprites/stingray_sprite.txt",
         "../Assets/sprites/Stingray_sheet.png",
         "stingray_spritesheet"
-    );
-    SetSpriteSheet(TextureManager::Instance().GetSpriteSheet("stingray_spritesheet"));
+    );*/
+    SetSpriteSheet(TextureManager::Instance().GetSpriteSheet(textureName));
     auto animation = Animation();
 
     animation.name = "move";
@@ -41,7 +41,7 @@ void Stingray::Draw()
             glm::vec2(this->GetWidth() * 0.5f, this->GetHeight() * 0.5f),
             this->GetWidth(), this->GetHeight());
     }
-    TextureManager::Instance().PlayAnimation("stingray_spritesheet", GetAnimation("move"), Camera::Instance().CameraDisplace(this), animVelo, GetTransform()->rotation.r * Util::Rad2Deg - 180, 255, true);
+    TextureManager::Instance().PlayAnimation(textureName, GetAnimation("move"), Camera::Instance().CameraDisplace(this), animVelo, GetTransform()->rotation.r * Util::Rad2Deg - 180, 255, true);
 
     //if (GetFlipped())
     //{

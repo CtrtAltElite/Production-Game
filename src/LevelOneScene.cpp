@@ -99,13 +99,13 @@ void LevelOneScene::Update()
 				shark->SetTargetPlayer(m_pPlayer);
 				m_pEnemyPool->Spawn(shark);
 
-				auto stingray = new Stingray;
-				stingray->GetTransform()->position = glm::vec2(Camera::Instance().GetTransform()->position.x, rand() % 5 + m_pPlayer->GetTransform()->position.y);
-				m_pObstaclePool->Spawn(stingray);
+				//auto stingray = new Stingray;
+				//stingray->GetTransform()->position = glm::vec2(Camera::Instance().GetTransform()->position.x, rand() % 5 + m_pPlayer->GetTransform()->position.y);
+				//m_pObstaclePool->Spawn(stingray);
 
-				auto jellyfish = new Jellyfish;
-				jellyfish->GetTransform()->position = glm::vec2(m_pPlayer->GetTransform()->position.x, m_pPlayer->GetTransform()->position.y - 800.0f);
-				m_pObstaclePool->Spawn(jellyfish);
+				//auto jellyfish = new Jellyfish;
+				//jellyfish->GetTransform()->position = glm::vec2(m_pPlayer->GetTransform()->position.x, m_pPlayer->GetTransform()->position.y - 800.0f);
+				//m_pObstaclePool->Spawn(jellyfish);
 				//m_pEnemyPool->UpdateTargetPlayer(m_pPlayer);
 			}
 			timer -= 0.1f;
@@ -222,11 +222,27 @@ void LevelOneScene::Start()
 	if (obstacleFile.is_open()) {
 		std::string fileName;
 		std::string textureName;
-		while (obstacleFile >> fileName >> textureName) {
-			auto temp = new Obstacle(fileName.c_str(), textureName.c_str());
-			m_pTotalObstacles.emplace(std::pair<std::string, Obstacle*>(fileName, temp));
+		std::string textFile;
+		std::string imageType;
+		while (!obstacleFile.eof()) {
+			obstacleFile >> imageType;
+			if (imageType == "image") // it is an image
+			{
+				obstacleFile >> textureName >> fileName;
+				auto temp = new Obstacle(textureName.c_str(), fileName.c_str());
+				m_pTotalObstacles.emplace(std::pair<std::string, Obstacle*>(textureName, temp));
+				std::cout << imageType << std::endl << fileName << std::endl << textureName << std::endl;
+			}
+			else if (imageType == "spritesheet") { // it is a spritesheet
+				obstacleFile >> textureName >> fileName >> textFile;
+				auto temp = new Obstacle(textureName.c_str(), fileName.c_str(), textFile.c_str());
+				m_pTotalObstacles.emplace(std::pair<std::string, Obstacle*>(textureName, temp));
+				std::cout << imageType << std::endl << fileName << std::endl << textureName << std::endl;
+			}
+			else { // Oopsies an error ran.
 
-			std::cout << fileName << std::endl << textureName << std::endl;
+			}
+
 		}
 		obstacleFile.close();
 	}
@@ -419,8 +435,9 @@ void LevelOneScene::LoadObstaclesToFile()
 		std::string name;
 		float x, y;
 
-		while (file >> name >> x >> y)
+		while (file.eof())
 		{
+			file >> name >> x >> y;
 			auto temp = new Obstacle(name.c_str(), m_pTotalObstacles[name]->textureName.c_str());
 			m_pObstaclePool->Spawn(temp);
 

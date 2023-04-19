@@ -1,3 +1,5 @@
-Rock ../Assets/sprites/obstacles/rock.png
-Henry ../Assets/sprites/obstacles/henry.png
-Sea_Urchin ../Assets/sprites/obstacles/sea_urchin.png
+image Sea_Urchin ../Assets/sprites/obstacles/images/sea_urchin.png 
+spritesheet LandFish ../Assets/sprites/obstacles/images/landFish.png ../Assets/sprites/obstacles/text/landfish.txt
+spritesheet JellyFish ../Assets/sprites/obstacles/images/jellyfish.png ../Assets/sprites/obstacles/text/jellyfish.txt
+spritesheet StingRay ../Assets/sprites/obstacles/images/stingray.png ../Assets/sprites/obstacles/text/stingray.txt
+spritesheet Pufferfish ../Assets/sprites/obstacles/images/pufferfish.png ../Assets/sprites/obstacles/text/pufferfish.txt

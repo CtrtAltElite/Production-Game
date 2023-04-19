@@ -1,0 +1,4 @@
+jellyfish1 0 0 96 96 
+jellyfish2 96 0 96 96
+jellyfish3 192 0 96 96 
+jellyfish4 288 0 96 96

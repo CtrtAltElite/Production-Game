@@ -7,12 +7,12 @@
 
 Jellyfish::Jellyfish()
 {
-	TextureManager::Instance().LoadSpriteSheet(
-		"../Assets/sprites/jellyfish_sprite.txt",
-		"../Assets/sprites/jellyfish-Sheetbig.png",
-		"jellyfish_spritesheet"
-	);
-	SetSpriteSheet(TextureManager::Instance().GetSpriteSheet("jellyfish_spritesheet"));
+	//TextureManager::Instance().LoadSpriteSheet(
+	//	"../Assets/sprites/jellyfish_sprite.txt",
+	//	"../Assets/sprites/jellyfish-Sheetbig.png",
+	//	"jellyfish_spritesheet"
+	//);
+	SetSpriteSheet(TextureManager::Instance().GetSpriteSheet(textureName));
 
 	auto animation = Animation();
 
@@ -44,7 +44,7 @@ void Jellyfish::Draw()
 			this->GetWidth(), this->GetHeight());
 	}
 	//SDL_RenderDrawRectF(Renderer::Instance().GetRenderer(),new SDL_FRect{Camera::Instance().CameraDisplace(this).x,Camera::Instance().CameraDisplace(this).y,static_cast<float>(GetWidth()),static_cast<float>(GetHeight())});
-	TextureManager::Instance().PlayAnimation("jellyfish_spritesheet", GetAnimation("move"), Camera::Instance().CameraDisplace(this), animVelo, GetTransform()->rotation.r * Util::Rad2Deg - 180, 255, true);
+	TextureManager::Instance().PlayAnimation(textureName, GetAnimation("move"), Camera::Instance().CameraDisplace(this), animVelo, GetTransform()->rotation.r * Util::Rad2Deg - 180, 255, true);
 }
 
 void Jellyfish::Update()
