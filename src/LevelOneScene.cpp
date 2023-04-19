@@ -263,7 +263,6 @@ void LevelOneScene::Collision()
 				m_pPlayer->TakeDamage(enemy->GetAttackDamage());
 				//make vector of current collisions and pass enemy and m_pPlayer in. so we can have multiple collisions at the same time and access damage values
 				//Game::Instance().ChangeSceneState(SceneState::END);
-				break;
 			}
 			else
 			{
@@ -300,9 +299,9 @@ void LevelOneScene::Collision()
 					else
 					{
 						//move this somewhere else
-						projectile->GetRigidBody()->currentCollisions.erase(std::remove(projectile->GetRigidBody()->currentCollisions.begin(), projectile->GetRigidBody()->currentCollisions.end(), projectile->GetRigidBody()),
+						projectile->GetRigidBody()->currentCollisions.erase(std::remove(projectile->GetRigidBody()->currentCollisions.begin(), projectile->GetRigidBody()->currentCollisions.end(), enemy->GetRigidBody()),
 							projectile->GetRigidBody()->currentCollisions.end());
-						enemy->GetRigidBody()->currentCollisions.erase(std::remove(enemy->GetRigidBody()->currentCollisions.begin(), enemy->GetRigidBody()->currentCollisions.end(), enemy->GetRigidBody()),
+						enemy->GetRigidBody()->currentCollisions.erase(std::remove(enemy->GetRigidBody()->currentCollisions.begin(), enemy->GetRigidBody()->currentCollisions.end(), projectile->GetRigidBody()),
 							enemy->GetRigidBody()->currentCollisions.end());
 						if (projectile->GetRigidBody()->currentCollisions.empty())
 						{
@@ -329,6 +328,25 @@ void LevelOneScene::Collision()
 		{
 			std::cout << "obstacle collision" << std::endl;
 			CollisionManager::ResolveCollisions(m_pPlayer, obstacle);
+		}
+		for (auto proj : m_pTorpedoPool->GetPool())
+		{
+			if(CollisionManager::AABBCheck(proj, obstacle))
+			{
+				proj->GetRigidBody()->isColliding = true;
+				proj->GetRigidBody()->currentCollisions.push_back(obstacle->GetRigidBody());
+			}
+			else
+			{
+				proj->GetRigidBody()->currentCollisions.erase(std::remove(proj->GetRigidBody()->currentCollisions.begin(), proj->GetRigidBody()->currentCollisions.end(), obstacle->GetRigidBody()),
+							proj->GetRigidBody()->currentCollisions.end());
+				if (proj->GetRigidBody()->currentCollisions.empty())
+				{
+					proj->GetRigidBody()->isColliding = false;
+				}
+				
+			}
+			
 		}
 
 	}
