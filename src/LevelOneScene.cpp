@@ -15,6 +15,7 @@
 #include "Util.h"
 #include "Layers.h"
 #include "Stingray.h"
+#include "SeaUrchin.h"
 #include "LevelManager.h"
 
 LevelOneScene::LevelOneScene()
@@ -502,6 +503,11 @@ void LevelOneScene::GUI_Function()
 				if (obstacle.first == "JellyFish")
 				{
 					temp = new Jellyfish();
+				}
+				// If sea urchin
+				if (obstacle.first == "Sea_Urchin")
+				{
+					temp = new SeaUrchin();
 				}
 
 				if (temp != nullptr)

@@ -230,6 +230,9 @@
     <ClCompile Include="..\src\TutorialScene.cpp">
       <Filter>Scenes\LevelScenes</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\SeaUrchin.cpp">
+      <Filter>Enemies\ObstacleTypes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\CollisionManager.h">
@@ -457,6 +460,9 @@
     </ClInclude>
     <ClInclude Include="..\src\TutorialScene.h">
       <Filter>Scenes\LevelScenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\SeaUrchin.h">
+      <Filter>Enemies\ObstacleTypes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

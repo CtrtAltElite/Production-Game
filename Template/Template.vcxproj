@@ -186,6 +186,7 @@
     <ClCompile Include="..\src\Pufferfish.cpp" />
     <ClCompile Include="..\src\RestartButton.cpp" />
     <ClCompile Include="..\src\Sardine.cpp" />
+    <ClCompile Include="..\src\SeaUrchin.cpp" />
     <ClCompile Include="..\src\SelectScene.cpp" />
     <ClCompile Include="..\src\Shark.cpp" />
     <ClCompile Include="..\src\Sprite.cpp" />
@@ -256,6 +257,7 @@
     <ClInclude Include="..\src\Pufferfish.h" />
     <ClInclude Include="..\src\RestartButton.h" />
     <ClInclude Include="..\src\Sardine.h" />
+    <ClInclude Include="..\src\SeaUrchin.h" />
     <ClInclude Include="..\src\SelectScene.h" />
     <ClInclude Include="..\src\Shark.h" />
     <ClInclude Include="..\src\SoundType.h" />

@@ -24,6 +24,7 @@ enum class GameObjectType {
 	TURTLE,
 	SWORDFISH,
 	PUFFERFISH,
-	JELLYFISH
+	JELLYFISH,
+	SEA_URCHIN
 };
 #endif /* defined (__GAME_OBJECT_TYPE__) */
