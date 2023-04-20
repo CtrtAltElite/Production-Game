@@ -7,11 +7,12 @@
 
 Jellyfish::Jellyfish()
 {
-	//TextureManager::Instance().LoadSpriteSheet(
-	//	"../Assets/sprites/jellyfish_sprite.txt",
-	//	"../Assets/sprites/jellyfish-Sheetbig.png",
-	//	"jellyfish_spritesheet"
-	//);
+	textureName = "JellyFish";
+	TextureManager::Instance().LoadSpriteSheet(
+		"../Assets/sprites/obstacles/text/jellyfish.txt",
+		"../Assets/sprites/obstacles/images/jellyfish.png",
+		textureName
+	);
 	SetSpriteSheet(TextureManager::Instance().GetSpriteSheet(textureName));
 
 	auto animation = Animation();

@@ -4,6 +4,8 @@
 // required for IMGUI
 #include "InputType.h"
 
+#include <typeinfo>
+
 #include "Camera.h"
 #include "imgui.h"
 #include "imgui_sdl.h"
@@ -234,6 +236,7 @@ void LevelOneScene::Start()
 				std::cout << imageType << std::endl << fileName << std::endl << textureName << std::endl;
 			}
 			else if (imageType == "spritesheet") { // it is a spritesheet
+				// TODO: make a switch case for each obstacle
 				obstacleFile >> textureName >> fileName >> textFile;
 				auto temp = new Obstacle(textureName.c_str(), fileName.c_str(), textFile.c_str());
 				m_pTotalObstacles.emplace(std::pair<std::string, Obstacle*>(textureName, temp));
@@ -420,7 +423,7 @@ void LevelOneScene::LoadObstaclesToFile()
 		while (file.eof())
 		{
 			file >> name >> x >> y;
-			auto temp = new Obstacle(name.c_str(), m_pTotalObstacles[name]->textureName.c_str());
+			Obstacle* temp = m_pTotalObstacles[name];
 			m_pObstaclePool->Spawn(temp);
 
 			temp->GetTransform()->position = { x, y };
@@ -472,13 +475,26 @@ void LevelOneScene::GUI_Function()
 		if (ImGui::Button(obstacle.first.c_str()))
 		{
 			if (Game::Instance().GetLevelEditorMode()) {
-				const auto temp = new Obstacle(obstacle.first.c_str(), obstacle.second->textureName.c_str());
+				
+				Obstacle* temp = nullptr;
+				
+				// multiple if statements is not the greatest, buuuut whatever :')
 
-				m_isObstacleBeingPlaced = true;
-				temp->m_isPlacing = true;
+				// If jellyfish
+				if (obstacle.first == "JellyFish")
+				{
+					temp = new Jellyfish();
+				}
 
-				m_pObstaclePool->Spawn(temp);
-				std::cout << obstacle.first;
+				if (temp != nullptr)
+				{
+					m_isObstacleBeingPlaced = true;
+					temp->m_isPlacing = true;
+
+					m_pObstaclePool->Spawn(temp);
+					std::cout << obstacle.first;
+				}
+				
 			}
 			else {
 				ImGui::SameLine();
