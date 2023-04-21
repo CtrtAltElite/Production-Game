@@ -64,6 +64,7 @@ private:
 	bool m_isMouseHeld;
 	bool m_isObstacleBeingPlaced;
 
+	Obstacle* CheckWhatObstacleToSpawn(std::string name);
 
 	// Input Control
 	int m_pCurrentInputType{};

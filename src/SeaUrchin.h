@@ -13,7 +13,8 @@ public:
 	void Update() override;
 	void Clean() override;
 private:
-	float randomDecreasingNumber;
+	float randomDecreasingNumberX;
+	float randomDecreasingNumberY;
 };
 
 #endif //!__SEA_URCHIN_H__

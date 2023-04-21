@@ -71,7 +71,7 @@ void LevelOneScene::Update()
 					m_isObstacleBeingPlaced = false;
 				}
 			}
-		}
+		}	
 		
 	}
 
@@ -171,6 +171,38 @@ void LevelOneScene::HandleEvents()
 	if (!LevelManager::IsLevelPaused() && !LevelManager::IsGameOver() && !Game::Instance().GetLevelEditorMode()) {
 		GetPlayerInput();
 	}
+}
+
+// Helps to figure out which obstacle should be spawned in!
+Obstacle* LevelOneScene::CheckWhatObstacleToSpawn(std::string name)
+{
+	// Bleh, I dislike string literals for this, really does not help.
+	// If jellyfish
+	if (name == "JellyFish")
+	{
+		return new Jellyfish();
+	}
+	// If sea urchin
+	if (name == "SeaUrchin")
+	{
+		return new SeaUrchin();
+	}
+	// If pufferfish
+	if (name == "Pufferfish")
+	{
+		// return new Pufferfish();
+	}
+	// If stingray
+	if (name == "StingRay")
+	{
+		return new Stingray();
+	}
+	// If landfish
+	if (name == "LandFish")
+	{
+		// return new LandFish();
+	}
+	return nullptr;
 }
 
 void LevelOneScene::GetPlayerInput()
@@ -439,10 +471,11 @@ void LevelOneScene::LoadObstaclesToFile()
 		std::string name;
 		float x, y;
 
-		while (file.eof())
+		while (!file.eof())
 		{
 			file >> name >> x >> y;
-			Obstacle* temp = m_pTotalObstacles[name];
+			std::cout << name << std::endl;
+			Obstacle* temp = CheckWhatObstacleToSpawn(name);
 			m_pObstaclePool->Spawn(temp);
 
 			temp->GetTransform()->position = { x, y };
@@ -495,21 +528,8 @@ void LevelOneScene::GUI_Function()
 		{
 			if (Game::Instance().GetLevelEditorMode()) {
 				
-				Obstacle* temp = nullptr;
+				Obstacle* temp = CheckWhatObstacleToSpawn(obstacle.first);
 				
-				// multiple if statements is not the greatest, buuuut whatever :')
-
-				// If jellyfish
-				if (obstacle.first == "JellyFish")
-				{
-					temp = new Jellyfish();
-				}
-				// If sea urchin
-				if (obstacle.first == "Sea_Urchin")
-				{
-					temp = new SeaUrchin();
-				}
-
 				if (temp != nullptr)
 				{
 					m_isObstacleBeingPlaced = true;
@@ -518,7 +538,6 @@ void LevelOneScene::GUI_Function()
 					m_pObstaclePool->Spawn(temp);
 					std::cout << obstacle.first;
 				}
-				
 			}
 			else {
 				ImGui::SameLine();

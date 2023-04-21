@@ -7,11 +7,13 @@
 
 Stingray::Stingray()
 {
-    /*TextureManager::Instance().LoadSpriteSheet(
-        "../Assets/sprites/stingray_sprite.txt",
-        "../Assets/sprites/Stingray_sheet.png",
-        "stingray_spritesheet"
-    );*/
+    textureName = "stingray";
+    TextureManager::Instance().LoadSpriteSheet(
+        "../Assets/sprites/obstacles/text/stingray.txt",
+        "../Assets/sprites/obstacles/images/stingray.png",
+        textureName
+    );
+
     SetSpriteSheet(TextureManager::Instance().GetSpriteSheet(textureName));
     auto animation = Animation();
 

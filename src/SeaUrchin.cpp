@@ -14,6 +14,10 @@ SeaUrchin::SeaUrchin()
 
 	GetRigidBody()->mass = 1.0f;
 	SetType(GameObjectType::SEA_URCHIN);
+
+	randomDecreasingNumberX = rand() % 4;
+	randomDecreasingNumberY = rand() % 4;
+
 }
 
 void SeaUrchin::Draw()
@@ -34,25 +38,25 @@ void SeaUrchin::Update()
 	GetTransform()->position.x = Util::Clamp(GetTransform()->position.x, Game::Instance().GetLevelBoundaries().x, Game::Instance().GetLevelBoundaries().y);
 	GetTransform()->position.y = Util::Clamp(GetTransform()->position.y, Game::Instance().GetLevelBoundaries().z, Game::Instance().GetLevelBoundaries().w);
 
-	if (GetTransform()->position.x >= Game::Instance().GetLevelBoundaries().x)
+	if (GetTransform()->position.x <= Game::Instance().GetLevelBoundaries().x)
 	{
-		randomDecreasingNumber = rand() % 4;
+		randomDecreasingNumberX = rand() % 4;
 	}
-	else if (GetTransform()->position.x <= Game::Instance().GetLevelBoundaries().y)
+	else if (GetTransform()->position.x >= Game::Instance().GetLevelBoundaries().y)
 	{
-		randomDecreasingNumber = -(rand() % 4);
+		randomDecreasingNumberX = -(rand() % 4);
 	}
-	if (GetTransform()->position.y >= Game::Instance().GetLevelBoundaries().z)
+	if (GetTransform()->position.y <= Game::Instance().GetLevelBoundaries().z)
 	{
-		randomDecreasingNumber = -(rand() % 4);
+		randomDecreasingNumberY = -(rand() % 4);
 	}
-	else if (GetTransform()->position.y <= Game::Instance().GetLevelBoundaries().w)
+	else if (GetTransform()->position.y >= Game::Instance().GetLevelBoundaries().w)
 	{
-		randomDecreasingNumber = rand() % 4;
+		randomDecreasingNumberY = rand() % 4;
 	}
 
-	GetTransform()->position.x += randomDecreasingNumber;
-	GetTransform()->position.y += randomDecreasingNumber;
+	GetTransform()->position.x += randomDecreasingNumberX;
+	GetTransform()->position.y += randomDecreasingNumberY;
 }
 
 void SeaUrchin::Clean()
