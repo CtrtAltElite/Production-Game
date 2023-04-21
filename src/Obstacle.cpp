@@ -30,8 +30,9 @@ Obstacle::Obstacle()
 	tag = "obstacle";
 }
 
-Obstacle::Obstacle(const char* fileName, const char* texture)
+Obstacle::Obstacle(const char* fileName, const char* texture, int scale)
 {
+	m_scale = scale;
 	TextureManager::Instance().Load(texture, fileName);
 
 	textureName = fileName;
@@ -84,11 +85,10 @@ void Obstacle::Draw()
 		Util::DrawRect(Camera::Instance().CameraDisplace(this) -
 			glm::vec2(this->GetWidth() * 0.5f, this->GetHeight() * 0.5f),
 			this->GetWidth(), this->GetHeight());
-		
 	}
 	if (!m_isSpriteSheet)
 	{
-		TextureManager::Instance().Draw(textureName, Camera::Instance().CameraDisplace(this), 0, 255, true);
+		TextureManager::Instance().DrawScale(textureName, Camera::Instance().CameraDisplace(this).x, Camera::Instance().CameraDisplace(this).y, m_scale, 0, 255, true);
 	}
 }
 

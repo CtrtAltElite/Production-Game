@@ -289,6 +289,14 @@ void LevelOneScene::Start()
 
 	InitFPSCounter();
 
+	Obstacle* bgObj = new Obstacle("firstLevelObstacles", "../Assets/sprites/obstacles/levelimages/firstLevelObstacles.png", 3);
+	
+
+	bgObj->GetTransform()->position = m_pBackground->GetTransform()->position;
+
+
+	m_pObstaclePool->Spawn(bgObj);
+
 	m_pPlayer->GetTransform()->position = m_pBackground->GetTransform()->position;
 
 	LoadObstaclesToFile();

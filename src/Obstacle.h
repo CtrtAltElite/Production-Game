@@ -8,7 +8,7 @@ class Obstacle : virtual public DisplayObject
 public:
 	// constructors
 	Obstacle();
-	Obstacle(const char* fileName, const char* texture);
+	Obstacle(const char* fileName, const char* texture, int scale = 1);
 	Obstacle(const char* fileName, const char* texture, const char* txtName);
 
 	// destructor
@@ -30,6 +30,7 @@ public:
 private:
 	bool m_deleteMe;
 	bool m_isSpriteSheet;
+	int m_scale;
 };
 
 class ObstaclePool : public DisplayObject
