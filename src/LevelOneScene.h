@@ -12,6 +12,7 @@
 #include "Torpedo.h"
 #include "Enemy.h"
 #include "Shark.h"
+#include "Pufferfish.h"
 #include <string>
 #include <fstream>
 #include <map>

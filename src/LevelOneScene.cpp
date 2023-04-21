@@ -16,6 +16,7 @@
 #include "Layers.h"
 #include "Stingray.h"
 #include "SeaUrchin.h"
+#include "LandFish.h"
 #include "LevelManager.h"
 
 LevelOneScene::LevelOneScene()
@@ -190,7 +191,7 @@ Obstacle* LevelOneScene::CheckWhatObstacleToSpawn(std::string name)
 	// If pufferfish
 	if (name == "Pufferfish")
 	{
-		// return new Pufferfish();
+		return new Pufferfish();
 	}
 	// If stingray
 	if (name == "StingRay")
@@ -200,7 +201,7 @@ Obstacle* LevelOneScene::CheckWhatObstacleToSpawn(std::string name)
 	// If landfish
 	if (name == "LandFish")
 	{
-		// return new LandFish();
+		return new LandFish();
 	}
 	return nullptr;
 }

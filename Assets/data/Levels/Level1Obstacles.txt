@@ -1,3 +1,6 @@
-JellyFish 202 349.2
-SeaUrchin -96 264.2
-
+JellyFish 202 1939.2
+SeaUrchin -708 2882
+SeaUrchin -602 1638.2
+Pufferfish 23.5187 619.399
+Pufferfish 23.5187 619.399
+LandFish -214 317.6

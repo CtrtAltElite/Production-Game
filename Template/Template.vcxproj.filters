@@ -155,9 +155,6 @@
     <ClCompile Include="..\src\Carl.cpp">
       <Filter>Enemies\EnemyTypes</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Pufferfish.cpp">
-      <Filter>Enemies\EnemyTypes</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\Shark.cpp">
       <Filter>Enemies\EnemyTypes</Filter>
     </ClCompile>
@@ -231,6 +228,12 @@
       <Filter>Scenes\LevelScenes</Filter>
     </ClCompile>
     <ClCompile Include="..\src\SeaUrchin.cpp">
+      <Filter>Enemies\ObstacleTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Pufferfish.cpp">
+      <Filter>Enemies\ObstacleTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\LandFish.cpp">
       <Filter>Enemies\ObstacleTypes</Filter>
     </ClCompile>
   </ItemGroup>
@@ -386,9 +389,6 @@
     <ClInclude Include="..\src\Carl.h">
       <Filter>Enemies\EnemyTypes</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Pufferfish.h">
-      <Filter>Enemies\EnemyTypes</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\Shark.h">
       <Filter>Enemies\EnemyTypes</Filter>
     </ClInclude>
@@ -462,6 +462,12 @@
       <Filter>Scenes\LevelScenes</Filter>
     </ClInclude>
     <ClInclude Include="..\src\SeaUrchin.h">
+      <Filter>Enemies\ObstacleTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Pufferfish.h">
+      <Filter>Enemies\ObstacleTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\LandFish.h">
       <Filter>Enemies\ObstacleTypes</Filter>
     </ClInclude>
   </ItemGroup>
