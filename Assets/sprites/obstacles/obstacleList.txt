@@ -3,3 +3,8 @@ spritesheet LandFish ../Assets/sprites/obstacles/images/landFish.png ../Assets/s
 spritesheet JellyFish ../Assets/sprites/obstacles/images/jellyfish.png ../Assets/sprites/obstacles/text/jellyfish.txt
 spritesheet StingRay ../Assets/sprites/obstacles/images/stingray.png ../Assets/sprites/obstacles/text/stingray.txt
 spritesheet Pufferfish ../Assets/sprites/obstacles/images/pufferfish.png ../Assets/sprites/obstacles/text/pufferfish.txt
+image LongLeft ../Assets/sprites/obstacles/levelImages/FirstLevel/LeftBotObstacle.png
+image CurveLeft  ../Assets/sprites/obstacles/levelImages/FirstLevel/LeftTopObstacle.png
+image StraightRight ../Assets/sprites/obstacles/levelImages/FirstLevel/RightBotObstacle.png
+image curveDownRight ../Assets/sprites/obstacles/levelImages/FirstLevel/RightMidObstacle.png
+image curveUpRight ../Assets/sprites/obstacles/levelImages/FirstLevel/RightTopObstacle.png

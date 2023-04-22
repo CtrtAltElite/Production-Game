@@ -203,7 +203,13 @@ Obstacle* LevelOneScene::CheckWhatObstacleToSpawn(std::string name)
 	{
 		return new LandFish();
 	}
-	return nullptr;
+	if (m_pTotalObstacles.size() != 1)
+	{
+		return m_pTotalObstacles[name];
+	}
+	else {
+		return nullptr;
+	}
 }
 
 void LevelOneScene::GetPlayerInput()
@@ -485,9 +491,16 @@ void LevelOneScene::LoadObstaclesToFile()
 			file >> name >> x >> y;
 			std::cout << name << std::endl;
 			Obstacle* temp = CheckWhatObstacleToSpawn(name);
-			m_pObstaclePool->Spawn(temp);
+			if (temp != nullptr)
+			{
+				m_pObstaclePool->Spawn(temp);
 
-			temp->GetTransform()->position = { x, y };
+				temp->GetTransform()->position = { x, y };
+			}
+			else {
+				std::cout << "Error loading obstacle from file to game!\n";
+			}
+			
 		}
 		file.close();
 	}
