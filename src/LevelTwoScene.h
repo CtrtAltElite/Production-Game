@@ -12,11 +12,14 @@
 #include "Torpedo.h"
 #include "Enemy.h"
 #include "Shark.h"
+#include "Pufferfish.h"
 #include <string>
 #include <fstream>
 #include <map>
 
-class LevelTwoScene final : public Scene
+#include "PlayScene.h"
+
+class LevelTwoScene final : public PlayScene
 {
 public:
 	LevelTwoScene();
@@ -29,38 +32,16 @@ public:
 	void HandleEvents() override;
 	void Start() override;
 	
+
 	// Specific functions dedicated to PlayScene
-	void Collision();
-	void InitPools();
-	void InitFPSCounter();
+	void Collision() override;
+	void InitPools() override;
+	void SaveObstaclesToFile();
+	void LoadObstaclesToFile();
 
-private:
-	// IMGUI Function
-	void GUI_Function();
-	std::string m_guiTitle;
-
-	Player* m_pPlayer{};
-
-	// Objects for the PlayScene
-	Background* m_pBackground{};
-	ObstaclePool* m_pObstaclePool{};
-	EnemyPool* m_pEnemyPool{};
-	TorpedoPool* m_pTorpedoPool{};
-	bool m_playerFacingRight{};
-	Label* m_pFpsCounter{};
-	float timer;
-
-	// Variables for grabbing total obstacles and storing them
-	std::map<std::string, Obstacle*> m_pTotalObstacles;
-
-	// Level Editor variables
-	bool isLevelEditing;
-
-	// Input Control
-	int m_pCurrentInputType{};
-	void GetPlayerInput();
 	
 
+private:
 };
 
 #endif /* defined (__LEVEL_TWO_SCENE_H__) */

@@ -11,6 +11,9 @@
 #include "Obstacle.h"
 #include "Torpedo.h"
 #include "Enemy.h"
+#include "LandFish.h"
+#include "Pufferfish.h"
+#include "SeaUrchin.h"
 #include "Shark.h"
 #include <string>
 #include <fstream>
@@ -25,22 +28,60 @@ public:
 	PlayScene();
 	~PlayScene() override;
 
-	// Scene LifeCycle Functions
+	// Inherited via Scene
 	void Draw() override;
 	void Update() override;
 	void Clean() override;
 	void HandleEvents() override;
 	void Start() override;
+	
 
 	// Specific functions dedicated to PlayScene
-	void Collision();
-	void InitPools();
+	virtual void Collision();
+	virtual void InitPools();
 	void InitFPSCounter();
+
+	std::string GetGuiTitle();
+	Player* GetPlayer();
+	Background* GetBackground();
+	ObstaclePool* GetObstaclePool();
+	EnemyPool* GetEnemyPool();
+	TorpedoPool* GetTorpedoPool();
+	bool GetPlayerFacingRight();
+	Label* GetFPSCounter();
+	float GetTimer();
+	std::map<std::string, Obstacle*> GetTotalObstacles();
+	bool GetIsLevelEditing();
+	bool GetIsObstacleDeleting();
+	bool GetIsMouseHeld();
+	bool GetIsObstacleBeingPlaced();
+	bool GetCurrentInputType();
+
+	void SetGuiTitle(std::string title);
+	void SetPlayer(Player* player);
+	void SetBackground(Background* background);
+	void SetObstaclePool(ObstaclePool* pool);
+	void SetEnemyPool(EnemyPool* pool);
+	void SetTorpedoPool(TorpedoPool* pool);
+	void SetPlayerFacingRight(bool facing);
+	void SetFPSCounter(Label* counter);
+	void SetTimer(float time);
+	void SetTotalObstacles(std::map<std::string, Obstacle*> totalObstacles);
+	void SetIsLevelEditing(bool editing);
+	void SetIsObstacleDeleting(bool deleting);
+	void SetIsMouseHeld(bool held);
+	void SetIsObstacleBeingPlaced(bool placed);
+	void SetCurrentInputType(bool type);
+
+	Obstacle* CheckWhatObstacleToSpawn(std::string name);
+
+	void GetPlayerInput();
+	void GUI_Function();
+
 private:
 	// IMGUI Function
-	void GUI_Function();
-	std::string m_guiTitle;
 	
+	std::string m_guiTitle;
 	Player* m_pPlayer{};
 
 	// Objects for the PlayScene
@@ -51,16 +92,21 @@ private:
 	bool m_playerFacingRight{};
 	Label* m_pFpsCounter{};
 	float timer;
-	
+
 	// Variables for grabbing total obstacles and storing them
 	std::map<std::string, Obstacle*> m_pTotalObstacles;
 
+
 	// Level Editor variables
 	bool isLevelEditing;
+	bool isObstacleDeleting;
+	bool m_isMouseHeld;
+	bool m_isObstacleBeingPlaced;
+
 	
+
 	// Input Control
 	int m_pCurrentInputType{};
-	void GetPlayerInput();
 };
 
 #endif /* defined (__PLAY_SCENE__) */

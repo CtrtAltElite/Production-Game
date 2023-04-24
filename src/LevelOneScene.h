@@ -17,8 +17,10 @@
 #include <fstream>
 #include <map>
 
+#include "PlayScene.h"
 
-class LevelOneScene final : public Scene
+
+class LevelOneScene final : public PlayScene
 {
 public:
 	LevelOneScene();
@@ -33,43 +35,15 @@ public:
 	
 
 	// Specific functions dedicated to PlayScene
-	void Collision();
-	void InitPools();
-	void InitFPSCounter();
+	void Collision() override;
+	void InitPools() override;
 	void SaveObstaclesToFile();
 	void LoadObstaclesToFile();
 
+	
+
 private:
-	// IMGUI Function
-	void GUI_Function();
-	std::string m_guiTitle;
-
-	Player* m_pPlayer{};
-
-	// Objects for the PlayScene
-	Background* m_pBackground{};
-	ObstaclePool* m_pObstaclePool{};
-	EnemyPool* m_pEnemyPool{};
-	TorpedoPool* m_pTorpedoPool{};
-	bool m_playerFacingRight{};
-	Label* m_pFpsCounter{};
-	float timer;
-
-	// Variables for grabbing total obstacles and storing them
-	std::map<std::string, Obstacle*> m_pTotalObstacles;
-
-
-	// Level Editor variables
-	bool isLevelEditing;
-	bool isObstacleDeleting;
-	bool m_isMouseHeld;
-	bool m_isObstacleBeingPlaced;
-
-	Obstacle* CheckWhatObstacleToSpawn(std::string name);
-
-	// Input Control
-	int m_pCurrentInputType{};
-	void GetPlayerInput();
+	
 };
 
 #endif /* defined (__LEVEL_ONE_SCENE_H__) */
