@@ -26,7 +26,7 @@ class PlayScene : public Scene
 {
 public:
 	PlayScene();
-	~PlayScene() override;
+	virtual ~PlayScene() = default;
 
 	// Inherited via Scene
 	void Draw() override;
@@ -75,6 +75,7 @@ public:
 
 	Obstacle* CheckWhatObstacleToSpawn(std::string name);
 
+	void AddToTotalObstacle(std::string name, Obstacle* obstacle);
 	void GetPlayerInput();
 	void GUI_Function();
 

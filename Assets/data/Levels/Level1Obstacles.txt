@@ -1,7 +1,0 @@
-firstLevelObstacles -800 0
-JellyFish 202 4145.2
-SeaUrchin -708 2882
-SeaUrchin -796 2883
-
-Pufferfish 23.5187 619.399
-LandFish -214 317.6

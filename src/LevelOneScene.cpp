@@ -224,18 +224,20 @@ void LevelOneScene::Start()
 			{
 				obstacleFile >> textureName >> fileName;
 				auto temp = new Obstacle(textureName.c_str(), fileName.c_str());
-				GetTotalObstacles().emplace(std::pair<std::string, Obstacle*>(textureName, temp));
+				AddToTotalObstacle(textureName, temp);
+				//GetTotalObstacles().emplace(std::pair<std::string, Obstacle*>(textureName, temp));
 				std::cout << imageType << std::endl << fileName << std::endl << textureName << std::endl;
 			}
 			else if (imageType == "spritesheet") { // it is a spritesheet
 				// TODO: make a switch case for each obstacle
 				obstacleFile >> textureName >> fileName >> textFile;
 				auto temp = new Obstacle(textureName.c_str(), fileName.c_str(), textFile.c_str());
-				GetTotalObstacles().emplace(std::pair<std::string, Obstacle*>(textureName, temp));
+				AddToTotalObstacle(textureName, temp);
+				//GetTotalObstacles().emplace(std::pair<std::string, Obstacle*>(textureName, temp));
 				std::cout << imageType << std::endl << fileName << std::endl << textureName << std::endl;
 			}
 			else { // Oopsies an error ran.
-
+				std::cout << "regfd\n";
 			}
 
 		}
@@ -247,13 +249,6 @@ void LevelOneScene::Start()
 
 	InitFPSCounter();
 
-	Obstacle* bgObj = new Obstacle("firstLevelObstacles", "../Assets/sprites/obstacles/levelimages/firstLevelObstacles.png", 3);
-	
-
-	bgObj->GetTransform()->position = GetBackground()->GetTransform()->position;
-
-
-	GetObstaclePool()->Spawn(bgObj);
 
 	GetPlayer()->GetTransform()->position = GetBackground()->GetTransform()->position;
 
@@ -421,11 +416,15 @@ void LevelOneScene::LoadObstaclesToFile()
 		std::string name;
 		float x, y;
 
-		while (!file.eof())
+		// Note: file.eof() is still false, it is only true AFTER
+		// the file tries to read PAST the end of file,therefore giving
+		// us a bad value if we try to read an obstacle.
+		while (file >> name >> x >> y)
 		{
-			file >> name >> x >> y;
+			//file >> name >> x >> y;
 			std::cout << name << std::endl;
 			Obstacle* temp = CheckWhatObstacleToSpawn(name);
+			std::cout << temp->textureName << std::endl;
 			if (temp != nullptr)
 			{
 				GetObstaclePool()->Spawn(temp);

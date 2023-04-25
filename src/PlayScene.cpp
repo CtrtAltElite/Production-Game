@@ -14,13 +14,9 @@
 #include "Layers.h"
 #include "Stingray.h"
 
-PlayScene::PlayScene()
-{
-	//PlayScene::Start();
-}
-
-PlayScene::~PlayScene()
-= default;
+PlayScene::PlayScene() : isLevelEditing(false), isObstacleDeleting(false), 
+m_isMouseHeld(false), m_isObstacleBeingPlaced(false), timer(0.0f)
+{ }
 
 void PlayScene::Draw()
 {
@@ -44,24 +40,6 @@ void PlayScene::Update()
 	if (m_pObstaclePool != nullptr) {
 		m_pObstaclePool->Update();
 	}
-
-	//if (timer <= 0)
-	//{
-	//	timer = NEXT_ENEMY_SPAWN;
-	//	auto shark = new Shark;
-	//	shark->SetTargetPlayer(m_pPlayer);
-	//	m_pEnemyPool->Spawn(shark);
-
-	//	auto stingray = new Stingray;
-	//	stingray->GetTransform()->position = glm::vec2(Camera::Instance().GetTransform()->position.x, rand() % 5 + m_pPlayer->GetTransform()->position.y);
-	//	m_pObstaclePool->Spawn(stingray);
-
-	//	auto jellyfish = new Jellyfish;
-	//	jellyfish->GetTransform()->position = glm::vec2(m_pPlayer->GetTransform()->position.x, m_pPlayer->GetTransform()->position.y - 800.0f);
-	//	m_pObstaclePool->Spawn(jellyfish);
-	//	//m_pEnemyPool->UpdateTargetPlayer(m_pPlayer);
-	//}
-
 
 	// Set FPS display on screen.
 	if ((SDL_GetTicks64() / 1000) > 0)
@@ -114,13 +92,18 @@ Obstacle* PlayScene::CheckWhatObstacleToSpawn(std::string name)
 	{
 		return new LandFish();
 	}
-	if (m_pTotalObstacles.size() != 1)
+	if (m_pTotalObstacles[name] != nullptr)
 	{
 		return m_pTotalObstacles[name];
 	}
 	else {
 		return nullptr;
 	}
+}
+
+void PlayScene::AddToTotalObstacle(std::string name, Obstacle* obstacle)
+{
+	m_pTotalObstacles.emplace(name, obstacle);
 }
 
 void PlayScene::GetPlayerInput()
@@ -130,17 +113,15 @@ void PlayScene::GetPlayerInput()
 		m_pPlayer->MoveAtMouse();
 	}
 	if(EventManager::Instance().MousePressed(1)) //left mouse button
-		{
+	{
 		m_pTorpedoPool->Fire();
-		//SoundManager::Instance().PlaySound("playerShoot"); //ITS SO LOUD LOL
-		}
+	}
 }
 
 void PlayScene::Start()
 {
 	// Set GUI Title
 	m_guiTitle = "Play Scene";
-
 
 	
 	/* DO NOT REMOVE */
@@ -275,7 +256,6 @@ void PlayScene::InitPools()
 	// Instantiating the obstacle pool.
 	m_pObstaclePool = new ObstaclePool();
 	AddChild(m_pObstaclePool, OBSTACLE);
-
 }
 
 void PlayScene::InitFPSCounter()
