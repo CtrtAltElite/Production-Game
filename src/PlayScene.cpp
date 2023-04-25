@@ -118,6 +118,59 @@ void PlayScene::GetPlayerInput()
 	}
 }
 
+void PlayScene::SaveObstaclesToFile()
+{
+	std::fstream file(currentLevelObstacleFile);
+	if (file.is_open())
+	{
+		file.clear();
+
+		for (auto obstacle : GetObstaclePool()->GetPool())
+		{
+			if (!obstacle->textureName.empty())
+			{
+				file << obstacle->textureName << " " << obstacle->GetTransform()->position.x << " " << obstacle->GetTransform()->position.y;
+				file << "\n";
+			}
+		}
+		file.close();
+		std::cout << "Obstacles Saved!\n";
+	}
+}
+
+void PlayScene::LoadObstaclesFromFile()
+{
+	std::fstream file(currentLevelObstacleFile);
+
+	if (file.is_open())
+	{
+		std::string name;
+		float x, y;
+
+		// Note: file.eof() is still false, it is only true AFTER
+		// the file tries to read PAST the end of file,therefore giving
+		// us a bad value if we try to read an obstacle.
+		while (file >> name >> x >> y)
+		{
+			//file >> name >> x >> y;
+			std::cout << name << std::endl;
+			Obstacle* temp = CheckWhatObstacleToSpawn(name);
+			std::cout << temp->textureName << std::endl;
+			if (temp != nullptr)
+			{
+				GetObstaclePool()->Spawn(temp);
+
+				temp->GetTransform()->position = { x, y };
+			}
+			else {
+				std::cout << "Error loading obstacle from file to game!\n";
+			}
+
+		}
+		file.close();
+	}
+}
+
 void PlayScene::Start()
 {
 	// Set GUI Title
@@ -351,6 +404,11 @@ bool PlayScene::GetCurrentInputType()
 	return m_pCurrentInputType;
 }
 
+std::string PlayScene::GetCurrentObstacleFile() const
+{
+	return currentLevelObstacleFile;
+}
+
 void PlayScene::SetGuiTitle(std::string title)
 {
 	m_guiTitle = title;
@@ -426,6 +484,11 @@ void PlayScene::SetCurrentInputType(bool type)
 	m_pCurrentInputType = type;
 }
 
+void PlayScene::SetCurrentObstacleFile(std::string current)
+{
+	currentLevelObstacleFile = current;
+}
+
 
 void PlayScene::GUI_Function() 
 {
@@ -446,30 +509,56 @@ void PlayScene::GUI_Function()
 
 	if (ImGui::Checkbox("Enable Level Editing", &isLevelEditing)) {
 		Game::Instance().SetLevelEditorMode(isLevelEditing);
+		SetIsObstacleDeleting(false);	
 	}
 
 	ImGui::Separator();
 
-	ImGui::TextColored(ImVec4(1, 0, 0, 1), "Obstacles To Place");
+	// Level editor buttons if we are level editing at the moment
+	if (GetIsLevelEditing()) {
+		if (ImGui::Checkbox("Enable Obstacle Deletion Mode", &isObstacleDeleting))
+		{
+		}
+
+		if (ImGui::Button("Save Obstacles"))
+		{
+			SaveObstaclesToFile();
+		}
+	}
+
+	ImGui::Separator();
+	
+	/* Obstacles placement for level editor. */
+	ImGui::TextColored(ImVec4(1, 0, 1, 1), "Obstacles To Place");
 	ImGui::BeginChild("Scrolling");
 		for (std::pair<std::string, Obstacle*> obstacle : m_pTotalObstacles)
 		{
 			if (ImGui::Button(obstacle.first.c_str()))
 			{
-				const auto temp = new Obstacle(obstacle.first.c_str(), obstacle.second->textureName.c_str());
+				if (isLevelEditing)
+				{
+					auto temp = CheckWhatObstacleToSpawn(obstacle.first);
+					if (temp != nullptr)
+					{
+						SetIsObstacleBeingPlaced(true);
+						temp->m_isPlacing = true;;
 
-				temp->m_isPlacing = true;
-
-				m_pObstaclePool->Spawn(temp);
-				std::cout << obstacle.first;
+						m_pObstaclePool->Spawn(temp);
+						std::cout << obstacle.first;
+					}
+				}
+				else {
+					ImGui::SameLine();
+					ImGui::TextColored(ImVec4(1, 0, 0, 1), "Level Editor not selected");
+				}
 			}
-
 		}
 	ImGui::EndChild();
 
 
-	ImGui::Separator();
+	
 
+	ImGui::Separator();
 	static float float3[3] = { 0.0f, 1.0f, 1.5f };
 	if(ImGui::SliderFloat3("My Slider", float3, 0.0f, 2.0f))
 	{

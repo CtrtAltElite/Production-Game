@@ -180,6 +180,7 @@ void LevelOneScene::HandleEvents()
 void LevelOneScene::Start()
 {
 	SetGuiTitle("Level 1");
+	SetCurrentObstacleFile("../Assets/data/Levels/Level1Obstacles.txt");
 
 	SoundManager::Instance().SetMusicVolume(25);
 	SoundManager::Instance().Load("../Assets/audio/LevelMusic/LevelOne/Dancing_with_Dolphins.mp3", "levelOneMusic", SoundType::SOUND_MUSIC);
@@ -250,9 +251,9 @@ void LevelOneScene::Start()
 	InitFPSCounter();
 
 
+	LoadObstaclesFromFile();
 	GetPlayer()->GetTransform()->position = GetBackground()->GetTransform()->position;
 
-	LoadObstaclesToFile();
 	ImGuiWindowFrame::Instance().SetGuiFunction([this] { GUI_Function(); });
 }
 
@@ -388,57 +389,57 @@ void LevelOneScene::InitPools()
 }
 
 
-void LevelOneScene::SaveObstaclesToFile()
-{
-	std::fstream file("../Assets/data/Levels/Level1Obstacles.txt");
-	if (file.is_open())
-	{
-		file.clear();
-
-		for (auto obstacle : GetObstaclePool()->GetPool())
-		{
-			if (!obstacle->textureName.empty())
-			{
-				file << obstacle->textureName << " " << obstacle->GetTransform()->position.x << " " << obstacle->GetTransform()->position.y;
-				file << "\n";
-			}
-		}
-		file.close();
-		std::cout << "Obstacles Saved!\n";
-	}
-}
-
-void LevelOneScene::LoadObstaclesToFile()
-{
-	std::fstream file("../Assets/data/Levels/Level1Obstacles.txt");
-	if (file.is_open())
-	{
-		std::string name;
-		float x, y;
-
-		// Note: file.eof() is still false, it is only true AFTER
-		// the file tries to read PAST the end of file,therefore giving
-		// us a bad value if we try to read an obstacle.
-		while (file >> name >> x >> y)
-		{
-			//file >> name >> x >> y;
-			std::cout << name << std::endl;
-			Obstacle* temp = CheckWhatObstacleToSpawn(name);
-			std::cout << temp->textureName << std::endl;
-			if (temp != nullptr)
-			{
-				GetObstaclePool()->Spawn(temp);
-
-				temp->GetTransform()->position = { x, y };
-			}
-			else {
-				std::cout << "Error loading obstacle from file to game!\n";
-			}
-			
-		}
-		file.close();
-	}
-}
+//void LevelOneScene::SaveObstaclesToFile()
+//{
+//	std::fstream file("../Assets/data/Levels/Level1Obstacles.txt");
+//	if (file.is_open())
+//	{
+//		file.clear();
+//
+//		for (auto obstacle : GetObstaclePool()->GetPool())
+//		{
+//			if (!obstacle->textureName.empty())
+//			{
+//				file << obstacle->textureName << " " << obstacle->GetTransform()->position.x << " " << obstacle->GetTransform()->position.y;
+//				file << "\n";
+//			}
+//		}
+//		file.close();
+//		std::cout << "Obstacles Saved!\n";
+//	}
+//}
+//
+//void LevelOneScene::LoadObstaclesToFile()
+//{
+//	std::fstream file("../Assets/data/Levels/Level1Obstacles.txt");
+//	if (file.is_open())
+//	{
+//		std::string name;
+//		float x, y;
+//
+//		// Note: file.eof() is still false, it is only true AFTER
+//		// the file tries to read PAST the end of file,therefore giving
+//		// us a bad value if we try to read an obstacle.
+//		while (file >> name >> x >> y)
+//		{
+//			//file >> name >> x >> y;
+//			std::cout << name << std::endl;
+//			Obstacle* temp = CheckWhatObstacleToSpawn(name);
+//			std::cout << temp->textureName << std::endl;
+//			if (temp != nullptr)
+//			{
+//				GetObstaclePool()->Spawn(temp);
+//
+//				temp->GetTransform()->position = { x, y };
+//			}
+//			else {
+//				std::cout << "Error loading obstacle from file to game!\n";
+//			}
+//			
+//		}
+//		file.close();
+//	}
+//}
 
 
 

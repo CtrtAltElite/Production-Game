@@ -56,6 +56,7 @@ public:
 	bool GetIsMouseHeld();
 	bool GetIsObstacleBeingPlaced();
 	bool GetCurrentInputType();
+	std::string GetCurrentObstacleFile() const;
 
 	void SetGuiTitle(std::string title);
 	void SetPlayer(Player* player);
@@ -72,11 +73,14 @@ public:
 	void SetIsMouseHeld(bool held);
 	void SetIsObstacleBeingPlaced(bool placed);
 	void SetCurrentInputType(bool type);
+	void SetCurrentObstacleFile(std::string current);
 
 	Obstacle* CheckWhatObstacleToSpawn(std::string name);
 
 	void AddToTotalObstacle(std::string name, Obstacle* obstacle);
 	void GetPlayerInput();
+	void SaveObstaclesToFile();
+	void LoadObstaclesFromFile();
 	void GUI_Function();
 
 private:
@@ -103,7 +107,7 @@ private:
 	bool isObstacleDeleting;
 	bool m_isMouseHeld;
 	bool m_isObstacleBeingPlaced;
-
+	std::string currentLevelObstacleFile;
 	
 
 	// Input Control

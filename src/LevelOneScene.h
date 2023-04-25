@@ -37,8 +37,8 @@ public:
 	// Specific functions dedicated to PlayScene
 	void Collision() override;
 	void InitPools() override;
-	void SaveObstaclesToFile();
-	void LoadObstaclesToFile();
+	/*void SaveObstaclesToFile();
+	void LoadObstaclesToFile();*/
 
 	
 
